@@ -1,0 +1,9 @@
+CT.require("CAN.config");
+CT.require("CAN.categories");
+CT.require("CAN.chat");
+CT.require("CAN.cookie");
+CT.require("CAN.frame");
+CT.require("CAN.search");
+CT.require("CAN.session");
+CT.require("CAN.widget.all");
+CT.require("CAN.media.all");

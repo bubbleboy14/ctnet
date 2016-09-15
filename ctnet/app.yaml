@@ -1,0 +1,84 @@
+- url: /rss
+  script: rss.py
+
+- url: /settings
+  script: settings.py
+
+- url: /get
+  script: get.py
+
+- url: /edit
+  script: edit.py
+
+- url: /upload
+  script: upload.py
+
+- url: /say
+  script: say.py
+
+- url: /invite
+  script: invite.py
+
+- url: /_sdb
+  script: _sdb.py
+
+- url: /newUser
+  script: newUser.py
+
+- url: /tryAuth
+  script: tryAuth.py
+
+- url: /phoneAuth
+  script: phoneAuth.py
+
+- url: /_pa
+  script: _pa.py
+
+- url: /activate
+  script: activate.py
+
+- url: /login
+  script: login.py
+
+- url: /remind
+  script: remind.py
+
+- url: /vote
+  script: vote.py
+
+- url: /refDoc
+  script: refDoc.py
+
+- url: /img
+  static_dir: img
+
+- url: /blob
+  static_dir: blob
+
+- url: /_db
+  script: _db.py
+
+- url: /
+  script: index.py
+
+- url: /.*%23.*
+  script: fix_hash.py
+
+- url: /.*\.(html|css)
+  script: router.py
+
+## MODE SWITCHING -- DON'T MESS WITH!
+# START mode: dynamic
+- url: /js
+  static_dir: js
+# END mode: dynamic
+# START mode: static
+#- url: /js
+#  static_dir: js
+# END mode: static
+# START mode: production
+#- url: /lib
+#  static_dir: js/lib
+#- url: /CT
+#  static_dir: js/CT
+# END mode: production

@@ -1,0 +1,69 @@
+copies = {
+	".": [
+		"emailTemplates.py",
+		"cron.yaml",
+		"app.yaml"
+	],
+	"img": "*"
+}
+syms = {
+	".": [
+		"PyRSS2Gen.py",
+		"_pa.py",
+		"activate.py",
+		"cronscan.py",
+		"edit.py",
+		"fix_hash.py",
+		"gbot.py",
+		"get.py",
+		"index.py",
+		"invite.py",
+		"login.py",
+		"newUser.py",
+		"phoneAuth.py",
+		"refDoc.py",
+		"remind.py",
+		"router.py",
+		"rss.py",
+		"say.py",
+		"settings.py",
+		"tryAuth.py",
+		"twilio.py",
+		"upload.py",
+		"util.py",
+		"vote.py"
+	],
+	"html": [
+		"404.html",
+		"about.html",
+		"basic.html",
+		"beta.html",
+		"browsers.html",
+		"cantools.css",
+		"cases.html",
+		"community.html",
+		"home.html",
+		"login.html",
+		"map.html",
+		"newaccount.html",
+		"news.html",
+		"participate.html",
+		"profile.html",
+		"recommendations.html",
+		"referenda.html",
+		"search.html",
+		"security.html",
+		"slider.css",
+		"stream.html",
+		"style2.css",
+		"talk.css",
+		"talk.html",
+		"video.html",
+		"wiki.css",
+		"wiki.html"
+	],
+	"js": ["CAN", "lib", "pages"]
+}
+model = {
+	"ctnet.model": ["*"]
+}

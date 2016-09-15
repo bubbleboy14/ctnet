@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0"/>
+  <title>Civil Action Network | Participate</title>
+  <link rel="stylesheet" href="style2.css">
+  <link rel="stylesheet" href="cantools.css">
+  <script src="/js/CT/ct.js"></script>
+  <script src="/js/pages/participate.js"></script>
+ </head>
+ <body><div id="all">
+
+  <div id="header"></div>
+  <div id="navigation_bar"></div>
+  <div id="welcome_bar"></div>
+  <div class="trim">
+   <div class="leftcolumn">
+    <div class="bigtabbed">
+     <div class="bold blue bottompadded nowrap">Post Something</div>
+     <div class="small" id="sbitems">loading...</div>
+    </div>
+   </div>
+   <table class="basictable content bigpadded withlc"><tr>
+    <td class="maxwidthoverride">
+
+  <!--div class="big margined center underline">
+   Featured Results
+  </div>
+
+  <div class="big margined center underline">
+   Search Rules
+  </div-->
+
+  <div id="photoselector" class="hidden adminpopup thumb">
+   <div class="right"><a id="npsclose">X</a></div>
+   <div id="photoselectoruploadcontainer">
+    <a class="small" id="photoselectoruploadlink">(upload)</a>
+    <div class="hidden higherpopup w400" id="photoselectoruploadnode"></div>
+   </div>
+   <div id="npsfreshtitle" class="big blue bold bottompadded hidden">
+    Fresh Photos
+   </div>
+   <div id="npsfresh" class="hidden boxbottom"></div>
+   <div class="blue bottompadded">
+    <span class="big bold">Browse Photos</span>
+   </div>
+   <div id="photoselectorbrowse"></div>
+  </div>
+  <div id="videoselector" class="hidden adminpopup thumb">
+   <div class="right"><a id="nvsclose">X</a></div>
+   <div id="nvsfreshtitle" class="big blue bold bottompadded hidden">
+    Fresh Videos
+   </div>
+   <div id="nvsfresh" class="hidden boxbottom"></div>
+   <div class="big blue bold bottompadded">
+    Browse Videos
+   </div>
+   <div id="videoselectorbrowse"></div>
+  </div>
+
+  <div id="sbpanelApprover" class="sbpanel hidden">
+   <div class="appanel" id="appanelReferenda">
+    <div class="bigger blue bold bottompadded">
+     Referendum Approver
+    </div>
+    <div class="bottompadded">Choose wisely.</div>
+    <div class="bordered padded round bottommargined">
+     <div id="apreferenda"></div>
+    </div>
+   </div>
+   <div class="appanel" id="appanelEvents">
+    <div class="bigger blue bold bottompadded">
+     Event Approver
+    </div>
+    <div class="bottompadded">Civil action!</div>
+    <div class="bordered padded round bottommargined w400">
+     <div id="apevents"></div>
+    </div>
+   </div>
+   <div class="appanel" id="appanelMedia">
+    <div class="bigger blue bold bottompadded">
+     Media Approver
+    </div>
+    <div class="bottompadded">Approve or deny. Always explain why!</div>
+    <div class="bordered padded round bottommargined">
+     <div id="apmapanels"></div>
+    </div>
+   </div>
+  </div>
+
+  <div id="sbpanelIntroduction" class="sbpanel hidden">
+   <div class="bigger blue bold bottompadded">
+    Welcome to the CAN Participate Page!
+   </div>
+   <div class="bottompadded">
+    You're invited to post research, news articles, referenda, position papers, opinions/ideas, videos, photos, and more.
+   </div>
+   <div class="bottompadded">
+    Simply use the left toolbar to post/edit/delete any content you like.
+   </div>
+   <div>
+    The public votes on your active content democratically.
+   </div>
+  </div>
+
+  <div id="sbpanelPaul" class="sbpanel hidden"></div>
+  <div id="sbpanelMario" class="sbpanel hidden"></div>
+
+  <div id="sbpanelGreg" class="sbpanel hidden">
+   <div class="bigger blue bold bottompadded">
+    Hi Greg!
+   </div>
+   <div class="ggpanel" id="ggpanelWelcome"></div>
+   <div class="ggpanel" id="ggpanelSettings">
+    <div class="bottompadded">Tweak CAN's settings!</div>
+   </div>
+   <div class="ggpanel" id="ggpanelNewsletter">
+    <!--div class="bottompadded">Send a newsletter to CAN's users.</div>
+
+    <div id="ggnledit">
+     <div class="bordered padded round bottommargined">
+      <div class="big bold blue bottompadded">
+       Title
+      </div>
+      <input id="ggnltitle" class="fullwidth">
+     </div>
+     <div class="bordered padded round bottommargined">
+      <div class="big bold blue bottompadded">
+       Body
+      </div>
+      <div>
+       Feel free to use html. Also, we will replace {firstname} with the user's first name.
+      </div>
+      <textarea id="ggnlbody" class="fullwidth"></textarea>
+     </div>
+     <div id="ggnlbuttons">
+      <div class="bordered padded round bottommargined">
+       <div class="big bold blue bottompadded">
+        Test Email
+       </div>
+       <div>Check this box to send email to Greg (you) only.</div>
+       <div id="ggnltest"></div>
+      </div>
+      <button id="ggnlsend">Send</button>
+      <button id="ggnlsave">Save</button>
+      <button id="ggnlsaveastemplate">Save as Template</button>
+     </div>
+     <div id="ggnltbuttons" class="hidden">
+      <button id="ggnltsave">Save</button>
+      <button id="ggnltuse">Use</button>
+     </div>
+    </div>
+    <div id="ggnlreview" class="hidden"></div-->
+
+   </div>
+   <div class="ggpanel" id="ggpanelKeywordSystem">
+    <div class="bottompadded">Search rules and featured results.</div>
+    <div id="ggkwmainrules" class="bordered padded round bottommargined hidden">
+     <div class="right"><button id="deleterulesbutton">Delete</button></div>
+     <div class="big bold blue bottompadded">
+      Smart Search Inserts and Triggered Results
+     </div>
+     <div class="bordered padded round bottommargined">
+      <div class="big bold blue bottompadded">
+       Name
+      </div>
+      <input id="ggkwrulesname" class="fullwidth">
+     </div>
+     <div class="bordered padded round bottommargined">
+      <div class="big bold blue bottompadded">
+       Type
+      </div>
+      <div id="ggkwrulestype"></div>
+     </div>
+     <div class="bordered padded round bottommargined">
+      <div class="big bold blue bottompadded">
+       Key Words
+      </div>
+      <textarea id="ggkwruleskeyword" class="fullwidth height200"></textarea>
+     </div>
+     <div class="bordered padded round bottommargined">
+      <div class="big bold blue bottompadded">
+       Inserts
+      </div>
+      <textarea id="ggkwrulesinsert" class="fullwidth height200"></textarea>
+     </div>
+     <div class="bordered padded round bottommargined">
+      <div class="right"><button id="addfeaturedbutton">Add</button></div>
+      <div class="big bold blue bottompadded">
+       Featured Results
+      </div>
+      <div id="ggkwrulesfeatured"></div>
+     </div>
+     <button id="ggkwrulessubmit">Submit</button>
+    </div>
+    <div id="ggkwmainfeatured" class="bordered padded round bottommargined">
+     <div class="right"><button id="deletefeaturedbutton">Delete</button></div>
+     <div class="big bold blue bottompadded">
+      Recommended Website
+     </div>
+     <div class="bordered padded round bottommargined">
+      <div class="big bold blue bottompadded">
+       Title
+      </div>
+      <input id="ggkwfeaturedtitle" class="fullwidth">
+     </div>
+     <div class="bordered padded round bottommargined">
+      <div class="big bold blue bottompadded">
+       Blurb
+      </div>
+      <textarea id="ggkwfeaturedblurb" class="fullwidth height200"></textarea>
+     </div>
+     <div class="bordered padded round bottommargined">
+      <div class="big bold blue bottompadded">
+       Link
+      </div>
+      <input id="ggkwfeaturedlink" class="fullwidth">
+     </div>
+     <button id="ggkwfeaturedsubmit">Submit</button>
+    </div>
+
+   </div>
+   <div class="ggpanel" id="ggpanelEvents">
+    <div class="bottompadded">Event deletion.</div>
+    <div class="bordered padded round bottommargined">
+     <div id="ggevents"></div>
+    </div>
+   </div>
+   <div class="ggpanel" id="ggpanelMedia">
+    <div class="bottompadded">Media deletion.</div>
+    <div class="bordered padded round bottommargined">
+     <div id="ggmapanels"></div>
+    </div>
+   </div>
+   <div class="ggpanel" id="ggpanelReferenda">
+    <div class="bottompadded">Put the system to work.</div>
+    <div class="bordered padded round bottommargined">
+     <div class="right shiftup">
+      <button id="submitreforder">Save</button>
+     </div>
+     <div class="big bold blue bottommargined bottomline">
+      Referenda Orderer
+     </div>
+     <div id="reforderer"></div>
+    </div>
+   </div>
+   <div class="ggpanel" id="ggpanelCategories">
+    <div class="bottompadded">How will media be presented?</div>
+    <div class="bordered padded round bottommargined">
+     <div class="right shiftup">
+      <button id="submitcatorder">Save</button>
+     </div>
+     <div class="big bold blue bottommargined bottomline">
+      Category Orderer
+     </div>
+     <div id="catorderer"></div>
+    </div>
+   </div>
+  </div>
+
+  <div id="sbpanelCoordinator" class="sbpanel hidden">
+   <div class="bigger blue bold bottompadded">
+    Event Adder
+   </div>
+   <div class="bottompadded">
+    This event will be featured on the Community Page.
+   </div>
+
+   <div class="bordered padded round bottommargined hidden">
+    <div class="big bold blue">Critique</div>
+    <div id="eventcritique"></div>
+   </div>
+
+   <div>
+
+    <div class="bordered padded round bottommargined">
+     <div class="big bold blue">
+      Title
+     </div>
+     <input id="cooeventtitle" class="fullwidth">
+    </div>
+    <div class="bordered padded round bottommargined">
+     <div class="big bold blue">
+      Description
+     </div>
+     <textarea id="cooeventdescription" class="fullwidth height200"></textarea>
+    </div>
+    <div class="bordered padded round bottommargined">
+     <div class="big bold blue">
+      Where
+     </div>
+     <div><label for="cooeventwherename">Location Name</label></div>
+     <input id="cooeventwherename" class="fullwidth">
+     <div><label for="cooeventwhereaddress">Street Address</label></div>
+     <input id="cooeventwhereaddress" class="fullwidth">
+     <div><label for="cooeventwherezip">Zipcode</label></div>
+     <input id="cooeventwherezip" class="fullwidth">
+    </div>
+    <div class="bordered padded round bottommargined">
+     <div class="big bold blue">
+      When
+     </div>
+     <div id="cooeventwhen"></div>
+    </div>
+    <div class="bordered padded round bottommargined">
+     <div class="big bold blue">
+      Tasks
+     </div>
+     <div id="cooeventtasks"></div>
+    </div>
+    <button id="cooeventsubmit">Submit</button>
+
+   </div>
+  </div>
+
+  <div id="sbpanelModerator" class="sbpanel hidden">
+   <div class="bigger blue bold bottompadded">
+    Moderator Panel
+   </div>
+   <div class="bottompadded">
+    Let <a href="/about.html#TermsofUse" target="_blank">your conscience</a> be your guide.
+   </div>
+   <div class="modpanel" id="modpanelConversations">
+    <div class="bordered padded round bottommargined">
+     <div class="big bold blue bottommargined bottomline">
+      Conversations
+     </div>
+     <div id="modconversations"></div>
+    </div>
+   </div>
+   <div class="modpanel" id="modpanelFlaggedItems">
+    <div class="bordered padded round bottommargined">
+     <div class="big bold blue bottommargined bottomline">
+      Flagged Items
+     </div>
+     <div id="modflaggeditems"></div>
+    </div>
+   </div>
+   <div class="modpanel" id="modpanelUsers">
+    <div class="bordered padded round bottommargined">
+     <div class="right hidden shiftup"><button id="ggdeluser">Delete User</button></div>
+     <div class="big bold blue bottommargined bottomline">User Editor</div>
+     <div id="modusereditor"></div>
+    </div>
+   </div>
+  </div>
+
+  <div id="sbpanelRecruiter" class="sbpanel hidden">
+   <div class="bigger blue bold bottompadded">
+    Recruiter Panel
+   </div>
+   <div class="bottompadded">What you do - NOT who you are.</div>
+   <div class="bordered padded round bottommargined">
+    <div class="big bold blue bottommargined bottomline">User Editor</div>
+    <div id="recusereditor"></div>
+   </div>
+   <div class="bordered padded round bottommargined">
+    <div class="big bold blue bottommargined bottomline">Application Reviewer</div>
+    <div id="recappreview"></div>
+    <button id="recappaccept">Accept</button>
+    <button id="recappreject">Reject</button>
+    <button id="recapppass">Pass</button>
+   </div>
+  </div>
+
+  <div id="sbpanelReporter" class="sbpanel hidden">
+   <div class="bigger bold blue bottompadded">
+    News Adder
+   </div>
+   <div class="bottompadded">
+    Post news and research articles here. If you like, you can choose to have your submission displayed on the CAN homepage in addition to your personal profile.
+   </div>
+   <div class="bordered padded round bottommargined hidden">
+    <div class="big bold blue">Critique</div>
+    <div id="newscritique"></div>
+   </div>
+   <div class="bordered padded round bottommargined">
+    <div class="big bold blue">Title</div>
+    <input id="newstitlefield" class="fullwidth">
+   </div>
+
+   <div class="bordered padded round bottommargined">
+    <div class="big bold blue">Photo Selector</div>
+    <div class="bottompadded">Pick the photos for your story!</div>
+    <div id="newsphotoselected" class="bigpic"></div>
+    <div><button id="showhidenewsphotoselector">Choose</button></div>
+   </div>
+
+   <div class="bordered padded round bottommargined">
+    <div class="big bold blue">Body</div>
+    Write up your news article here. Below is the open-source Javascript text editor TinyMCE.
+    <textarea id="newsbodyfield" class="fullwidth height200"></textarea>
+   </div>
+
+   <div class="bordered padded round bottommargined">
+    <div class="big bold blue">Video Selector</div>
+    <div class="bottompadded">Does your story require any videos?</div>
+    <div id="newsvideoselected" class="bigpic"></div>
+    <div><button id="showhidenewsvideoselector">Choose</button></div>
+   </div>
+
+   <div class="bordered padded round bottommargined">
+    <div class="big bold blue">
+     Optional
+    </div>
+    <input type="checkbox" id="newsshared">
+    <label for="newsshared">
+     Display this content on the CAN homepage in addition to my personal profile.
+    </label>
+   </div>
+
+   <button id="newssubmit">Submit</button>
+  </div>
+
+  <div id="sbpanelPhotographer" class="sbpanel hidden">
+   <div class="bigger bold blue bottompadded">
+    Photo Adder
+   </div>
+   <div class="bottompadded">
+    Provide a photo regarding justice, liberty, sustainable living, or a threat to those ideals. If you like, you can choose to have the photo displayed on the CAN homepage in addition to your personal profile.
+   </div>
+   <div id="pspanelUpload" class="pspanel">
+    <div class="bordered padded round bottommargined">
+     <div class="big bold blue"><label for="photouploadtitle">Title</label></div>
+     <input id="photouploadtitle" name="photouploadtitle" class="fullwidth">
+    </div>
+    <div class="bordered padded round bottommargined">
+     <div class="big bold blue"><label for="photouploadartist">Artist</label></div>
+     <input id="photouploadartist" name="photouploadartist" class="fullwidth">
+    </div>
+    <div class="bordered padded round bottommargined">
+     <div class="big bold blue"><label for="photouploadupload">Photo</label></div>
+     <span id="photouploadupload"></span>
+     <span id="photouploadstatus" class="red"></span>
+    </div>
+    <div class="bordered padded round bottommargined">
+     <div class="big bold blue"><label for="photouploadlink">Credit Link</label></div>
+     <input id="photouploadlink" name="photouploadlink" class="fullwidth">
+    </div>
+   </div>
+
+   <div id="pspanelHTML" class="pspanel">
+    <div class="bordered padded round bottommargined">
+     <div class="big bold blue"><label for="photohtmlfield">HTML</label></div>
+     <textarea id="photohtmlfield" class="fullwidth h100"></textarea>
+    </div>
+   </div>
+
+   <div id="pspanelManual" class="pspanel">
+    <div class="bordered padded round bottommargined">
+     <div class="big bold blue"><label for="phototitlefield">Title</label></div>
+     <input id="phototitlefield" name="phototitlefield" class="fullwidth">
+    </div>
+    <div class="bordered padded round bottommargined">
+     <div class="big bold blue"><label for="photoartistfield">Artist</label></div>
+     <input id="photoartistfield" name="photoartistfield" class="fullwidth">
+    </div>
+    <div class="bordered padded round bottommargined">
+     <div class="big bold blue"><label for="photophotofield">Photo Link</label></div>
+     <input id="photophotofield" name="photophotofield" class="fullwidth">
+    </div>
+    <div class="bordered padded round bottommargined">
+     <div class="big bold blue"><label for="photolinkfield">Credit Link</label></div>
+     <input id="photolinkfield" name="photolinkfield" class="fullwidth">
+    </div>
+   </div>
+   <div class="bordered padded round bottommargined">
+    <div class="big bold blue">
+     Optional
+    </div>
+    <input type="checkbox" id="photoshared">
+    <label for="photoshared">
+     Display this content on the CAN homepage in addition to my personal profile.
+    </label>
+   </div>
+
+   <button id="photosubmit">Submit</button>
+  </div>
+
+  <div id="sbpanelVideographer" class="sbpanel hidden">
+
+  <div class="hidden bigger bold blue bottompadded">
+   Video Player
+  </div>
+
+  <div class="hidden" id="videoplayer"></div>
+
+  <div class="bigger bold blue bottompadded">
+   Video Adder
+  </div>
+  <div class="bottompadded">
+   A solution-oriented video is a great way to shake people out of the mainstream news coma.
+  </div>
+  <div class="bordered padded round bottommargined hidden">
+   <div class="big bold blue">Critique</div>
+   <div id="videocritique"></div>
+  </div>
+  <div class="bordered padded round bottommargined">
+   <div class="big bold blue">Title</div>
+   <input id="vtitle" class="fullwidth">
+  </div>
+  <div class="bordered padded round bottommargined">
+   <div class="big bold blue">Description</div>
+   <div id="vdnode" class="bottompadded"></div>
+  </div>
+  <div class="bordered padded round bottommargined">
+   <div class="big bold blue">Link</div>
+   <div>
+    We currently support YouTube, Google Video, and Vimeo.
+   </div>
+   <input id="vlink" class="fullwidth">
+  </div>
+  <div class="bordered padded round bottommargined">
+   <div class="big bold blue">Submit</div>
+   <div>
+    Test before you submit. If your video appears, it worked!
+   </div>
+   <div id="videotest"></div>
+   <button id="vtestbutton">Test</button>
+   <button id="vsubmitbutton">Submit</button>
+  </div>
+
+  </div>
+  <div id="sbpanelWriter" class="sbpanel hidden">
+   <div class="wspanel" id="wspanelQuoteSide2">
+    <div class="bigger bold blue bottompadded">
+     Famous Quote
+    </div>
+    <div class="bottompadded">
+     Give us a famous and inspirational quote about freedom and/or personal responsibility. If you like, you can choose to have this quote displayed on the CAN homepage in addition to your personal profile.
+    </div>
+   </div>
+   <div class="wspanel" id="wspanelBookRecommendationSide2">
+    <div class="bigger bold blue bottompadded">
+     Book Recommendation
+    </div>
+    <div class="bottompadded">
+     Provide a book recommendation that focuses on evidence of what's really happening in the world today. If you like, you can choose to have this recommendation displayed on the CAN homepage in addition to your personal profile.
+    </div>
+   </div>
+   <div class="wspanel" id="wspanelSustainableActionSide2">
+    <div class="bigger bold blue bottompadded">
+     Sustainable Action
+    </div>
+    <div class="bottompadded">
+     Briefly describe an action people can take to promote sustainable living in their personal lives, family, and community. If you like, you can choose to have this statement displayed on the CAN homepage in addition to your personal profile.
+    </div>
+   </div>
+
+   <div class="bordered padded round bottommargined hidden">
+    <div class="big bold blue">Critique</div>
+    <div id="writercritique"></div>
+   </div>
+
+   <div class="wspanel" id="wspanelQuote">
+    <div class="bordered padded round bottommargined">
+     <div class="big bold blue">
+      Author
+     </div>
+     <input id="writerquoteauthor" class="fullwidth">
+    </div>
+    <div class="bordered padded round bottommargined">
+     <div class="big bold blue">
+      Content
+     </div>
+     <textarea id="writerquotecontent" class="fullwidth height200"></textarea>
+    </div>
+    <div class="bordered padded round bottommargined">
+     <div class="big bold blue">
+      Optional
+     </div>
+     <input type="checkbox" id="writerquoteshared">
+     <label for="writerquoteshared">
+      Display this content on the CAN homepage in addition to my personal profile.
+     </label>
+    </div>
+   </div>
+
+   <div class="wspanel" id="wspanelBookRecommendation">
+    <div class="bordered padded round bottommargined">
+     <div class="big bold blue">
+      Title
+     </div>
+     <input id="writerbooktitle" class="fullwidth">
+    </div>
+    <div class="bordered padded round bottommargined">
+     <div class="big bold blue">
+      Author
+     </div>
+     <input id="writerbookauthor" class="fullwidth">
+    </div>
+    <div class="bordered padded round bottommargined">
+     <div class="big bold blue">
+      Content
+     </div>
+     <textarea id="writerbookcontent" class="fullwidth height200"></textarea>
+    </div>
+    <div class="bordered padded round bottommargined">
+     <div class="big bold blue">
+      Read Link
+     </div>
+     <input id="writerbookreadlink" class="fullwidth">
+    </div>
+    <div class="bordered padded round bottommargined">
+     <div class="big bold blue">
+      Buy Link
+     </div>
+     <input id="writerbookbuylink" class="fullwidth">
+    </div>
+    <div class="bordered padded round bottommargined">
+     <div class="big bold blue">
+      Photo Selector
+     </div>
+     <div class="bottompadded">
+      Pick the photo for your book cover!
+     </div>
+     <div class="bigpic" id="bookphotoselected"></div>
+     <button id="writerbookphotobutton">Choose</button>
+    </div>
+    <div class="bordered padded round bottommargined">
+     <div class="big bold blue">
+      Optional
+     </div>
+     <input type="checkbox" id="writerbookshared">
+     <label for="writerbookshared">
+      Display this content on the CAN homepage in addition to my personal profile.
+     </label>
+    </div>
+   </div>
+
+   <div class="wspanel" id="wspanelSustainableAction">
+    <div class="bordered padded round bottommargined">
+     <div class="big bold blue">
+      Title
+     </div>
+     <input id="writersustainableactiontitle" class="fullwidth">
+    </div>
+    <div class="bordered padded round bottommargined">
+     <div class="big bold blue">
+      Content
+     </div>
+     <textarea id="writersustainableactioncontent" class="fullwidth height200"></textarea>
+    </div>
+    <div class="bordered padded round bottommargined">
+     <div class="big bold blue">
+      Action Link
+     </div>
+     <input id="writersustainableactionlink" class="fullwidth">
+    </div>
+    <div class="bordered padded round bottommargined">
+     <div class="big bold blue">
+      Photo Selector
+     </div>
+     <div class="bottompadded">
+      Pick the photo for your sustainable action!
+     </div>
+     <div class="bigpic" id="sustainableactionphotoselected"></div>
+     <button id="writersustainableactionphotobutton">Choose</button>
+    </div>
+    <div class="bordered padded round bottommargined">
+     <div class="big bold blue">
+      Optional
+     </div>
+     <input type="checkbox" id="writersustainableactionshared">
+     <label for="writersustainableactionshared">
+      Display this content on the CAN homepage in addition to my personal profile.
+     </label>
+    </div>
+   </div>
+
+   <button id="writersubmit">Submit</button>
+
+
+  </div>
+
+  <div id="sbpanelActionGroups" class="sbpanel hidden">
+   <div class="bigger bold blue bottompadded">
+    Action Groups
+   </div>
+   <div class="bottompadded">
+    <div class="hidden right shiftup"><button id="gdelgroup">Delete This Group</button></div>
+    Get some fresh air! Change the world!
+   </div>
+   <div id="agmain" class="w420"></div>
+  </div>
+
+  <div id="sbpanelCases" class="sbpanel hidden">
+   <div class="bigger bold blue bottompadded">
+    Cases
+   </div>
+   <div class="bottompadded">
+    Build your case. Start here by writing a description of your case (i.e., "End Nuclear War."). Once you have created your case, you can navigate around the CAN website and add content from any source you choose. So a case is a collection of content on the CAN website, such as 1 referendum + 2 news stories, plus 10 position papers.
+   </div>
+   <div class="bordered padded round bottommargined">
+    <div class="big bold blue">
+     Title
+    </div>
+    <div class="bottompadded">
+     What will they call this case?
+    </div>
+    <div id="casetitle"></div>
+   </div>
+   <div class="bordered padded round bottommargined">
+    <div class="big bold blue">
+     Body
+    </div>
+    <div class="bottompadded">
+     Please tell me more.
+    </div>
+    <div id="caseblurb"></div>
+   </div>
+   <div class="bordered padded round bottommargined">
+    <div class="big bold blue">
+     Research
+    </div>
+    <div class="bottompadded">
+     Have you compiled a huge body of research? Stick it in a PDF and show the world!
+    </div>
+    <div id="casePDF"></div>
+   </div>
+   <button id="casesubmit">Submit</button>
+   <div id="caseStatus"></div>
+  </div>
+
+  <div id="sbpanelOpinionsAndIdeas" class="sbpanel hidden">
+   <div class="bigger bold blue bottompadded">
+    Opinions and Ideas
+   </div>
+   <div class="bottompadded">
+    Share any thoughts and ideas you wish. Your submission will be displayed in your personal profile.
+   </div>
+   <div class="bordered padded round bottommargined">
+    <div class="big bold blue">
+     Title
+    </div>
+    <div class="bottompadded">
+     What will they call this piece?
+    </div>
+    <div id="oititle"></div>
+   </div>
+   <div class="bordered padded round bottommargined">
+    <div class="big bold blue">
+     Body
+    </div>
+    <div class="bottompadded">
+     Please tell me more.
+    </div>
+    <div id="oibody"></div>
+   </div>
+   <div class="bordered padded round bottommargined">
+    <div class="big bold blue">
+     Optional
+    </div>
+    <input type="checkbox" id="oiconversation">
+    <label for="oiconversation">
+     Include a discussion board with this submission.
+    </label>
+   </div>
+   <button id="oisubmit">Submit</button>
+  </div>
+
+  <div id="sbpanelPositionPapers" class="sbpanel hidden">
+   <div class="bigger bold blue bottompadded">
+    Position Papers
+   </div>
+   <div class="bottompadded">
+    Write a long essay or even a paragraph describing your position on a matter of importance. Your position paper will be displayed in your personal profile.
+   </div>
+   <div class="bordered padded round bottommargined">
+    <div class="big bold blue">
+     Title
+    </div>
+    <div class="bottompadded">
+     What will they call this position paper?
+    </div>
+    <div id="pptitle"></div>
+   </div>
+   <div class="bordered padded round bottommargined">
+    <div class="big bold blue">
+     Body
+    </div>
+    <div class="bottompadded">
+     Please tell me more.
+    </div>
+    <div id="ppbody"></div>
+   </div>
+   <button id="ppsubmit">Submit</button>
+  </div>
+
+  <div id="sbpanelReferenda" class="sbpanel hidden">
+   <div class="bigger bold blue bottompadded">
+    Referendum Submitter
+   </div>
+   <div class="bottompadded">
+    Think you have a good idea to improve national or state governance? Submit your proposed law today through the CAN Referenda process, and allow others to vote on your proposal. Your referendum will be added to your profile page and also the 'Participant Referenda' page.
+   </div>
+   <div class="bottompadded">
+    <b>Important Note:</b> please only submit the actual text of a proposed law on this page. Or, if you'd like to post general political ideas, policy thoughts, and so forth, please take advantage of the 'Position Papers' function in your CAN profile. Thank you!
+   </div>
+   <div class="bordered padded round bottommargined">
+    <div class="big bold blue">
+     Title
+    </div>
+    <div class="bottompadded">
+     Name your proposed law (i.e., California Civil Code).
+    </div>
+    <div id="refsubtitle"></div>
+   </div>
+   <div class="bordered padded round bottommargined">
+    <div class="big bold blue">
+     Jurisdiction
+    </div>
+    <div class="bottompadded">
+     State the jurisdiction where your law would apply (i.e., California).
+    </div>
+    <div id="refsubjurisdiction"></div>
+   </div>
+   <div class="bordered padded round bottommargined">
+    <div class="big bold blue">
+     Summary
+    </div>
+    <div class="bottompadded">
+     Submit the text of your law.
+    </div>
+    <div id="refsubsummary"></div>
+   </div>
+   <button id="refsubbutton">Submit</button>
+  </div>
+
+  <div id="sbpanelLawyer" class="sbpanel hidden">
+   <div class="bigger bold blue bottompadded">
+    Referendum Editor
+   </div>
+
+   <!--div class="bottompadded">Draft a new law, and we'll take it from there!</div-->
+   <div class="bottompadded">
+    Think you have a good idea to improve national or state governance? Submit your proposed law today through the CAN Referenda process, and allow others to vote on your proposal. Your referendum will be added to your profile page and also the 'Participant Referenda' page.
+   </div>
+   <div class="bottompadded">
+    <b>Important Note:</b> please only submit the actual text of a proposed law on this page. Or, if you'd like to post general political ideas, policy thoughts, and so forth, please take advantage of the 'Position Papers' function in your CAN profile. Thank you!
+   </div>
+
+   <div id="refCritiques" class="hidden bordered padded round bottommargined"></div>
+   <div id="refTitle" class="bordered padded round bottommargined"></div>
+   <div id="refPdf" class="bordered padded round bottommargined"></div>
+   <!--div id="refDocLink"></div>
+   <div id="refDocUpload"></div-->
+   <div id="refBlurb" class="bordered padded round bottommargined"></div>
+   <div id="refSummary" class="bordered padded round bottommargined"></div>
+   <div id="refJurisdiction" class="bordered padded round bottommargined"></div>
+   <div id="refIsReady" class="bordered padded round bottommargined"></div>
+   <button id="refSaveChanges">Save Changes</button>
+   <div id="refStatus"></div>
+
+  </div>
+
+  <div id="sbpanelAuthenticator" class="sbpanel hidden">
+   <div class="bigger bold blue bottompadded">
+    Authentication
+   </div>
+   <div id="authmessage"></div>
+   <div id="authgraphic"></div>
+   <button id="authaccept">Accept</button>
+   <button id="authreject">Reject</button>
+   <button id="authpass">Pass</button>
+  </div>
+
+  <div id="sbpanelPutUpFlyers" class="sbpanel hidden">
+   <div class="bigger bold blue bottompadded">
+    Put Up Flyers
+   </div>
+   <div class="bottompadded">
+    If you feel motivated to promote our wiki-style citizens' referenda tool, please distribute this flyer at OWS and Tea Party gatherings. Thank you!
+   </div>
+   <div class="bigpic">
+    <div>
+     <a href="/img/misc/CAN_Flyer_1.png">
+      Full-size image
+     </a>
+    </div>
+    <img src="/img/misc/CAN_Flyer_1.png">
+   </div>
+  </div>
+
+  <div id="sbpanelMakeaDonation" class="sbpanel hidden">
+   <div class="bigger bold blue bottompadded">
+    Make a Donation
+   </div>
+   <div class="bottompadded">
+    Donations to CAN are greatly appreciated! 100% of your donation is received and earmarked by Glaser for the following CAN operations expenses (in this order): programmer/developer fees and website hosting costs, CAN News, CAN original programming.
+   </div>
+   <div>
+    <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+     <input type="hidden" name="cmd" value="_s-xclick">
+     <input type="hidden" name="hosted_button_id" value="7VMM25MLX29TS">
+     <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+     <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+    </form>
+   </div>
+  </div>
+
+  <div id="sbpanelLinktoCAN" class="sbpanel hidden">
+   <div class="bigger bold blue bottompadded">
+    Link to CAN
+   </div>
+   <div class="bottompadded">
+    Please help us raise awareness about CAN by placing one of these image links on your own website. Thank you for your support!
+   </div>
+   <div class="big blue">Badge 1</div>
+   <div class="small bordered padded bottommargined">
+    <div class="bold">HTML</div>
+    <div class="bottompadded">
+     &lt;a href="<span class="dswap"></span>/"&gt;&lt;img src="<span class="dswap"></span>/img/logo.gif"&gt;&lt;/a&gt;
+    </div>
+    <div class="bold">Example</div>
+    <a href="/home.html"><img src="/img/logo.gif"></a>
+   </div>
+   <div class="big blue">Badge 2</div>
+   <div class="small bordered padded">
+    <div class="bold">HTML</div>
+    <div class="bottompadded">
+     &lt;a href="<span class="dswap"></span>/referenda.html"&gt;&lt;img src="<span class="dswap"></span>&#8203;/img/VOTE_NOW_SIDE_BAR_TEXT_GRAPHIC.gif"&gt;&lt;/a&gt;
+    </div>
+    <div class="bold">Example</div>
+    <a href="/referenda.html"><img src="/img/VOTE_NOW_SIDE_BAR_TEXT_GRAPHIC.gif"></a>
+   </div>
+  </div>
+
+  <div id="sbpanelApply" class="sbpanel hidden">
+   <div class="bigger bold blue bottompadded">
+    CAN Contributor Application
+   </div>
+   <div class="bottompadded">
+    For new or additional abilities to post content on this site, please complete the application below. If/when your application is accepted you will be granted status as a "Provisional CAN Contributor." It works like a political primary - we give you 40 days to keep your status by earning at least 5 positive votes on your content and also maintaining a positive voting percentage above 50% (among people choosing to vote on your content). A positive vote is a 6 or better on a scale of 0-10.
+   </div>
+   <div class="bottompadded">
+    If you succeed in maintaining this level of CAN user approval, you will become an "Active CAN Contributor" after 40 days. Your profile will reflect your success and will remain Active until you are up for election again in one year, at which time you become provisional for another 40 days.
+   </div>
+   <div class="bottompadded">
+    Active contributors can also be impeached if their approval rating falls below 20% for a period of 90 days.
+   </div>
+   <div class="bottompadded">
+    Please note that for fairness reasons and to promote individual representation, Referenda Contributions and Position Papers are not included in this democratic system -- all users are able to post a referendum on the site at anytime.
+   </div>
+   <div class="bottompadded">
+    Please also note that our site will censor any hate speech, unlawful conduct, extreme obscenity or vulgarity, and nudity.
+   </div>
+   <div class="bordered padded round bottommargined">
+    <div class="big bold blue bottompadded">
+     Role
+    </div>
+    <div id="applyrole"></div>
+   </div>
+   <div class="bordered padded round bottommargined">
+    <div class="big bold blue bottompadded">
+     Statement
+    </div>
+    <textarea id="applystatement" class="fullwidth height200"></textarea>
+   </div>
+   <button id="applysubmit">Submit</button>
+  </div>
+
+    </td>
+    <td class="rightcolumn">
+
+     <div id="sbpanelCasesSide" class="sbpanel hidden">
+      <div class="padded bordered round bottommargined">
+       <div class="big bold blue bottommargined bottomline">Cases</div>
+       <div id="caitems"></div>
+      </div>
+     </div>
+
+     <div id="sbpanelActionGroupsSide" class="sbpanel hidden">
+
+      <div id="agmembernode" class="hidden">
+       <div class="padded bordered round bottommargined">
+        <div class="big bold blue bottommargined bottomline">
+         Group Menu
+        </div>
+        <div id="gmitems"></div>
+       </div>
+
+       <div id="gmpanelNewsletterSide" class="gmpanel hidden"></div>
+
+       <div id="gmpanelWikiSide" class="hidden">
+        <div class="padded bordered round bottommargined">
+         <div class="big bold blue bottommargined bottomline">
+          Group Wiki
+         </div>
+         <div id="gwitems"></div>
+        </div>
+       </div>
+
+      </div>
+      <div class="padded bordered round bottommargined">
+       <div class="big bold blue bottommargined bottomline">
+        Your Action Groups
+       </div>
+       <div id="agyour"></div>
+      </div>
+      <div id="moreactiongroups" class="hidden padded bordered round bottommargined">
+       <div class="big bold blue bottommargined bottomline">
+        More Action Groups
+       </div>
+       <div id="agmore"></div>
+      </div>
+     </div>
+
+     <div id="sbpanelOpinionsAndIdeasSide" class="sbpanel hidden">
+      <div class="padded bordered round bottommargined">
+       <div class="big bold blue bottommargined bottomline">
+        Your Opinions And Ideas
+       </div>
+       <div id="oiitems"></div>
+      </div>
+      <div class="padded bordered round bottommargined">
+       <div class="big bold blue bottommargined bottomline">
+        Link to Content on Our Site
+       </div>
+       <div>
+        Next time you're reading an article, watching a video, or considering a referendum, look for this icon:
+       </div>
+       <img src="/img/buttons/clipboard.png">
+       <div>
+        Click it to see a link to what you're reading or watching or considering.
+       </div>
+      </div>
+     </div>
+
+     <div id="sbpanelPositionPapersSide" class="sbpanel hidden">
+      <div class="padded bordered round bottommargined">
+       <div class="big bold blue bottommargined bottomline">
+        Your Position Papers
+       </div>
+       <div id="ppitems"></div>
+      </div>
+      <div class="padded bordered round bottommargined">
+       <div class="big bold blue bottommargined bottomline">
+        Link to Content on Our Site
+       </div>
+       <div>
+        Next time you're reading an article, watching a video, or considering a referendum, look for this icon:
+       </div>
+       <img src="/img/buttons/clipboard.png">
+       <div>
+        Click it to see a link to what you're reading or watching or considering.
+       </div>
+      </div>
+     </div>
+
+     <div id="sbpanelApplySide" class="sbpanel hidden">
+      <div class="padded bordered round bottommargined">
+       <div class="big bold blue bottommargined bottomline">Promote Justice, Liberty, and Sustainable Living</div>
+       <ul class="betterul">
+        <li id="applyrolereporter">Reporter - provides news and research articles that are expose-driven and solution oriented</li>
+        <li id="applyrolephotographer">Photographer - submits top quality, cutting edge photography</li>
+        <li id="applyrolevideographer">Videographer - submits important videos exposing the New World Order</li>
+        <li id="applyrolecoordinator">Community Organizer - uploads community events to the CAN calendar</li>
+        <li id="applyroleother">Other - what would you like to accomplish?</li>
+       </ul>
+      </div>
+     </div>
+
+     <div id="sbpanelCoordinatorSide" class="sbpanel hidden">
+      <div class="padded bordered round bottommargined">
+       <div class="big bold blue bottommargined bottomline">Your Events</div>
+       <div id="evitems"></div>
+      </div>
+     </div>
+
+     <div id="sbpanelVideographerSide" class="sbpanel hidden">
+      <div class="padded bordered round bottommargined">
+       <div class="big bold blue bottommargined bottomline">Your Videos</div>
+       <div id="voitems"></div>
+      </div>
+     </div>
+     <div id="sbpanelReporterSide" class="sbpanel hidden">
+      <div class="padded bordered round bottommargined">
+       <div class="big bold blue bottommargined bottomline">Your Stories</div>
+       <div id="rpitems"></div>
+      </div>
+     </div>
+     <div id="sbpanelWriterSide" class="sbpanel hidden">
+      <div class="padded bordered round bottommargined">
+       <div class="big bold blue bottommargined bottomline">Sections</div>
+       <div id="wsitems"></div>
+      </div>
+      <div class="wspanel" id="wspanelQuoteSide">
+       <div class="padded bordered round bottommargined">
+        <div class="big blue bold bottommargined bottomline">
+         Your Quotes
+        </div>
+        <div id="wsqitems"></div>
+       </div>
+      </div>
+      <div class="wspanel" id="wspanelBookRecommendationSide">
+       <div class="padded bordered round bottommargined">
+        <div class="big blue bold bottommargined bottomline">
+         Your Book Recommendations
+        </div>
+        <div id="wsbitems"></div>
+       </div>
+      </div>
+      <div class="wspanel" id="wspanelSustainableActionSide">
+       <div class="padded bordered round bottommargined">
+        <div class="big blue bold bottommargined bottomline">
+         Your Sustainable Actions
+        </div>
+        <div id="wssitems"></div>
+       </div>
+      </div>
+     </div>
+     <div id="sbpanelPhotographerSide" class="sbpanel hidden">
+      <div class="padded bordered round bottommargined">
+       <div class="big bold blue bottommargined bottomline">Methods</div>
+       <div id="psitems"></div>
+      </div>
+      <div id="pspanelUploadSide" class="pspanel hidden">
+       <div class="padded bordered round bottommargined">
+        <div class="big bold blue bottommargined bottomline">
+         Upload a Photo
+        </div>
+        <ul class="bestul">
+         <li>enter title and artist</li>
+         <li>select a photo from your hard drive</li>
+         <li>enter url of credit link</li>
+        </ul>
+       </div>
+      </div>
+      <div id="pspanelManualSide" class="pspanel hidden">
+       <div class="padded bordered round bottommargined">
+        <div class="big bold blue bottommargined bottomline">
+         Submit a Photo From the Internet
+        </div>
+        <ul class="bestul">
+         <li>enter title and artist</li>
+         <li>enter url of image itself - <b>not</b> webpage <i>with</i> image</li>
+         <li>enter url of credit link</li>
+        </ul>
+       </div>
+      </div>
+      <div id="pspanelHTMLSide" class="pspanel hidden">
+       <div class="padded bordered round bottommargined">
+        <div class="big bold blue bottommargined bottomline">
+         Provide HTML for a Photo
+        </div>
+        <div class="bold">Flickr</div>
+        <ul class="bestul">
+         <li>sign in to flickr and find your pic</li>
+         <li>click "Share this"</li>
+         <li>in drop-down menu, click "Grab the HTML/BBCode"</li>
+         <li>paste html here -- you're done!</li>
+        </ul>
+        <div class="bold">everystockphoto.com</div>
+        <ul class="bestul">
+         <li>find your pic</li>
+         <li>DON'T USE "Embed Code for this Photo with Attribution" -- it causes strange behavior!</li>
+         <li>if possible, click "View this photo on Flickr", and proceed with Flickr instructions</li>
+         <li>else, use manual mode</li>
+        </ul>
+       </div>
+      </div>
+     </div>
+
+     <div class="sbpanel hidden" id="sbpanelApproverSide">
+      <div class="padded bordered round bottommargined">
+       <div class="big bold blue bottommargined bottomline">Sections</div>
+       <div id="apitems"></div>
+       <div class="appanel" id="appanelMediaSide">
+        <div class="tabbed" id="apmaitems"></div>
+        <div class="apmapanel" id="apmapanelTextSide">
+         <div class="bigtabbed" id="apmatxtitems"></div>
+        </div>
+       </div>
+      </div>
+     </div>
+
+     <div class="sbpanel hidden" id="sbpanelGregSide">
+      <div class="padded bordered round bottommargined">
+       <div class="big bold blue bottommargined bottomline">Sections</div>
+       <div id="ggitems"></div>
+       <div class="ggpanel" id="ggpanelMediaSide">
+        <div class="tabbed" id="ggmaitems"></div>
+        <div class="ggmapanel" id="ggmapanelTextSide">
+         <div class="bigtabbed" id="ggmatxtitems"></div>
+        </div>
+       </div>
+      </div>
+      <div id="ggpanelNewsletterSide" class="ggpanel hidden">
+       <!--div class="padded bordered round bottommargined">
+        <div class="big bold blue bottommargined bottomline">Newsletters in Progress</div>
+        <div id="ggnlinprogress" class="h200 scrolly"></div>
+       </div>
+       <div class="padded bordered round bottommargined hidden">
+        <div class="big bold blue bottommargined bottomline">Templates</div>
+        <div id="ggnltemplates" class="h200 scrolly"></div>
+       </div>
+       <div class="padded bordered round bottommargined hidden">
+        <div class="big bold blue bottommargined bottomline">Newsletter Gallery</div>
+        <div id="ggnlgallery" class="h200 scrolly"></div>
+       </div-->
+      </div>
+      <div class="ggpanel hidden" id="ggpanelKeywordSystemSide">
+       <div id="ggkwsiderules" class="padded bordered round bottommargined hidden">
+        <div id="ggkwswaprules" class="right"></div>
+        <div class="big bold blue bottommargined bottomline">Search Rules</div>
+        <div id="ggsearchrules" class="h200 scrolly"></div>
+       </div>
+       <div id="ggkwsidefeatured" class="padded bordered round bottommargined">
+        <div id="ggkwswapfeatured" class="right"></div>
+        <div class="big bold blue bottommargined bottomline">Featured Results</div>
+        <div id="ggfeaturedresults" class="h200 scrolly"></div>
+       </div>
+      </div>
+
+     </div>
+     <div class="sbpanel hidden" id="sbpanelRecruiterSide">
+      <div class="padded bordered round bottommargined">
+       <div class="big bold blue bottommargined bottomline">User Selector</div>
+       <div id="recuserselector" class="h200 scrolly"></div>
+      </div>
+     </div>
+     <div class="sbpanel hidden" id="sbpanelModeratorSide">
+      <div class="padded bordered round bottommargined">
+       <div class="big bold blue bottommargined bottomline">Sections</div>
+       <div id="moditems"></div>
+      </div>
+      <div class="modpanel" id="modpanelConversationsSide">
+       <div class="padded bordered round bottommargined">
+        <div class="big bold blue bottommargined bottomline">
+         Conversation Selector
+        </div>
+        <div id="modconvoselector" class="h200 scrolly"></div>
+       </div>
+      </div>
+      <div class="modpanel" id="modpanelUsersSide">
+       <div class="padded bordered round bottommargined">
+        <div class="big bold blue bottommargined bottomline">
+         User Selector
+        </div>
+        <div id="moduserselector" class="h200 scrolly"></div>
+       </div>
+      </div>
+      <div class="padded bordered round bottommargined">
+       <div class="big bold blue bottommargined bottomline">Changing Text</div>
+       <div>
+        When editing or deleting an item, flagged or otherwise, you can always leave the text field blank to submit this default message:
+       </div>
+       <div class="padded">
+        <b>This item has been deleted by a moderator for violating <a href='/about.html#TermsofUse' target='_blank'>CAN's Terms of Use</a>. Please be respectful.</b>
+       </div>
+      </div>
+     </div>
+     <div class="sbpanel hidden" id="sbpanelLawyerSide">
+      <div class="padded bordered round bottommargined">
+       <div class="big bold blue bottommargined bottomline">
+        Your Referenda
+       </div>
+       <div id="referenda" class="h200 scrolly"></div>
+      </div>
+     </div>
+
+     <div id="getmost" class="padded bordered round bottommargined hidden">
+      <div class="big bold bottompadded blue">
+       Get the Most Out of CAN
+      </div>
+      <div class="small gray nicelinks">
+       <a href="/login.html">Log in</a> to post events, articles, videos, photos, cases, referenda, and much more!
+       <br><br>
+       Not a member yet? <a href="/login.html#NewUser">Create a free, secure account in less than a minute.</a> You can delete any of your content or your whole account at any time. See our <a href="/about.html#TermsofUse">Terms of Use</a> for details. Your privacy is our priority.
+      </div>
+     </div>
+
+     <div class="padded bordered round bottommargined">
+      <div class="big bold bottompadded blue">
+       Build Your Community!
+      </div>
+      <div class="small gray nicelinks">
+       Check out the <a href="/community.html">Community Page</a>! Have a question about the site? <a href="/community.html#!Questions">Ask it</a>! Have a great idea that could change the world for the better? <a href="/community.html#!Ideas">Post it</a>! Got a link or something to say about current events? <a href="/community.html#!Stream">Share it</a>!
+      </div>
+     </div>
+
+     <div class="padded bordered round">
+      <div class="bigger bold red">Vote Now!</div>
+      <a href="/referenda.html"><img src="/img/VOTE_NOW_SIDE_BAR_TEXT_GRAPHIC.gif"></a>
+     </div>
+
+     <div id="sbpanelCoordinatorSide2" class="sbpanel hidden">
+      <div class="padded bordered round topmargined">
+       <div class="big bold blue bottommargined bottomline">
+        Task Suggestions
+       </div>
+       <div class="bold blue bottomline">
+        Standard Tasks
+       </div>
+       <div id="evstandardtasks"></div>
+       <div class="bold blue topmargined bottomline">
+        Supplemental Tasks
+       </div>
+       <div id="evsupplementaltasks"></div>
+      </div>
+     </div>
+
+    </td>
+   </tr></table>
+  </div>
+  <div id="footer"></div>
+ </div>
+ <div id="photopreview" class="hidden adminpopup fullheight"></div>
+ <div id="newspreview" class="hidden adminpopup fullheight"></div>
+ <div id="pppreview" class="hidden adminpopup fullheight"></div>
+ <div id="opreview" class="hidden adminpopup fullheight"></div>
+ <div id="refreview" class="hidden adminpopup fullheight"></div>
+ <div id="lawreview" class="hidden adminpopup fullheight"></div>
+ <div id="careview" class="hidden adminpopup fullheight"></div>
+</body></html>

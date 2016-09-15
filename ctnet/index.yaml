@@ -1,0 +1,470 @@
+indexes:
+- kind: AuthAttempt
+  properties:
+  - name: auth
+  - name: date
+    direction: desc
+
+- kind: Video
+  properties:
+  - name: category
+  - name: date
+    direction: desc
+
+- kind: Video
+  properties:
+  - name: approved
+  - name: date
+    direction: desc
+
+- kind: Video
+  properties:
+  - name: approved
+  - name: critiqued
+  - name: date
+    direction: desc
+
+- kind: Video
+  properties:
+  - name: approved
+  - name: user
+  - name: date
+    direction: desc
+
+- kind: Video
+  properties:
+  - name: user
+  - name: date
+    direction: desc
+
+- kind: Referendum
+  properties:
+  - name: approved
+  - name: date
+    direction: desc
+
+- kind: Referendum
+  properties:
+  - name: user
+  - name: date
+    direction: desc
+
+- kind: Referendum
+  properties:
+  - name: approved
+  - name: user
+  - name: date
+    direction: desc
+
+- kind: Referendum
+  properties:
+  - name: approved
+  - name: critiqued
+  - name: date
+    direction: desc
+
+- kind: Quote
+  properties:
+  - name: user
+  - name: date
+    direction: desc
+
+- kind: Quote
+  properties:
+  - name: approved
+  - name: shared
+  - name: date
+    direction: desc
+
+- kind: Quote
+  properties:
+  - name: category
+  - name: date
+    direction: desc
+
+- kind: Quote
+  properties:
+  - name: approved
+  - name: category
+  - name: date
+    direction: desc
+
+- kind: Quote
+  properties:
+  - name: approved
+  - name: critiqued
+  - name: date
+    direction: desc
+
+- kind: Quote
+  properties:
+  - name: approved
+  - name: user
+  - name: date
+    direction: desc
+
+- kind: Quote
+  properties:
+  - name: approved
+  - name: date
+    direction: desc
+
+- kind: CategoryScore
+  properties:
+  - name: user
+  - name: score
+    direction: desc
+
+- kind: News
+  properties:
+  - name: user
+  - name: date
+    direction: desc
+
+- kind: News
+  properties:
+  - name: approved
+  - name: shared
+  - name: date
+    direction: desc
+
+- kind: News
+  properties:
+  - name: category
+  - name: date
+    direction: desc
+
+- kind: News
+  properties:
+  - name: approved
+  - name: date
+    direction: desc
+
+- kind: News
+  properties:
+  - name: approved
+  - name: critiqued
+  - name: date
+    direction: desc
+
+- kind: News
+  properties:
+  - name: approved
+  - name: user
+  - name: date
+    direction: desc
+
+- kind: Book
+  properties:
+  - name: user
+  - name: date
+    direction: desc
+
+- kind: Book
+  properties:
+  - name: approved
+  - name: shared
+  - name: date
+    direction: desc 
+
+- kind: Book
+  properties:
+  - name: category
+  - name: date
+    direction: desc
+
+- kind: Book
+  properties:
+  - name: approved
+  - name: date
+    direction: desc
+
+- kind: Book
+  properties:
+  - name: approved
+  - name: critiqued
+    direction: desc
+
+- kind: Book
+  properties:
+  - name: approved
+  - name: critiqued
+  - name: date
+    direction: desc
+
+- kind: Book
+  properties:
+  - name: approved
+  - name: user
+  - name: date
+    direction: desc
+
+- kind: Photo
+  properties:
+  - name: approved
+  - name: shared
+  - name: date
+    direction: desc
+
+- kind: Photo
+  properties:
+  - name: approved
+  - name: is_book_cover
+  - name: shared
+  - name: index
+    direction: desc
+
+- kind: Photo
+  properties:
+  - name: approved
+  - name: date
+    direction: desc
+
+- kind: Photo
+  properties:
+  - name: approved
+  - name: index
+    direction: desc
+
+- kind: Photo
+  properties:
+  - name: approved
+  - name: critiqued
+  - name: date
+    direction: desc
+
+- kind: Photo
+  properties:
+  - name: approved
+  - name: user
+  - name: date
+    direction: desc
+
+- kind: Photo
+  properties:
+  - name: approved
+  - name: is_book_cover
+  - name: index
+    direction: desc 
+
+- kind: Photo
+  properties:
+  - name: approved
+  - name: category
+  - name: date
+    direction: desc
+
+- kind: Photo
+  properties:
+  - name: approved
+  - name: shared
+  - name: index
+    direction: desc
+
+- kind: SustainableAction
+  properties:
+  - name: user
+  - name: date
+    direction: desc
+
+- kind: SustainableAction
+  properties:
+  - name: approved
+  - name: shared
+  - name: index
+    direction: desc
+
+- kind: SustainableAction
+  properties:
+  - name: approved
+  - name: index
+    direction: desc
+
+- kind: SustainableAction
+  properties:
+  - name: approved
+  - name: date
+    direction: desc
+
+- kind: SustainableAction
+  properties:
+  - name: approved
+  - name: user
+  - name: date
+    direction: desc
+
+- kind: SustainableAction
+  properties:
+  - name: approved
+  - name: critiqued
+  - name: date
+    direction: desc
+
+- kind: SustainableAction
+  properties:
+  - name: approved
+  - name: category
+  - name: date
+    direction: desc
+
+- kind: Event
+  properties:
+  - name: user
+  - name: date
+    direction: desc
+
+- kind: Event
+  properties:
+  - name: approved
+  - name: date
+    direction: desc
+
+- kind: Event
+  properties:
+  - name: approved
+  - name: user
+  - name: date
+    direction: desc
+
+- kind: Event
+  properties:
+  - name: approved
+  - name: critiqued
+  - name: date
+    direction: desc
+
+- kind: Event
+  properties:
+  - name: approved
+  - name: when
+
+- kind: Event
+  properties:
+  - name: approved
+  - name: when
+    direction: desc
+
+- kind: Event
+  properties:
+  - name: searchwords
+  - name: when
+
+- kind: Event
+  properties:
+  - name: approved
+  - name: user
+  - name: when
+    direction: desc
+
+- kind: Event
+  properties:
+  - name: user
+  - name: when
+    direction: desc
+
+- kind: Event
+  properties:
+  - name: approved
+  - name: critiqued
+  - name: when
+    direction: desc
+
+- kind: PositionPaper
+  properties:
+  - name: user
+  - name: date
+    direction: desc
+
+- kind: PositionPaper
+  properties:
+  - name: category
+  - name: date
+    direction: desc
+
+- kind: ULog
+  properties:
+  - name: user
+  - name: date
+    direction: desc
+
+- kind: User
+  properties:
+  - name: is_active
+  - name: provisional_date
+
+- kind: User
+  properties:
+  - name: deleted
+  - name: lastName
+
+- kind: User
+  properties:
+  - name: deleted
+  - name: searchable_profile
+  - name: lastName
+
+- kind: Newsletter
+  properties:
+  - name: group
+  - name: user
+  - name: date
+    direction: desc
+
+- kind: OpinionIdea
+  properties:
+  - name: user
+  - name: date
+    direction: desc
+
+- kind: OpinionIdea
+  properties:
+  - name: category
+  - name: date
+    direction: desc
+
+- kind: Conversation
+  properties:
+  - name: privlist
+  - name: date
+    direction: desc
+
+- kind: Comment
+  properties:
+  - name: conversation
+  - name: deleted
+  - name: date
+
+- kind: Comment
+  properties:
+  - name: conversation
+  - name: deleted
+  - name: seenlist
+  - name: date
+
+- kind: Message
+  properties:
+  - name: recipient
+  - name: userviewed
+  - name: date
+    direction: desc
+
+- kind: Thought
+  properties:
+  - name: user
+  - name: date
+
+- kind: Case
+  properties:
+  - name: user
+  - name: date
+    direction: desc
+
+- kind: ChangeIdea
+  properties:
+  - name: user
+  - name: date
+
+- kind: Page
+  properties:
+  - name: wiki
+  - name: title

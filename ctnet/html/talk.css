@@ -1,0 +1,140 @@
+body {
+	height: 100%;
+	margin: 0px;
+	padding: 0px;
+    line-height: 1;
+    font-family: "Lucida Sans Unicode","Lucida Grande",Garuda,sans-serif;
+}
+a {
+	text-decoration: none;
+	color: blue;
+	cursor: pointer;
+}
+button {
+	cursor: pointer;
+}
+#chitems {
+	overflow-y: scroll;
+	width: 150px;
+	height: 225px;
+}
+#chpanels {
+	width: 405px;
+	height: 255px;
+}
+#rightside {
+	font-size: 80%;
+	float: right;
+	width: 150px;
+	height: 255px;
+}
+#chatbox {
+	width: 558px;
+	height: 257px;
+}
+#chatbox img {
+    max-width: 400px !important;
+    height: auto;
+}
+#buttonbox {
+	text-align: center;
+	height: 30px;
+}
+#people {
+	width: 150px;
+	height: 225px;
+}
+#presence {
+	width: 150px;
+	height: 150px;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+#spotlight {
+	width: 150px;
+	height: 75px;
+}
+.allchat {
+	background: white;
+}
+.chatname {
+	color: blue;
+}
+.chatout {
+    width: 402px;
+    height: 200px;
+    border: 1px solid gray;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    font-size: 80%;
+}
+.chatin {
+    width: 400px;
+}
+.nowrap {
+    white-space: nowrap;
+}
+.hidden {
+	display: none;
+}
+.gray {
+    color: gray;
+}
+.blue {
+    color: #010068;
+}
+.right {
+    float: right;
+}
+.bold {
+	font-weight: bold;
+}
+.small {
+    font-size: 80%;
+}
+.big {
+	font-size: 120%;
+}
+.bigger {
+	font-size: 140%;
+}
+.topmargined {
+	margin-top: 10px;
+}
+.bottommargined {
+	margin-bottom: 10px;
+}
+.bottompadded {
+	padding-bottom: 10px;
+}
+
+/* chat widget style */
+
+/*#peopleButton {
+
+}
+#placesButton {
+
+}
+.allchat {
+	background: black;
+	color: #286836;
+}
+.chatname {
+	color: white;
+}
+.chatarea {
+	
+}
+.people {
+
+}
+.places {
+
+}
+.userlist {
+
+}
+.userinfo {
+
+}*/

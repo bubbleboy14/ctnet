@@ -1,0 +1,55 @@
+#sbitems {
+	margin-left: auto;
+	margin-right: auto;
+	cursor: pointer;
+}
+#sbitems div {
+	height: 55px;
+	padding: 5px;
+	display: table-cell;
+	text-align: center;
+	vertical-align: middle;
+}
+.hidden {
+	display: none;
+}
+.bigger {
+	font-size: 140%;
+}
+.activetab a {
+    color: red !important;
+}
+.allwiki {
+	background: white;
+}
+
+/* wiki widget style */
+
+/*.allwiki {
+	background: black;
+}
+.tabbox {
+	border-top: 1px solid gray;
+	border-right: 1px solid gray;
+	border-left: 1px solid gray;
+	font-weight: bold;
+}
+.tabbox a {
+	text-decoration: none;
+	color: white;
+}
+.tabbox div:hover {
+	background: gray;
+}
+.tabbox div:hover a {
+	color: black;
+}
+.activetab {
+	border-bottom: 1px solid gray;
+}
+.titlebox {
+	color: #286836;
+}
+.bodybox {
+	color: white;
+}*/
