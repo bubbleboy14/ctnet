@@ -1,9 +1,7 @@
 CT.require("CT.all");
 CT.require("CT.map");
 CT.require("CAN.all");
-CT.map.util.setGeoKeys([
-    "AIzaSyCgnoy4AYjX5qblebjf8HASGyHhnCZYMkQ",
-    "AIzaSyDW-yuqN1MeX06PDburFj76rf6LhUoSuOc"]);
+CT.map.util.setGeoKeys(core.config.ctnet.geokeys);
 
 onload = function() {
     var uid = CAN.session.isLoggedIn();
