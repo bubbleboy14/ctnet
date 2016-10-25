@@ -13,7 +13,8 @@ setup(
     ],
     zip_safe = False,
     install_requires = [
-        "ct >= 0.8.8.1"
+        "ct >= 0.8.13",
+        "Pillow >= 3.3.1"
     ],
     entry_points = '''''',
     classifiers = [

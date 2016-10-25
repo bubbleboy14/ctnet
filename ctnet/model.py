@@ -127,8 +127,14 @@ class Graphic(CANModel):
     def setBlob(self, data=None):
         self.img = data
 
-    def setImg(self, data, size=None):
-        self.setBlob(data)
+    def setImg(self, data, size=[100, 100]):
+        from io import BytesIO
+        from PIL import Image
+        out = BytesIO()
+        img = Image.open(BytesIO(data))
+        img.thumbnail(size)
+        img.save(out, "png")
+        self.setBlob(out.getvalue())
         self.put()
 
 SIZEMAP = {
@@ -146,7 +152,7 @@ class Avatar(CANModel):
                 self.profile.delete()
             if self.chat:
                 self.chat.delete()
-            self.key.delete()
+            ModelBase.rm(self)
 
     def setSize(self, data, size, force=False):
         if force and getattr(self, size):
@@ -376,8 +382,7 @@ class User(UserBase, Searchable):
         self.email_newsletters = self.email_messages = self.email_notifications = self.is_active = self.show_contact_info = self.searchable_profile = self.non_user_view = False
         self.phone = self.address = self.blurb = self.survey_context = ""
         if self.avatar:
-            self.avatar.get().rm()
-            self.avatar = None
+            self.avatar.delete()
         self.gender = "decline"
         self.survey = ["none", "none", "none", "none"]
         # websites, affiliations, projects _will be_ keys
@@ -407,7 +412,7 @@ class User(UserBase, Searchable):
 
     def setImg(self, data):
         if self.avatar:
-            self.avatar.get().rm()
+            self.avatar.delete()
         a = Avatar()
         a.setImg(data, True)
         self.avatar = a.key
@@ -680,7 +685,7 @@ class Thought(CategoriedVotingModel, Searchable):
     def rm(self):
         if self.conversation:
             self.conversation.delete()
-        self.key.delete()
+        ModelBase.rm(self)
 
     def title_analog(self):
         return self.thought
@@ -730,7 +735,7 @@ class ChangeIdea(CategoriedVotingModel, Searchable):
     def rm(self):
         if self.conversation:
             self.conversation.delete()
-        self.key.delete()
+        ModelBase.rm(self)
 
     def title_analog(self):
         return self.idea
@@ -788,7 +793,7 @@ class Question(CategoriedVotingModel, Searchable):
     def rm(self):
         if self.conversation:
             self.conversation.delete()
-        self.key.delete()
+        ModelBase.rm(self)
 
     def storylink(self, aslist=False):
         from util import DOMAIN
@@ -833,7 +838,7 @@ class Case(CategoriedVotingModel, Searchable):
     def rm(self):
         if self.conversation:
             self.conversation.delete()
-        self.key.delete()
+        ModelBase.rm(self)
 
     def setSearchWords(self):
         self.searchwords = self.string2words("%s %s"%(self.title, self.blurb))
@@ -984,7 +989,7 @@ class Group(CANModel, Searchable):
     def rm(self):
         if self.conversation:
             self.conversation.delete()
-        self.key.delete()
+        ModelBase.rm(self)
 
     def setSearchWords(self):
         self.searchwords = self.string2words("%s %s %s"%(self.title,
@@ -1428,7 +1433,7 @@ class OpinionIdea(CategoriedVotingModel, Searchable):
     def rm(self):
         if self.conversation:
             self.conversation.delete()
-        self.key.delete()
+        ModelBase.rm(self)
 
     def setSearchWords(self):
         self.searchwords = self.string2words("%s %s"%(self.title,
@@ -1475,7 +1480,7 @@ class PositionPaper(CategoriedVotingModel, Searchable):
     def rm(self):
         if self.conversation:
             self.conversation.delete()
-        self.key.delete()
+        ModelBase.rm(self)
 
     def setSearchWords(self):
         self.searchwords = self.string2words("%s %s"%(self.title,
@@ -1526,7 +1531,7 @@ class Video(CategoriedVotingModel, Searchable, Approvable):
     def rm(self):
         if self.conversation:
             self.conversation.delete()
-        self.key.delete()
+        ModelBase.rm(self)
 
     def setSearchWords(self):
         if self.description:
@@ -1859,7 +1864,7 @@ class Event(CategoriedVotingModel, Searchable, Approvable):
     def rm(self):
         if self.conversation:
             self.conversation.delete()
-        self.key.delete()
+        ModelBase.rm(self)
 
     def logstring(self):
         return "<b>%s</b><br>%s"%(self.title, self.blurb())
@@ -2114,7 +2119,7 @@ class News(CategoriedVotingModel, Searchable, Approvable):
     def rm(self):
         if self.conversation:
             self.conversation.delete()
-        self.key.delete()
+        ModelBase.rm(self)
 
     def setSearchWords(self):
         self.searchwords = self.string2words("%s %s"%(self.title, self.body))
@@ -2294,7 +2299,7 @@ class Referendum(Votable, Approvable, Searchable):
     def rm(self):
         if self.conversation:
             self.conversation.delete()
-        self.key.delete()
+        ModelBase.rm(self)
 
     def setTitle(self, t, noput=False):
         self.title = t
