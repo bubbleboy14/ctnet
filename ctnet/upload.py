@@ -1,21 +1,19 @@
-from util import succeed, fail, clearmem, read_file
+from util import respond, cgi_get, succeed, fail, clearmem, read_file
 from model import db, newphoto, Graphic
-import cgi
 
-form = cgi.FieldStorage()
-uid = form.getvalue('uid')
-key = form.getvalue('key')
-data_field = None
+def response():
+    def basicchecks(user):
+        if not user:
+            fail("no user", html=True, noenc=True)
+        if not data_field:
+            fail("no data field submitted", html=True, noenc=True)
 
-def basicchecks(user):
-    if not user:
-        fail("no user", html=True, noenc=True)
-    if not data_field.file:
-        fail("empty data field submitted", html=True, noenc=True)
-
-try:
     clearmem()
-    data_field = form['data']
+
+    uid = cgi_get("uid")
+    key = cgi_get("key")
+    data_field = cgi_get("data")
+
     if key == "avatar": # user avatar
         user = db.get(uid)
         basicchecks(user)
@@ -61,7 +59,5 @@ try:
         ref.setBlob(read_file(data_field))
         ref.put()
     succeed(html=True)
-except Exception, e:
-    fail(err=e, html=True, noenc=True)
-except SystemExit:
-    pass
+
+respond(response, failHtml=True, failNoEnc=True)
