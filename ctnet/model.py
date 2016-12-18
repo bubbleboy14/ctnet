@@ -1805,24 +1805,15 @@ def randomindexed(modelname):
     if not modeltype:
         from util import fail
         fail("%s is not indexed for randomization!"%(modelname,))
-
-    def basicquery():
-        bq = modeltype.query().filter(modeltype.shared == True).filter(modeltype.approved == True).order(-modeltype.index)
-        if modelname == "photo":
-            bq.filter(modeltype.is_book_cover == False)
-        return bq
-
-    q = basicquery()
-    if q.count() == 0:
+    q = modeltype.query(modeltype.shared == True, modeltype.approved == True)
+    if modelname == "photo":
+        q.filter(modeltype.is_book_cover == False)
+    c = q.count()
+    if c == 0:
         from util import fail
         fail("no %s randomization candidates!"%(modelname,))
-
     import random
-    q = q.filter(modeltype.index <= random.randint(1,
-        getattr(getsettings(), SETTING_COUNTS[modeltype]+"_count")))
-    if q.count() == 0:
-        q = basicquery()
-    return q.get()
+    return q.fetch(1, offset=random.randint(0, c))[0]
 
 def newsustainableaction(**kwargs):
     s = getsettings()
