@@ -1813,7 +1813,7 @@ def randomindexed(modelname):
         from util import fail
         fail("no %s randomization candidates!"%(modelname,))
     import random
-    return q.fetch(1, offset=random.randint(0, c))[0]
+    return q.fetch(1, offset=random.randint(0, c - 1))[0]
 
 def newsustainableaction(**kwargs):
     s = getsettings()
