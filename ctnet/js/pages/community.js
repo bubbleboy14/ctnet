@@ -41,6 +41,27 @@ onload = function() {
             map.refresh();
         }]);
 
+    // video
+    if (CT.info.isChrome) {
+        var vsb = CT.dom.id("vstream");
+        CT.dom.show(vsb.parentNode);
+        vsb.onclick = function() {
+            vsb._modal = vsb._modal || new CT.modal.Modal({
+                center: false,
+                className: "basicpopup w1 bigger vslide",
+                transition: "slide",
+                slide: {
+                    origin: "bottom"
+                },
+                content: [
+                    "Who else is lurking around CAN? Ask them yourself!",
+                    CT.dom.iframe("https://fzn.party/widget.html#can", "w1")
+                ]
+            });
+            vsb._modal.showHide();
+        };
+    }
+
     // map
     map = new CAN.widget.map.Map({
         node: CT.dom.id("sbcontentMap")

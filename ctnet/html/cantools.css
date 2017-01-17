@@ -256,6 +256,35 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     text-align: center;
 }
 
+.abs { position: absolute !important; }
+.ctr {
+    top: 10px;
+    right: 10px;
+}
+
+.vslide,
+.vslide a {
+    color: white;
+}
+
+.vslide {
+    height: 500px;
+    text-align: center;
+    background: black !important;
+}
+
+.vslide iframe {
+    height: 480px;
+}
+
+.h1 {
+    height: 100%;
+}
+.h9-10 {
+    height: 90%;
+}
+
+.w1,
 .fullwidth {
     width: 100%;
 }
