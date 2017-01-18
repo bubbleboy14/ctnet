@@ -1,8 +1,3 @@
-// do something better with these...
-var _c = '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_-./{}[]:,"\'';
-var _cl = _c.length;
-var _chl = _cl / 2;
-
 CAN.cookie = {
 	"search_start_date": {},
 	"search_end_date": {},
@@ -37,14 +32,18 @@ CAN.cookie = {
 	    return cc.replace(/%22/g, "\"");
 	},
 	"flipU": function(s) {
-	    var s2 = "";
-	    for (var i = 0; i < s.length; i++) {
-	        var z = _c.indexOf(s[i]);
-	        if (z == -1)
-	            s2 += s[i];
-	        else
-	            s2 += _c[(z + _chl) % _cl];
-	    }
+	    var s2 = "", i, z, _c = CAN.config.scrambler, _cl, _chl;
+	    if (_c) {
+	    	_cl = CAN.config.scramlen;
+	    	_clh = CAN.config.scramlenh;
+		    for (i = 0; i < s.length; i++) {
+		        z = _c.indexOf(s[i]);
+		        if (z == -1)
+		            s2 += s[i];
+		        else
+		            s2 += _c[(z + _chl) % _cl];
+		    }
+		}
 	    return s2;
 	},
 	"flipReverse": function(d) {

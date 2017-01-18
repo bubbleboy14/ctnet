@@ -1,3 +1,5 @@
 CT.require("core");
-CAN.config = core.config.ctnet;
-CAN.config.mobile.page = CAN.config.mobile.menus[CT.info.page];
+var c = CAN.config = core.config.ctnet;
+c.mobile.page = c.mobile.menus[CT.info.page];
+c.scramlen = c.scrambler.length;
+c.scramlenh = c.scramlen / 2;
