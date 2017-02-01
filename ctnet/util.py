@@ -22,6 +22,7 @@ def randomString(slength):
     import random
     return ''.join([random.choice(_c[:62]) for i in range(slength)])
 
+# TODO: probs get rid of the following crap -- it's been replaced by prod enc stuff built into ct
 def flipC(c):
     i = _c.find(c)
     if i == -1:
@@ -77,5 +78,5 @@ def decode(d):
     return d
 
 setlog(log)
-setenc(lambda d : flipU(b64encode(d)))
-setdec(decode)
+#setenc(lambda d : flipU(b64encode(d)))
+#setdec(decode)

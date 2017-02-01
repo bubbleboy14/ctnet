@@ -1,6 +1,5 @@
 {
 	"RECAPTCHA_KEY": null,
-	"scrambler": "",
 	"name": "Network",
 	"domain": "localhost",
 	"okdomains": ["localhost"],

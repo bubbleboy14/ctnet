@@ -115,5 +115,6 @@ CAN.cookie = {
 	    return uid;
 	}
 };
-CT.net.setEncoder(CAN.cookie.flipJ);
-CT.net.setDecoder(CAN.cookie.flipJD);
+// TODO: probs get rid of encoding stuff here -- it's been replaced by prod enc stuff built into ct
+//CT.net.setEncoder(CAN.cookie.flipJ);
+//CT.net.setDecoder(CAN.cookie.flipJD);
