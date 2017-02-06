@@ -695,8 +695,8 @@ class Thought(CategoriedVotingModel, Searchable):
         from util import DOMAIN
         lnk = "%s/tweet?key=%s"%(DOMAIN, self.key.urlsafe())
         return {
-            "yes": link + "?doit=1",
-            "no": link
+            "yes": lnk + "?doit=1",
+            "no": lnk
         }
 
     def storylink(self, aslist=False):
