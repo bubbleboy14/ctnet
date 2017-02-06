@@ -413,3 +413,37 @@ Have a great day!<br>
 <br>
 The CAN Team
 """
+
+tweet = {}
+tweet['body'] = """
+Hey Greg!
+
+Someone submitted this thought:
+
+%s
+
+Would you like to tweet it?
+
+Yes: %s
+No: %s
+
+Thanks! Have a great day.
+
+The CAN Team
+"""
+tweet['html'] = """
+Hey Greg!<br>
+<br>
+Someone submitted this thought:<br>
+<br>
+%s<br>
+<br>
+Would you like to tweet it?<br>
+<br>
+<a href="%s">Yes</a><br>
+<a href="%s">No</a><br>
+<br>
+Thanks! Have a great day.<br>
+<br>
+The CAN Team
+"""
