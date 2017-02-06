@@ -620,8 +620,8 @@ def send_invitation(media, user, invitee=None, email=None):
         from util import fail
         fail("no invitee or email")
 
-def emailgreg(subject, body):
-    emailuser(getgreg(), subject, body)
+def emailgreg(subject, body, html=None):
+    emailuser(getgreg(), subject, body, html)
 
 survey_questions = [
     "Buy Organic, Local, and Humane Products and Services",
@@ -678,6 +678,7 @@ class Thought(CategoriedVotingModel, Searchable):
     user = db.ForeignKey(kind=User)
     conversation = db.ForeignKey(kind=Conversation)
     thought = db.Text()
+    reviewed_for_tweet = db.Boolean(default=False)
 
     def convoTopic(self):
         return ("THOUGHT: %s"%(self.thought.replace('\n', ' '),))[:500]
@@ -689,6 +690,14 @@ class Thought(CategoriedVotingModel, Searchable):
 
     def title_analog(self):
         return self.thought
+
+    def tweetlinks(self):
+        from util import DOMAIN
+        lnk = "%s/tweet?key=%s"%(DOMAIN, self.key.urlsafe())
+        return {
+            "yes": link + "?doit=1",
+            "no": link
+        }
 
     def storylink(self, aslist=False):
         from util import DOMAIN, flipQ
@@ -717,7 +726,7 @@ class Thought(CategoriedVotingModel, Searchable):
         return {"uid": self.user and self.user.urlsafe() or None,
                 "user": self.user and self.user.get().firstName or "Anonymous",
                 "conversation": self.conversation and self.conversation.urlsafe() or None,
-                "thought": self.thought,
+                "thought": self.thought, "reviewed_for_tweet": self.reviewed_for_tweet,
                 "date": self.date.date().strftime("%a %b %d")}
 
 class ChangeIdea(CategoriedVotingModel, Searchable):
