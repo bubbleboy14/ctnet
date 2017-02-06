@@ -13,8 +13,9 @@ setup(
     ],
     zip_safe = False,
     install_requires = [
-        "ct >= 0.8.13",
-        "Pillow >= 3.3.1"
+        "ct >= 0.9.2.2",
+        "Pillow >= 3.3.1",
+        "python-twitter >= 3.2.1"
     ],
     entry_points = '''''',
     classifiers = [

@@ -49,6 +49,9 @@
 - url: /refDoc
   script: refDoc.py
 
+- url: /tweet
+  script: tweet.py
+
 - url: /img
   static_dir: img
 

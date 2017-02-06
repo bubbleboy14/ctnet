@@ -28,6 +28,7 @@ syms = {
 		"say.py",
 		"settings.py",
 		"tryAuth.py",
+		"tweet.py",
 		"twilio.py",
 		"upload.py",
 		"util.py",
