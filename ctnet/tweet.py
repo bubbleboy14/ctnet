@@ -1,3 +1,4 @@
+import twitter
 from cantools import config
 from cantools.util import log
 from model import db
@@ -32,7 +33,6 @@ def response():
 		if config.twitter.test:
 			log(tweet, important=True)
 		else:
-			import twitter
 			api = twitter.Api(consumer_key=config.twitter.consumer.key,
 				consumer_secret=config.twitter.consumer.secret,
 				access_token_key=config.twitter.token.key,
