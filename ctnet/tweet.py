@@ -1,4 +1,4 @@
-import twitter
+import tweepy # imports ssl crap that (rarely) messes up gae dev unless you monkey patch it ;)
 from cantools import config
 from cantools.util import log
 from model import db
@@ -33,11 +33,10 @@ def response():
 		if config.twitter.test:
 			log(tweet, important=True)
 		else:
-			api = twitter.Api(consumer_key=config.twitter.consumer.key,
-				consumer_secret=config.twitter.consumer.secret,
-				access_token_key=config.twitter.token.key,
-				access_token_secret=config.twitter.token.secret)
-			api.PostUpdate(tweet)
+			auth = tweepy.OAuthHandler(config.twitter.consumer.key, config.twitter.consumer.secret)
+			auth.set_access_token(config.twitter.token.key, config.twitter.token.secret)
+			api = tweepy.API(auth)
+			api.update_status(tweet)
 	ent.reviewed_for_tweet = True
 	ent.put()
 	redirect("/", "you did it! tweeted!")

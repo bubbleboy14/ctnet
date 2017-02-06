@@ -15,7 +15,7 @@ setup(
     install_requires = [
         "ct >= 0.9.2.2",
         "Pillow >= 3.3.1",
-        "python-twitter >= 3.2.1"
+        "tweepy >= 3.6.0"
     ],
     entry_points = '''''',
     classifiers = [
