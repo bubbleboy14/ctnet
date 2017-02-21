@@ -55,7 +55,7 @@ onload = function() {
                 },
                 content: [
                     "Who else is lurking around CAN? Ask them yourself!",
-                    CT.dom.iframe("https://fzn.party/widget.html#can", "w1")
+                    CT.dom.iframe("https://fzn.party/stream/widget.html#can", "w1")
                 ]
             });
             vsb._modal.showHide();
