@@ -27,7 +27,7 @@ def twit(sample):
     return result
 
 def response():
-	ent = db.get(cgi_get("key").strip())
+	ent = db.get(cgi_get("key"))
 	if cgi_get("doit", default=False) and config.twitter:
 		tweet = twit(ent.thought)
 		if config.twitter.test:
