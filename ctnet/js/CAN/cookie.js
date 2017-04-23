@@ -35,7 +35,7 @@ CAN.cookie = {
 	    var s2 = "", i, z, _c = CAN.config.scrambler, _cl, _chl;
 	    if (_c) {
 	    	_cl = CAN.config.scramlen;
-	    	_clh = CAN.config.scramlenh;
+	    	_chl = CAN.config.scramlenh;
 		    for (i = 0; i < s.length; i++) {
 		        z = _c.indexOf(s[i]);
 		        if (z == -1)
