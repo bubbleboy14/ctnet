@@ -29,7 +29,7 @@ def response():
     user.date = date
     db.put_multi([user, ip])
     send_mail(
-        to="%s %s <%s>"%(firstName, lastName, email),
+        to=email,
         subject="New Account!",
         body=activate['body']%(firstName, DOMAIN, user.id()),
         html=activate['html']%(firstName, DOMAIN, user.id()))
