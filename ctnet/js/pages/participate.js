@@ -1313,9 +1313,19 @@ onload = function() {
         var eventHasChanged = function() {
             if (currentEvent == null)
                 return false;
-            return currentEvent.title != e.title.value || currentEvent.description != e.description.get() || currentEvent.where.name != e.wherename.value || currentEvent.where.address != e.whereaddress.value || currentEvent.where.zipcode.code != e.wherezip.value || currentEvent.when.year != e.year.value || currentEvent.when.month != e.month.value || currentEvent.when.day != e.day.value || currentEvent.when.time != e.time.value || tasksHaveChanged();
+            return currentEvent.title != e.title.value || currentEvent.description != e.description.get() || currentEvent.where.name != e.wherename.value || currentEvent.where.address != e.whereaddress.value || currentEvent.where.zipcode.code != e.wherezip.value || currentEvent.when.year != e.year.value || _pad(currentEvent.when.month) != e.month.value || _pad(currentEvent.when.day) != e.day.value || _tpad(currentEvent.when.time) != e.time.value || tasksHaveChanged();
         };
 
+        var _pad = function(n) {
+            if (n < 10)
+                return "0" + n;
+            return n.toString();
+        };
+        var _tpad = function(t) {
+            if (t.charAt(1) == ":")
+                return "0" + t;
+            return t;
+        };
         var submitevent = null; // for compiler
         var showEvent = function(d) {
             CAN.media.moderation.listCritiques(d, ecritique, "event");
@@ -1325,9 +1335,9 @@ onload = function() {
             e.whereaddress.value = d.where.address;
             e.wherezip.value = d.where.zipcode.code;
             e.year.value = d.when.year;
-            e.month.value = d.when.month;
-            e.day.value = d.when.day;
-            e.time.value = d.when.time;
+            e.month.value = _pad(d.when.month);
+            e.day.value = _pad(d.when.day);
+            e.time.value = _tpad(d.when.time);
 
             tnum = 0;
             tbox.innerHTML = "";
