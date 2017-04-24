@@ -2702,9 +2702,9 @@ def castvote(ref, user, opinion, cchallenge=None, cresponse=None, squestion=None
     db.put_multi([vote, ref, ip, user])
 
 def email_in_use(email, return_user=False, no_userbase=False):
-    user = User.gql("WHERE email = :email", email=email).get()
+    user = User.query(User.email == email).get()
     if not user and not no_userbase:
-        user = UserBase.gql("WHERE email = :email", email=email).get()
+        user = UserBase.query(UserBase.email == email).get()
     if return_user:
         return user
     return bool(user)

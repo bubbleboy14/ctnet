@@ -5,7 +5,7 @@ from emailTemplates import reset_password
 def response():
     email = cgi_get('email').lower()
 
-    user = User.gql("WHERE email = :email", email=email).get()
+    user = User.query(User.email == email).get()
     if not user:
         fail()
     pw = randomString(10)
