@@ -117,7 +117,7 @@ onload = function() {
     var h = unescape(document.location.hash.slice(2));
     if (h.indexOf("|") != -1) {
         var p = h.split("|");
-        var k = flipReverse(p[1]);
+        var k = CAN.cookie.flipReverse(p[1]);
         CT.data.checkAndDo([k], function() {
             singleLoaders[p[0]](CT.data.get(k));
         });
