@@ -1439,6 +1439,9 @@ class OpinionIdea(CategoriedVotingModel, Searchable):
     body = db.Text()
     conversation_active = db.Boolean(default=True)
 
+    def verb(self):
+        return "consider"
+
     def rm(self):
         if self.conversation:
             self.conversation.delete()
@@ -1485,6 +1488,9 @@ class PositionPaper(CategoriedVotingModel, Searchable):
     conversation = db.ForeignKey(kind=Conversation)
     title = db.String()
     body = db.Text()
+
+    def verb(self):
+        return "consider"
 
     def rm(self):
         if self.conversation:
