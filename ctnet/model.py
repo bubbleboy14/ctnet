@@ -2401,6 +2401,11 @@ CANSEARCHES = {
     "place": Place
 }
 
+def _filter(q, qm, word):
+    if config.web.server == "dez":
+        return q.filter(qm.searchwords.contains(word))
+    return q.filter(qm.searchwords == word)
+
 def cansearch(stype, string, startdate, enddate):
     if stype == "rules":
         return [r.data() for r in SearchRule.query().fetch(1000)]
@@ -2425,13 +2430,13 @@ def cansearch(stype, string, startdate, enddate):
     from util import strip_punctuation
     searchwords = [w for w in strip_punctuation(string).lower().split(" ")]
     if dstart and dend: # filter and manually prune
-        return [d.data() for d in list(set(reduce(list.__add__, [f.filter(db.GenericProperty(dprop) > dstart).filter(qm.searchwords == word).fetch(1000) for word in searchwords]))) if d.dateProp() < dend]
+        return [d.data() for d in list(set(reduce(list.__add__, [_filter(f.filter(db.GenericProperty(dprop) > dstart), qm, word).fetch(1000) for word in searchwords]))) if d.dateProp() < dend]
     elif dstart: # filter only
-        return [d.data() for d in list(set(reduce(list.__add__, [f.filter(db.GenericProperty(dprop) > dstart).filter(qm.searchwords == word).fetch(1000) for word in searchwords])))]
+        return [d.data() for d in list(set(reduce(list.__add__, [_filter(f.filter(db.GenericProperty(dprop) > dstart), qm, word).fetch(1000) for word in searchwords])))]
     elif dend: # filter only
-        return [d.data() for d in list(set(reduce(list.__add__, [f.filter(db.GenericProperty(dprop) < dend).filter(qm.searchwords == word).fetch(1000) for word in searchwords])))]
+        return [d.data() for d in list(set(reduce(list.__add__, [_filter(f.filter(db.GenericProperty(dprop) < dend), qm, word).fetch(1000) for word in searchwords])))]
     else: # no date filter
-        return [d.data() for d in list(set(reduce(list.__add__, [f.filter(qm.searchwords == word).fetch(1000) for word in searchwords])))]
+        return [d.data() for d in list(set(reduce(list.__add__, [_filter(f, qm, word).fetch(1000) for word in searchwords])))]
 
 CONVOTYPES = {
     "CASE": Case,
