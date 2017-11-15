@@ -38,7 +38,7 @@ setTimeout(function() {
 	iframe.style.borderBottom = '0px';
 	iframe.style.overflow = 'hidden';
 	iframe.src = ((["localhost", "can.mkult.co"].indexOf(location.hostname) != -1)
-		? "" : "http://www.civilactionnetwork.org")
+		? "" : "//www.civilactionnetwork.org")
 		+ "/talk.html" + (agkey ? ("#" + agkey) : "");
 
 	var msgDown = function(msg) {
