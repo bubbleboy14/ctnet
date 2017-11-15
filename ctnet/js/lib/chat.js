@@ -37,7 +37,7 @@ setTimeout(function() {
 	iframe.style.borderRight = '0px';
 	iframe.style.borderBottom = '0px';
 	iframe.style.overflow = 'hidden';
-	iframe.src = ((["localhost", "can.mkult.co"].indexOf(location.hostname) != -1)
+	iframe.src = ((["localhost", "can.mkult.co", "neo.civilactionnetwork.org"].indexOf(location.hostname) != -1)
 		? "" : "//www.civilactionnetwork.org")
 		+ "/talk.html" + (agkey ? ("#" + agkey) : "");
 
