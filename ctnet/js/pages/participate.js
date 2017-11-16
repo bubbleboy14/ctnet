@@ -16,16 +16,6 @@ onload = function() {
     if (!uid)
         CT.dom.showHide(CT.dom.id("getmost"));
 
-    var listDiff = function(porig, pnew) {
-        if (porig.length != pnew.length)
-            return true;
-        for (var i = 0; i < porig.length; i++) {
-            if (porig[i] != pnew[i])
-                return true;
-        }
-        return false;
-    };
-
     var resizeThese = [];
     var resizeNodes = function() {
         var newsize = SBITEMS.clientHeight + "px";
@@ -257,7 +247,7 @@ onload = function() {
         pdata.val = [];
         for (var i = 0; i < snode.childNodes.length; i++)
             pdata.val.push(snode.childNodes[i].id.slice(2));
-        if (! CT.data.listDiff(CAN.session.settings[sname], pdata.val)) {
+        if (CT.data.sameList(CAN.session.settings[sname], pdata.val)) {
             if (cb) cb(false);
             else alert("but you haven't changed anything!");
         }
@@ -1436,7 +1426,7 @@ onload = function() {
                     if (CT.dom.id(r + "checkbox").checked)
                         rs.push(r);
                 }
-                if (! CT.data.listDiff(u.role, rs))
+                if (CT.data.sameList(u.role, rs))
                     return alert("you haven't changed anything!");
                 var oldroles = u.role;
                 u.role = rs;
