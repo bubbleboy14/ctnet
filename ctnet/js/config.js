@@ -7,7 +7,8 @@
 	"geokeys": [],
 	"pubsub": {
 		"host": null,
-		"port": null
+		"port": null,
+		"timezone_offset": 0
 	},
 	"mobile": {
 		"resize": {
