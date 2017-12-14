@@ -84,10 +84,14 @@ def response():
             succeed(db.get(k).data())
         from model import Conversation
         succeed([c.data(nocomments=True) for c in Conversation.query().fetch(1000)])
+    elif gtype == "convolink":
+        convo = db.get(cgi_get("key"))
+        mod = db.get_model(convo.topic.split(": ")[0].lower())
+        succeed(mod.query(mod.conversation == convo.key).get().storylink())
     elif gtype == "media":
         from model import nextmedia, getcategory, randomindexed
         category = cgi_get('category', required=False)
-        mtype = cgi_get('mtype', choices=["text", "quote", "titled", "video", "photo", "book", "referenda", "sustainableaction", "news", "event", "newsletter", "paper", "opinion", "group", "conversation", "thought", "case", "page", "changeidea", "question", "branch", "place"])
+        mtype = cgi_get('mtype', choices=["text", "quote", "titled", "video", "photo", "book", "referenda", "sustainableaction", "news", "event", "newsletter", "paper", "opinion", "group", "conversation", "thought", "case", "page", "changeidea", "question", "branch", "place", "comment"])
         number = cgi_get('number', default="none")
         offset = cgi_get('offset', default=0)
         recommendations = cgi_get('recommendations', default=False)
