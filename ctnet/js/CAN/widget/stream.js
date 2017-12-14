@@ -22,16 +22,31 @@ CAN.widget.stream = {
 	    var addNode = function(d) {
 	        var n = CT.dom.node("", "div",
 	            "padded bordered round bottommargined");
-	        var tnode = CT.dom.node(CT.parse.process(d[opts.type]));
-	        var convonode = CT.dom.node();
-	        CAN.widget.conversation.load(opts.uid, d.conversation,
-	        	convonode, d.key, d.conversation+"ta", true);
+	        var tnode = CT.dom.node(CT.parse.process(d[opts.type] || d.body));
 	        if (opts.taguser && d.uid)
 	            n.appendChild(CAN.session.firstLastLink({ "firstName": d.user,
 	            	"key": d.uid }, false, true, null, true));
 	        n.appendChild(tnode);
-	        n.appendChild(CT.dom.node("", "hr"));
-	        n.appendChild(convonode);
+	        if (opts.noConvo) {
+				n.appendChild(CT.dom.button("Check out the conversation", function() {
+					CT.net.post({
+						path: "/get",
+						params: {
+							gtype: "convolink",
+							key: d.conversation
+						},
+						cb: function(clink) {
+							window.location = clink;
+						}
+					});
+				}, "w1"));
+	        } else {
+		        n.appendChild(CT.dom.node("", "hr"));
+		        var convonode = CT.dom.node();
+		        CAN.widget.conversation.load(opts.uid, d.conversation,
+		        	convonode, d.key, d.conversation+"ta", true);
+		        n.appendChild(convonode);
+	        }
 	        if (!opts.taguser && !opts.listonly)
 	            n.appendChild(CAN.media.moderation.remove(d, opts));
 	        if (utlist.innerHTML == "no " + opts.type + "s yet!") {
@@ -41,7 +56,7 @@ CAN.widget.stream = {
 	        else
 	            utlist.insertBefore(n, utlist.firstChild);
 	    };
-	    CT.dom.richInput(utinput, opts.type + "input",
+	    !opts.noInput && CT.dom.richInput(utinput, opts.type + "input",
 	        CT.dom.button("Post " + CT.parse.capitalize(opts.type), function() {
 	            var cbody = CT.dom.id(opts.type + "input");
 	            var charcount = CT.dom.id(opts.type + "inputcc");
@@ -106,6 +121,21 @@ CAN.widget.stream = {
 	        type: 'question',
 	        bodyproperty: 'question',
 	        info: "Any questions?"
+	    });
+	},
+
+	// chatter
+	"comment": function(pnode, uid, comments, listonly, taguser) {
+	    CAN.widget.stream.addNodes({
+	        pnode: pnode,
+	        uid: uid,
+	        items: comments,
+	        listonly: listonly,
+	        taguser: taguser,
+	        type: 'comment',
+	        info: "Here's the latest chatter...",
+	        noInput: true,
+	        noConvo: true
 	    });
 	}
 };
