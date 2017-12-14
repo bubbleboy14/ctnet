@@ -2485,7 +2485,8 @@ mediatypes = {
     "page": Page,
     "question": Question,
     "branch": Branch,
-    "place": Place
+    "place": Place,
+    "comment": Comment
 }
 
 def recommendsomething(user, q, number=1):
@@ -2609,7 +2610,7 @@ def nextmedia(mtype, category=None, uid=None, number=1000, offset=0, nodata=Fals
 
         b = q.count()
 
-        if mtype not in  ["paper", "opinion", "thought", "case", "page", "changeidea", "question", "place"]:
+        if mtype not in  ["paper", "opinion", "thought", "case", "page", "changeidea", "question", "place", "comment"]:
             if approved != "both":
                 q = q.filter(mt.approved == approved)
             if approved == False and critiqued != "both":
