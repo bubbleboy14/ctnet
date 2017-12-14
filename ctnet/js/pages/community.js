@@ -14,10 +14,11 @@ onload = function() {
     CAN.categories.load(uid);
     CAN.media.loader.load({"mtype": "referenda", "number": 3, "uid": uid,
         "node": CT.dom.id("reflist"), "paging": "bidirectional"});
-    CT.panel.load(["Events", "People", "Questions", "Ideas", "Stream", "Map"],
+    CT.panel.load(["Events", "People", "Questions", "Ideas", "Stream", "Chatter", "Map"],
         true, null, null, null, null, ["/img/community/events.png",
         "/img/community/people.png", "/img/community/questions.png",
-        "/img/community/ideas.png", "/img/community/stream.png", "/img/community/map.png"],
+        "/img/community/ideas.png", "/img/community/stream.png",
+        "/img/community/comments.png", "/img/community/map.png"],
         null, null, [function() {
             CT.dom.hide(viewmap.parentNode);
             CT.dom.hide(svnode);
@@ -36,6 +37,8 @@ onload = function() {
             CAN.widget.share.updateShareItem("community", null, "Ideas");
         }, function() {
             CAN.widget.share.updateShareItem("community", null, "Stream");
+        }, function() {
+            CAN.widget.share.updateShareItem("community", null, "Chatter");
         }, function() {
             CAN.widget.share.updateShareItem("community", null, "Map");
             map.refresh();
@@ -77,8 +80,8 @@ onload = function() {
     };
 
     // node streams
-    var nodetypes = { "question": "Questions", "changeidea": "Ideas", "thought": "Stream" };
-    ['question', 'changeidea', 'thought'].forEach(function (item) {
+    var nodetypes = { "question": "Questions", "changeidea": "Ideas", "thought": "Stream", "comment": "Chatter" };
+    ['question', 'changeidea', 'thought', 'comment'].forEach(function (item) {
         CT.net.post("/get", {"gtype": "media", "mtype": item, "number": 40}, null, function(items) {
             CAN.widget.stream[item](CT.dom.id("sbcontent" + nodetypes[item]),
                 uid, items.reverse(), false, true);
