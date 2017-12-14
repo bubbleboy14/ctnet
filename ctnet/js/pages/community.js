@@ -139,7 +139,7 @@ onload = function() {
                     viewSingleEvent(CT.data.get(hkey));
                 });
             }
-            else if (["Questions", "Ideas", "Stream", "Map"].indexOf(section) != -1) {
+            else if (["Questions", "Ideas", "Stream", "Chatter", "Map"].indexOf(section) != -1) {
                 CT.panel.swap(section, true, "sb");
                 CAN.widget.share.updateShareItem("community", null, section);
             } else {//} if (uid) {
