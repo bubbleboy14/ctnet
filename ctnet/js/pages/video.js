@@ -36,6 +36,11 @@ onload = function() {
     CAN.media.loader.load({"mtype": "referenda", "number": 3, "uid": uid,
         "node": CT.dom.id("reflist"), "paging": "bidirectional"});
 
+    // chatterbox
+    CT.net.post("/get", {"gtype": "media", "mtype": "comment", "number": 4}, null, function(items) {
+        CAN.widget.stream.comment(CT.dom.id("chatterbox"), uid, items.reverse(), false, true, "full");
+    });
+
     var _hash = CAN.cookie.flipReverse(document.location.hash.slice(2));
     var checkHash = function() {
         if (! LOADED)

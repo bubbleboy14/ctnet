@@ -66,6 +66,11 @@ onload = function() {
         CT.dom.showHide(CAN.media.news.inviteButton.parentNode, null, true);
     });
 
+    // chatterbox
+    CT.net.post("/get", {"gtype": "media", "mtype": "comment", "number": 4}, null, function(items) {
+        CAN.widget.stream.comment(CT.dom.id("chatterbox"), uid, items.reverse(), false, true, "full");
+    });
+
     // single news article (hash linked or simply clicked)
     var _hash = CAN.cookie.flipReverse(document.location.hash.slice(2));
     var checkHash = function() {
