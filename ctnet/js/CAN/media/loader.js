@@ -347,13 +347,18 @@ CAN.media.loader = {
 	    var photoSplit = url.split("gtype=graphic&key=");
 	    if (photoSplit.length > 1)
 	        return '<img src="' + url + '">';
+	    var embedder = CT.video.embed;
+	    if (["fit", "full"].indexOf(novid) != -1) {
+	    	embedder = CT.video[novid];
+	    	novid = false;
+	    }
 	    if (!novid) {
 	        var vidSplit = url.split("video.html#!");
 	        if (vidSplit.length > 1)
 	            return CT.dom.node(CAN.media.video.getAndShow(CAN.cookie.flipReverse(vidSplit[1]))).innerHTML;
 	        var vdata = CT.video.videoData(url);
 	        if (vdata)
-	            return CT.video.embed(vdata);
+	            return embedder(vdata);
 	    }
 	}
 };
