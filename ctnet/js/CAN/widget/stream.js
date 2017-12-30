@@ -22,7 +22,7 @@ CAN.widget.stream = {
 	    var addNode = function(d) {
 	        var n = CT.dom.node("", "div",
 	            "padded bordered round bottommargined");
-	        var tnode = CT.dom.node(CT.parse.process(d[opts.type] || d.body));
+	        var tnode = CT.dom.node(CT.parse.process(d[opts.type] || d.body, false, opts.processArg));
 	        if (opts.taguser && d.uid)
 	            n.appendChild(CAN.session.firstLastLink({ "firstName": d.user,
 	            	"key": d.uid }, false, true, null, true));
@@ -125,7 +125,7 @@ CAN.widget.stream = {
 	},
 
 	// chatter
-	"comment": function(pnode, uid, comments, listonly, taguser) {
+	"comment": function(pnode, uid, comments, listonly, taguser, processArg) {
 	    CAN.widget.stream.addNodes({
 	        pnode: pnode,
 	        uid: uid,
@@ -135,7 +135,8 @@ CAN.widget.stream = {
 	        type: 'comment',
 	        info: "Here's the latest chatter...",
 	        noInput: true,
-	        noConvo: true
+	        noConvo: true,
+	        processArg: processArg
 	    });
 	}
 };
