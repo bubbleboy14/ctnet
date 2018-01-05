@@ -67,7 +67,7 @@ CAN.widget.chatterlightbox = {
 							CT.dom.span("for things like internal communication (live and via private messages and message boards), newsletters, event planning, sprucing up your organization's own site (via free widgets), and various other what-have-yous.")
 						], "padded"),
 						talkBack
-					], "w2-3")
+					], "w2-3 bolda nodecoration")
 				]
 			});
 			CT.storage.set("lb_viewed", true);
