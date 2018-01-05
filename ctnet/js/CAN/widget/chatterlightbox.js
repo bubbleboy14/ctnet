@@ -1,9 +1,11 @@
 CAN.widget.chatterlightbox = {
 	"load": function() {
+		if (CAN.widget.chatterlightbox._box)
+			return CAN.widget.chatterlightbox._box.show();
 	    CT.net.post("/get", {"gtype": "media", "mtype": "comment", "number": 4}, null, function(items) {
 	    	var cbox = CT.dom.div(null, "w1-3 right");
 	        CAN.widget.stream.comment(cbox, null, items.reverse(), false, true, "full");
-			(new CT.modal.LightBox({
+			CAN.widget.chatterlightbox._box = new CT.modal.LightBox({
 				content: [
 					cbox,
 					CT.dom.div([
@@ -59,7 +61,8 @@ CAN.widget.chatterlightbox = {
 						], "padded")
 					], "w2-3")
 				]
-			})).show();
+			});
+			CAN.widget.chatterlightbox._box.show();
 	    });
 	}
 };
