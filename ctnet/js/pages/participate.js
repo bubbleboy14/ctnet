@@ -189,27 +189,38 @@ onload = function() {
         var n = CT.dom.node("", "div",
             "bordered padded round bottommargined", "si"+key);
         n.appendChild(CT.dom.node(CT.data.get(key).name || CT.data.get(key).title));
-        n.appendChild(CT.dom.link("up", function() {
-            var prev = n.previousSibling;
-            if (prev)
-                n.parentNode.insertBefore(n, prev);
-            else // n is top node -- move it to bottom!
-                n.parentNode.appendChild(n);
-        }));
-        n.appendChild(CT.dom.node("&nbsp;&nbsp;&nbsp;", "span"));
-        n.appendChild(CT.dom.link("down", function() {
-            var p = n.parentNode;
-            var nxt = n.nextSibling;
-            if (nxt) {
-                var nxtnxt = nxt.nextSibling;
-                if (nxtnxt)
-                    p.insertBefore(n, nxtnxt);
-                else
-                    p.appendChild(n);
-            }
-            else // n is bottom node -- move it to top!
-                p.insertBefore(n, p.firstChild);
-        }));
+        if (stype == "Unlisted") {
+            n.appendChild(CT.dom.button("DELETE", function() {
+                if (confirm("are you sure?") && confirm("really? no takebacks...")) {
+                    CT.net.post("/edit", {"eid": uid, "data": {"key": key,
+                        "delete": 1}}, "error deleting referendum", function() {
+                        CT.dom.remove(n);
+                    });
+                }
+            }, "m10"));
+        } else {
+            n.appendChild(CT.dom.link("up", function() {
+                var prev = n.previousSibling;
+                if (prev)
+                    n.parentNode.insertBefore(n, prev);
+                else // n is top node -- move it to bottom!
+                    n.parentNode.appendChild(n);
+            }));
+            n.appendChild(CT.dom.node("&nbsp;&nbsp;&nbsp;", "span"));
+            n.appendChild(CT.dom.link("down", function() {
+                var p = n.parentNode;
+                var nxt = n.nextSibling;
+                if (nxt) {
+                    var nxtnxt = nxt.nextSibling;
+                    if (nxtnxt)
+                        p.insertBefore(n, nxtnxt);
+                    else
+                        p.appendChild(n);
+                }
+                else // n is bottom node -- move it to top!
+                    p.insertBefore(n, p.firstChild);
+            }));
+        }
         n.appendChild(CT.dom.node("", "br"));
         for (var i = 0; i < swappertypes[stype].length; i++) {
             setSwapLine(n, key, swappertypes[stype][i]);
