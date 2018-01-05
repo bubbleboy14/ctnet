@@ -70,7 +70,10 @@ CAN.widget.chatterlightbox = {
 					], "w2-3")
 				]
 			});
+			CT.storage.set("lb_viewed", true);
 			CAN.widget.chatterlightbox._box.show();
 	    });
 	}
 };
+if (!CT.storage.get("lb_viewed"))
+	setTimeout(CAN.widget.chatterlightbox.load, 5000);
