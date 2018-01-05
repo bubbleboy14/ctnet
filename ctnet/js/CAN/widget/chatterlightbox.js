@@ -33,7 +33,7 @@ CAN.widget.chatterlightbox = {
 					CT.dom.span(". The best part is, member-initiated investigations are crowd-sourced, with other members submitting evidence as they encounter it.")
 				], "padded"),
 				CT.dom.div([
-					CT.dom.span("And then there's the content delivery algorithm. Unlike FaceGoogTube et al, we don't decide what's true. Members rate content, and the ratings curate the perrsonal and global"),
+					CT.dom.span("And then there's the content delivery algorithm. Unlike FaceGoogTube et al, we don't pretend to know what's true. Members rate content, and the ratings curate the personal and global"),
 					CT.dom.pad(),
 					CT.dom.link("recommendation feeds", null, "/recommendations.html"),
 					CT.dom.span(". Simple is best.")
