@@ -21,7 +21,7 @@ def response():
         getip()
 
     if pname == "favicon":
-        send_file(readfile(os.path.join("img", pi)), "ico")
+        send_file(readfile("favicon.ico"), "ico")
 
     if pname in allowed or "tiny_mce" in pname:
         send_text(readfile(pi), ptype)

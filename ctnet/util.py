@@ -43,7 +43,9 @@ def flipQ(s):
     return quote(flipR(s))
 
 def readfile(pname):
-    if "tiny_mce" in pname and config.mode != "production":
+    if pname == "favicon.ico":
+        pname = os.path.join("img", pname)
+    elif "tiny_mce" in pname and config.mode != "production":
         pname = pname[1:]
     else:
         pname = "%s%s"%(config.mode == "dynamic" and "html" or "html-%s"%(config.mode,), pname)
