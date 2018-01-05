@@ -2210,8 +2210,8 @@ class CategoryScore(_ScoredModelBase):
     user = db.ForeignKey(kind=User)
 
 def getcategoryscores(cat, user=None):
-    score = user and (CategoryScore.gql("WHERE category = :category AND user = :user", category=cat.key, user=user.key).get() or CategoryScore(category=cat.key, user=user.key)) or None
-    gscore = GlobalCategoryScore.gql("WHERE category = :category", category=cat.key).get() or GlobalCategoryScore(category=cat.key)
+    score = user and (CategoryScore.query(CategoryScore.category == cat.key, CategoryScore.user == user.key).get() or CategoryScore(category=cat.key, user=user.key))
+    gscore = GlobalCategoryScore.query(GlobalCategoryScore.category == cat.key).get() or GlobalCategoryScore(category=cat.key)
     return score, gscore
 
 def ratemedia(media, user, opinion):
