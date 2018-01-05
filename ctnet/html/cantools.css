@@ -40,26 +40,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     float: left;
 }
 
-.big {
-    font-size: 120%;
-}
-
-.bigger {
-    font-size: 140%;
-}
-
-.biggest {
-    font-size: 160%;
-}
-
-.small {
-    font-size: 80%;
-}
-
-.smaller {
-    font-size: 60%;
-}
-
 .clearnode {
     clear: both;
 }
@@ -338,11 +318,25 @@ textarea.fullwidth {
 }
 
 /* from ct.css */
+.big { font-size: 120%; }
+.bigger { font-size: 140%; }
+.biggest { font-size: 180%; }
+.biggerer { font-size: 200%; }
+.biggerest { font-size: 230%; }
+.biggerester { font-size: 300%; }
+.gigantic { font-size: 400%; }
+.small { font-size: 80%; }
+.smaller { font-size: 60%; }
+.smallest { font-size: 40%; }
+.smallerest { font-size: 30%; }
+.tiny { font-size: 25%; }
+
 .m0 { margin: 0px !important; }
 .m5 { margin: 5px; }
 .m10 { margin: 10px; }
 .m20 { margin: 20px; }
 .m30 { margin: 30px; }
+
 .backdrop {
     position: fixed;
     top: 0px;

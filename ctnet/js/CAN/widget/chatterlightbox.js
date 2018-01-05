@@ -2,17 +2,17 @@ CAN.widget.chatterlightbox = {
 	"load": function() {
 		(new CT.modal.LightBox({
 			content: [
-				CT.dom.div("What's This All About?", "biggest bold centered"),
+				CT.dom.div("What's This All About?", "biggerest bold centered"),
 				CT.dom.div("Civil Action Network is your source for peaceful activism and the democratic exchange of ideas. Every perspective counts - make yourself heard!", "padded"),
-				CT.dom.div("We're about true democracy.", "bigger bold centered"),
+				CT.dom.div("true democracy", "biggerer bold right"),
 				CT.dom.div([
 					CT.dom.span("Our goal is to increase the degree to which all of us can have a positive, creative impact on ourselves, each other, our neighborhoods, and our world. This means having a"),
 					CT.dom.pad(),
 					CT.dom.link("direct say", null, "/referenda.html"),
 					CT.dom.pad(),
 					CT.dom.span("in projects and policies that affect us (as any genuine human being would expect). With CAN Referenda, we all riff on each other's ideas, branching proposals and even voting on branches individually before settling upon a final version (for further voting :).")
-				], "padded"),
-				CT.dom.div("We're about real media.", "bigger bold centered"),
+				], "padded clearnode"),
+				CT.dom.div("real media", "biggerer bold right"),
 				CT.dom.div([
 					CT.dom.span("As a precursor to individual and collective action, we must forage for healthy, true information. And when we find choice nuggets,"),
 					CT.dom.pad(),
@@ -25,7 +25,7 @@ CAN.widget.chatterlightbox = {
 					CT.dom.pad(),
 					CT.dom.link("public domain news articles", null, "/news.html"),
 					CT.dom.span(", you're helping us all question mainstream narratives.")
-				], "padded"),
+				], "padded clearnode"),
 				CT.dom.div([
 					CT.dom.span("Meanwhile, our system catalogs your findings for"),
 					CT.dom.pad(),
@@ -38,13 +38,13 @@ CAN.widget.chatterlightbox = {
 					CT.dom.link("recommendation feeds", null, "/recommendations.html"),
 					CT.dom.span(". Simple is best.")
 				], "padded"),
-				CT.dom.div("We're about grassroots cooperation.", "bigger bold centered"),
+				CT.dom.div("grassroots cooperation", "biggerer bold right"),
 				CT.dom.div([
 					CT.dom.span("This means communication. Want to talk to anyone else on the site? Click 'expand' in the bottom-right corner of the page to see who's logged in. Prefer video chat? Just click 'Give It A Whirl!' on the"),
 					CT.dom.pad(),
 					CT.dom.link("community page", null, "/community.html"),
 					CT.dom.span(", which by the way is also where members post and peruse upcoming events.")
-				], "padded"),
+				], "padded clearnode"),
 				CT.dom.div([
 					CT.dom.span("This also means"),
 					CT.dom.pad(),
