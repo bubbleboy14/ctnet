@@ -332,3 +332,30 @@ textarea.fullwidth {
     text-align: center;
     overflow-y: auto;
 }
+
+/* from ct.css */
+.m0 { margin: 0px !important; }
+.m5 { margin: 5px; }
+.m10 { margin: 10px; }
+.m20 { margin: 20px; }
+.m30 { margin: 30px; }
+.backdrop {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 2000;
+}
+.lightbox {
+    position: fixed;
+    top: 30px;
+    left: 30px;
+    right: 30px;
+    bottom: 30px;
+    padding: 20px;
+    border-radius: 10px;
+    background: white;
+}
+.scroller { overflow: auto; }
