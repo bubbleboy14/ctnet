@@ -13,7 +13,7 @@ setup(
     ],
     zip_safe = False,
     install_requires = [
-        "ct >= 0.10.1.1",
+        "ct >= 0.10.1.5",
         "Pillow >= 3.3.1",
         "tweepy >= 3.6.0"
     ],
