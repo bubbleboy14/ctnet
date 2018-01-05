@@ -1,5 +1,6 @@
 CT.require("CAN.widget.action");
 CT.require("CAN.widget.challenge");
+CT.require("CAN.widget.chatterlightbox");
 CT.require("CAN.widget.conversation");
 CT.require("CAN.widget.invite");
 CT.require("CAN.widget.map");
