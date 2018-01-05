@@ -142,6 +142,15 @@ onload = function() {
             else if (["Questions", "Ideas", "Stream", "Chatter", "Map"].indexOf(section) != -1) {
                 CT.panel.swap(section, true, "sb");
                 CAN.widget.share.updateShareItem("community", null, section);
+                if (section == "Stream") {
+                    var ti = CT.dom.id("thoughtinput"),
+                        val = CT.storage.get("gts");
+                    if (val) {
+                        ti.value = val;
+                        CT.storage.set("gts", ""); // jank clear?
+                        ti.parentNode.nextSibling.nextSibling.onclick();
+                    }
+                }
             } else {//} if (uid) {
                 CT.panel.swap("People", true, "sb");
                 CAN.widget.share.updateShareItem("community", null, "People");
