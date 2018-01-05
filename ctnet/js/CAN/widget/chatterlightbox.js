@@ -74,6 +74,7 @@ CAN.widget.chatterlightbox = {
 				]
 			});
 			CT.storage.set("lb_viewed", true);
+			CT.key.on("ESCAPE", CAN.widget.chatterlightbox._box.hide);
 			CAN.widget.chatterlightbox._box.show();
 	    });
 	}
