@@ -75,17 +75,21 @@ CAN.session = {
 
 	    var fn = uid && CAN.cookie.checkFirstName() || "(Guest)";
 	    var logmsg = uid && "Log Out" || "Log In";
-	    var rd = CT.dom.node("", "div", "small right shiftupless");
+	    var rd = CT.dom.div("", "small right shiftupless");
 	    if (uid) {
 	        rd.appendChild(CAN.frame.setInfoBubble(
 	        	CT.dom.linkWithIcon("/img/header/participate.png",
 	            "Participate", "/participate.html"), CAN.frame.navinfo.participate));
-	        rd.appendChild(CT.dom.node("&nbsp;&nbsp;&nbsp;", "span"));
+	        rd.appendChild(CT.dom.span("&nbsp;&nbsp;&nbsp;"));
 	        rd.appendChild(CAN.frame.setInfoBubble(
 	        	CT.dom.linkWithIcon("/img/header/profile.png",
 	            "Profile", "/profile.html"), CAN.frame.navinfo.profile));
-	        rd.appendChild(CT.dom.node("&nbsp;&nbsp;&nbsp;", "span"));
+	        rd.appendChild(CT.dom.span("&nbsp;&nbsp;&nbsp;"));
 	    }
+        rd.appendChild(CAN.frame.setInfoBubble(
+        	CT.dom.linkWithIcon("/img/header/what.png", "What's This?", null,
+        		CAN.widget.chatterlightbox.load), CAN.frame.navinfo.what));
+        rd.appendChild(CT.dom.span("&nbsp;&nbsp;&nbsp;"));
 	    CT.net.post("/settings", {}, "error retrieving settings",
 	        function(s) {
 	            CAN.session.settings = s;
