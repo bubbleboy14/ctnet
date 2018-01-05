@@ -8,7 +8,7 @@ CAN.widget.chatterlightbox = {
 	        CAN.widget.stream.comment(cbox, null, items.reverse(), false, true, "full");
 	        CT.dom.inputEnterCallback(CT.dom.richInput(talkBack, null, null, null, null,
 	        	["what do you think we should discuss?", "breaking news?", "what's the latest?",
-	        	"your turn! what's next on the global thought stream?"]), function(val) {
+	        	"your turn! what's next on the global thought stream?"], null, "w1 h100p"), function(val) {
 		        	CT.storage.set("gts", val.trim());
 		        	location = "/community.html#!Stream";
 		        });
