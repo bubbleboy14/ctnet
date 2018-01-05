@@ -1,5 +1,5 @@
 import os
-from util import respond, redirect, send_text, readfile
+from util import respond, redirect, send_text, send_file, readfile
 
 def response():
     if "_escaped_fragment_" in os.environ.get("QUERY_STRING"):
@@ -19,6 +19,9 @@ def response():
         s.hit_count += 1
         s.put()
         getip()
+
+    if pname == "favicon":
+        send_file(readfile(os.path.join("img", pi)), "ico")
 
     if pname in allowed or "tiny_mce" in pname:
         send_text(readfile(pi), ptype)
