@@ -12,6 +12,7 @@ CAN.frame = {
 	    'about': 'Learn the basics about Civil Action Network.',
 	    'participate': 'Disagree with anything you see? Great! Post a new perspective on the Participate Page!',
 	    'profile': 'Establish your credentials, connect with other users, participate in thought streams, tweak your account settings, and review your content contributions to the CAN community.',
+	    'what': "What are the people saying? Aren't you curious? And what's this all about, anyway?",
 	    'logout': 'We miss you already!',
 	    'login': 'Log in to your free, secure CAN account and broadcast your perspective today!'
 	},
