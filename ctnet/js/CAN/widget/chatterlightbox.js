@@ -13,6 +13,7 @@ CAN.widget.chatterlightbox = {
 		        	location = "/community.html#!Stream";
 		        });
 			CAN.widget.chatterlightbox._box = new CT.modal.LightBox({
+				innerClass: "lightbox hglite",
 				content: [
 					cbox,
 					CT.dom.div([
@@ -66,6 +67,8 @@ CAN.widget.chatterlightbox = {
 							CT.dom.pad(),
 							CT.dom.span("for things like internal communication (live and via private messages and message boards), newsletters, event planning, sprucing up your organization's own site (via free widgets), and various other what-have-yous.")
 						], "padded"),
+						CT.dom.div("your turn", "biggerer bold right bordertop"),
+						CT.dom.div("Click the \"What's This?\" link at the top of any page (right by the \"Log In\" link) to return to this menu at any time. Click outside the box (or press the ESCAPE key) to make it go away. And in the meantime, tell us something we don't know.", "padded"),
 						talkBack
 					], "w2-3 bolda nodecoration")
 				]
