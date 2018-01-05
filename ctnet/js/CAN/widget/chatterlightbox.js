@@ -2,7 +2,7 @@ CAN.widget.chatterlightbox = {
 	"load": function() {
 		if (CAN.widget.chatterlightbox._box)
 			return CAN.widget.chatterlightbox._box.show();
-	    CT.net.post("/get", {"gtype": "media", "mtype": "comment", "number": 4}, null, function(items) {
+	    CT.net.post("/get", {"gtype": "media", "mtype": "comment", "number": 3}, null, function(items) {
 	    	var cbox = CT.dom.div(null, "w1-3 mw150p m5 right"),
 	    		talkBack = CT.dom.div();
 	        CAN.widget.stream.comment(cbox, null, items.reverse(), false, true, "full");
