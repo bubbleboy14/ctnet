@@ -3,8 +3,15 @@ CAN.widget.chatterlightbox = {
 		if (CAN.widget.chatterlightbox._box)
 			return CAN.widget.chatterlightbox._box.show();
 	    CT.net.post("/get", {"gtype": "media", "mtype": "comment", "number": 4}, null, function(items) {
-	    	var cbox = CT.dom.div(null, "w1-3 right");
+	    	var cbox = CT.dom.div(null, "w1-3 right"),
+	    		talkBack = CT.dom.div();
 	        CAN.widget.stream.comment(cbox, null, items.reverse(), false, true, "full");
+	        CT.dom.inputEnterCallback(CT.dom.richInput(talkBack, null, null, null, null,
+	        	["what do you think we should discuss?", "breaking news?", "what's the latest?",
+	        	"your turn! what's next on the global thought stream?"]), function(val) {
+		        	CT.storage.set("gts", val.trim());
+		        	location = "/community.html#!Stream";
+		        });
 			CAN.widget.chatterlightbox._box = new CT.modal.LightBox({
 				content: [
 					cbox,
@@ -58,7 +65,8 @@ CAN.widget.chatterlightbox = {
 							CT.dom.link("secure organizational tools", null, "/participate.html#ActionGroups"),
 							CT.dom.pad(),
 							CT.dom.span("for things like internal communication (live and via private messages and message boards), newsletters, event planning, sprucing up your organization's own site (via free widgets), and various other what-have-yous.")
-						], "padded")
+						], "padded"),
+						talkBack
 					], "w2-3")
 				]
 			});
