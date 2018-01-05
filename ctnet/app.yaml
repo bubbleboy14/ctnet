@@ -67,7 +67,7 @@
 - url: /.*%23.*
   script: fix_hash.py
 
-- url: /.*\.(html|css)
+- url: /.*\.(html|css|ico)
   script: router.py
 
 ## MODE SWITCHING -- DON'T MESS WITH!
