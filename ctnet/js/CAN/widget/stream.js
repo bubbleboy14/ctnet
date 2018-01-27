@@ -14,6 +14,19 @@ CAN.widget.stream = {
 	    CAN.media.loader.load(tsvars);
 	},
 
+	"jumpTo": function(conversation) {
+		CT.net.post({
+			path: "/get",
+			params: {
+				gtype: "convolink",
+				key: conversation
+			},
+			cb: function(clink) {
+				window.location = clink;
+			}
+		});
+	},
+
 	// generic node stream adder
 	"addNodes": function(opts) {
 	    var utinfo = CT.dom.node(opts.info);
@@ -29,16 +42,7 @@ CAN.widget.stream = {
 	        n.appendChild(tnode);
 	        if (opts.noConvo) {
 				n.appendChild(CT.dom.button("Check out the conversation", function() {
-					CT.net.post({
-						path: "/get",
-						params: {
-							gtype: "convolink",
-							key: d.conversation
-						},
-						cb: function(clink) {
-							window.location = clink;
-						}
-					});
+					CAN.widget.stream.jumpTo(d.conversation);
 				}, "w1"));
 	        } else {
 		        n.appendChild(CT.dom.node("", "hr"));
