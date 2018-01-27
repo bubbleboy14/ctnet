@@ -416,8 +416,8 @@ ins {
 #forum {
     width: 950px;
     height: 300px;
-    border-left: 2px solid #d3d3d3;
-    border-right: 2px solid #d3d3d3;
+    border-left: 1px solid #d3d3d3;
+    border-right: 1px solid #d3d3d3;
     box-sizing: border-box;
 }
 
