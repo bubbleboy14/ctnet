@@ -83,28 +83,27 @@ onload = function() {
                 pruneCats();
 
                 // now show it in 4 columns...
+                var fnode = function(key) {
+                    var entity = CT.data.get(key);
+                    return CT.dom.div([
+                        CT.dom.div("(" + (entity.mtype || "thought") + ")", "smaller bold right"),
+                        entity.title || CT.parse.shortened(entity.thought, 50),
+                        CT.dom.div(convos[entity.conversation].length, "smaller bold right")
+                    ], null, null, {
+                        onclick: function() {
+                            CAN.widget.stream.jumpTo(entity.conversation);
+                        }
+                    });
+                };
                 CT.dom.setContent("forum", winners.map(function(cat) {
                     return [
                         CT.dom.div(CT.data.get(cat).name, "biggest bold blue centered"),
-                        fcats[cat].map(function(t) {
-                            topic = CT.data.get(t);
-                            return CT.dom.div([
-                                CT.dom.div("(" + (topic.mtype || "thought") + ")", "smaller bold right"),
-                                topic.title || CT.parse.shortened(topic.thought, 50),
-                                CT.dom.div(convos[topic.conversation].length, "smaller bold right")
-                            ], null, null, {
-                                onclick: function() {
-                                    CAN.widget.stream.jumpTo(topic.conversation);
-                                }
-                            });
-                        })
+                        fcats[cat].map(fnode)
                     ];
                 }));
             }
         });
     });
-
-
 
 
     // challenge
