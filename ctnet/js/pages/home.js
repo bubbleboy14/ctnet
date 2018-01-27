@@ -10,7 +10,7 @@ onload = function() {
 
     // forum
     CT.net.post("/get", {
-        "gtype": "media", "mtype": "comment", "number": 18
+        "gtype": "media", "mtype": "comment", "number": 26
     }, null, function(comments) {
         var topic, cat, i, j, k, top = 0,
             clist = [], convos = {},
@@ -41,9 +41,11 @@ onload = function() {
 
         // compile conversation sets
         comments.forEach(function(comment) {
-            convos[comment.conversation] = convos[comment.conversation] || [];
+            if (!(comment.conversation in convos)) {
+                clist.push(comment.conversation);
+                convos[comment.conversation] = [];
+            }
             convos[comment.conversation].push(comment);
-            clist.push(comment.conversation);
         });
 
         // compile topic sets
@@ -86,10 +88,11 @@ onload = function() {
                         CT.dom.div(CT.data.get(cat).name, "biggest bold blue centered"),
                         fcats[cat].map(function(t) {
                             topic = CT.data.get(t);
-                            return CT.dom.div(topic.title ? [
-                                CT.dom.div("(" + topic.mtype + ")", "smaller bold right"),
-                                topic.title
-                            ] : CT.parse.shortened(topic.thought, 50), null, null, {
+                            return CT.dom.div([
+                                CT.dom.div("(" + (topic.mtype || "thought") + ")", "smaller bold right"),
+                                topic.title || CT.parse.shortened(topic.thought, 50),
+                                CT.dom.div(convos[topic.conversation].length, "smaller bold right")
+                            ], null, null, {
                                 onclick: function() {
                                     CAN.widget.stream.jumpTo(topic.conversation);
                                 }
