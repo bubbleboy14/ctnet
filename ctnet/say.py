@@ -1,4 +1,4 @@
-from util import respond, succeed, fail, cgi_get, DOMAIN, flipQ
+from util import respond, succeed, fail, cgi_get, DOMAIN, flipQ, clearmem
 from model import db, send_invitation, chat_message, emailuser, getfounder, Conversation, Comment, Membership
 from emailTemplates import comment_received, message_received, response_received, comment_alert
 
@@ -43,6 +43,7 @@ def response():
     if contentkey:
         content = db.KeyWrapper(urlsafe=contentkey).get()
         if content:
+            clearmem()
             titleanalog = content.title_analog()
             storylink = content.storylink()
             exemptuserkeys = [user.key]
