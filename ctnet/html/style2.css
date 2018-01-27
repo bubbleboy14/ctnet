@@ -413,12 +413,52 @@ ins {
 /*    padding-right: 15px;*/
 }
 
+#forum {
+    width: 950px;
+    height: 300px;
+    border-left: 2px solid #d3d3d3;
+    border-right: 2px solid #d3d3d3;
+    box-sizing: border-box;
+}
+
+#forum > div {
+    height: 100%;
+}
+
+#forum > div > div {
+    display: inline-block;
+    width: 25%;
+    height: 100%;
+    padding: 10px;
+    border: 1px solid lightgray;
+    vertical-align: top;
+    box-sizing: border-box;
+}
+
+#forum > div > div > div:last-child > div {
+    border: 1px solid lightgray;
+    padding: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+    font-size: 90%;
+    color: #555;
+    background: white;
+    transition: all 500ms;
+}
+
+#forum > div > div > div:last-child > div:hover {
+    border: 1px solid black;
+    color: white;
+    background: #555;
+}
+
 #challenge {
     width: 923px;
     height: 300px;
     background: white;
     overflow: hidden;
-    border-right: 2px solid #d3d3d3;
+    border-bottom: 4px solid #e6eaed;
+    border-right: 2px solid #e6eaed;
     padding-right: 25px;
 }
 
