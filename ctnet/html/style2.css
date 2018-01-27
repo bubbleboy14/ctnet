@@ -435,6 +435,11 @@ ins {
     box-sizing: border-box;
 }
 
+#forum > div > div > div:last-child {
+    height: calc(100% - 30px);
+    overflow-y: auto;
+}
+
 #forum > div > div > div:last-child > div {
     border: 1px solid lightgray;
     padding: 10px;

@@ -10,7 +10,7 @@ onload = function() {
 
     // forum
     CT.net.post("/get", {
-        "gtype": "media", "mtype": "comment", "number": 26
+        "gtype": "media", "mtype": "comment", "number": 60
     }, null, function(comments) {
         var topic, cat, i, j, k, top = 0,
             clist = [], convos = {},
@@ -61,7 +61,7 @@ onload = function() {
                 // compile category sets
                 clist.forEach(function(c, i) {
                     topic = convos[c].topic = cdata[i];
-                    topic.category.forEach(function(cat) {
+                    topic.category && topic.category.forEach(function(cat) {
                         fcats[cat] = fcats[cat] || [];
                         fcats[cat].push(topic.key);
                         top = Math.max(top, fcats[cat].length);
