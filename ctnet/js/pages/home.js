@@ -6,9 +6,105 @@ onload = function() {
     var signup_share = CT.dom.id("home_signup_share");
     var freedomquote = CT.dom.id("freedomquote");
     var uid = CAN.session.isLoggedIn();
+    CAN.categories.load(uid || "anonymous");
+
+    // forum
+    CT.net.post("/get", {
+        "gtype": "media", "mtype": "comment", "number": 18
+    }, null, function(comments) {
+        var topic, cat, i, j, k, top = 0,
+            clist = [], convos = {},
+            fcats = {}, winners = [];
+
+        // prunes away duplicates from biggest cats
+        var pruneCats = function() {
+            var pruned, touched;
+            for (i = 0; i < 3; i++) {
+                touched = false;
+                cat = fcats[winners[i]];
+                for (j = 0; !touched && j < cat.length; j++) {
+                    topic = cat[j];
+                    for (k = i + 1; k < 4; k++)
+                        touched = !!CT.data.remove(fcats[winners[k]], topic) || touched;
+                    pruned = touched || pruned;
+                }
+            }
+            if (pruned) {
+                winners.sort(function(a, b) {
+                    return fcats[a].length > fcats[b].length;
+                });
+                pruneCats();
+            }
+        };
+
+        CT.data.addSet(comments);
+
+        // compile conversation sets
+        comments.forEach(function(comment) {
+            convos[comment.conversation] = convos[comment.conversation] || [];
+            convos[comment.conversation].push(comment);
+            clist.push(comment.conversation);
+        });
+
+        // compile topic sets
+        CT.net.post({
+            path: "/get",
+            params: {
+                gtype: "convodata",
+                keys: clist
+            },
+            cb: function(cdata) {
+                CT.data.addSet(cdata);
+
+                // compile category sets
+                clist.forEach(function(c, i) {
+                    topic = convos[c].topic = cdata[i];
+                    topic.category.forEach(function(cat) {
+                        fcats[cat] = fcats[cat] || [];
+                        fcats[cat].push(topic.key);
+                        top = Math.max(top, fcats[cat].length);
+                    });
+                });
+
+                // get top 4 categories
+                for (i = top; i > 0 && winners.length < 4; i--) {
+                    for (c in fcats) {
+                        if (fcats[c].length == i) {
+                            winners.unshift(c);
+                            if (winners.length == 4)
+                                break;
+                        }
+                    }
+                }
+
+                // prune (recurses several times)
+                pruneCats();
+
+                // now show it in 4 columns...
+                CT.dom.setContent("forum", winners.map(function(cat) {
+                    return [
+                        CT.dom.div(CT.data.get(cat).name, "biggest bold blue centered"),
+                        fcats[cat].map(function(t) {
+                            topic = CT.data.get(t);
+                            return CT.dom.div(topic.title ? [
+                                CT.dom.div("(" + topic.mtype + ")", "smaller bold right"),
+                                topic.title
+                            ] : CT.parse.shortened(topic.thought, 50), null, null, {
+                                onclick: function() {
+                                    CAN.widget.stream.jumpTo(topic.conversation);
+                                }
+                            });
+                        })
+                    ];
+                }));
+            }
+        });
+    });
+
+
+
 
     // challenge
-    CAN.categories.load(uid || "anonymous");
     CAN.widget.challenge.load(uid);
 
     var mostRecent = CT.dom.id("mostRecent");
