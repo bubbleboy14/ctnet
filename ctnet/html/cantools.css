@@ -402,3 +402,12 @@ textarea.fullwidth {
 }
 .scroller { overflow: auto; }
 .scrolly { overflow-y: auto !important; overflow-x: hidden; }
+
+.all0 {
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+}
+.noflow { overflow: hidden; }
+.below { z-index: -1000 !important; }
