@@ -413,6 +413,14 @@ ins {
 /*    padding-right: 15px;*/
 }
 
+.whitestroke {
+    -webkit-text-stroke: 1px white;
+}
+
+#forum, #forum > div, #forum > div > div {
+    position: relative;
+}
+
 #forum {
     width: 950px;
     height: 300px;
@@ -435,23 +443,23 @@ ins {
     box-sizing: border-box;
 }
 
-#forum > div > div > div:last-child {
+#forum > div > div > div:nth-child(2) {
     height: calc(100% - 30px);
     overflow-y: auto;
 }
 
-#forum > div > div > div:last-child > div {
+#forum > div > div > div:nth-child(2) > div {
     border: 1px solid lightgray;
     padding: 10px;
     margin-top: 10px;
     cursor: pointer;
     font-size: 90%;
     color: #555;
-    background: white;
+    background: rgba(200, 200, 200, 0.8);
     transition: all 500ms;
 }
 
-#forum > div > div > div:last-child > div:hover {
+#forum > div > div > div:nth-child(2) > div:hover {
     border: 1px solid black;
     color: white;
     background: #555;
