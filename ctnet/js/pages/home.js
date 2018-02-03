@@ -95,11 +95,36 @@ onload = function() {
                         }
                     });
                 };
-                CT.dom.setContent("forum", winners.map(function(cat) {
-                    return [
-                        CT.dom.div(CT.data.get(cat).name, "biggest bold blue centered"),
-                        fcats[cat].map(fnode)
-                    ];
+                var bgz = [];
+                CT.dom.setContent("forum", winners.map(function(ckey) {
+                    var cat = CT.data.get(ckey), n = CT.dom.div([
+                        CT.dom.div(cat.name, "biggest bold blue centered whitestroke"),
+                        fcats[ckey].map(fnode)
+                    ]);
+                    CT.db.get("photo", function(pz) {
+                        var idata = CT.data.choice(pz.filter(function(p) {
+                            return bgz.indexOf(p.key) == -1;
+                        })), img;
+                        bgz.push(idata.key);
+                        if (idata.photo)
+                            img = idata.photo;
+                        else if (idata.html)
+                            img = idata.html.split('src="')[1].split('" ')[0];
+                        else
+                            img = "/get?gtype=graphic&key=" + (idata.graphic || idata.key);
+                        n.appendChild(CT.dom.panImg({
+                            img: img,
+                            panDuration: 10000
+                        }));
+                    }, 8, 0, null, {
+                        category: {
+                            value: cat.key,
+                            comparator: "contains"
+                        },
+                        shared: true,
+                        is_book_cover: false
+                    });
+                    return n;
                 }));
             }
         });
