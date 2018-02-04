@@ -448,6 +448,7 @@ ins {
 }
 
 #forum > div > div > div:nth-child(2) > div {
+    position: relative;
     border: 1px solid lightgray;
     padding: 10px;
     margin-top: 10px;
@@ -463,6 +464,15 @@ ins {
     border: 1px solid black;
     color: white;
     background: #555;
+}
+
+#forum > div > div > div:nth-child(2) > div .below {
+    z-index: 0 !important;
+    opacity: 0;
+}
+
+#forum > div > div > div:nth-child(2) > div:hover .below {
+    opacity: 0.4;
 }
 
 #challenge {

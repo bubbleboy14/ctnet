@@ -84,8 +84,7 @@ onload = function() {
 
                 // now show it in 4 columns...
                 var fnode = function(key) {
-                    var entity = CT.data.get(key);
-                    return CT.dom.div([
+                    var entity = CT.data.get(key), n = CT.dom.div([
                         CT.dom.div("(" + (entity.mtype || "thought") + ")", "smaller bold right"),
                         entity.title || CT.parse.shortened(entity.thought, 50),
                         CT.dom.div(convos[entity.conversation].length, "smaller bold right")
@@ -94,6 +93,24 @@ onload = function() {
                             CAN.widget.stream.jumpTo(entity.conversation);
                         }
                     });
+                    setTimeout(function() {
+                        var img, blurb = entity.thought || entity.blurb || entity.body;
+                        if (entity.thumbnail)
+                            img = entity.thumbnail;
+                        else if (entity.photo)
+                            img = "/get?gtype=graphic&key=" + entity.photo[0];
+                        else if (blurb)
+                            img = CT.parse.extractImage(blurb);
+                        if (img) {
+                            n.appendChild(CT.dom.panImg({
+                                img: img
+                            }));
+                        } else {
+                            CT.log("NEEDS IMAGE");
+                            CT.log(entity);
+                        }
+                    });
+                    return n;
                 };
                 var bgz = [];
                 CT.dom.setContent("forum", winners.map(function(ckey) {
