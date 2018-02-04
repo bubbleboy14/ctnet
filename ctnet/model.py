@@ -1682,6 +1682,9 @@ class Photo(CategoriedVotingModel, Approvable):
     def logstring(self):
         return self.pic_html()
 
+    def getBlob(self):
+        return self.graphic.get().getBlob()
+
     def pic_link(self, absolute=False):
         if self.photo:
             return self.photo
