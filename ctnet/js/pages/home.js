@@ -8,7 +8,31 @@ onload = function() {
     var uid = CAN.session.isLoggedIn();
     CAN.categories.load(uid || "anonymous");
 
-    // forum
+    // topz (more like a forum)
+    CT.db.get("thought", function(thoughts) {
+        var unodez = [], posterz = [];
+        CT.dom.setContent("topz", CT.dom.table([[
+                "<b>Thread</b>", "<b>Poster</b>", "<b>Posted</b>", "<b>Modified</b>"
+            ]].concat(thoughts.map(function(t) {
+                var unode = CT.dom.div();
+                unodez.push(unode);
+                posterz.push(t.user);
+                return [
+                    CT.dom.link(CT.parse.shortened(t.thought, 150, 15, true), null,
+                        "/community.html#!Stream|" + CAN.cookie.flipReverse(t.key)),
+                    unode,
+                    CT.parse.timeStamp(t.created),
+                    CT.parse.timeStamp(t.modified)
+                ];
+            }))));
+        CT.data.checkAndDo(posterz, function() {
+            unodez.forEach(function(n, i) {
+                n.appendChild(CAN.session.firstLastLink(CT.data.get(posterz[i])));
+            });
+        });
+    }, 7, 0, "-created");
+
+    // forum (more like hot topics)
     CT.net.post("/get", {
         "gtype": "media", "mtype": "comment", "number": 60
     }, null, function(comments) {

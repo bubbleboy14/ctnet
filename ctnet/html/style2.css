@@ -417,11 +417,23 @@ ins {
     -webkit-text-stroke: 1px white;
 }
 
+#topz {
+    font-size: 120%;
+}
+
+#topz a {
+     text-decoration: none;
+}
+
+#topz tr:nth-child(even) {
+    background-color: #e6eaed;
+}
+
 #forum, #forum > div, #forum > div > div {
     position: relative;
 }
 
-#forum {
+#topz, #forum {
     width: 950px;
     height: 300px;
     border-left: 1px solid #d3d3d3;
