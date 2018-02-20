@@ -38,7 +38,7 @@ onload = function() {
             }))));
         CT.data.checkAndDo(posterz, function() {
             unodez.forEach(function(n, i) {
-                n.appendChild(CAN.session.firstLastLink(CT.data.get(posterz[i])));
+                n.appendChild(CAN.session.firstLastLink(CT.data.get(posterz[i]), null, null, null, true));
             });
         });
         CT.net.post({
