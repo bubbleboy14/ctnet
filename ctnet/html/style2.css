@@ -429,6 +429,21 @@ ins {
     background-color: #e6eaed;
 }
 
+#topz td {
+    min-width: 77px;
+}
+
+#topz td:first-child,
+#topz td:nth-child(4) {
+    text-align: center;
+}
+
+#topz td:nth-child(3),
+#topz td:nth-child(5),
+#topz td:nth-child(6) {
+    text-align: right;
+}
+
 #forum, #forum > div, #forum > div > div {
     position: relative;
 }
