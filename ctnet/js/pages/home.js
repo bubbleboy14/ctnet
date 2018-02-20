@@ -10,17 +10,28 @@ onload = function() {
 
     // topz (more like a forum)
     CT.db.get("thought", function(thoughts) {
-        var unodez = [], posterz = [];
+        var unodez = [], rnodez = [], posterz = [];
         CT.dom.setContent("topz", CT.dom.table([[
-                "<b>Thread</b>", "<b>Poster</b>", "<b>Posted</b>", "<b>Modified</b>"
+                "<b>Tags</b>", "<b>Thread</b>", "<b>Poster</b>",
+                "<b>Replies</b>", "<b>Posted</b>", "<b>Modified</b>"
             ]].concat(thoughts.map(function(t) {
-                var unode = CT.dom.div();
+                var unode = CT.dom.div(), tnode = CT.dom.div(), rnode = CT.dom.div();
                 unodez.push(unode);
+                rnodez.push(rnode);
                 posterz.push(t.user);
+                CAN.categories.get(function() {
+                    CT.dom.setContent(tnode, t.category.filter(function(c) {
+                        return CAN.categories.byKey(c).name in core.config.ctnet.categories.icons;
+                    }).map(function(c) {
+                        return CT.dom.img(core.config.ctnet.categories.icons[CAN.categories.byKey(c).name]);
+                    }));
+                });
                 return [
+                    tnode,
                     CT.dom.link(CT.parse.shortened(t.thought, 150, 15, true), null,
                         "/community.html#!Stream|" + CAN.cookie.flipReverse(t.key)),
                     unode,
+                    rnode,
                     CT.parse.timeStamp(t.created),
                     CT.parse.timeStamp(t.modified)
                 ];
@@ -29,6 +40,20 @@ onload = function() {
             unodez.forEach(function(n, i) {
                 n.appendChild(CAN.session.firstLastLink(CT.data.get(posterz[i])));
             });
+        });
+        CT.net.post({
+            path: "/get",
+            params: {
+                gtype: "comcount",
+                keys: thoughts.map(function(t) {
+                    return t.conversation;
+                })
+            },
+            cb: function(countz) {
+                rnodez.forEach(function(n, i) {
+                    CT.dom.setContent(n, countz[i]);
+                });
+            }
         });
     }, 7, 0, "-created");
 
