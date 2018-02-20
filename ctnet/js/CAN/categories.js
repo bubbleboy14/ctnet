@@ -40,6 +40,9 @@ CAN.categories = {
 	    	function() { CAN.categories.view(cat, cb); }),
 	    	"div", "sbitem", "sbitem"+cat.key));
 	},
+	"byKey": function(key) {
+		return CAN.categories._keys[key];
+	},
 	"get": function(cb, gotcats, getpath, getparams) {
 	    CAN.categories.collection = CAN.categories.collection || gotcats;
 	    if (CAN.categories.collection) {
@@ -54,6 +57,10 @@ CAN.categories = {
 	            "error retrieving categories", function(cats) {
 	                CT.data.addSet(cats);
 	                CAN.categories.collection = cats;
+	                CAN.categories._keys = {};
+	                cats.forEach(function(cat) {
+	                	CAN.categories._keys[cat.key] = cat;
+	                });
 	                for (var i = 0; i < CAN.categories.cbs.length; i++)
 	                    CAN.categories.cbs[i](cats);
 	            });
