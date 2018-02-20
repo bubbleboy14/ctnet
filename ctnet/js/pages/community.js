@@ -87,7 +87,8 @@ onload = function() {
     };
 
     // node streams
-    var nodetypes = { "question": "Questions", "changeidea": "Ideas", "thought": "Stream", "comment": "Chatter" };
+    var nodetypes = { "question": "Questions", "changeidea": "Ideas", "thought": "Stream", "comment": "Chatter" },
+        ntrev = { "Questions": "question", "Ideas": "changeidea", "Stream": "thought" };
     var viewSingleItem = function(d, mtype) {
         if (!CT.dom.id("sbitem" + d.key)) {
             var pnode = CT.dom.id("sv_" + mtype),
@@ -100,7 +101,11 @@ onload = function() {
         var ntype = nodetypes[mtype], nodez = streamnodes[mtype];
         CT.panel.swap(ntype, true);
         CT.panel.select(d.key);
-        CT.dom.setContent(nodez.snode, d.nodeGen());
+        CT.dom.setContent(nodez.snode, CAN.widget.stream.getNode(d, {
+            uid: uid,
+            type: mtype,
+            taguser: true
+        }));
         CT.dom.hide(nodez.anode);
         CT.dom.show(nodez.snode);
         CAN.widget.share.updateShareItem("community", d.key, ntype);
@@ -169,23 +174,31 @@ onload = function() {
                     viewSingleEvent(CT.data.get(hkey));
                 });
             }
-            else if (["Questions", "Ideas", "Stream", "Chatter", "Map"].indexOf(section) != -1) {
-                CT.panel.swap(section, true, "sb");
-                CAN.widget.share.updateShareItem("community", null, section);
-                if (section == "Stream") {
-                    var ti = CT.dom.id("thoughtinput"),
-                        val = CT.storage.get("gts");
-                    if (val) {
-                        ti.value = val;
-                        CT.storage.set("gts", ""); // jank clear?
-                        ti.parentNode.nextSibling.nextSibling.onclick();
+            else if (["Questions", "Ideas", "Stream"].indexOf(section) != -1) {
+                if (hkey) {
+                    CT.data.checkAndDo([hkey], function() {
+                        viewSingleItem(CT.data.get(hkey), ntrev[section]);
+                    });
+                } else {
+                    CT.panel.swap(section, true, "sb");
+                    CAN.widget.share.updateShareItem("community", null, section);
+                    if (section == "Stream") {
+                        var ti = CT.dom.id("thoughtinput"),
+                            val = CT.storage.get("gts");
+                        if (val) {
+                            ti.value = val;
+                            CT.storage.set("gts", ""); // jank clear?
+                            ti.parentNode.nextSibling.nextSibling.onclick();
+                        }
                     }
                 }
-            } else {//} if (uid) {
-                CT.panel.swap("People", true, "sb");
-                CAN.widget.share.updateShareItem("community", null, "People");
-                mrlink.onclick();
-                CT.panel.swap(allgroups[hkey], true, "ch");
+            } else { // People, Chatter, Map
+                CT.panel.swap(section, true, "sb");
+                CAN.widget.share.updateShareItem("community", null, section);
+                if (section == "People") {
+                    mrlink.onclick();
+                    CT.panel.swap(allgroups[hkey], true, "ch");
+                }
             }
             document.location.hash = "";
         }
