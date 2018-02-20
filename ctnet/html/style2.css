@@ -433,12 +433,12 @@ ins {
     min-width: 77px;
 }
 
+#topz tr:not(:first-child) td:nth-child(3),
 #topz tr:not(:first-child) td:first-child,
 #topz tr:not(:first-child) td:nth-child(4) {
     text-align: center;
 }
 
-#topz tr:not(:first-child) td:nth-child(3),
 #topz tr:not(:first-child) td:nth-child(5),
 #topz tr:not(:first-child) td:nth-child(6) {
     text-align: right;
