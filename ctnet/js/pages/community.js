@@ -10,6 +10,7 @@ onload = function() {
     var people = CT.dom.id("sbpanelPeople");
     var viewmap = CT.dom.id("viewmap");
     var map = null;
+    var streamnodes = {};
 
     CAN.categories.load(uid);
     CAN.media.loader.load({"mtype": "referenda", "number": 3, "uid": uid,
@@ -33,10 +34,16 @@ onload = function() {
             }
         }, function() {
             CAN.widget.share.updateShareItem("community", null, "Questions");
+            CT.dom.hide(streamnodes.question.snode);
+            CT.dom.show(streamnodes.question.anode);
         }, function() {
             CAN.widget.share.updateShareItem("community", null, "Ideas");
+            CT.dom.hide(streamnodes.changeidea.snode);
+            CT.dom.show(streamnodes.changeidea.anode);
         }, function() {
             CAN.widget.share.updateShareItem("community", null, "Stream");
+            CT.dom.hide(streamnodes.thought.snode);
+            CT.dom.show(streamnodes.thought.anode);
         }, function() {
             CAN.widget.share.updateShareItem("community", null, "Chatter");
         }, function() {
@@ -81,22 +88,45 @@ onload = function() {
 
     // node streams
     var nodetypes = { "question": "Questions", "changeidea": "Ideas", "thought": "Stream", "comment": "Chatter" };
+    var viewSingleItem = function(d, mtype) {
+        if (!CT.dom.id("sbitem" + d.key)) {
+            var pnode = CT.dom.id("sv_" + mtype),
+                lname = (d.body || d.idea || d[mtype]).split(' ').slice(0, 2).join(' ') + " ...";
+            pnode.appendChild(CT.dom.div(CT.dom.link(lname,
+                function() { viewSingleItem(d, mtype); }),
+                "bottompadded sbitem", "sbitem"+d.key));
+            CT.dom.show(pnode.parentNode);
+        }
+        var ntype = nodetypes[mtype], nodez = streamnodes[mtype];
+        CT.panel.swap(ntype, true);
+        CT.panel.select(d.key);
+        CT.dom.setContent(nodez.snode, d.nodeGen());
+        CT.dom.hide(nodez.anode);
+        CT.dom.show(nodez.snode);
+        CAN.widget.share.updateShareItem("community", d.key, ntype);
+    };
     ['question', 'changeidea', 'thought', 'comment'].forEach(function (item) {
+        var nodez = streamnodes[item] = {},
+            pnode = CT.dom.id("sbcontent" + nodetypes[item]),
+            snode = nodez.snode = CT.dom.div(null, "hidden"),
+            anode = nodez.anode = CT.dom.div();
+        pnode.appendChild(snode);
+        pnode.appendChild(anode);
         CT.net.post("/get", {"gtype": "media", "mtype": item, "number": 40}, null, function(items) {
-            CAN.widget.stream[item](CT.dom.id("sbcontent" + nodetypes[item]),
-                uid, items.reverse(), false, true);
+            CAN.widget.stream[item](anode, uid, items.reverse(), false, true, function(d) {
+                viewSingleItem(d, item);
+            });
         }, function() {
-            CAN.widget.stream[item](CT.dom.id("sbcontent" + nodetypes[item]),
-                uid, [], false, true);
+            CAN.widget.stream[item](anode, uid, [], false, true);
         });
     });
 
     var eventStuff = CT.dom.id("sbcontentEvents");
     eventStuff.appendChild(svnode);
     eventStuff.appendChild(events);
-    eventStuff.parentNode.insertBefore(CT.dom.node(CT.dom.button("Post Event",
+    eventStuff.parentNode.insertBefore(CT.dom.div(CT.dom.button("Post Event",
         function() { document.location = "/participate.html#Coordinator"; }),
-        "div", "right"), eventStuff.previousSibling);
+        "right"), eventStuff.previousSibling);
 
     var mrlink = CT.dom.id("moreroomslink");
 
@@ -111,9 +141,9 @@ onload = function() {
     CAN.widget.share.updateShareItem("community");
     var viewSingleEvent = function(event) {
         if (!CT.dom.id("sbitem"+event.key)) {
-            svl.appendChild(CT.dom.node(CT.dom.link(event.title,
+            svl.appendChild(CT.dom.div(CT.dom.link(event.title,
                 function() { viewSingleEvent(event); }),
-                "div", "bottompadded sbitem", "sbitem"+event.key));
+                "bottompadded sbitem", "sbitem"+event.key));
             CT.dom.show(sv);
         }
         viewmap._evt = event;
