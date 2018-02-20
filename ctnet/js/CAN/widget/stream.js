@@ -33,24 +33,34 @@ CAN.widget.stream = {
 	    var utinput = CT.dom.node();
 	    var utlist = CT.dom.node("no " + opts.type + "s yet!");
 	    var addNode = function(d) {
-	        var n = CT.dom.node("", "div",
-	            "padded bordered round bottommargined");
-	        var tnode = CT.dom.node(CT.parse.process(d[opts.type] || d.body, false, opts.processArg));
-	        if (opts.taguser && d.uid)
-	            n.appendChild(CAN.session.firstLastLink({ "firstName": d.user,
-	            	"key": d.uid }, false, true, null, true));
-	        n.appendChild(tnode);
-	        if (opts.noConvo) {
-				n.appendChild(CT.dom.button("Check out the conversation", function() {
-					CAN.widget.stream.jumpTo(d.conversation);
-				}, "w1"));
-	        } else {
-		        n.appendChild(CT.dom.node("", "hr"));
-		        var convonode = CT.dom.node();
-		        CAN.widget.conversation.load(opts.uid, d.conversation,
-		        	convonode, d.key, d.conversation+"ta", true);
-		        n.appendChild(convonode);
-	        }
+	    	d.nodeGen = d.nodeGen || function() {
+		        var n = CT.dom.node("", "div",
+		            "padded bordered round bottommargined");
+		        var tnode = CT.dom.node(CT.parse.process(d[opts.type] || d.body, false, opts.processArg));
+		        if (opts.onclick) {
+		        	tnode.onclick = function() {
+		        		opts.onclick(d);
+		        	};
+		        	tnode.className = "pointer";
+		        }
+		        if (opts.taguser && d.uid)
+		            n.appendChild(CAN.session.firstLastLink({ "firstName": d.user,
+		            	"key": d.uid }, false, true, null, true));
+		        n.appendChild(tnode);
+		        if (opts.noConvo) {
+					n.appendChild(CT.dom.button("Check out the conversation", function() {
+						CAN.widget.stream.jumpTo(d.conversation);
+					}, "w1"));
+		        } else {
+			        n.appendChild(CT.dom.node("", "hr"));
+			        var convonode = CT.dom.node();
+			        CAN.widget.conversation.load(opts.uid, d.conversation,
+			        	convonode, d.key, d.conversation+"ta", true);
+			        n.appendChild(convonode);
+		        }
+		        return n;
+	    	};
+	    	var n = d.nodeGen();
 	        if (!opts.taguser && !opts.listonly)
 	            n.appendChild(CAN.media.moderation.remove(d, opts));
 	        if (utlist.innerHTML == "no " + opts.type + "s yet!") {
@@ -87,26 +97,28 @@ CAN.widget.stream = {
 	},
 
 	// thoughts
-	"thought": function(pnode, uid, thoughts, listonly, taguser) {
+	"thought": function(pnode, uid, thoughts, listonly, taguser, onclick) {
 	    CAN.widget.stream.addNodes({
 	        pnode: pnode,
 	        uid: uid,
 	        items: thoughts,
 	        listonly: listonly,
 	        taguser: taguser,
+	        onclick: onclick,
 	        type: 'thought',
 	        info: "Post a thought or idea here and it will appear on the CAN homepage in our 'Global Thought Stream'."
 	    });
 	},
 
 	// changes
-	"changeidea": function(pnode, uid, changes, listonly, taguser) {
+	"changeidea": function(pnode, uid, changes, listonly, taguser, onclick) {
 	    CAN.widget.stream.addNodes({
 	        pnode: pnode,
 	        uid: uid,
 	        items: changes,
 	        listonly: listonly,
 	        taguser: taguser,
+	        onclick: onclick,
 	        type: 'idea',
 	        key: 'changeidea',
 	        bodyproperty: 'idea',
@@ -115,13 +127,14 @@ CAN.widget.stream = {
 	},
 
 	// questions
-	"question": function(pnode, uid, questions, listonly, taguser) {
+	"question": function(pnode, uid, questions, listonly, taguser, onclick) {
 	    CAN.widget.stream.addNodes({
 	        pnode: pnode,
 	        uid: uid,
 	        items: questions,
 	        listonly: listonly,
 	        taguser: taguser,
+	        onclick: onclick,
 	        type: 'question',
 	        bodyproperty: 'question',
 	        info: "Any questions?"
@@ -140,7 +153,7 @@ CAN.widget.stream = {
 	        info: "Here's the latest chatter...",
 	        noInput: true,
 	        noConvo: true,
-	        processArg: processArg
+	        processArg: typeof processArg != "function" && processArg // no onclick
 	    });
 	}
 };
