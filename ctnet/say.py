@@ -33,6 +33,7 @@ def response():
         comment.conversation = conversation.key
         comment.body = body
         comment.seenlist = [uid]
+        comment.private = True
         comment.put()
         for invitee in db.get_multi(privlist):
             if invitee != user:
