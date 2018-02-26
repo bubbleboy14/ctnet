@@ -574,7 +574,7 @@ class Invitation(CANModel):
     mkey = db.ForeignKey()
 
 def emailuser(user, subject, body, html=None):
-    send_email("%s <%s>"%(user.fullName(), user.email),
+    send_email(user.email,#"%s <%s>"%(user.fullName(), user.email),
         subject, body, html)
 
 def prepend_article(word):
