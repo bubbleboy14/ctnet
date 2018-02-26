@@ -6,9 +6,198 @@ onload = function() {
     var signup_share = CT.dom.id("home_signup_share");
     var freedomquote = CT.dom.id("freedomquote");
     var uid = CAN.session.isLoggedIn();
+    CAN.categories.load(uid || "anonymous");
+
+    // topz (more like a forum)
+    CT.db.get("thought", function(thoughts) {
+        var unodez = [], rnodez = [], posterz = [];
+        CT.dom.setContent("topz", CT.dom.table([[
+                "<b>Tags</b>", "<b>Thread</b>", "<b>Poster</b>",
+                "<b>Replies</b>", "<b>Posted</b>", "<b>Modified</b>"
+            ]].concat(thoughts.map(function(t) {
+                var unode = CT.dom.div(), tnode = CT.dom.div(), rnode = CT.dom.div();
+                unodez.push(unode);
+                rnodez.push(rnode);
+                posterz.push(t.user);
+                CAN.categories.get(function() {
+                    CT.dom.setContent(tnode, t.category.filter(function(c) {
+                        return CAN.categories.byKey(c).name in core.config.ctnet.categories.icons;
+                    }).map(function(c) {
+                        return CT.dom.img(core.config.ctnet.categories.icons[CAN.categories.byKey(c).name]);
+                    }));
+                });
+                return [
+                    tnode,
+                    CT.dom.link(CT.parse.shortened(t.thought, 150, 15, true), null,
+                        "/community.html#!Stream|" + CAN.cookie.flipReverse(t.key)),
+                    unode,
+                    rnode,
+                    CT.parse.timeStamp(t.created),
+                    CT.parse.timeStamp(t.modified)
+                ];
+            }))));
+        CT.data.checkAndDo(posterz, function() {
+            unodez.forEach(function(n, i) {
+                n.appendChild(CAN.session.firstLastLink(CT.data.get(posterz[i]), null, null, null, true));
+            });
+        });
+        CT.net.post({
+            path: "/get",
+            params: {
+                gtype: "comcount",
+                keys: thoughts.map(function(t) {
+                    return t.conversation;
+                })
+            },
+            cb: function(countz) {
+                rnodez.forEach(function(n, i) {
+                    CT.dom.setContent(n, countz[i]);
+                });
+            }
+        });
+    }, 7, 0, "-created");
+
+    // forum (more like hot topics)
+    CT.net.post("/get", {
+        "gtype": "media", "mtype": "comment", "number": 60
+    }, null, function(comments) {
+        var topic, cat, i, j, k, top = 0,
+            clist = [], convos = {},
+            fcats = {}, winners = [];
+
+        // prunes away duplicates from biggest cats
+        var pruneCats = function() {
+            var pruned, touched;
+            for (i = 0; i < 3; i++) {
+                touched = false;
+                cat = fcats[winners[i]];
+                for (j = 0; !touched && j < cat.length; j++) {
+                    topic = cat[j];
+                    for (k = i + 1; k < 4; k++)
+                        touched = !!CT.data.remove(fcats[winners[k]], topic) || touched;
+                    pruned = touched || pruned;
+                }
+            }
+            if (pruned) {
+                winners.sort(function(a, b) {
+                    return fcats[a].length > fcats[b].length;
+                });
+                pruneCats();
+            }
+        };
+
+        CT.data.addSet(comments);
+
+        // compile conversation sets
+        comments.forEach(function(comment) {
+            if (!(comment.conversation in convos)) {
+                clist.push(comment.conversation);
+                convos[comment.conversation] = [];
+            }
+            convos[comment.conversation].push(comment);
+        });
+
+        // compile topic sets
+        CT.net.post({
+            path: "/get",
+            params: {
+                gtype: "convodata",
+                keys: clist
+            },
+            cb: function(cdata) {
+                CT.data.addSet(cdata);
+
+                // compile category sets
+                clist.forEach(function(c, i) {
+                    topic = convos[c].topic = cdata[i];
+                    topic.category && topic.category.forEach(function(cat) {
+                        fcats[cat] = fcats[cat] || [];
+                        fcats[cat].push(topic.key);
+                        top = Math.max(top, fcats[cat].length);
+                    });
+                });
+
+                // get top 4 categories
+                for (i = top; i > 0 && winners.length < 4; i--) {
+                    for (c in fcats) {
+                        if (fcats[c].length == i) {
+                            winners.unshift(c);
+                            if (winners.length == 4)
+                                break;
+                        }
+                    }
+                }
+
+                // prune (recurses several times)
+                pruneCats();
+
+                // now show it in 4 columns...
+                var fnode = function(key) {
+                    var entity = CT.data.get(key), n = CT.dom.div([
+                        CT.dom.div("(" + (entity.mtype || "thought") + ")", "smaller bold right"),
+                        entity.title || CT.parse.shortened(entity.thought, 50),
+                        CT.dom.div(convos[entity.conversation].length, "smaller bold right")
+                    ], null, null, {
+                        onclick: function() {
+                            CAN.widget.stream.jumpTo(entity.conversation);
+                        }
+                    });
+                    setTimeout(function() {
+                        var img, blurb = entity.thought || entity.blurb || entity.body;
+                        if (entity.thumbnail)
+                            img = entity.thumbnail;
+                        else if (entity.photo)
+                            img = "/get?gtype=graphic&key=" + entity.photo[0];
+                        else if (blurb)
+                            img = CT.parse.extractImage(blurb);
+                        if (img) {
+                            n.appendChild(CT.dom.panImg({
+                                img: img
+                            }));
+                        } else {
+                            CT.log("NEEDS IMAGE");
+                            CT.log(entity);
+                        }
+                    });
+                    return n;
+                };
+                var bgz = [];
+                CT.dom.setContent("forum", winners.map(function(ckey) {
+                    var cat = CT.data.get(ckey), n = CT.dom.div([
+                        CT.dom.div(cat.name, "biggest bold blue centered whitestroke"),
+                        fcats[ckey].map(fnode)
+                    ]);
+                    CT.db.get("photo", function(pz) {
+                        var idata = CT.data.choice(pz.filter(function(p) {
+                            return bgz.indexOf(p.key) == -1;
+                        })), img;
+                        bgz.push(idata.key);
+                        if (idata.photo)
+                            img = idata.photo;
+                        else if (idata.html)
+                            img = idata.html.split('src="')[1].split('" ')[0];
+                        else
+                            img = "/get?gtype=graphic&key=" + (idata.graphic || idata.key);
+                        n.appendChild(CT.dom.panImg({
+                            img: img,
+                            panDuration: 10000
+                        }));
+                    }, 8, 0, null, {
+                        category: {
+                            value: cat.key,
+                            comparator: "contains"
+                        },
+                        shared: true,
+                        is_book_cover: false
+                    });
+                    return n;
+                }));
+            }
+        });
+    });
+
 
     // challenge
-    CAN.categories.load(uid || "anonymous");
     CAN.widget.challenge.load(uid);
 
     var mostRecent = CT.dom.id("mostRecent");

@@ -88,6 +88,16 @@ def response():
         convo = db.get(cgi_get("key"))
         mod = db.get_model(convo.topic.split(": ")[0].lower())
         succeed(mod.query(mod.conversation == convo.key).get().storylink())
+    elif gtype == "convodata":
+        convos = cgi_get("keys")
+        ents = []
+        for convo in convos:
+            mod = db.get_model(db.get(convo).topic.split(": ")[0].lower())
+            ents.append(mod.query(mod.conversation == convo).get())
+        succeed([ent.data() for ent in ents])
+    elif gtype == "comcount":
+        from model import Comment
+        succeed([Comment.query(Comment.conversation == c).count() for c in cgi_get("keys")])
     elif gtype == "media":
         from model import nextmedia, getcategory, randomindexed
         category = cgi_get('category', required=False)

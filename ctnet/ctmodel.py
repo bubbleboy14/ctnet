@@ -94,6 +94,7 @@ class UserBase(ModelBase):
         comment = Comment(user=self.key, conversation=conversation.key, body=body)
         if len(conversation.privlist):
             comment.seenlist = [self.key]
+            comment.private = True
         # we put conversation to update the date
         db.put_multi([comment, conversation])
 
@@ -161,6 +162,7 @@ class Comment(ModelBase):
     body = db.Text()
     date = db.DateTime(auto_now_add=True)
     deleted = db.Boolean(default=False)
+    private = db.Boolean(default=False)
     # DONE: STRING2KEY conversion!
     seenlist = db.ForeignKey(kind="user", repeated=True) # user ids ([] = public)
     # collections (checked): flags

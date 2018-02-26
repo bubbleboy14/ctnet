@@ -10,6 +10,9 @@
 		"port": null,
 		"timezone_offset": 0
 	},
+	"categories": {
+		"icons": {}
+	},
 	"mobile": {
 		"resize": {
 		    "stretched": {

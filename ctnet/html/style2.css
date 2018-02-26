@@ -413,12 +413,102 @@ ins {
 /*    padding-right: 15px;*/
 }
 
+.whitestroke {
+    -webkit-text-stroke: 1px white;
+}
+
+#topz {
+    font-size: 120%;
+}
+
+#topz a {
+     text-decoration: none;
+}
+
+#topz tr:nth-child(even) {
+    background-color: #e6eaed;
+}
+
+#topz td {
+    min-width: 77px;
+}
+
+#topz tr:not(:first-child) td:nth-child(3),
+#topz tr:not(:first-child) td:first-child,
+#topz tr:not(:first-child) td:nth-child(4) {
+    text-align: center;
+}
+
+#topz tr:not(:first-child) td:nth-child(5),
+#topz tr:not(:first-child) td:nth-child(6) {
+    text-align: right;
+}
+
+#forum, #forum > div, #forum > div > div {
+    position: relative;
+}
+
+#topz, #forum {
+    width: 950px;
+    height: 300px;
+    border-left: 1px solid #d3d3d3;
+    border-right: 1px solid #d3d3d3;
+    box-sizing: border-box;
+}
+
+#forum > div {
+    height: 100%;
+}
+
+#forum > div > div {
+    display: inline-block;
+    width: 25%;
+    height: 100%;
+    padding: 10px;
+    vertical-align: top;
+    box-sizing: border-box;
+}
+
+#forum > div > div > div:nth-child(2) {
+    height: calc(100% - 30px);
+    overflow-y: auto;
+}
+
+#forum > div > div > div:nth-child(2) > div {
+    position: relative;
+    border: 1px solid lightgray;
+    padding: 10px;
+    margin-top: 10px;
+    margin-right: 2px;
+    cursor: pointer;
+    font-size: 90%;
+    color: #555;
+    background: rgba(200, 200, 200, 0.8);
+    transition: all 500ms;
+}
+
+#forum > div > div > div:nth-child(2) > div:hover {
+    border: 1px solid black;
+    color: white;
+    background: #555;
+}
+
+#forum > div > div > div:nth-child(2) > div .below {
+    z-index: 0 !important;
+    opacity: 0;
+}
+
+#forum > div > div > div:nth-child(2) > div:hover .below {
+    opacity: 0.4;
+}
+
 #challenge {
     width: 923px;
     height: 300px;
     background: white;
     overflow: hidden;
-    border-right: 2px solid #d3d3d3;
+    border-bottom: 4px solid #e6eaed;
+    border-right: 2px solid #e6eaed;
     padding-right: 25px;
 }
 

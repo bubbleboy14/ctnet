@@ -2,12 +2,15 @@ CT.require("CT.align");
 CT.require("CT.data");
 CT.require("CT.dom");
 CT.require("CT.mobile");
+CT.require("CT.parse");
+CT.require("CT.storage");
 CT.require("CT.trans");
 CT.require("CAN.config");
 CT.require("CAN.cookie");
 CT.require("CAN.frame");
 CT.require("CAN.search");
 CT.require("CAN.session");
+CT.require("CAN.widget.chatterlightbox");
 
 onload = function() {
     var uid = CAN.session.isLoggedIn();

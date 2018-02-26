@@ -1682,6 +1682,9 @@ class Photo(CategoriedVotingModel, Approvable):
     def logstring(self):
         return self.pic_html()
 
+    def getBlob(self):
+        return self.graphic.get().getBlob()
+
     def pic_link(self, absolute=False):
         if self.photo:
             return self.photo
@@ -2595,21 +2598,17 @@ def nextmedia(mtype, category=None, uid=None, number=1000, offset=0, nodata=Fals
 #        else:
 #            results = q.fetch(number, offset)
 #    elif mtype == "referenda" and not allrefs and approved and not authid:
-    if mtype == "referenda" and not allrefs and approved and not authid:
+    if mtype == "comment":
+        results = q.filter(mt.private == False).fetch(number, offset=offset)
+    elif mtype == "referenda" and not allrefs and approved and not authid:
         results = db.get_multi(getsettings().CAN_referenda[offset:offset+number])
     else:
-
-        a = q.count()
-
         if authid and mtype not in ["group", "page", "branch"]:
             q = q.filter(mt.user == db.KeyWrapper(urlsafe=authid))
 #        elif mtype == "paper" and user:
 #            q.filter("user = ", user)
         if mtype == "newsletter":
             q = q.filter(mt.group == (nlgroup and db.KeyWrapper(urlsafe=nlgroup) or None))
-
-        b = q.count()
-
         if mtype not in  ["paper", "opinion", "thought", "case", "page", "changeidea", "question", "place", "comment"]:
             if approved != "both":
                 q = q.filter(mt.approved == approved)
@@ -2620,30 +2619,14 @@ def nextmedia(mtype, category=None, uid=None, number=1000, offset=0, nodata=Fals
                     from util import fail
                     fail("You're not authorized!")
                 q = q.filter(mt.user == user.key)
-
-        c = q.count()
-
         if category:
             q = q.filter(mt.category.contains(getcategory(category).key.urlsafe()))
-
-        d = q.count()
-
         if recommendations:
             q = recommendsomething(user, q, MINI_QUERY_SIZE)
-
-        e = q.count()
-
         if shrink_post_filter:
             results = postFilters(q, approved, critiqued, mtype, user, filter_voted, authid, number, offset)
         else:
             results = q.fetch(number, offset=offset)
-
-        f = q.count()
-
-#        if mtype == "news":
- #           from cantools.web import fail
-  #          fail("%s %s %s %s %s %s"%(a, b, c, d, e, f))
-
     if len(results) == 0:
         from util import fail
         fail("zero count: %s.%s. (you may have already voted on all matches. we need: tons of media to make sure this doesn't happen; reasonable fallback behavior when it does; and, whenever possible, code smart enough to avoid the request altogether.)"%(mtype, category or ""))
