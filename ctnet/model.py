@@ -2433,13 +2433,13 @@ def cansearch(stype, string, startdate, enddate):
     from util import strip_punctuation
     searchwords = [w for w in strip_punctuation(string).lower().split(" ")]
     if dstart and dend: # filter and manually prune
-        return [d.data() for d in list(set(reduce(list.__add__, [_filter(f.filter(db.GenericProperty(dprop) > dstart), qm, word).fetch(1000) for word in searchwords]))) if d.dateProp() < dend]
+        return [d.data() for d in list(set(reduce(list.__add__, [_filter(f.filter(db.GenericProperty(dprop) > dstart), qm, word).all() for word in searchwords]))) if d.dateProp() < dend]
     elif dstart: # filter only
-        return [d.data() for d in list(set(reduce(list.__add__, [_filter(f.filter(db.GenericProperty(dprop) > dstart), qm, word).fetch(1000) for word in searchwords])))]
+        return [d.data() for d in list(set(reduce(list.__add__, [_filter(f.filter(db.GenericProperty(dprop) > dstart), qm, word).all() for word in searchwords])))]
     elif dend: # filter only
-        return [d.data() for d in list(set(reduce(list.__add__, [_filter(f.filter(db.GenericProperty(dprop) < dend), qm, word).fetch(1000) for word in searchwords])))]
+        return [d.data() for d in list(set(reduce(list.__add__, [_filter(f.filter(db.GenericProperty(dprop) < dend), qm, word).all() for word in searchwords])))]
     else: # no date filter
-        return [d.data() for d in list(set(reduce(list.__add__, [_filter(f, qm, word).fetch(1000) for word in searchwords])))]
+        return [d.data() for d in list(set(reduce(list.__add__, [_filter(f, qm, word).all() for word in searchwords])))]
 
 CONVOTYPES = {
     "CASE": Case,
