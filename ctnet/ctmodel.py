@@ -232,4 +232,5 @@ def getzips(kwargs):
 def send_email(recipient, subject, body, html=None):
     from util import send_mail
     html = html or body
-    send_mail(to=recipient, subject=subject, body=body, html=html)
+    send_mail(to=recipient, subject=subject, body=body or html)
+#    send_mail(to=recipient, subject=subject, body=body, html=html)
