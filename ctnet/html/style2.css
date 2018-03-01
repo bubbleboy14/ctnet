@@ -417,6 +417,10 @@ ins {
     -webkit-text-stroke: 1px white;
 }
 
+#chatterbox img {
+    max-width: 100%;
+}
+
 #topz {
     font-size: 120%;
 }
