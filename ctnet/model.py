@@ -703,7 +703,7 @@ class Thought(CategoriedVotingModel, Searchable):
         from util import DOMAIN, flipQ
         if aslist:
             return ["community"]
-        return "%s/community.html#!Stream|%s"%(DOMAIN, self.key.urlsafe())
+        return "%s/community.html#!Stream|%s"%(DOMAIN, flipQ(self.key.urlsafe()))
         # forget profile
 #        if self.user:
 #            if aslist:
@@ -756,7 +756,7 @@ class ChangeIdea(CategoriedVotingModel, Searchable):
         from util import DOMAIN, flipQ
         if aslist:
             return ["community"]
-        return "%s/community.html#!Ideas|%s"%(DOMAIN, self.key.urlsafe())
+        return "%s/community.html#!Ideas|%s"%(DOMAIN, flipQ(self.key.urlsafe()))
         # don't mess around with profile
 #        if self.user:
 #            if aslist:
@@ -808,7 +808,7 @@ class Question(CategoriedVotingModel, Searchable):
         from util import DOMAIN
         if aslist:
             return ["community"]
-        return "%s/community.html#!Questions|%s"%(DOMAIN, self.key.urlsafe())
+        return "%s/community.html#!Questions|%s"%(DOMAIN, flipQ(self.key.urlsafe()))
 
     def rssitems(self):
         return {"title": self.question, "link": self.storylink(),
