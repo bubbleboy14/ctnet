@@ -400,6 +400,9 @@ textarea.fullwidth {
     border-radius: 10px;
     background: white;
 }
+.lightbox img {
+    max-width: 100%;
+}
 .scroller { overflow: auto; }
 .scrolly { overflow-y: auto !important; overflow-x: hidden; }
 
