@@ -10,7 +10,7 @@ onload = function() {
 
     // topz (more like a forum)
     CT.db.get("thought", function(thoughts) {
-        var unodez = [], rnodez = [], posterz = [];
+        var unodez = [], rnodez = [], posterz = [], pkeyz = [];
         CT.dom.setContent("topz", CT.dom.table([[
                 "<b>Tags</b>", "<b>Thread</b>", "<b>Poster</b>",
                 "<b>Replies</b>", "<b>Posted</b>", "<b>Modified</b>"
@@ -18,7 +18,8 @@ onload = function() {
                 var unode = CT.dom.div(), tnode = CT.dom.div(), rnode = CT.dom.div();
                 unodez.push(unode);
                 rnodez.push(rnode);
-                posterz.push(t.user);
+                posterz.push(t.user || "anon");
+                t.user && pkeyz.push(t.user);
                 CAN.categories.get(function() {
                     CT.dom.setContent(tnode, t.category.filter(function(c) {
                         return CAN.categories.byKey(c).name in core.config.ctnet.categories.icons;
@@ -36,9 +37,10 @@ onload = function() {
                     CT.parse.timeStamp(t.modified)
                 ];
             }))));
-        CT.data.checkAndDo(posterz, function() {
+        CT.data.checkAndDo(pkeyz, function() {
             unodez.forEach(function(n, i) {
-                n.appendChild(CAN.session.firstLastLink(CT.data.get(posterz[i]), null, null, null, true));
+                n.appendChild(posterz[i] == "anon" ? CT.dom.div("(anon)") :
+                    CAN.session.firstLastLink(CT.data.get(posterz[i]), null, null, null, true));
             });
         });
         CT.net.post({
