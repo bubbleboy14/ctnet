@@ -1,5 +1,6 @@
 CT.require("CT.all");
 CT.require("CAN.all");
+CT.net.setRetry(3);
 
 onload = function() {
     var feat = CT.dom.id("home_featured");
