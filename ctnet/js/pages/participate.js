@@ -2205,7 +2205,7 @@ onload = function() {
             var d = CT.video.videoData(vlink.value);
             if (d && CT.video.rawVidTypes.indexOf(d.player) == -1)
                 return d;
-            alert('No usable value for "link". Please note that for now, we only support Youtube, Google Video, and Vimeo. We\'re always working to improve the site, so check back soon!');
+            alert('No usable value for "link". Please note that while we support embedded video from Ustream and Facebook (ew), as well as links to raw files (mp4, ogg, and webm), our "Video Adder" (this thing) can only handle DTube, Vimeo, YouTube (ew), and Google Video (ew). We\'re always working to improve the site, so check back soon!');
         };
         CT.dom.id("vtestbutton").onclick = function() {
             var pdata = majorVideoData();

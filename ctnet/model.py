@@ -1591,7 +1591,12 @@ class Video(CategoriedVotingModel, Searchable, Approvable):
 
     def makethumb(self):
         self.docid = self.docid.strip()
-        if self.player == "youtube":
+        if self.player == "dtube":
+            from cantools.web import fetch
+            self.thumbnail = fetch("api.d.tube", path="/oembed", asjson=True, protocol="https", qsp={
+                "url": "https://d.tube/v/%s"%(self.docid,)
+            })["thumbnail_url"]
+        elif self.player == "youtube":
             self.thumbnail = "http://img.youtube.com/vi/%s/0.jpg"%(self.docid,)
         elif self.player == "google":
             from cantools.web import fetch
