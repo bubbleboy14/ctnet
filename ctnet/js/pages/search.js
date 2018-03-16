@@ -220,8 +220,6 @@ google.setOnLoadCallback(function() {
     CAN.search.setCANsearch(new CANSearch());
     var searchform = new google.search.SearchForm(false,
         CT.dom.id("search"));
-    searchform.userDefinedCell.innerHTML = "civil action network";
-    searchform.userDefinedCell.className = "gray small";
     searchform.setOnSubmitCallback(CAN.search.cansearch,
         CANSearch.prototype.search);
     var _hash = document.location.hash.slice(1);
