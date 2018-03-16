@@ -136,13 +136,12 @@ onload = function() {
     castVote = function(ref, opinion, pdata, customvotearea) { // set to null higher up to avoid compilation issues
         if (!pdata) {
             if (!customvotearea) {
-                var captchaResponse = Recaptcha.get_response();
+                var captchaResponse = grecaptcha.getResponse();
                 if (captchaResponse.length < 3)
                     return alert("don't forget to fill in the CAPTCHA! you are human, right?");
             }
             pdata = {"key": ref.key, "uid": uid,
-                "opinion": opinion, "cresponse": captchaResponse,
-                "cchallenge": Recaptcha.get_challenge()};
+                "opinion": opinion, "cresponse": captchaResponse};
         }
         CT.net.post("/vote", pdata, "error casting vote",
             function() {
