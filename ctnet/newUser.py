@@ -9,10 +9,9 @@ def response():
     email = cgi_get('email').lower()
     password = cgi_get('password')
     zipcode = cgi_get('zipcode')
-    cchallenge = cgi_get('cchallenge')
     cresponse = cgi_get('cresponse')
 
-    verify_recaptcha(cchallenge, cresponse, RCK)
+    verify_recaptcha(cresponse, RCK)
 
     if email_in_use(email):
         fail("Email address already registered. If you've already made an account, click 'Existing User' (on the left) to log in!")

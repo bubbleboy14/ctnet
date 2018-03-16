@@ -7,7 +7,6 @@ def response():
     uid = cgi_get('uid')
     key = cgi_get('key')
     opinion = cgi_get('opinion')
-    cchallenge = cgi_get('cchallenge', required=False)
     cresponse = cgi_get('cresponse', required=False)
     squestion = cgi_get('squestion', required=False)
     sanswer = cgi_get('sanswer', required=False)
@@ -23,7 +22,7 @@ def response():
     if not target:
         fail("invalid target!")
     if target.modeltype() in ["referendum", "branch"]:
-        castvote(target, user, opinion, cchallenge, cresponse, squestion, sanswer)
+        castvote(target, user, opinion, cresponse, squestion, sanswer)
         u = target.user.get()
         if u.email_notifications:
             emailuser(u, "Vote Received",

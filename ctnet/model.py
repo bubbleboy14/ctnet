@@ -2665,7 +2665,7 @@ class Vote(CANModel):
     ip = db.ForeignKey(kind=IP)
     opinion = db.Boolean()
 
-def castvote(ref, user, opinion, cchallenge=None, cresponse=None, squestion=None, sanswer=None):
+def castvote(ref, user, opinion, cresponse=None, squestion=None, sanswer=None):
     if opinion == True:
         ref.ye += 1
     elif opinion == False:
@@ -2674,7 +2674,7 @@ def castvote(ref, user, opinion, cchallenge=None, cresponse=None, squestion=None
         from util import fail
         fail("invalid opinion!")
     ip = getip()
-    if cchallenge:
+    if cresponse:
         from util import fail, verify_recaptcha, RCK
         if ip.key not in user.ips:
             if squestion == None and sanswer == None:
@@ -2692,7 +2692,7 @@ def castvote(ref, user, opinion, cchallenge=None, cresponse=None, squestion=None
                 user.ips.append(ip.key)
             else:
                 fail("You're an imposter!")
-        verify_recaptcha(cchallenge, cresponse, RCK)
+        verify_recaptcha(cresponse, RCK)
     ip.voteCount += 1
     vote = Vote()
     vote.ip = ip.key
