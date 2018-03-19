@@ -31,7 +31,7 @@ CAN.media.video = {
 	    if (vindex != null)
 	        CT.data.add(video);
 	    var c = CT.dom.node("", "div", "bordered padded");
-	    c.appendChild(CT.dom.node(CT.video.embed(video)));
+	    c.appendChild(CT.video.thumbnail(video));
 	    var notVidPage = location.pathname.slice(1, 6) != "video";
 	    c.appendChild(CT.dom.link(video.title, notVidPage ? null
 	    	: function() { CAN.media.video.viewSingle(video); },
