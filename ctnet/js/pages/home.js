@@ -138,7 +138,7 @@ onload = function() {
                 var fnode = function(key) {
                     var entity = CT.data.get(key), n = CT.dom.div([
                         CT.dom.div("(" + (entity.mtype || "thought") + ")", "smaller bold right"),
-                        entity.title || CT.parse.shortened(entity.thought, 50),
+                        entity.title || CT.parse.shortened(entity.thought, 50, 5, true),
                         CT.dom.div(convos[entity.conversation].length, "smaller bold right")
                     ], null, null, {
                         onclick: function() {
