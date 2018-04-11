@@ -1,3 +1,5 @@
+import requests
+from HTMLParser import HTMLParser
 from util import respond, succeed, fail, cgi_get, trysavedresponse, setcachedefault
 from model import db
 
@@ -8,6 +10,31 @@ def response():
     gtype = cgi_get('gtype')
     uid = cgi_get('uid', required=False)
     uids = cgi_get('uids', required=False)
+
+    if gtype == "og":
+        url = cgi_get("url")
+        data = requests.get(url, headers={
+            'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0'
+        }).content.decode("utf-8")
+        resp = []
+        for flag in ["title", "image", "url"]:
+            fullflag = '"og:%s"'%(flag,)
+            if fullflag in data:
+                before, after = data.split(fullflag, 1)
+                if after.startswith(">") or after.startswith(" />"):
+                    sub = before.rsplit('content="', 1)
+                else:
+                    sub = after.split('content="')
+                metad = sub[1].split('"')[0]
+                if flag == "image":
+                    metad = metad.replace(" ", "%20")
+                resp.append(metad)
+            elif flag == "url":
+                resp.append(url)
+        resp = " ".join(resp)
+        if len(resp) > 500:
+            succeed(url)
+        succeed(HTMLParser.unescape.__func__(HTMLParser, resp))
 
     if gtype == "fstats":
         user = db.get(uid)
