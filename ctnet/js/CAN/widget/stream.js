@@ -71,22 +71,44 @@ CAN.widget.stream = {
 			else
 				utlist.insertBefore(n, utlist.firstChild);
 		};
-		!opts.noInput && CT.dom.richInput(utinput, opts.type + "input",
-			CT.dom.button("Post " + CT.parse.capitalize(opts.type), function() {
-				var cbody = CT.dom.id(opts.type + "input");
-				var charcount = CT.dom.id(opts.type + "inputcc");
-				var b = CT.parse.sanitize(cbody.value);
-				if (b == "")
-					return alert("say what?");
-				var postOpts = {"key": opts.key || opts.type};
-				postOpts[opts.bodyproperty || 'body'] = b.replace(/%E2%80%99/g, "'");
-				CAN.categories.tagAndPost(postOpts, function(item) {
-					CT.data.add(item);
-					addNode(item);
-					cbody.value = "";
-					charcount.innerHTML = "(500 chars left)";
-				}, 'anonymous');
-			}));
+		if (!opts.noInput) {
+			var linkMod = new CT.modal.Prompt({
+				clear: true,
+				transition: "slide",
+				prompt: "what's the link?",
+				cb: function(url) {
+					CT.net.post({
+						path: "/get",
+						params: {
+							gtype: "og",
+							url: url
+						},
+						cb: function(data) {
+							rinput.value = data;
+							rinput.onkeyup();
+						}
+					});
+				}
+			});
+			var rinput = CT.dom.richInput(utinput, opts.type + "input", CT.dom.div([
+				CT.dom.button("Post " + CT.parse.capitalize(opts.type), function() {
+					var cbody = CT.dom.id(opts.type + "input");
+					var charcount = CT.dom.id(opts.type + "inputcc");
+					var b = CT.parse.sanitize(cbody.value);
+					if (b == "")
+						return alert("say what?");
+					var postOpts = {"key": opts.key || opts.type};
+					postOpts[opts.bodyproperty || 'body'] = b.replace(/%E2%80%99/g, "'");
+					CAN.categories.tagAndPost(postOpts, function(item) {
+						CT.data.add(item);
+						addNode(item);
+						cbody.value = "";
+						charcount.innerHTML = "(500 chars left)";
+					}, 'anonymous');
+				}),
+				CT.dom.button("Embed Link", linkMod.show)
+			]));
+		}
 		for (var i = 0; i < opts.items.length; i++)
 			addNode(opts.items[i]);
 		if (!opts.listonly) {
