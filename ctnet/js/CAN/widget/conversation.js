@@ -30,23 +30,44 @@ CAN.widget.conversation = {
 	"input": function(uid, ckey, convonode, contentkey, taid, noflagging, commentsnode, charlimit, blurs) {
 	    taid = taid || CT.dom._get_ta_id();
 	    charlimit = charlimit || 500;
-	    CT.dom.richInput(convonode, taid,
-	        ckey != "conversation" && CT.dom.button("Add Comment", function() {
-	            var cbody = CT.dom.id(taid);
-	            var charcount = CT.dom.id(taid+"cc");
-	            var b = CT.parse.sanitize(cbody.value);
-	            if (b == "")
-	                return alert("say what?");
-	            b = CAN.widget.conversation.COMMENT_PREFIX + b;
-	            CT.net.post("/say", {"uid": uid, "conversation": ckey,
-	                "body": b, "contentkey": contentkey},
-	                "error posting comment", function() {
-	                    CAN.widget.conversation.comment({"user": uid, "body": b},
-	                        commentsnode, uid, noflagging);
-	                    cbody.value = "";
-	                    cbody.focus();
-	                    charcount.innerHTML = "(" + charlimit + " chars left)"; });
-	        }) || null, null, charlimit, blurs, ckey == "conversation");
+		var linkMod = new CT.modal.Prompt({
+			clear: true,
+			transition: "slide",
+			prompt: "what's the link?",
+			cb: function(url) {
+				CT.net.post({
+					path: "/get",
+					params: {
+						gtype: "og",
+						url: url
+					},
+					cb: function(data) {
+						rinput.value = data;
+						rinput.onkeyup();
+					}
+				});
+			}
+		});
+	    var rinput = CT.dom.richInput(convonode, taid,
+	        ckey != "conversation" && CT.dom.div([
+	        	CT.dom.button("Add Comment", function() {
+		            var cbody = CT.dom.id(taid);
+		            var charcount = CT.dom.id(taid+"cc");
+		            var b = CT.parse.sanitize(cbody.value);
+		            if (b == "")
+		                return alert("say what?");
+		            b = CAN.widget.conversation.COMMENT_PREFIX + b;
+		            CT.net.post("/say", {"uid": uid, "conversation": ckey,
+		                "body": b, "contentkey": contentkey},
+		                "error posting comment", function() {
+		                    CAN.widget.conversation.comment({"user": uid, "body": b},
+		                        commentsnode, uid, noflagging);
+		                    cbody.value = "";
+		                    cbody.focus();
+		                    charcount.innerHTML = "(" + charlimit + " chars left)"; });
+		        }),
+		        CT.dom.button("Embed Link", linkMod.show)
+		    ]) || null, null, charlimit, blurs, ckey == "conversation");
 	},
 	"load": function(uid, ckey, convonode, contentkey, taid, noflagging, charlimit, blurs) {
 	    if (uid == "nouid") uid = null;
