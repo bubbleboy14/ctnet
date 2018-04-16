@@ -7,7 +7,7 @@ CAN.media.paper = {
 	            	"paper", "read", CAN.cookie.getUid()), "div", "right"));
 	            n.appendChild(CT.dom.node(CT.dom.link(d.title, function() {
 	                if (location.pathname.slice(1, -5) == "recommendations")
-	                    CAN.media.opinion.viewSingle(d);
+	                    CAN.media.paper.viewSingle(d);
 	                else
 	                    location = "/recommendations.html#!PositionPapers|"
 	                        + CAN.cookie.flipReverse(d.key);
@@ -38,7 +38,7 @@ CAN.media.paper = {
 	                    paper.key, "PositionPapers");
 	            });
 	        var cnode = CT.dom.id("sbcontent" + paper.key);
-	        cnode.parentNode.insertBefore(CT.dom.node(invButt(paper,
+	        cnode.parentNode.insertBefore(CT.dom.node(CAN.widget.invite.button(paper,
 	            "paper", "read", CAN.cookie.getUid()), "div", "right"),
 	            cnode.parentNode.firstChild);
 	        cnode.appendChild(CAN.media.paper.build(paper, null, true, true));
