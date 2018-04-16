@@ -2501,7 +2501,7 @@ def recommendsomething(user, q, number=1):
     cs = user and CategoryScore or GlobalCategoryScore
     topcats = user and cs.query(cs.user == user.key) or cs.query()
     for cat in [c for c in topcats.order(-cs.score).fetch(1000) if c.preferred()]:
-        newq = q.copy(cs.category == cat.category)
+        newq = q.copy(q.mod.category.contains(cat.category.urlsafe()))
         if newq.count() < number:
             break
         q = newq
@@ -2527,8 +2527,6 @@ def filterVoted(user, results):
 MINI_QUERY_SIZE = 20
 
 def postFilters(q, approved, critiqued, mtype, user, filter_voted, authid, number, offset, results=[], depth=0):
-    import copy
-
     # fetch result
     qdata = q.fetch(MINI_QUERY_SIZE, offset = offset + MINI_QUERY_SIZE * depth)
     results = results + qdata
@@ -2562,8 +2560,8 @@ def nextmedia(mtype, category=None, uid=None, number=1000, offset=0, nodata=Fals
         author = db.get(authid)
         return [g.group.get().data(author) for g in author.collection(Membership,
             "user", fetch=False).fetch(number, offset=offset)]
-    if mtype != "newsletter": # why?
-        user = user or uid and uid != "nouid" and db.get(uid)
+    if not user and mtype != "newsletter": # why?
+        user = uid and uid != "nouid" and db.get(uid)
     # shrink_post_filter is necessary whenever post-query filtering takes place
     shrink_post_filter = bool(user)
     justone = False
@@ -2627,7 +2625,7 @@ def nextmedia(mtype, category=None, uid=None, number=1000, offset=0, nodata=Fals
         if category:
             q = q.filter(mt.category.contains(getcategory(category).key.urlsafe()))
         if recommendations:
-            q = recommendsomething(user, q, MINI_QUERY_SIZE)
+            q = recommendsomething(user, q, MINI_QUERY_SIZE + offset)
         if shrink_post_filter:
             results = postFilters(q, approved, critiqued, mtype, user, filter_voted, authid, number, offset)
         else:
