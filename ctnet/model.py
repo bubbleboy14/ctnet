@@ -1476,6 +1476,7 @@ class OpinionIdea(CategoriedVotingModel, Searchable):
 
     def mydata(self):
         return { "key": self.id(),
+                 "mtype": "opinion",
                  "title": self.title,
                  "body": self.body,
                  "uid": self.user.urlsafe(),
@@ -1526,6 +1527,7 @@ class PositionPaper(CategoriedVotingModel, Searchable):
 
     def mydata(self):
         return { "key": self.id(),
+                 "mtype": "paper",
                  "user": self.user.urlsafe(),
                  "title": self.title,
                  "body": self.body,
@@ -1928,7 +1930,8 @@ class Event(CategoriedVotingModel, Searchable, Approvable):
                 "full": w.strftime("%A %B %d, %Y at %I:%M%p")}
 
     def mydata(self):
-        return {"approved": self.approved,
+        return {"mtype": "event",
+                "approved": self.approved,
                 "user": self.user.urlsafe(),
                 "title": self.title,
                 "description": self.description,

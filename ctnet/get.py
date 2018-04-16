@@ -113,13 +113,13 @@ def response():
         succeed([c.data(nocomments=True) for c in Conversation.query().fetch(1000)])
     elif gtype == "convolink":
         convo = db.get(cgi_get("key"))
-        mod = db.get_model(convo.topic.split(": ")[0].lower())
+        mod = db.get_model(convo.topic.split(": ")[0].lower().replace(" ", ""))
         succeed(mod.query(mod.conversation == convo.key).get().storylink())
     elif gtype == "convodata":
         convos = cgi_get("keys")
         ents = []
         for convo in convos:
-            mod = db.get_model(db.get(convo).topic.split(": ")[0].lower())
+            mod = db.get_model(db.get(convo).topic.split(": ")[0].lower().replace(" ", ""))
             ents.append(mod.query(mod.conversation == convo).get())
         succeed([ent.data() for ent in ents])
     elif gtype == "comcount":
