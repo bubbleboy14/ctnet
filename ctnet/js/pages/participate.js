@@ -1032,9 +1032,10 @@ onload = function() {
             "approved": true, "uid": uid, "eb": function(e) {
                 ggmvnode.appendChild(CT.dom.node(e)); }});
 
-        var ggmnewsfull = CT.dom.node("", "div", "hidden adminpopup");
+        var ggmnewsfull = CT.dom.node("", "div", "hidden adminpopup fullheight");
         var ggmnnode = CT.dom.node("", "div", "thumb");
-        CT.dom.id("ggmapanelNews").appendChild(ggmnewsfull);
+//        CT.dom.id("ggmapanelNews").appendChild(ggmnewsfull);
+        document.body.appendChild(ggmnewsfull);
         CT.dom.id("ggmapanelNews").appendChild(ggmnnode);
         CT.align.centered(ggmnewsfull);
 
@@ -1163,9 +1164,10 @@ onload = function() {
             "uid": uid, "approved": false, "eb": function(e) {
                 apmvnode.appendChild(CT.dom.node(e)); }});
 
-        var apmnewsfull = CT.dom.node("", "div", "hidden adminpopup");
+        var apmnewsfull = CT.dom.node("", "div", "hidden adminpopup fullheight");
         var apmnnode = CT.dom.node("", "div", "thumb");
-        CT.dom.id("apmapanelNews").appendChild(apmnewsfull);
+        document.body.appendChild(apmnewsfull);
+//        CT.dom.id("apmapanelNews").appendChild(apmnewsfull);
         CT.dom.id("apmapanelNews").appendChild(apmnnode);
         CT.align.centered(apmnewsfull);
 
