@@ -1,7 +1,7 @@
 CAN.widget.stream = {
 	// thought stream widget
-	"load": function(streamnode, filternode, cb) {
-		var tsvars = {"node": streamnode, "mtype": "thought", "number": 4};
+	"load": function(streamnode, filternode, cb, number) {
+		var tsvars = { "node": streamnode, "mtype": "thought", "number": number || 4 };
 		tsvars.cb = function() {
 			var mdata = CAN.media.loader.cache[CAN.media.loader.varsToKey(tsvars)];
 			var usecats = [];
