@@ -136,15 +136,22 @@ onload = function() {
 
                 // now show it in 4 columns...
                 var fnode = function(key) {
-                    var entity = CT.data.get(key), n = CT.dom.div([
-                        CT.dom.div("(" + (entity.mtype || "thought") + ")", "smaller bold right"),
-                        entity.title || CT.parse.shortened(entity.thought, 50, 10, true),
-                        CT.dom.div(convos[entity.conversation].length, "smaller bold right")
-                    ], null, null, {
-                        onclick: function() {
-                            CAN.widget.stream.jumpTo(entity.conversation);
-                        }
-                    });
+                    var entity = CT.data.get(key),
+                        cnode = CT.dom.div(convos[entity.conversation].length, "smaller bold right"),
+                        n = CT.dom.div([
+                            CT.dom.div("(" + (entity.mtype || "thought") + ")", "smaller bold right"),
+                            entity.title || CT.parse.shortened(entity.thought, 50, 10, true),
+                            cnode
+                        ], null, null, {
+                            onclick: function() {
+                                CAN.widget.stream.jumpTo(entity.conversation);
+                            }
+                        });
+                    CT.db.get("comment", function(comcount) {
+                        cnode.innerHTML += " (" + comcount + ")";
+                    }, null, null, null, {
+                        conversation: entity.conversation
+                    }, null, true);
                     setTimeout(function() {
                         var img, blurb = entity.thought || entity.blurb || entity.body;
                         if (entity.thumbnail)
