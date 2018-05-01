@@ -153,7 +153,7 @@ onload = function() {
                         conversation: entity.conversation
                     }, null, true);
                     setTimeout(function() {
-                        var img, blurb = entity.thought || entity.blurb || entity.body;
+                        var img, blurb = entity.thought || entity.blurb || entity.body || entity.description;
                         if (entity.thumbnail)
                             img = entity.thumbnail;
                         else if (entity.photo)
