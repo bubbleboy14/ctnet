@@ -40,7 +40,6 @@ syms = {
 		"basic.html",
 		"beta.html",
 		"browsers.html",
-		"cantools.css",
 		"cases.html",
 		"community.html",
 		"home.html",
@@ -54,14 +53,16 @@ syms = {
 		"referenda.html",
 		"search.html",
 		"security.html",
-		"slider.css",
 		"stream.html",
-		"style2.css",
-		"talk.css",
 		"talk.html",
 		"video.html",
-		"wiki.css",
 		"wiki.html"
+	],
+	"css": [
+		"can.css",
+		"slider.css",
+		"talk.css",
+		"wiki.css"
 	],
 	"js": ["CAN", "lib", "pages"]
 }
