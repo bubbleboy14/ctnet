@@ -52,6 +52,9 @@
 - url: /tweet
   script: tweet.py
 
+- url: /css
+  static_dir: css
+
 - url: /img
   static_dir: img
 
@@ -67,7 +70,7 @@
 - url: /.*%23.*
   script: fix_hash.py
 
-- url: /.*\.(html|css|ico)
+- url: /.*\.(html|ico)
   script: router.py
 
 ## MODE SWITCHING -- DON'T MESS WITH!

@@ -5,20 +5,19 @@ def response():
     if "_escaped_fragment_" in os.environ.get("QUERY_STRING"):
         import gbot
 
-    allowed = set(["404", "about", "beta", "browsers", "cantools",
+    allowed = set(["404", "about", "beta", "browsers",
         "community", "home", "login", "newaccount", "news", "participate",
         "profile", "recommendations", "referenda", "search", "security",
-        "style2", "video", "slider", "cases", "talk", "chat", "wiki", "stream", "map"])
+        "video", "slider", "cases", "talk", "chat", "wiki", "stream", "map"])
 
     pi = os.environ.get("PATH_INFO")
     pname, ptype = pi[1:].split(".", 1) # shouldn't be necessary :-\
 
-    if pname == "style2":
-        from model import getsettings, getip
-        s = getsettings()
-        s.hit_count += 1
-        s.put()
-        getip()
+    from model import getsettings, getip
+    s = getsettings()
+    s.hit_count += 1
+    s.put()
+    getip()
 
     if pname == "favicon":
         send_file(readfile("favicon.ico"), "ico")
