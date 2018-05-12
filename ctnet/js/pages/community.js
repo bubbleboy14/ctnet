@@ -167,7 +167,7 @@ onload = function() {
         var h = unescape(document.location.hash.slice(2));
         if (h) {
             var hs = h.split("|");
-            var hkey = CAN.cookie.flipReverse(hs[1]);
+            var hkey = hs[1] && CAN.cookie.flipReverse(hs[1]);
             var section = hs[0];
             if (section == "Events") {
                 CT.data.checkAndDo([hkey], function() {
