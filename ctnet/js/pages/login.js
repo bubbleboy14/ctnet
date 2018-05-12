@@ -165,7 +165,7 @@ onload = function() {
     };
     CT.dom.inputEnterCallback(CT.dom.id("NewUserReenterPassword"), NUsubmit);
     var FPemail = swapFoci['ForgotPassword'] = CT.dom.id("ForgotPasswordEmail");
-    CT.dom.id("ForgotPasswordButton").onclick = function() {
+    var fpcb = CT.dom.id("ForgotPasswordButton").onclick = function() {
         if (! CT.parse.validEmail(FPemail.value))
             return alert("invalid email!");
         CT.net.post("/remind", {"email": FPemail.value}, "password retrieval error", function() {
@@ -173,5 +173,6 @@ onload = function() {
         });
         FPemail.value = "";
     };
+    CT.dom.inputEnterCallback(FPemail, fpcb);
     switchTo(document.location.hash.slice(1));
 };
