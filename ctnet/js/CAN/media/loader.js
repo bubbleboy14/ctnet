@@ -342,11 +342,20 @@ CAN.media.loader = {
 	        CAN.media.loader.change(d, v.mtype, v.showMedia, v.hasChanged, null, v.authid); }),
 	        "div", d.unseencount && "bold" || "", "ll"+d.key);
 	},
+	"ytUnthumb": function(key) {
+		var n = document.getElementById(key);
+		n.style.height = n.firstChild.clientHeight + "px";
+		n.innerHTML = CT.video.full(CT.video.videoData("https://youtube.com?v=" + key));
+	},
 	"linkProcessor": function (url, novid) {
 	    url = url.replace("gtype=graphic&amp;key=", "gtype=graphic&key=");
 	    var photoSplit = url.split("gtype=graphic&key=");
 	    if (photoSplit.length > 1)
 	        return '<img src="' + url + '">';
+	    if (url.indexOf("youtube.com") != -1) {
+	    	var key = url.split("?v=")[1];
+	    	return '<div id="' + key + '"><img class="pointer" src="http://img.youtube.com/vi/' + key + '/0.jpg" onclick="CAN.media.loader.ytUnthumb(\'' + key + '\')"></div>';
+	    }
 	    var embedder = CT.video.embed;
 	    if (["fit", "full"].indexOf(novid) != -1) {
 	    	embedder = CT.video[novid];
