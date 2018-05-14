@@ -345,6 +345,7 @@ CAN.media.loader = {
 	"ytUnthumb": function(key) {
 		var n = document.getElementById(key);
 		n.style.height = n.firstChild.clientHeight + "px";
+		n.classList.remove("vidthumb");
 		n.innerHTML = CT.video.full(CT.video.videoData("https://youtube.com?v=" + key));
 	},
 	"linkProcessor": function (url, novid) {
@@ -354,7 +355,7 @@ CAN.media.loader = {
 	        return '<img src="' + url + '">';
 	    if (url.indexOf("youtube.com") != -1) {
 	    	var key = url.split("?v=")[1];
-	    	return '<div id="' + key + '"><img class="pointer" src="http://img.youtube.com/vi/' + key + '/0.jpg" onclick="CAN.media.loader.ytUnthumb(\'' + key + '\')"></div>';
+	    	return '<div class="vidthumb" id="' + key + '"><img class="pointer" src="http://img.youtube.com/vi/' + key + '/0.jpg" onclick="CAN.media.loader.ytUnthumb(\'' + key + '\')"></div>';
 	    }
 	    var embedder = CT.video.embed;
 	    if (["fit", "full"].indexOf(novid) != -1) {
