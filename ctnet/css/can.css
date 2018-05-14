@@ -1299,8 +1299,20 @@ textarea.fullwidth {
     color: black;
 }
 
+.vidthumb img {
+    position: relative;
+}
+
 .vidthumb:hover {
     color: #670002;
+}
+
+.vidthumb:before {
+    content: "<-- censored!";
+    position: absolute;
+    right: 0;
+    top: 40%;
+    font-size: 180%;
 }
 
 .vidthumb:after {
