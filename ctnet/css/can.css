@@ -1301,6 +1301,7 @@ textarea.fullwidth {
 
 .vidthumb img {
     position: relative;
+    max-width: 100% !important;
 }
 
 .vidthumb:hover {
