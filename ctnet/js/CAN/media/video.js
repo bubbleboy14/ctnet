@@ -40,8 +40,6 @@ CAN.media.video = {
 	    if (htmlSafe && !notVidPage) {
 	    	var randid = c.lastChild.id = "randid" + (Math.random() * 1000);
 	    	setTimeout(function() {
-	    		CT.log("FIRED!");
-	    		CT.log(randid);
 		    	CT.dom.id(randid).onclick = function() {
 		    		CAN.media.video.viewSingle(CT.data.get(video.key));
 		    	};
