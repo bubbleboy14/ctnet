@@ -76,8 +76,7 @@ CAN.media.video = {
 	    return CT.dom.div(c, cclass, video.docid);
 	},
 	"getAndShow": function(vid) {
-	    var n = CT.dom.div();
-	    n.id = "convovid" + vid;
+	    var n = CT.dom.div(null, null, "convovid" + vid + Math.floor(Math.random() * 1000));
 	    var viddata = CT.data.get(vid);
 	    if (viddata && viddata.player)
 	        n.innerHTML = CAN.media.video.build(viddata,
@@ -86,9 +85,8 @@ CAN.media.video = {
 	        CT.net.post("/get", {"gtype": "data", "key": vid},
 	            "error retrieving video", function(result) {
 	            CT.data.add(result);
-	            (CT.dom.id("convovid" + vid)
-	            	|| n).innerHTML = CAN.media.video.build(result,
-	                	null, true, true, true).firstChild.innerHTML;
+	            (CT.dom.id(n.id) || n).innerHTML = CAN.media.video.build(result,
+                	null, true, true, true).firstChild.innerHTML;
 	        });
 	    }
 	    return n;
