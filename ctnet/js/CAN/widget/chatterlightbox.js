@@ -13,7 +13,7 @@ CAN.widget.chatterlightbox = {
 		        	location = "/community.html#!Stream";
 		        });
 			CAN.widget.chatterlightbox._box = new CT.modal.LightBox({
-				innerClass: "scrolly lightbox hglite upscale",
+				innerClass: "scrolly lightbox hglite",
 				content: [
 					cbox,
 					CT.dom.div([
@@ -78,7 +78,7 @@ CAN.widget.chatterlightbox = {
 						CT.dom.div("your turn", "biggerer bold right bordertop"),
 						CT.dom.div("Click the \"What's This?\" link at the top of any page (right by the \"Log In\" link) to return to this menu at any time. Click outside the box (or press the ESCAPE key) to make it go away. And in the meantime, tell us something we don't know.", "padded"),
 						talkBack
-					], "bolda nodecoration")
+					], "upscale nodecoration")
 				]
 			});
 			CT.storage.set("lb_viewed", true);
