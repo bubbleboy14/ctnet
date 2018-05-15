@@ -38,12 +38,12 @@ CAN.media.video = {
 	    	notVidPage ? "/video.html#!" + CAN.cookie.flipReverse(video.key) : null,
 	        "bold red nodecoration"));
 	    if (htmlSafe && !notVidPage) {
-	    	var randid = c.lastChild.id = "randid" + (Math.random() * 1000);
+	    	var randid = c.lastChild.id = "randid" + Math.floor(Math.random() * 1000);
 	    	setTimeout(function() {
 		    	CT.dom.id(randid).onclick = function() {
 		    		CAN.media.video.viewSingle(CT.data.get(video.key));
 		    	};
-	    	}, 500);
+	    	}, 2000);
 	    }
 	    var byline = CT.dom.node("", "div", "smaller right");
 	    byline.appendChild(CT.dom.node("posted "
@@ -56,17 +56,18 @@ CAN.media.video = {
 	    	true), "div", "small"));
 	    if (!nocat)
 	        c.appendChild(CAN.categories.listing(video.category));
-	    var convobox = CT.dom.node("", "div", "categoriedbox hidden",
-	        video.docid + "conversation");
-	    convobox.appendChild(CT.dom.node("Conversation",
-	    	"div", "blue bold topmargined"));
-	    var convonode = CT.dom.node("loading conversation...",
-	        "div", "bordertop");
-	    convobox.appendChild(convonode);
-	    c.appendChild(convobox);
-	    if (!inconvo && video.conversation)
+	    if (!inconvo && video.conversation) {
+		    var convobox = CT.dom.node("", "div", "categoriedbox hidden",
+		        video.docid + "conversation");
+		    convobox.appendChild(CT.dom.node("Conversation",
+		    	"div", "blue bold topmargined"));
+		    var convonode = CT.dom.node("loading conversation...",
+		        "div", "bordertop");
+		    convobox.appendChild(convonode);
+		    c.appendChild(convobox);
 	        CAN.widget.conversation.load(v.uid,
 	        	video.conversation, convonode, video.key);
+	    }
 	    var cclass = "categoriedbox bottompadded";
 	    if (video.category) {
 	        for (var i = 0; i < video.category.length; i++)
