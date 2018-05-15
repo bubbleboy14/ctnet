@@ -12,9 +12,9 @@ CAN.media.video = {
 	    }
 	    if (!video.viewed) {
 	        CT.dom.id("svl").appendChild(
-	        	CT.dom.node(CT.dom.link(video.title,
+	        	CT.dom.div(CT.dom.link(video.title,
 	            function() { CAN.media.video.viewSingle(video); }),
-	            "div", "sbitem", "sbitem" + video.docid));
+	            "sbitem", "sbitem" + video.docid));
 	        CT.dom.id("sv").style.display = "block";
 	        video.viewed = true;
 	    }
@@ -30,7 +30,7 @@ CAN.media.video = {
 		var v = CAN.media.loader.args.video;
 	    if (vindex != null)
 	        CT.data.add(video);
-	    var c = CT.dom.node("", "div", "bordered padded");
+	    var c = CT.dom.div("", "bordered padded");
 	    c.appendChild(CT.video.thumbnail(video));
 	    var notVidPage = location.pathname.slice(1, 6) != "video";
 	    c.appendChild(CT.dom.link(video.title, (notVidPage || htmlSafe)
@@ -40,29 +40,27 @@ CAN.media.video = {
 	    if (htmlSafe && !notVidPage) {
 	    	var randid = c.lastChild.id = "randid" + Math.floor(Math.random() * 1000);
 	    	setTimeout(function() {
-		    	CT.dom.id(randid).onclick = function() {
-		    		CAN.media.video.viewSingle(CT.data.get(video.key));
-		    	};
-	    	}, 2000);
+	    		CT.dom.doWhenNodeExists(randid, function() {
+			    	CT.dom.id(randid).onclick = function() {
+			    		CAN.media.video.viewSingle(CT.data.get(video.key));
+			    	};
+	    		});
+	    	}, 5000);
 	    }
-	    var byline = CT.dom.node("", "div", "smaller right");
-	    byline.appendChild(CT.dom.node("posted "
-	    	+ (video.date || "(now)") + ", by ", "span", "gray"));
+	    var byline = CT.dom.div("", "smaller right");
+	    byline.appendChild(CT.dom.span("posted " + (video.date || "(now)") + ", by ", "gray"));
 	    byline.appendChild(CAN.session.firstLastLink({
 	    	"firstName": video.user, "key": video.uid
 	    }, false, false, "Videos", true));
 	    c.appendChild(byline);
-	    c.appendChild(CT.dom.node(CT.parse.process(video.description,
-	    	true), "div", "small"));
+	    c.appendChild(CT.dom.div(CT.parse.process(video.description, true), "small"));
 	    if (!nocat)
 	        c.appendChild(CAN.categories.listing(video.category));
 	    if (!inconvo && video.conversation) {
-		    var convobox = CT.dom.node("", "div", "categoriedbox hidden",
+		    var convobox = CT.dom.div("", "categoriedbox hidden",
 		        video.docid + "conversation");
-		    convobox.appendChild(CT.dom.node("Conversation",
-		    	"div", "blue bold topmargined"));
-		    var convonode = CT.dom.node("loading conversation...",
-		        "div", "bordertop");
+		    convobox.appendChild(CT.dom.div("Conversation", "blue bold topmargined"));
+		    var convonode = CT.dom.div("loading conversation...", "bordertop");
 		    convobox.appendChild(convonode);
 		    c.appendChild(convobox);
 	        CAN.widget.conversation.load(v.uid,
@@ -75,10 +73,10 @@ CAN.media.video = {
 	    }
 	    if (typeof vindex == "number" && (vindex < CAN.media.loader.newcount))
 	        cclass += " Latest";
-	    return CT.dom.node(c, "div", cclass, video.docid);
+	    return CT.dom.div(c, cclass, video.docid);
 	},
 	"getAndShow": function(vid) {
-	    var n = CT.dom.node();
+	    var n = CT.dom.div();
 	    n.id = "convovid" + vid;
 	    var viddata = CT.data.get(vid);
 	    if (viddata && viddata.player)
@@ -96,12 +94,12 @@ CAN.media.video = {
 	    return n;
 	},
 	"slider": function(video) {
-	    var n = CT.dom.node();
-	    var r = CT.dom.node("", "div", "right w400");
-	    r.appendChild(CT.dom.node(video.title, "div", "big bold"));
-	    r.appendChild(CT.dom.node(CT.parse.process(video.description)));
+	    var n = CT.dom.div();
+	    var r = CT.dom.div("", "right w400");
+	    r.appendChild(CT.dom.div(video.title, "big bold"));
+	    r.appendChild(CT.dom.div(CT.parse.process(video.description)));
 	    n.appendChild(r);
-	    n.appendChild(CT.dom.node(CT.video.embed(video)));
+	    n.appendChild(CT.dom.div(CT.video.embed(video)));
 	    n.onclick = function() {
 	        document.location = "/video.html#!"
 	        	+ CAN.cookie.flipReverse(video.key);
@@ -109,9 +107,9 @@ CAN.media.video = {
 	    return n;
 	},
 	"evidence": function(video) {
-	    var n = CT.dom.node();
-	    n.appendChild(CT.dom.node(CT.video.embed(video, true)));
-	    n.appendChild(CT.dom.node(video.title, "div", "big bold"));
+	    var n = CT.dom.div();
+	    n.appendChild(CT.dom.div(CT.video.embed(video, true)));
+	    n.appendChild(CT.dom.div(video.title, "big bold"));
 	    n.onclick = function() {
 	        document.location = "/video.html#!"
 	        	+ CAN.cookie.flipReverse(video.key);
@@ -127,24 +125,22 @@ CAN.media.video = {
 	"result": function(video, lastvideo) {
 	    var n = CT.dom.link("", null, "/video.html#!"
 	    	+ CAN.cookie.flipReverse(video.key));
-	    n.appendChild(CT.dom.node(CT.dom.img(
-	    	video.thumbnail.replace(/&amp;/g, "&")), "div", "lfloat rpadded"));
-	    n.appendChild(CT.dom.node(video.title, "div", "big"));
-	    n.appendChild(CT.dom.node(CT.parse.process(video.description, true)));
-	    n.appendChild(CT.dom.node("", "div", "clearnode"));
-	    return CT.dom.node(n, "div", (!lastvideo)
-	    	&& "bottompadded bottomline" || "");
+	    n.appendChild(CT.dom.div(CT.dom.img(
+	    	video.thumbnail.replace(/&amp;/g, "&")), "lfloat rpadded"));
+	    n.appendChild(CT.dom.div(video.title, "big"));
+	    n.appendChild(CT.dom.div(CT.parse.process(video.description, true)));
+	    n.appendChild(CT.dom.div("", "clearnode"));
+	    return CT.dom.div(n, lastvideo ? "" : "bottompadded bottomline");
 	},
 	"thumbnaked": function(video, i) {
 	    var n = CT.dom.link("", null, "/video.html#!"
 	    	+ CAN.cookie.flipReverse(video.key));
 	    n.appendChild(CT.dom.img(video.thumbnail.replace(/&amp;/g, "&")));
-	    n.appendChild(CT.dom.node(video.title, "div", "cutoff64"));
-	    return CT.dom.node(n);
+	    n.appendChild(CT.dom.div(video.title, "cutoff64"));
+	    return CT.dom.div(n);
 	},
 	"thumb": function(video, i) {
-	    return CT.dom.node(CAN.media.video.thumbnaked(video, i),
-	        "div", "thumbcell");
+	    return CT.dom.div(CAN.media.video.thumbnaked(video, i), "thumbcell");
 	}
 };
 
