@@ -3,7 +3,7 @@ CAN.widget.chatterlightbox = {
 		if (CAN.widget.chatterlightbox._box)
 			return CAN.widget.chatterlightbox._box.show();
 	    CT.net.post("/get", {"gtype": "media", "mtype": "comment", "number": 3}, null, function(items) {
-	    	var cbox = CT.dom.div(null, "w1-3 mw150p m5 right"),
+	    	var cbox = CT.dom.div(null, "w1-3 mw150p wm400p m5 right"),
 	    		talkBack = CT.dom.div();
 	        CAN.widget.stream.comment(cbox, null, items.reverse(), false, true, "full");
 	        CT.dom.inputEnterCallback(CT.dom.richInput(talkBack, null, null, null, null,
@@ -13,7 +13,7 @@ CAN.widget.chatterlightbox = {
 		        	location = "/community.html#!Stream";
 		        });
 			CAN.widget.chatterlightbox._box = new CT.modal.LightBox({
-				innerClass: "scrolly lightbox hglite",
+				innerClass: "scrolly lightbox hglite upscale",
 				content: [
 					cbox,
 					CT.dom.div([
