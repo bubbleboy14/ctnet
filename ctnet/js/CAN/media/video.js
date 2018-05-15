@@ -26,18 +26,27 @@ CAN.media.video = {
 	    CAN.widget.share.updateShareItem("video", video.key);
 	},
 	// embedded video, as in list
-	"build": function(video, vindex, nocat, inconvo) {
+	"build": function(video, vindex, nocat, inconvo, htmlSafe) {
 		var v = CAN.media.loader.args.video;
 	    if (vindex != null)
 	        CT.data.add(video);
 	    var c = CT.dom.node("", "div", "bordered padded");
 	    c.appendChild(CT.video.thumbnail(video));
 	    var notVidPage = location.pathname.slice(1, 6) != "video";
-	    c.appendChild(CT.dom.link(video.title, notVidPage ? null
-	    	: function() { CAN.media.video.viewSingle(video); },
-	    	notVidPage ? "/video.html#!" +
-	    	CAN.cookie.flipReverse(video.key) : null,
+	    c.appendChild(CT.dom.link(video.title, (notVidPage || htmlSafe)
+	    	? null : function() { CAN.media.video.viewSingle(video); },
+	    	notVidPage ? "/video.html#!" + CAN.cookie.flipReverse(video.key) : null,
 	        "bold red nodecoration"));
+	    if (htmlSafe && !notVidPage) {
+	    	var randid = c.lastChild.id = "randid" + (Math.random() * 1000);
+	    	setTimeout(function() {
+	    		CT.log("FIRED!");
+	    		CT.log(randid);
+		    	CT.dom.id(randid).onclick = function() {
+		    		CAN.media.video.viewSingle(CT.data.get(video.key));
+		    	};
+	    	}, 500);
+	    }
 	    var byline = CT.dom.node("", "div", "smaller right");
 	    byline.appendChild(CT.dom.node("posted "
 	    	+ (video.date || "(now)") + ", by ", "span", "gray"));
@@ -75,14 +84,14 @@ CAN.media.video = {
 	    var viddata = CT.data.get(vid);
 	    if (viddata && viddata.player)
 	        n.innerHTML = CAN.media.video.build(viddata,
-	        	null, true, true).firstChild.innerHTML;
+	        	null, true, true, true).firstChild.innerHTML;
 	    else {
 	        CT.net.post("/get", {"gtype": "data", "key": vid},
 	            "error retrieving video", function(result) {
 	            CT.data.add(result);
 	            (CT.dom.id("convovid" + vid)
 	            	|| n).innerHTML = CAN.media.video.build(result,
-	                	null, true, true).firstChild.innerHTML;
+	                	null, true, true, true).firstChild.innerHTML;
 	        });
 	    }
 	    return n;
