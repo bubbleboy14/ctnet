@@ -1333,3 +1333,29 @@ textarea.fullwidth {
     transform: translate(-45px, -45px);
     background: rgba(50, 50, 50, 0.4);
 }
+
+@media (min-width: 1100px) {
+    .upscale {
+        font-size: 110%;
+    }
+}
+@media (min-width: 1300px) {
+    .upscale {
+        font-size: 120%;
+    }
+}
+@media (min-width: 1500px) {
+    .upscale {
+        font-size: 130%;
+    }
+}
+@media (min-width: 1700px) {
+    .upscale {
+        font-size: 140%;
+    }
+}
+@media (min-width: 1900px) {
+    .upscale {
+        font-size: 150%;
+    }
+}
