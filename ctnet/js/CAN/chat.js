@@ -139,7 +139,7 @@ CAN.chat = {
 	            CT.dom.id(rd.key).firstChild.innerHTML = rd.name;
 	        CAN.chat.currentRoom = room;
 	        isWidget ? CT.dom.id("peopleButton").onclick()
-	            : updateShareItem("community", room, "People");
+	            : CAN.widget.share.updateShareItem("community", room, "People");
 	        CAN.chat.scrollOutie();
 	        CAN.chat.focusChatInput();
 	    };

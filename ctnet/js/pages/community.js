@@ -197,7 +197,7 @@ onload = function() {
                 CAN.widget.share.updateShareItem("community", null, section);
                 if (section == "People") {
                     mrlink.onclick();
-                    CT.panel.swap(allgroups[hkey], true, "ch");
+                    CT.panel.swap(CAN.chat.groups[hkey], true, "ch");
                 }
             }
             document.location.hash = "";
