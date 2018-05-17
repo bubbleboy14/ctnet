@@ -354,7 +354,7 @@ CAN.media.loader = {
 	    if (photoSplit.length > 1)
 	        return '<img src="' + url + '">';
 	    if (url.indexOf("youtube.com") != -1) {
-	    	var key = url.split("?v=")[1];
+	    	var key = url.split("v=")[1].split("&")[0];
 	    	return '<div class="vidthumb" id="' + key + '"><img class="pointer" src="http://img.youtube.com/vi/' + key + '/0.jpg" onclick="CAN.media.loader.ytUnthumb(\'' + key + '\')"></div>';
 	    }
 	    var embedder = CT.video.embed;
