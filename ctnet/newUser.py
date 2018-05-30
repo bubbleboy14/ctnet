@@ -30,7 +30,6 @@ def response():
     send_mail(
         to=email,
         subject="New Account!",
-        body=activate['body']%(firstName, DOMAIN, user.id()),
-        html=activate['html']%(firstName, DOMAIN, user.id()))
+        body=activate%(firstName, DOMAIN, user.id()))
 
 respond(response)

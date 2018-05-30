@@ -36,8 +36,7 @@ def response():
         from model import emailuser
         from emailTemplates import account_activated
         emailuser(user, "Account Activated",
-            account_activated['body']%(user.firstName, DOMAIN),
-            account_activated['html']%(user.firstName, DOMAIN))
+            account_activated%(user.firstName, DOMAIN))
     redirect("/login.html", "success! %s! now login!"%(txt,))
 
 respond(response, failMsg="account activation failed", failHtml=True, noLoad=True)

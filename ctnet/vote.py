@@ -26,9 +26,7 @@ def response():
         u = target.user.get()
         if u.email_notifications:
             emailuser(u, "Vote Received",
-                vote_received['body']%(u.firstName, target.title,
-                    DOMAIN, flipQ(target.id())),
-                vote_received['html']%(u.firstName, target.title,
+                vote_received%(u.firstName, target.title,
                     DOMAIN, flipQ(target.id())))
         vote_message(target)
     elif uid != "anonymous":

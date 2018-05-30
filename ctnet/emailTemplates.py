@@ -1,5 +1,4 @@
-email_changed = {}
-email_changed['body'] = """
+email_changed = """
 Dear %s:
 
 You have changed the email address associated with your account.
@@ -12,20 +11,8 @@ Enjoy!
 
 The CAN Team
 """
-email_changed['html'] = """
-Dear %s:<br>
-<br>
-You have changed the email address associated with your account.<br>
-<br>
-To confirm this change, click <a href="%s/activate?u=%s">here</a>.<br>
-<br>
-Enjoy!<br>
-<br>
-The CAN Team
-"""
 
-submission_approved = {}
-submission_approved['body'] = """
+submission_approved = """
 Dear %s:
 
 Your submission, "%s", has been approved!
@@ -38,20 +25,8 @@ Have a great day!
 
 The CAN Team
 """
-submission_approved['html'] = """
-Dear %s:<br>
-<br>
-Your submission, "%s", has been approved!<br>
-<br>
-To view your content live, click <a href="%s">here</a>.<br>
-<br>
-Have a great day!<br>
-<br>
-The CAN Team
-"""
 
-submission_critiqued = {}
-submission_critiqued['body'] = """
+submission_critiqued = """
 Dear %s:
 
 Your submission, "%s", has been critiqued!
@@ -64,20 +39,8 @@ Have a great day!
 
 The CAN Team
 """
-submission_critiqued['html'] = """
-Dear %s:<br>
-<br>
-Your submission, "%s", has been critiqued!<br>
-<br>
-You can view the critique and resubmit your content on the participate page, <a href="%s/participate.html">here</a>.<br>
-<br>
-Have a great day!<br>
-<br>
-The CAN Team
-"""
 
-account_activated = {}
-account_activated['body'] = """
+account_activated = """
 Dear %s:
 
 Congratulations! Your Civil Action Network account is now activated -- welcome to the network!
@@ -90,20 +53,8 @@ Thank you for joining us! Have a great day.
 
 The CAN Team
 """
-account_activated['html'] = """
-Dear %s:<br>
-<br>
-Congratulations! Your Civil Action Network account is now activated -- welcome to the network!<br>
-<br>
-To log in, click <a href="%s/login.html">here</a><br>
-<br>
-Thank you for joining us! Have a great day.<br>
-<br>
-The CAN Team
-"""
 
-activate = {}
-activate['body'] = """
+activate = """
 Dear %s:
 
 Your Civil Action Network account has been approved.
@@ -118,22 +69,8 @@ Enjoy!
 
 The CAN Team
 """
-activate['html'] = """
-Dear %s:<br>
-<br>
-Your Civil Action Network account has been approved.<br>
-<br>
-To activate your account, click <a href="%s/activate?u=%s">here</a>.<br>
-<br>
-Please note that we will delete your account if you fail to activate within 7 days.<br>
-<br>
-Enjoy!<br>
-<br>
-The CAN Team
-"""
 
-reset_password = {}
-reset_password['body'] = """
+reset_password = """
 Dear %s:
 
 As requested, we've reset your password.
@@ -144,20 +81,8 @@ Don't forget to change it, and have a great day!
 
 The CAN Team
 """
-reset_password['html'] = """
-Dear %s:<br>
-<br>
-As requested, we've reset your password.<br>
-<br>
-New password: "%s".<br>
-<br>
-Don't forget to change it, and have a great day!<br>
-<br>
-The CAN Team
-"""
 
-comment_received = {}
-comment_received['body'] = """
+comment_received = """
 Dear %s:
 
 Your submission entitled "%s" has received a comment.
@@ -170,20 +95,8 @@ Have a great day!
 
 The CAN Team
 """
-comment_received['html'] = """
-Dear %s:<br>
-<br>
-Your submission entitled "%s" has received a comment.<br>
-<br>
-To check it out, click <a href="%s">here</a>.<br>
-<br>
-Have a great day!<br>
-<br>
-The CAN Team
-"""
 
-comment_alert = {}
-comment_alert['body'] = """
+comment_alert = """
 Dear %s:
 
 A submission entitled "%s" has received a comment.
@@ -196,20 +109,8 @@ Have a great day!
 
 The CAN Team
 """
-comment_alert['html'] = """
-Dear %s:<br>
-<br>
-A submission entitled "%s" has received a comment.<br>
-<br>
-To check it out, click <a href="%s">here</a>.<br>
-<br>
-Have a great day!<br>
-<br>
-The CAN Team
-"""
 
-message_received = {}
-message_received['body'] = """
+message_received = """
 Dear %s:
 
 %s has sent you a message!
@@ -222,20 +123,8 @@ Have a great day!
 
 The CAN Team
 """
-message_received['html'] = """
-Dear %s:<br>
-<br>
-%s has sent you a message!<br>
-<br>
-To check it out, click <a href="%s/profile.html#%s">here</a>.<br>
-<br>
-Have a great day!<br>
-<br>
-The CAN Team
-"""
 
-invitation = {}
-invitation['body'] = """
+invitation = """
 Dear %s:
 
 %s has invited you to %s %s called "%s".
@@ -248,20 +137,8 @@ Have a great day!
 
 The CAN Team
 """
-invitation['html'] = """
-Dear %s:<br>
-<br>
-%s has invited you to %s %s called "%s".<br>
-<br>
-To check it out, click <a href="%s">here</a>.<br>
-<br>
-Have a great day!<br>
-<br>
-The CAN Team
-"""
 
-invite_email = {}
-invite_email['body'] = """
+invite_email = """
 %s has invited you to participate in %s called "%s".
 
 To check it out, please make a free, secure account here:
@@ -276,20 +153,8 @@ Have a great day!
 
 The CAN Team
 """
-invite_email['html'] = """
-%s has invited you to participate in %s called "%s".<br>
-<br>
-To check it out, please make a free, secure account <a href="%s/login.html">here</a>.<br>
-<br>
-Then, view the %s <a href="%s">here</a>.<br>
-<br>
-Have a great day!<br>
-<br>
-The CAN Team
-"""
 
-invite_email_no_account = {}
-invite_email_no_account['body'] = """
+invite_email_no_account = """
 %s has invited you to %s %s called "%s".
 
 Check it out here:
@@ -300,18 +165,8 @@ Have a great day!
 
 The CAN Team
 """
-invite_email_no_account['html'] = """
-%s has invited you to %s %s called "%s".<br>
-<br>
-Check it out <a href="%s">here</a>.<br>
-<br>
-Have a great day!<br>
-<br>
-The CAN Team
-"""
 
-vote_received = {}
-vote_received['body'] = """
+vote_received = """
 Dear %s:
 
 Your referendum entitled "%s" has received a vote!
@@ -324,20 +179,8 @@ Have a great day!
 
 The CAN Team
 """
-vote_received['html'] = """
-Dear %s:<br>
-<br>
-Your referendum entitled "%s" has received a vote!<br>
-<br>
-To check it out, click <a href="%s/referenda#!%s">here</a>.<br>
-<br>
-Have a great day!<br>
-<br>
-The CAN Team
-"""
 
-evidence_submitted = {}
-evidence_submitted['body'] = """
+evidence_submitted = """
 Dear %s:
 
 Evidence has been submitted in support of your case, "%s"!
@@ -350,20 +193,8 @@ Have a great day!
 
 The CAN Team
 """
-evidence_submitted['html'] = """
-Dear %s:<br>
-<br>
-Evidence has been submitted in support of your case, "%s"!<br>
-<br>
-To view your case, click <a href="%s">here</a>.<br>
-<br>
-Have a great day!<br>
-<br>
-The CAN Team
-"""
 
-branch_submitted = {}
-branch_submitted['body'] = """
+branch_submitted = """
 Dear %s:
 
 A new branch has been submitted diverging from your referendum, "%s"!
@@ -376,20 +207,8 @@ Have a great day!
 
 The CAN Team
 """
-branch_submitted['html'] = """
-Dear %s:<br>
-<br>
-A new branch has been submitted diverging from your referendum, "%s"!<br>
-<br>
-To view your referendum, click <a href="%s">here</a>.<br>
-<br>
-Have a great day!<br>
-<br>
-The CAN Team
-"""
 
-response_received = {}
-response_received['body'] = """
+response_received = """
 Dear %s:
 
 %s has responded to your comment.
@@ -402,20 +221,8 @@ Have a great day!
 
 The CAN Team
 """
-response_received['html'] = """
-Dear %s:<br>
-<br>
-%s has responded to your comment.<br>
-<br>
-To view the conversation, click <a href="%s">here</a>.<br>
-<br>
-Have a great day!<br>
-<br>
-The CAN Team
-"""
 
-tweet = {}
-tweet['body'] = """
+tweet = """
 Hey Greg!
 
 Someone submitted this thought:
@@ -429,21 +236,5 @@ No: %s
 
 Thanks! Have a great day.
 
-The CAN Team
-"""
-tweet['html'] = """
-Hey Greg!<br>
-<br>
-Someone submitted this thought:<br>
-<br>
-%s<br>
-<br>
-Would you like to tweet it?<br>
-<br>
-<a href="%s">Yes</a><br>
-<a href="%s">No</a><br>
-<br>
-Thanks! Have a great day.<br>
-<br>
 The CAN Team
 """

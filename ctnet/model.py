@@ -597,24 +597,18 @@ def send_invitation(media, user, invitee=None, email=None):
             from util import DOMAIN
             from emailTemplates import invite_email
             send_email(email, subject,
-                invite_email['body']%(fn, asomething,
-                    mtitle, DOMAIN, mtype, mlink),
-                invite_email['html']%(fn, asomething,
+                invite_email%(fn, asomething,
                     mtitle, DOMAIN, mtype, mlink))
         else: # event, video, news, referendum
             from emailTemplates import invite_email_no_account
             send_email(email, subject,
-                invite_email_no_account['body']%(fn,
-                    verb, asomething, mtitle, mlink),
-                invite_email_no_account['html']%(fn,
+                invite_email_no_account%(fn,
                     verb, asomething, mtitle, mlink))
     elif invitee:
         if invitee.email_messages:
             from emailTemplates import invitation
             emailuser(invitee, subject,
-                invitation['body']%(invitee.firstName,
-                    fn, verb, asomething, mtitle, mlink),
-                invitation['html']%(invitee.firstName,
+                invitation%(invitee.firstName,
                     fn, verb, asomething, mtitle, mlink))
     else:
         from util import fail

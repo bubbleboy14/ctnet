@@ -12,7 +12,6 @@ def response():
     user.password = hashpass(pw, user.date)
     user.put()
     emailuser(user, "Password Reset",
-        reset_password['body']%(user.firstName, pw),
-        reset_password['html']%(user.firstName, pw))
+        reset_password%(user.firstName, pw))
 
 respond(response)

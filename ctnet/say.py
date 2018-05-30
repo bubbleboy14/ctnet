@@ -5,9 +5,7 @@ from emailTemplates import comment_received, message_received, response_received
 def emailCommentReceived(user, u, ctitle, storylink, content):
     if u and u.email_notifications:
         emailuser(u, "Comment Received",
-            comment_received['body']%(u.firstName,
-                ctitle, storylink),
-            comment_received['html']%(u.firstName,
+            comment_received%(u.firstName,
                 ctitle, storylink))
     chat_message(user, u, content)
 
@@ -58,17 +56,13 @@ def response():
             for u in db.get_multi(list(set([c.user for c in conversation.collection(Comment, "conversation") if c.user not in exemptuserkeys]))):
                 if u.email_notifications:
                     emailuser(u, "Response Received",
-                        response_received['body']%(u.firstName,
-                            user.firstName, storylink),
-                        response_received['html']%(u.firstName,
+                        response_received%(u.firstName,
                             user.firstName, storylink))
                     exemptuserkeys.append(u.key)
             for u in map(getfounder, ["greg", "paul", "mario"]):
                 if u.email_notifications and u.key not in exemptuserkeys:
                     emailuser(u, "Comment Alert!",
-                        comment_alert['body']%(u.firstName,
-                            titleanalog, storylink),
-                        comment_alert['html']%(u.firstName,
+                        comment_alert%(u.firstName,
                             titleanalog, storylink))
             content.setSearchWords()
             content.put()
@@ -78,9 +72,7 @@ def response():
         for u in db.get_multi(conversation.privlist):
             if u != user and u.email_messages:
                 emailuser(u, "Message from %s"%(user.firstName,),
-                    message_received['body']%(u.firstName,
-                        fn, DOMAIN, cid),
-                    message_received['html']%(u.firstName,
+                    message_received%(u.firstName,
                         fn, DOMAIN, cid))
 
 respond(response)

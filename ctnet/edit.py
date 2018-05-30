@@ -58,9 +58,7 @@ def edit(element, key, val, editor, emtype):
             elus = element.user.get()
             if elus.email_notifications:
                 emailuser(elus, "Content Approval",
-                    submission_approved['body']%(elus.firstName,
-                        element.title, element.storylink()),
-                    submission_approved['html']%(elus.firstName,
+                    submission_approved%(elus.firstName,
                         element.title, element.storylink()))
             approve_message(element)
         ul = ULog()
@@ -132,9 +130,7 @@ def edit(element, key, val, editor, emtype):
         elus = element.user.get()
         if elus.email_notifications:
             emailuser(elus, "Content Critiqued",
-                submission_critiqued['body']%(elus.firstName,
-                    element.title, DOMAIN),
-                submission_critiqued['html']%(elus.firstName,
+                submission_critiqued%(elus.firstName,
                     element.title, DOMAIN))
         element.critiqued = True
         return [Critique(subject=element.key, critic=editor.key, comment=val)]
@@ -264,9 +260,7 @@ def edit(element, key, val, editor, emtype):
             send_mail(
                 to="%s %s <%s>"%(element.firstName, element.lastName, val),
                 subject="Email Authentication",
-                body=email_changed['body']%(element.firstName,
-                    DOMAIN, element.id()),
-                html=email_changed['html']%(element.firstName,
+                body=email_changed%(element.firstName,
                     DOMAIN, element.id()))
         elif key == "phone":
             uauth.set_status("phone", False)
@@ -402,8 +396,7 @@ def response():
             db.put_multi([t, ul])
             tlz = t.tweetlinks()
             emailgreg("Tweet This?",
-                tweet['body']%(t.thought, tlz["yes"], tlz["no"]),
-                tweet['html']%(t.thought, tlz["yes"], tlz["no"]))
+                tweet%(t.thought, tlz["yes"], tlz["no"]))
             succeed(t.data())
         editor = db.KeyWrapper(urlsafe=eid).get()
         if elkey == "place":
@@ -431,9 +424,7 @@ def response():
             refu = ref.user.get()
             if refu.email_notifications:
                 emailuser(refu, "Referendum Branch Submission",
-                    branch_submitted['body']%(refu.firstName,
-                        ref.title, ref.storylink()),
-                    branch_submitted['html']%(refu.firstName,
+                    branch_submitted%(refu.firstName,
                         ref.title, ref.storylink()))
             succeed(p.id())
         elif elkey == "page":
@@ -604,9 +595,7 @@ def response():
             u = element.user.get()
             if u.email_notifications:
                 emailuser(u, "Evidence Submission",
-                    evidence_submitted['body']%(u.firstName,
-                        element.title, element.storylink()),
-                    evidence_submitted['html']%(u.firstName,
+                    evidence_submitted%(u.firstName,
                         element.title, element.storylink()))
     if emtype == "page":
         if data.pop('wiki') != element.wiki.id():
