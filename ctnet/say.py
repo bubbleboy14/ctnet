@@ -53,7 +53,7 @@ def response():
                 emailCommentReceived(user, content.user.get(), titleanalog, storylink, content, body)
                 exemptuserkeys.append(content.user)
             for u in db.get_multi(list(set([c.user for c in conversation.collection(Comment, "conversation") if c.user not in exemptuserkeys]))):
-                if u.email_notifications:
+                if u.email_notifications and u.key not in exemptuserkeys:
                     emailuser(u, "Response Received", response_received%(u.firstName, user.firstName, body, storylink))
                     exemptuserkeys.append(u.key)
             for u in map(getfounder, ["greg", "paul", "mario"]):
