@@ -85,7 +85,9 @@ The CAN Team
 comment_received = """
 Dear %s:
 
-Your submission entitled "%s" has received a comment.
+Your submission entitled "%s" has received a comment:
+
+%s
 
 To check it out, please go here:
 
@@ -113,7 +115,9 @@ The CAN Team
 message_received = """
 Dear %s:
 
-%s has sent you a message!
+%s has sent you a message:
+
+%s
 
 To check it out, please go here:
 
@@ -211,7 +215,9 @@ The CAN Team
 response_received = """
 Dear %s:
 
-%s has responded to your comment.
+%s has responded to your comment:
+
+%s
 
 To view the conversation, please go here:
 

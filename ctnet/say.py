@@ -2,11 +2,10 @@ from util import respond, succeed, fail, cgi_get, DOMAIN, flipQ, clearmem
 from model import db, send_invitation, chat_message, emailuser, getfounder, Conversation, Comment, Membership
 from emailTemplates import comment_received, message_received, response_received, comment_alert
 
-def emailCommentReceived(user, u, ctitle, storylink, content):
+def emailCommentReceived(user, u, ctitle, storylink, content, body):
     if u and u.email_notifications:
         emailuser(u, "Comment Received",
-            comment_received%(u.firstName,
-                ctitle, storylink))
+            comment_received%(u.firstName, ctitle, body, storylink))
     chat_message(user, u, content)
 
 def response():
@@ -48,16 +47,14 @@ def response():
             exemptuserkeys = [user.key]
             if content.modeltype() == "group":
                 for u in db.get_multi([m.user for m in content.collection(Membership, "group") if m.user != user.key]):
-                    emailCommentReceived(user, u, titleanalog, storylink, content)
+                    emailCommentReceived(user, u, titleanalog, storylink, content, body)
                     exemptuserkeys.append(u.key)
             elif content.user and user.key != content.user:
-                emailCommentReceived(user, content.user.get(), titleanalog, storylink, content)
+                emailCommentReceived(user, content.user.get(), titleanalog, storylink, content, body)
                 exemptuserkeys.append(content.user)
             for u in db.get_multi(list(set([c.user for c in conversation.collection(Comment, "conversation") if c.user not in exemptuserkeys]))):
                 if u.email_notifications:
-                    emailuser(u, "Response Received",
-                        response_received%(u.firstName,
-                            user.firstName, storylink))
+                    emailuser(u, "Response Received", response_received%(u.firstName, user.firstName, body, storylink))
                     exemptuserkeys.append(u.key)
             for u in map(getfounder, ["greg", "paul", "mario"]):
                 if u.email_notifications and u.key not in exemptuserkeys:
@@ -72,7 +69,6 @@ def response():
         for u in db.get_multi(conversation.privlist):
             if u != user and u.email_messages:
                 emailuser(u, "Message from %s"%(user.firstName,),
-                    message_received%(u.firstName,
-                        fn, DOMAIN, cid))
+                    message_received%(u.firstName, fn, body, DOMAIN, cid))
 
 respond(response)
