@@ -403,7 +403,7 @@ onload = function() {
         "node": CT.dom.id("reflist"),
         "paging": "rotation", "cb": refreshSameHeights});
 
-    CAN.media.loader.load({"mtype": "book", "number": 11, "uid": uid,
+    CAN.media.loader.load({"mtype": "book", "number": 10, "uid": uid,
         "node": CT.dom.id("bookrecommendations"),
         "paging": "rotation", "cb": refreshSameHeights, "shared": 1});
 
