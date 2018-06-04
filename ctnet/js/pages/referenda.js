@@ -477,18 +477,18 @@ onload = function() {
         convoshowhide.appendChild(CT.dom.node("", "div", "clearnode"));
         REFAREA.appendChild(convoshowhide);
         REFAREA.appendChild(convonode);
-        if (ref.hasDoc) {
-            var docnode = CAN.frame.setInfoBubble(CT.dom.node("",
-                "div", "topmargined pointer"), bubbles.download);
-            var docimg = CT.dom.node(CT.dom.img("/img/referenda/download.png"),
-                "div", "lfloat shiftup");
+        if (ref.doc) {
+            var docnode = CAN.frame.setInfoBubble(CT.dom.div("",
+                "topmargined pointer"), bubbles.download);
+            var docimg = CT.dom.div(CT.dom.img("/img/referenda/download.png"),
+                "lfloat shiftup");
             docimg.onclick = function() {
-                window.open("/refDoc?key="+ref.key);
+                window.open(ref.doc);
             };
             docnode.appendChild(docimg);
             docnode.appendChild(CT.dom.link("Download Text of " + ref.title, null,
-                "/refDoc?key=" + ref.key, "gray lmargined", "", {"target": "_blank"}));
-            docnode.appendChild(CT.dom.node("", "div", "clearnode"));
+                ref.doc, "gray lmargined", "", {"target": "_blank"}));
+            docnode.appendChild(CT.dom.div("", "clearnode"));
             REFAREA.appendChild(docnode);
         }
 
