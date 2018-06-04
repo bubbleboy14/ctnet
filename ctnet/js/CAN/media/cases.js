@@ -79,10 +79,10 @@ CAN.media.cases = {
 	    n.appendChild(CT.dom.node(d.blurb,
 	        "div", "bottompadded"));
 
-	    if (d.hasDoc) {
-	        n.appendChild(CT.dom.node(CT.dom.link("Download Text of "
-	        	+ d.title, null, "/refDoc?key=" + d.key, "gray", "",
-	        	{"target": "_blank"}), "div", "bottompadded"));
+	    if (d.doc) {
+	        n.appendChild(CT.dom.div(CT.dom.link("Download Text of "
+	        	+ d.title, null, d.doc, "gray", "",
+	        	{"target": "_blank"}), "bottompadded"));
 	    }
 
 	    var evnode = CT.dom.node("", "div", "bordered padded");
