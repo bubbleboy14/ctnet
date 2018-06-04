@@ -2885,11 +2885,11 @@ onload = function() {
         };
         var viewPDF = function(d) {
             casePDF.innerHTML = "";
-            casePDF.appendChild(CT.dom.node("PDF", "div", "big bold blue"));
-            if (d.hasDoc) {
-                casePDF.appendChild(CT.dom.node("Current PDF: ", "span"));
+            casePDF.appendChild(CT.dom.div("PDF", "big bold blue"));
+            if (d.doc) {
+                casePDF.appendChild(CT.dom.span("Current PDF: "));
                 // "ref" stands for "reference" ;)
-                var caseLink = CT.dom.link(d.title, null, "/refDoc?key=" + d.key,
+                var caseLink = CT.dom.link(d.title, null, d.doc,
                     null, "reflink" + d.key);
                 caseLink.target = "_blank";
                 casePDF.appendChild(caseLink);
@@ -2916,7 +2916,7 @@ onload = function() {
 
         var caseitems = CT.dom.id("caitems");
         CAN.media.loader.list(uid, "case", caseitems, showCase,
-            caseHasChanged, {"title": "", "blurb": "", "hasDoc": false});
+            caseHasChanged, {"title": "", "blurb": ""});
 
         var casereview = CT.dom.id("careview");
         CT.dom.id("casesubmit").onclick = function() {
@@ -2946,14 +2946,14 @@ onload = function() {
                     if (docForm.data.value) {
                         docForm.key.value = curCase.key;
                         setStatus("uploading pdf");
-                        CT.upload.submit(docForm, function() {
+                        CT.upload.submit(docForm, function(docpath) {
                             docForm.data.value = "";
-                            curCase.hasDoc = true;
+                            curCase.doc = docpath;
                             viewPDF(curCase);
                             setStatus("done");
                         }, function(err) {
                             setStatus("failed to upload pdf! " + err);
-                        });
+                        }, true);
                     }
                     else {
                         alert("success!");
@@ -3180,11 +3180,11 @@ onload = function() {
         };
         var viewPDF = function(ref) {
             REFPDF.innerHTML = "";
-            REFPDF.appendChild(CT.dom.node("PDF", "div", "big bold blue"));
-            if (ref.hasDoc) {
-                REFPDF.appendChild(CT.dom.node("Current PDF: ", "span"));
+            REFPDF.appendChild(CT.dom.div("PDF", "big bold blue"));
+            if (ref.doc) {
+                REFPDF.appendChild(CT.dom.span("Current PDF: "));
                 var refLink = CT.dom.link(ref.title, null,
-                    "/refDoc?key=" + ref.key, null, "reflink" + ref.key);
+                    ref.doc, null, "reflink" + ref.key);
                 refLink.target = "_blank";
                 REFPDF.appendChild(refLink);
             }
@@ -3233,7 +3233,7 @@ onload = function() {
                     else {
                         if (currentRef.title != rtitle.value) {
                             CT.dom.id("ll" + key).firstChild.innerHTML = rtitle.value;
-                            if (currentRef.hasDoc)
+                            if (currentRef.doc)
                                 CT.dom.id("reflink" + key).innerHTML = rtitle.value;
                         }
                         currentRef.title = rtitle.value;
@@ -3246,14 +3246,14 @@ onload = function() {
                     if (docForm.data.value) {
                         docForm.key.value = currentRef.key;
                         setStatus("uploading pdf");
-                        CT.upload.submit(docForm, function() {
+                        CT.upload.submit(docForm, function(docpath) {
                             docForm.data.value = "";
-                            currentRef.hasDoc = true;
+                            currentRef.doc = docpath;
                             viewPDF(currentRef);
                             setStatus("done");
                         }, function() {
                             setStatus("failed to upload pdf!");
-                        });
+                        }, true);
                     }
                     else {
                         alert("success!");
@@ -3336,6 +3336,6 @@ onload = function() {
         CAN.media.loader.list(uid, "referenda", ALLREFS, viewRef,
             currentChanges, {"title": "", "blurb": "",
                 "summary": "", "jurisdiction": "World",
-                "hasDoc": false, "is_ready": false});
+                "is_ready": false});
     };
 };
