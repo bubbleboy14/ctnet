@@ -21,7 +21,6 @@ syms = {
 		"login.py",
 		"newUser.py",
 		"phoneAuth.py",
-		"refDoc.py",
 		"remind.py",
 		"router.py",
 		"rss.py",
