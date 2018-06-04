@@ -864,15 +864,12 @@ class Case(CategoriedVotingModel, Searchable):
         return {"title": self.title, "link": self.storylink(),
             "description": truncate(self.blurb), "pubDate": self.date}
 
-    def hasDoc(self):
-        return bool(self.document)
-
     def mydata(self):
         return { "mtype": "case",
                  "uid": self.user.urlsafe(),
                  "title": self.title,
                  "blurb": self.blurb,
-                 "hasDoc": self.hasDoc(),
+                 "doc": self.document.path,
                  "evidence": [k.urlsafe() for k in self.evidence],
                  "conversation": self.conversation.urlsafe() }
 
@@ -2318,9 +2315,6 @@ class Referendum(Votable, Approvable, Searchable):
         if not noput:
             db.put_multi([self, self.conversation])
 
-    def hasDoc(self):
-        return bool(self.document)
-
     def voteText(self):
         return self.summary
 
@@ -2338,7 +2332,7 @@ class Referendum(Votable, Approvable, Searchable):
         if not noblurb:
             d['blurb'] = self.blurb
         if not bare:
-            d.update({"summary": self.summary, "ye": self.ye, "nay": self.nay, "hasDoc": self.hasDoc(), "conversation": self.conversation.urlsafe(), "is_ready": self.is_ready, "approved": self.approved})
+            d.update({"summary": self.summary, "ye": self.ye, "nay": self.nay, "doc": self.document.path, "conversation": self.conversation.urlsafe(), "is_ready": self.is_ready, "approved": self.approved})
         user and self.getvote(user, d)
         if is_user:
             d['user'] = self.user.get().data()
