@@ -58,6 +58,7 @@ def response():
             fail("invalid credentials!", html=True, noenc=True)
         ref.setBlob(read_file(data_field))
         ref.put()
+        succeed(ref.document.path, html=True, noenc=True)
     succeed(html=True)
 
 respond(response, failHtml=True, failNoEnc=True)
