@@ -1336,6 +1336,11 @@ textarea.fullwidth {
     background: rgba(50, 50, 50, 0.4);
 }
 
+/* tinyMCE-related */
+.field-item > div {
+    margin: 16px 0;
+}
+
 @media (min-width: 1100px) {
     .upscale {
         font-size: 110%;
