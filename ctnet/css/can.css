@@ -28,6 +28,7 @@ body {
     line-height: 1;
     background: white;
     overflow-y: scroll;
+    position: relative;
 }
 
 button {
@@ -65,7 +66,7 @@ ins {
 }
 
 .button_row {
-    position: absolute;
+    position: fixed;
     text-align: center;
     pointer-events: none;
     -webkit-transition: top 1s, bottom 1s;
@@ -768,6 +769,7 @@ ins {
 .fullheight {
     top: 10px;
     bottom: 10px;
+    height: initial; /* overrides ct version */
 }
 
 #sharesubnode img {
