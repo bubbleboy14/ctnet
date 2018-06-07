@@ -13,7 +13,7 @@ onload = function() {
     CT.db.get("thought", function(thoughts) {
         var unodez = [], rnodez = [], posterz = [], pkeyz = [];
         CT.dom.setContent("topz", CT.dom.table([[
-                "<b>Tags</b>", "<b>Thread</b>", "<b>Poster</b>",
+                "<b>Tags</b>", "<b id='threadspot'>Thread</b>", "<b>Poster</b>",
                 "<b>Replies</b>", "<b>Posted</b>", "<b>Modified</b>"
             ]].concat(thoughts.map(function(t) {
                 var unode = CT.dom.div(), tnode = CT.dom.div(), rnode = CT.dom.div();
@@ -38,6 +38,9 @@ onload = function() {
                     CT.parse.timeStamp(t.modified)
                 ];
             }))));
+        CT.dom.id("threadspot").appendChild(CT.dom.button("new", function() {
+            window.location = "/community.html#!Stream";
+        }, "bold right"));
         CT.data.checkAndDo(pkeyz, function() {
             unodez.forEach(function(n, i) {
                 n.appendChild(posterz[i] == "anon" ? CT.dom.div("(anon)") :
