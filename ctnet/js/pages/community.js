@@ -92,7 +92,7 @@ onload = function() {
     var viewSingleItem = function(d, mtype) {
         if (!CT.dom.id("sbitem" + d.key)) {
             var pnode = CT.dom.id("sv_" + mtype),
-                lname = (d.body || d.idea || d[mtype]).split(' ').slice(0, 2).join(' ') + " ...";
+                lname = (d.body || d.idea || d[mtype]).split("http")[0].split(' ').slice(0, 2).join(' ') + " ...";
             pnode.appendChild(CT.dom.div(CT.dom.link(lname,
                 function() { viewSingleItem(d, mtype); }),
                 "bottompadded sbitem", "sbitem"+d.key));
