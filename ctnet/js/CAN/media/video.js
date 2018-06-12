@@ -30,8 +30,7 @@ CAN.media.video = {
 		var v = CAN.media.loader.args.video;
 	    if (vindex != null)
 	        CT.data.add(video);
-	    var c = CT.dom.div("", "bordered padded");
-	    c.appendChild(CT.video.thumbnail(video));
+	    var c = CT.dom.div(CT.video.thumbnail(video, htmlSafe), "bordered padded");
 	    var notVidPage = location.pathname.slice(1, 6) != "video";
 	    c.appendChild(CT.dom.link(video.title, (notVidPage || htmlSafe)
 	    	? null : function() { CAN.media.video.viewSingle(video); },

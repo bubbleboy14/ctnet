@@ -343,7 +343,7 @@ CAN.media.loader = {
 	        "div", d.unseencount && "bold" || "", "ll"+d.key);
 	},
 	"ytUnthumb": function(key) {
-		var n = document.getElementById(key);
+		var n = CT.dom.id(key);
 		n.style.height = n.firstChild.clientHeight + "px";
 		n.classList.remove("vidthumb");
 		n.innerHTML = CT.video.full(CT.video.videoData("https://youtube.com?v=" + key));
