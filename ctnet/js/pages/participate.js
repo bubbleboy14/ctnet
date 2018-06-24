@@ -13,8 +13,10 @@ onload = function() {
     var uid = CAN.session.isLoggedIn(function() {
         loadSettingsPanel();
     });
-    if (!uid)
-        CT.dom.showHide(CT.dom.id("getmost"));
+    if (!uid) {
+        CT.dom.show("getmost");
+        CT.dom.show("intro_login");
+    }
 
     var resizeThese = [];
     var resizeNodes = function() {
