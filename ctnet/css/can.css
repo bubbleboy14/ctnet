@@ -126,13 +126,6 @@ ins {
     bottom: 30px;
 }
 
-#resize_btn, #mobile_menu_btn {
-    cursor: pointer;
-    position: fixed;
-    top: 5px;
-    z-index: 10;
-}
-
 #resize_btn {
     left: 5px;
 }
