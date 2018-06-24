@@ -315,6 +315,12 @@ onload = function() {
         null, "/video.html"), "div", "bold whitelink nowrap"), 625, 273 + vOffset));
     feat.appendChild(CT.align.absed(CT.dom.node(CT.dom.link("LATEST NEWS",
         null, "/news.html"), "div", "bold whitelink"), 300, 273 + vOffset));
+    feat.appendChild(CT.align.absed(CT.dom.button("new", function() {
+        location = "/participate.html#Videographer";
+    }, "bold"), 803, 268 + vOffset));
+    feat.appendChild(CT.align.absed(CT.dom.button("new", function() {
+        location = "/participate.html#Reporter";
+    }, "bold"), 560, 268 + vOffset));
 
     var newslink = CT.dom.link("", null, "/news.html");
     newslink.appendChild(CT.dom.node("", "div", null, "newswirelink"));
