@@ -37,7 +37,7 @@ CAN.media.video = {
 	    	notVidPage ? "/video.html#!" + CAN.cookie.flipReverse(video.key) : null,
 	        "bold red nodecoration"));
 	    if (htmlSafe && !notVidPage) {
-	    	var randid = c.lastChild.id = "randid" + Math.floor(Math.random() * 1000);
+	    	var randid = c.lastChild.id = "randid" + CT.data.random(1000);
 	    	setTimeout(function() {
 	    		CT.dom.doWhenNodeExists(randid, function() {
 			    	CT.dom.id(randid).onclick = function() {
@@ -75,7 +75,7 @@ CAN.media.video = {
 	    return CT.dom.div(c, cclass, video.docid);
 	},
 	"getAndShow": function(vid) {
-	    var n = CT.dom.div(null, null, "convovid" + vid + Math.floor(Math.random() * 1000));
+	    var n = CT.dom.div(null, null, "convovid" + vid + CT.data.random(1000));
 	    var viddata = CT.data.get(vid);
 	    if (viddata && viddata.player)
 	        n.innerHTML = CAN.media.video.build(viddata,
