@@ -11,7 +11,7 @@ CAN.media.news = {
 			n.appendChild(CT.dom.link([
 				CT.dom.div(d.title, "big bold"),
 				CT.dom.img("/get?gtype=graphic&key=" + d.photo[0], "w1"),
-				CT.dom.div(CT.parse.shortened(d.body, 800), "gray italic")
+				CT.dom.div(CT.parse.shortened(d.body, 400), "gray italic")
 			], null, "/news.html#!" + CAN.cookie.flipReverse(d.key),
 				"blue pointer nodecoration"));
 			return n;
