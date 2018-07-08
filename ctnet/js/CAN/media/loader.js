@@ -349,6 +349,7 @@ CAN.media.loader = {
 		n.innerHTML = CT.video.full(CT.video.videoData("https://youtube.com?v=" + key));
 	},
 	"linkProcessor": function (url, novid) {
+	    // photos
 	    url = url.replace("gtype=graphic&amp;key=", "gtype=graphic&key=");
 	    var photoSplit = url.split("gtype=graphic&key=");
 	    if (photoSplit.length > 1)
@@ -357,6 +358,11 @@ CAN.media.loader = {
 	    	var key = url.split("v=")[1].split("&")[0];
 	    	return '<div class="vidthumb" id="' + key + '"><img class="pointer" src="http://img.youtube.com/vi/' + key + '/0.jpg" onclick="CAN.media.loader.ytUnthumb(\'' + key + '\')"></div>';
 	    }
+	    // news
+	    var nsplit = url.split("news.html#!");
+	    if (nsplit.length > 1)
+	    	return CT.dom.node(CAN.media.news.getAndShow(CAN.cookie.flipReverse(nsplit[1]))).innerHTML;
+	    // videos
 	    var embedder = CT.video.embed;
 	    if (["fit", "full"].indexOf(novid) != -1) {
 	    	embedder = CT.video[novid];
