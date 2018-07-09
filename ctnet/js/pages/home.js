@@ -30,7 +30,7 @@ onload = function() {
                 });
                 return [
                     tnode,
-                    CT.dom.link(CT.parse.shortened(t.thought, 150, 15, true), null,
+                    CT.dom.link(CT.parse.shortened(t.thought, 100, 15, true), null,
                         "/community.html#!Stream|" + CAN.cookie.flipReverse(t.key)),
                     unode,
                     rnode,
