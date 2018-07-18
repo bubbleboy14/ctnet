@@ -1,5 +1,5 @@
 from util import respond, succeed, fail, cgi_get, DOMAIN, flipQ, clearmem
-from model import db, send_invitation, chat_message, emailuser, getfounder, Conversation, Comment, Membership
+from model import db, send_invitation, chat_message, emailuser, getadmins, Conversation, Comment, Membership
 from emailTemplates import comment_received, message_received, response_received, comment_alert
 
 def emailCommentReceived(user, u, ctitle, storylink, content, body):
