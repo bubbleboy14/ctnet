@@ -499,7 +499,7 @@ def response():
         elif elkey == "group":
             succeed(newGroup(editor, **data))
         #isapproved = "greg" in editor.role
-        isapproved = editor.is_active or "admin" in editor.roles
+        isapproved = editor.is_active or "admin" in editor.role
         if rolemap[elkey] not in editor.role:
             fail("You're not authorized!")
         if elkey == "event":
@@ -559,7 +559,7 @@ def response():
     else:
         editor, element = db.get_multi([db.KeyWrapper(urlsafe=eid), db.KeyWrapper(urlsafe=elkey)])
         #isapproved = "greg" in editor.role
-        isapproved = (editor.is_active or "admin" in editor.roles) and 'addcritique' not in data
+        isapproved = (editor.is_active or "admin" in editor.role) and 'addcritique' not in data
         if element == editor:
             if "deleteaccount" in data:
                 if element.password != hashpass(data.pop('password'), element.date):
