@@ -1,5 +1,5 @@
 from util import respond, succeed, fail, cgi_get, send_mail, clearmem, DOMAIN, RAWDOMAIN
-from model import db, approvables, emailgreg, getsettings, dict2date, newcred, modcred, process_newsletter, getzip, hashpass, email_in_use, Conversation, Task, Moderation, Flag, Critique, newevent, newphoto, newnews, newref, newVideo, castvote, mediatypes, rolemap, SearchRule, Featured, Application, get_newsletter, Rideshare, OpinionIdea, PositionPaper, newGroup, Membership, emailuser, approve_message, ULog, Thought, Case, ChangeIdea, Page, Question, Branch, User, SustainableAction, Book, newPlace
+from model import db, approvables, emailadmins, getsettings, dict2date, newcred, modcred, process_newsletter, getzip, hashpass, email_in_use, Conversation, Task, Moderation, Flag, Critique, newevent, newphoto, newnews, newref, newVideo, castvote, mediatypes, rolemap, SearchRule, Featured, Application, get_newsletter, Rideshare, OpinionIdea, PositionPaper, newGroup, Membership, emailuser, approve_message, ULog, Thought, Case, ChangeIdea, Page, Question, Branch, User, SustainableAction, Book, newPlace
 from emailTemplates import email_changed, submission_approved, submission_critiqued, evidence_submitted, branch_submitted, tweet
 
 recruitergrants = ['reporter', 'writer', 'photographer', 'videographer']
@@ -27,7 +27,7 @@ def edit(element, key, val, editor, emtype):
         if element != editor:
             fail("You can't apply for someone else!")
         if val['role'] == "other":
-            emailgreg("'other' application from %s"%(editor.fullName(),), val['statement'])
+            emailadmins("'other' application from %s"%(editor.fullName(),), val['statement'])
             succeed()
         a = Application()
         a.role = val['role']
@@ -72,10 +72,10 @@ def edit(element, key, val, editor, emtype):
         succeed()
     elif key == "delete":
         if emtype == "group":
-            if not ("greg" in editor.role or editor.mygroups().get(element.id()) == "leader"):
+            if not ("admin" in editor.role or editor.mygroups().get(element.id()) == "leader"):
                 fail("You're not authorized!")
             db.delete_multi(element.collection(Membership, "group", keys_only=True) + element.collection(Newsletter, "group", keys_only=True))
-        elif not ("greg" in editor.role or hasattr(element, "user") and element.user == editor.key):
+        elif not ("admin" in editor.role or hasattr(element, "user") and element.user == editor.key):
             fail("You're not authorized!")
         if emtype == "featured":
             srhits = SearchRule.query(SearchRule.featured == element.key).fetch(1000)
@@ -226,7 +226,7 @@ def edit(element, key, val, editor, emtype):
         if key == "role":
             if "recruiter" not in editor.role:
                 fail("you're no recruiter!")
-            if "greg" not in editor.role:
+            if "admin" not in editor.role:
                 for v in val:
                     if v not in recruitergrants and v not in element.role:
                         fail("you're not authorized!")
@@ -395,7 +395,7 @@ def response():
             ul.newval = t.thought
             db.put_multi([t, ul])
             tlz = t.tweetlinks()
-            emailgreg("Tweet This?",
+            emailadmins("Tweet This?",
                 tweet%(t.thought, tlz["yes"], tlz["no"]))
             succeed(t.data())
         editor = db.KeyWrapper(urlsafe=eid).get()
@@ -499,7 +499,7 @@ def response():
         elif elkey == "group":
             succeed(newGroup(editor, **data))
         #isapproved = "greg" in editor.role
-        isapproved = editor.is_active
+        isapproved = editor.is_active or "admin" in editor.roles
         if rolemap[elkey] not in editor.role:
             fail("You're not authorized!")
         if elkey == "event":
@@ -559,7 +559,7 @@ def response():
     else:
         editor, element = db.get_multi([db.KeyWrapper(urlsafe=eid), db.KeyWrapper(urlsafe=elkey)])
         #isapproved = "greg" in editor.role
-        isapproved = editor.is_active and 'addcritique' not in data
+        isapproved = (editor.is_active or "admin" in editor.roles) and 'addcritique' not in data
         if element == editor:
             if "deleteaccount" in data:
                 if element.password != hashpass(data.pop('password'), element.date):
@@ -580,7 +580,7 @@ def response():
     if emtype in approvables and notpub(data):
         element.approved = isapproved
         notifyapprovers(isapproved)
-    if "deleteuser" in data and ("greg" not in editor.role or editor.password != hashpass(data.pop('password'), editor.date)):
+    if "deleteuser" in data and ("admin" not in editor.role or editor.password != hashpass(data.pop('password'), editor.date)):
         fail("You're not authorized!")
     if hasattr(element, "critiqued") and element.critiqued == True:
         if element.user != editor.key:

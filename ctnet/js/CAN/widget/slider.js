@@ -7,7 +7,7 @@ CAN.widget.slider = {
 
 	// slider rotation setting (greg-only)
 	"initUpdate": function(uid, curkeycb) {
-	    CAN.session.ifGreg(uid, function() {
+	    CAN.session.ifAdmin(uid, function() {
 	        var rotButton = CT.dom.id("grotadd");
 	        rotButton.onclick = function() {
 	            CT.net.post("/settings", { "key": "slider_rotation",

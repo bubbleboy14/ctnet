@@ -56,7 +56,7 @@ def response():
                 if u.email_notifications and u.key not in exemptuserkeys:
                     emailuser(u, "Response Received", response_received%(u.firstName, user.firstName, body, storylink))
                     exemptuserkeys.append(u.key)
-            for u in map(getfounder, ["greg", "paul", "mario"]):
+            for u in getadmins():
                 if u.email_notifications and u.key not in exemptuserkeys:
                     emailuser(u, "Comment Alert!",
                         comment_alert%(u.firstName,

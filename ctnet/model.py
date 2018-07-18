@@ -334,7 +334,7 @@ class User(UserBase, Searchable):
     # DONE: STRING2KEY conversion!
     ips = db.ForeignKey(kind=IP, repeated=True)
     role = db.String(repeated=True)
-    # greg, paul, mario, authenticator, approver, coordinator, moderator, lawyer, recruiter, reporter, writer, photographer, videographer
+    # admin, authenticator, approver, coordinator, moderator, lawyer, recruiter, reporter, writer, photographer, videographer
     email_newsletters = db.Boolean(default=True)
     email_messages = db.Boolean(default=True)
     email_notifications = db.Boolean(default=True)
@@ -359,7 +359,7 @@ class User(UserBase, Searchable):
     impeach_date = db.DateTime(default=None)
     provisional_date = db.DateTime(default=None)
     deleted = db.Boolean(default=False)
-    # collections (checked): comments, votes, catscores, mediavotes, applications, referenda (lawyers only), articles (reporters only), writing (writers only), photographs (photographer only), videos (videographer only), events (coordinator only), critiques (approver only), security_questions, judgments, rulings (both for moderation), flaggings, flags (both for flagging), rideshares, qualifications, jobs, education, volunteering, position_papers, opinions_and_ideas, ratings, logs, groups, newsletters (greg and leaders only), invitees, msgs_sent, msgs_received, thoughts, cases, changes, questions, branches
+    # collections (checked): comments, votes, catscores, mediavotes, applications, referenda (lawyers only), articles (reporters only), writing (writers only), photographs (photographer only), videos (videographer only), events (coordinator only), critiques (approver only), security_questions, judgments, rulings (both for moderation), flaggings, flags (both for flagging), rideshares, qualifications, jobs, education, volunteering, position_papers, opinions_and_ideas, ratings, logs, groups, newsletters (admins and leaders only), invitees, msgs_sent, msgs_received, thoughts, cases, changes, questions, branches
     label = "firstName"
 
     def isSearchable(self):
@@ -535,15 +535,18 @@ class User(UserBase, Searchable):
         self.date = old.date
         self.setSearchWords(True)
 
-def getfounder(fname):
+def getfounder(fname): # depped, leaving for posterity
     g = User.query(User.role.contains(fname)).fetch(2)
     if len(g) != 1:
         from util import fail
         fail("can't find unique %s!"%(fname,))
     return g[0]
 
-def getgreg():
+def getgreg(): # depped, leaving for posterity
     return getfounder("greg")
+
+def getadmins():
+    return User.query(User.role.contains("admin")).fetch()
 
 def popularityContest(item):
     psum = sum([v.opinion for v in item.votes()])
@@ -614,8 +617,9 @@ def send_invitation(media, user, invitee=None, email=None):
         from util import fail
         fail("no invitee or email")
 
-def emailgreg(subject, body, html=None):
-    emailuser(getgreg(), subject, body, html)
+def emailadmins(subject, body, html=None):
+    for admin in getadmins():
+        emailuser(admin, subject, body, html)
 
 survey_questions = [
     "Buy Organic, Local, and Humane Products and Services",
@@ -1731,7 +1735,7 @@ class Settings(CANModel):
     authenticate_phone = db.Boolean(default=False)
     password_to_edit_profile = db.Boolean(default=True)
     closed_beta = db.Boolean(default=False)
-    beta_message = db.String(default="Greg can change this text on the participate page.")
+    beta_message = db.String(default="Admin can change this text on the participate page.")
     beta_password = db.String(default="thoughtful")
     # DONE: STRING2KEY conversion!
     slider_rotation = db.ForeignKey(repeated=True)
@@ -2354,7 +2358,7 @@ def newref(shouldmakeblurb=False, **kwargs):
         kwargs['blurb'] = makeblurb(kwargs['summary'])
     ref = Referendum(**kwargs)
     ref.setSearchWords()
-    if "greg" in ref.user.get().role:
+    if "admin" in ref.user.get().role:
         ref.approved = True
     c = Conversation(topic="REFERENDUM: %s"%(ref.title,))
     db.put_multi([ref, c])
@@ -2502,8 +2506,8 @@ rolemap = { "quote": "writer", "book": "writer",
     "video": "videographer", "photo": "photographer",
     "news": "reporter", "sustainableaction": "writer",
     "event": "coordinator", "referenda": "lawyer",
-    "featured": "greg", "rules": "greg", "newsletter": "",
-    "settings": "greg", "refnonlawyer": "", "paper": "",
+    "featured": "admin", "rules": "admin", "newsletter": "",
+    "settings": "admin", "refnonlawyer": "", "paper": "",
     "group": "", "opinion": "", "thought": "", "case": "",
     "changeidea": "", "page": "", "question": "", "branch": "", "place": ""}
 
@@ -2526,7 +2530,7 @@ def postFilters(q, approved, critiqued, mtype, user, filter_voted, authid, numbe
     # because of datastore query rules.
     if approved == False:
         if critiqued:
-            if mtype == "referenda" and "greg" not in user.role:
+            if mtype == "referenda" and "admin" not in user.role:
                 results = [r for r in results if r.id() not in acceptedRefKeys()]
         else:
             results = [r for r in results if r.user != user.key]

@@ -169,7 +169,7 @@ var loadPage = function(uid, pid) {
                     else if (clower == "videos")
                         mvars.newMediaDefault = "videoprofile";
                     else if (clower == "cases") {
-                        if (!pid || uid && CT.data.get(uid).role[0] == "greg")
+                        if (!pid || uid && CT.data.get(uid).role.indexOf("admin") != -1)
                             mvars.newMediaDefault = "caseprofile";
                         mvars.newMediaChecks = {
                             "list": ["evidence"]

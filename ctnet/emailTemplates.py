@@ -229,7 +229,7 @@ The CAN Team
 """
 
 tweet = """
-Hey Greg!
+Hey Dude!
 
 Someone submitted this thought:
 

@@ -4,7 +4,7 @@ CAN.session = {
 	"DOMAIN": "http://" + _RD,
 	"okdomains": core.config.ctnet.okdomains,
 	"settings": null,
-	"welcomeFirstName": CT.dom.node("", "span"),
+	"welcomeFirstName": CT.dom.span(),
 
 	"_getIEVersion": function() {
 	    var ua = navigator.userAgent;
@@ -142,25 +142,25 @@ CAN.session = {
 	    return uid;
 	},
 
-	// greg checker
+	// admin checker
 	"gvars": {
-	    "isgreg": false,
-	    "isnotgreg": false,
+	    "isadmin": false,
+	    "isnotadmin": false,
 	    "checking": false,
 	    "cbs": [],
 	    "ngcbs": []
 	},
-	"checkGreg": function(u) {
-	    CAN.session.gvars.isgreg = u.role.indexOf("greg") != -1;
-	    CAN.session.gvars.isnotgreg = !CAN.session.gvars.isgreg;
-	    return CAN.session.gvars.isgreg;
+	"checkAdmin": function(u) {
+	    CAN.session.gvars.isadmin = u.role.indexOf("admin") != -1;
+	    CAN.session.gvars.isnotadmin = !CAN.session.gvars.isadmin;
+	    return CAN.session.gvars.isadmin;
 	},
-	"ifGreg": function(uid, cb, ngcb) {
-	    if (CAN.session.gvars.isnotgreg) return ngcb && ngcb();
-	    if (CAN.session.gvars.isgreg) return cb();
+	"ifAdmin": function(uid, cb, ngcb) {
+	    if (CAN.session.gvars.isnotadmin) return ngcb && ngcb();
+	    if (CAN.session.gvars.isadmin) return cb();
 	    var u = CT.data.get(uid);
 	    if (u && u.role)
-	        return CAN.session.checkGreg(u) && cb() || (ngcb && ngcb());
+	        return CAN.session.checkAdmin(u) && cb() || (ngcb && ngcb());
 	    CAN.session.gvars.cbs.push(cb);
 	    ngcb && CAN.session.gvars.ngcbs.push(ngcb);
 	    if (!CAN.session.gvars.checking) {
@@ -168,7 +168,7 @@ CAN.session = {
 	        CT.net.post("/get", { "gtype": "user", "uid": uid, "role_only": 1 },
 	            "error retrieving user data", function(d) {
 	                CT.data.add(d);
-	                var cbset = CAN.session.checkGreg(d) ?
+	                var cbset = CAN.session.checkAdmin(d) ?
 	                	CAN.session.gvars.cbs : CAN.session.gvars.ngcbs;
 	                for (var i = 0; i < cbset.length; i++)
 	                    cbset[i]();

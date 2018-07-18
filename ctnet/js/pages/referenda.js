@@ -262,7 +262,7 @@ onload = function() {
             branchDeleter.style.display = "none";
         else if (canedit)
             branchDeleter.style.display = "inline";
-        else if (uid) ifGreg(uid,
+        else if (uid) CAN.session.ifAdmin(uid,
             function () { branchDeleter.style.display = "inline"; },
             function () { branchDeleter.style.display = "none"; });
     };

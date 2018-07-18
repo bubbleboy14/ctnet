@@ -12,7 +12,7 @@ def response():
 
     settings = getsettings()
     if uid:
-        if "greg" not in db.KeyWrapper(urlsafe=uid).get().role:
+        if "admin" not in db.KeyWrapper(urlsafe=uid).get().role:
             fail("you're not qualified!")
         if key in keyprops:
             val = db.KeyWrapper(urlsafe=val)

@@ -36,7 +36,7 @@ onload = function() {
         // o = old roles
         p = p || [];
         o = o || [];
-        if (p.indexOf("greg") == 0)
+        if (p.indexOf("admin") != -1)
             roles = ggroles.concat(roles);
         var pstart = ["Introduction"];
         p = pstart.concat(p);
@@ -65,7 +65,8 @@ onload = function() {
             "coordinator": "events",
             "greg": "founder",
             "paul": "founder",
-            "mario": "founder"
+            "mario": "founder",
+            "admin": "founder"
         };
         var titleMap = {
             "videographer": "Videos",
@@ -74,6 +75,8 @@ onload = function() {
             "coordinator": "Events",
             "writer": "Quips And Tips"
         };
+        if (p.indexOf("admin") != -1) // leaves non-admin founders w/ regular stats panel
+            p = p.filter(function(r) { return ["greg", "mario", "paul"].indexOf(r) == -1; });
         for (var i = 0; i < p.length; i++) {
             if (loaders[p[i]]) loaders[p[i]]();
             //var cappedname = p[i].slice(0,1).toUpperCase() + p[i].slice(1);
@@ -375,7 +378,7 @@ onload = function() {
         };
     };
 
-    var mp = ["paul", "mario"];
+    var mp = ["greg", "paul", "mario"];
     for (var i = 0; i < mp.length; i++) {
         var person = mp[i];
         loaders[person] = welcomeFounderFunction(person);
@@ -663,19 +666,19 @@ onload = function() {
             }, groupkey && {"nlgroup": groupkey} || null);
     };
 
-    // greg panel
-    loaders["greg"] = function() {
-        if (loaded["greg"])
+    // admin panel
+    loaders["admin"] = function() {
+        if (loaded["admin"])
             return;
-        loaded["greg"] = true;
+        loaded["admin"] = true;
 
         founderWelcome(CT.dom.id("ggpanelWelcome"));
         CT.panel.load(["Welcome", "Settings", "Newsletter", "Keyword System", "Referenda", "Categories", "Events", "Media"], true, "gg");
 
         // settings
-        var loadGregSettings = function() {
+        var loadAdminSettings = function() {
             if (CAN.session.settings == null)
-                return setTimeout(loadGregSettings, 500);
+                return setTimeout(loadAdminSettings, 500);
             var gps = CT.dom.id("ggpanelSettings");
             gps.appendChild(CT.dom.checkboxAndLabel("authenticate_phone",
                 CAN.session.settings.authenticate_phone, "Authenticate Phone"));
@@ -684,7 +687,7 @@ onload = function() {
                 "Require Password to Edit User Profile"));
             gps.appendChild(CT.dom.checkboxAndLabel("email_founders_on_comment",
                 CAN.session.settings.email_founders_on_comment,
-                "Email Founders When People Comment"));
+                "Email Admins When People Comment"));
             var bnode = CT.dom.node();
             bnode.appendChild(CT.dom.node(CT.dom.labelAndField("Beta Password",
                 "beta_password", "w300", null, CAN.session.settings.beta_password),
@@ -737,7 +740,7 @@ onload = function() {
                     });
             }), "div", "topmargined"));
         };
-        loadGregSettings();
+        loadAdminSettings();
 
         // newsletter sender
         loadNewsletterForm(CT.dom.id("ggpanelNewsletter"));
@@ -1084,11 +1087,11 @@ onload = function() {
 
         var sbplist = ["Events", "Media"];
         var user = CT.data.get(uid);
-        if (user.role.indexOf("greg") != -1)
+        if (user.role.indexOf("admin") != -1)
             sbplist = ["Referenda"].concat(sbplist);
         CT.panel.load(sbplist, true, "ap");
 
-        if (user.role.indexOf("greg") != -1) {
+        if (user.role.indexOf("admin") != -1) {
             // referendum approval
             var aprefs = CT.dom.id("apreferenda");
             CAN.media.loader.load({"mtype": "referenda", "layout": "fluid", "number": 12,
@@ -1425,12 +1428,16 @@ onload = function() {
             }
             n.appendChild(CT.dom.button("Save Changes", function() {
                 var rs = [];
+
+                // nostalgic lines allowing founders to retain legacy roles -- no harm ;)
                 var guys = ["greg", "paul", "mario"];
                 for (var i = 0; i < guys.length; i++) {
                     if (u.role.indexOf(guys[i]) != -1)
                         rs.push(guys[i]);
                 }
-                if (CT.data.get(uid).role.indexOf("greg") == -1) {
+
+                // non-admins can't strip admin-level roles
+                if (CT.data.get(uid).role.indexOf("admin") == -1) {
                     for (var i = 0; i < u.role.length; i++) {
                         if (ggroles.indexOf(u.role[i]) != -1)
                             rs.push(u.role[i]);
@@ -1809,7 +1816,7 @@ onload = function() {
                 });
             });
 
-        if (CT.data.get(uid).role.indexOf("greg") != -1) {
+        if (CT.data.get(uid).role.indexOf("admin") != -1) {
             var dub = CT.dom.id("ggdeluser");
             CT.dom.showHide(dub.parentNode);
             dub.onclick = function() {
@@ -2844,7 +2851,7 @@ onload = function() {
                     CT.dom.id("ll" + CAN.cookie.flipReverse(hashsub)).firstChild.onclick();
             });
 
-        if (user.role.indexOf("greg") != -1) {
+        if (user.role.indexOf("admin") != -1) {
             var gdelgroup = CT.dom.id("gdelgroup");
             gdelgroup.onclick = function() {
                 if (agcur == null || agcur.is_new)

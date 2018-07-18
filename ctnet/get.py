@@ -38,7 +38,7 @@ def response():
 
     if gtype == "fstats":
         user = db.get(uid)
-        if "greg" in user.role or "paul" in user.role or "mario" in user.role:
+        if set(["admin", "greg", "paul", "mario"]).intersection(user.role):
             from model import getstats
             succeed(getstats())
         fail("You're no founder!")
