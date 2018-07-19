@@ -89,7 +89,7 @@ onload = function() {
     // node streams
     var nodetypes = { "question": "Questions", "changeidea": "Ideas", "thought": "Stream", "comment": "Chatter" },
         ntrev = { "Questions": "question", "Ideas": "changeidea", "Stream": "thought" };
-    var viewSingleItem = function(d, mtype) {
+    viewSingleItem = function(d, mtype) {
         if (!CT.dom.id("sbitem" + d.key)) {
             var pnode = CT.dom.id("sv_" + mtype),
                 lname = (d.body || d.idea || d[mtype]).split("http")[0].split(' ').slice(0, 2).join(' ') + " ...";

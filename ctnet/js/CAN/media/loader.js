@@ -358,6 +358,16 @@ CAN.media.loader = {
 	    	var key = url.split("v=")[1].split("&")[0];
 	    	return '<div class="vidthumb" id="' + key + '"><img class="pointer" src="http://img.youtube.com/vi/' + key + '/0.jpg" onclick="CAN.media.loader.ytUnthumb(\'' + key + '\')"></div>';
 	    }
+	    // thoughts
+	    var tsplit = url.split("community.html#!");
+	    if (tsplit.length > 1) {
+	    	var token = tsplit[1];
+	    	if (token.startsWith("Stream|")) { // thoughts ... do others
+	    		var key = CAN.cookie.flipReverse(token.slice(7));
+	    		return '<div class="pointer" onclick="CAN.media.thought.jump(\'' + key + '\')">'
+	    			+ CT.dom.node(CAN.media.thought.htmlSafe(key)).innerHTML + "</div>";
+	    	}
+	    }
 	    // news
 	    var nsplit = url.split("news.html#!");
 	    if (nsplit.length > 1)
