@@ -348,6 +348,11 @@ CAN.media.loader = {
 		n.classList.remove("vidthumb");
 		n.innerHTML = CT.video.full(CT.video.videoData("https://youtube.com?v=" + key));
 	},
+	"_linkFlags": {
+		"thought": "community.html#!Stream|",
+		"event": "community.html#!Events|"
+	},
+	"_linkTypes": ["thought", "event", "cases"],
 	"linkProcessor": function (url, novid) {
 	    // photos
 	    url = url.replace("gtype=graphic&amp;key=", "gtype=graphic&key=");
@@ -358,26 +363,15 @@ CAN.media.loader = {
 	    	var key = url.split("v=")[1].split("&")[0];
 	    	return '<div class="vidthumb" id="' + key + '"><img class="pointer" src="http://img.youtube.com/vi/' + key + '/0.jpg" onclick="CAN.media.loader.ytUnthumb(\'' + key + '\')"></div>';
 	    }
-	    // thoughts
-	    var tsplit = url.split("community.html#!Stream|");
-	    if (tsplit.length > 1) {
-    		var key = CAN.cookie.flipReverse(tsplit[1]);
-    		return '<div class="pointer" onclick="CAN.media.thought.jump(\'' + key + '\')">'
-    			+ CT.dom.node(CAN.media.thought.htmlSafe(key)).innerHTML + "</div>";
-	    }
-	    // events
-	    var esplit = url.split("community.html#!Events|");
-	    if (esplit.length > 1) {
-	    	var key = CAN.cookie.flipReverse(esplit[1]);
-    		return '<div class="pointer" onclick="CAN.media.event.jump(\'' + key + '\')">'
-    			+ CT.dom.node(CAN.media.event.htmlSafe(key)).innerHTML + "</div>";
-	    }
-	    // cases
-	    var csplit = url.split("cases.html#!");
-	    if (csplit.length > 1) {
-	    	var key = CAN.cookie.flipReverse(csplit[1]);
-    		return '<div class="pointer" onclick="CAN.media.cases.jump(\'' + key + '\')">'
-    			+ CT.dom.node(CAN.media.cases.htmlSafe(key)).innerHTML + "</div>";
+	    // thoughts, events, cases
+	    for (var i = 0; i < CAN.media.loader._linkTypes.length; i++) {
+	    	var ltype = CAN.media.loader._linkTypes[i],
+		    	split = url.split(CAN.media.loader._linkFlags[ltype] || (ltype + ".html#!"));
+		    if (split.length > 1) {
+	    		var key = CAN.cookie.flipReverse(split[1]);
+	    		return '<div class="pointer" onclick="CAN.media.' + ltype + '.jump(\'' + key + '\')">'
+	    			+ CT.dom.node(CAN.media[ltype].htmlSafe(key)).innerHTML + "</div>";
+		    }
 	    }
 	    // news
 	    var nsplit = url.split("news.html#!");
