@@ -144,7 +144,7 @@ onload = function() {
     CAN.widget.share.currentShareName = "community";
     CAN.widget.share.shareSub("community");
     CAN.widget.share.updateShareItem("community");
-    var viewSingleEvent = function(event) {
+    viewSingleEvent = function(event) {
         if (!CT.dom.id("sbitem"+event.key)) {
             svl.appendChild(CT.dom.div(CT.dom.link(event.title,
                 function() { viewSingleEvent(event); }),

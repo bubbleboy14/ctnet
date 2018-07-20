@@ -359,14 +359,18 @@ CAN.media.loader = {
 	    	return '<div class="vidthumb" id="' + key + '"><img class="pointer" src="http://img.youtube.com/vi/' + key + '/0.jpg" onclick="CAN.media.loader.ytUnthumb(\'' + key + '\')"></div>';
 	    }
 	    // thoughts
-	    var tsplit = url.split("community.html#!");
+	    var tsplit = url.split("community.html#!Stream|");
 	    if (tsplit.length > 1) {
-	    	var token = tsplit[1];
-	    	if (token.startsWith("Stream|")) { // thoughts ... do others
-	    		var key = CAN.cookie.flipReverse(token.slice(7));
-	    		return '<div class="pointer" onclick="CAN.media.thought.jump(\'' + key + '\')">'
-	    			+ CT.dom.node(CAN.media.thought.htmlSafe(key)).innerHTML + "</div>";
-	    	}
+    		var key = CAN.cookie.flipReverse(tsplit[1]);
+    		return '<div class="pointer" onclick="CAN.media.thought.jump(\'' + key + '\')">'
+    			+ CT.dom.node(CAN.media.thought.htmlSafe(key)).innerHTML + "</div>";
+	    }
+	    // events
+	    var esplit = url.split("community.html#!Events|");
+	    if (esplit.length > 1) {
+	    	var key = CAN.cookie.flipReverse(esplit[1]);
+    		return '<div class="pointer" onclick="CAN.media.event.jump(\'' + key + '\')">'
+    			+ CT.dom.node(CAN.media.event.htmlSafe(key)).innerHTML + "</div>";
 	    }
 	    // cases
 	    var csplit = url.split("cases.html#!");

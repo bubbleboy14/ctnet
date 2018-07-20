@@ -6,6 +6,32 @@ CAN.media.event = {
 	    return z.city + ", " + z.state + ", " + z.code;
 	},
 
+	"jump": function(key) {
+		if (location.pathname.startsWith("/community.html"))
+			viewSingleEvent(CT.data.get(key));
+		else
+			window.location = "/community.html#!Events|" + CAN.cookie.flipReverse(key);
+	},
+	"htmlSafe": function(key) {
+		var n = CT.dom.div(null, "bordered padded round",
+			"convoevent" + key + CT.data.random(1000)),
+			edata = CT.data.get(key);
+		if (edata)
+			n.appendChild(CAN.media.event.info(edata));
+		else {
+			CT.net.post("/get", {"gtype": "data", "key": key},
+				"error retrieving event", function(result) {
+				CT.data.add(result);
+				setTimeout(function() {
+					CT.dom.doWhenNodeExists(n.id, function() {
+						CT.dom.id(n.id).appendChild(CAN.media.event.info(result));
+					});
+				}, 5000);
+			});
+		}
+		return n;
+	},
+
 	"info": function(d, v) {
 		v = v || CAN.media.loader.args.event;
 		return CT.dom.node([
