@@ -21,7 +21,7 @@ onload = function() {
     else
         CAN.frame.clickToLogin(CAN.media.cases.inviteButton);
 
-    var viewSingleCase = function(cdata) {
+    viewSingleCase = function(cdata) {
         if (!CT.dom.id("sbitem"+cdata.key)) {
             svl.appendChild(CT.dom.node(CT.dom.link(cdata.title,
                 function() { viewSingleCase(cdata); }),

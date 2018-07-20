@@ -368,6 +368,13 @@ CAN.media.loader = {
 	    			+ CT.dom.node(CAN.media.thought.htmlSafe(key)).innerHTML + "</div>";
 	    	}
 	    }
+	    // cases
+	    var csplit = url.split("cases.html#!");
+	    if (csplit.length > 1) {
+	    	var key = CAN.cookie.flipReverse(csplit[1]);
+    		return '<div class="pointer" onclick="CAN.media.cases.jump(\'' + key + '\')">'
+    			+ CT.dom.node(CAN.media.cases.htmlSafe(key)).innerHTML + "</div>";
+	    }
 	    // news
 	    var nsplit = url.split("news.html#!");
 	    if (nsplit.length > 1)

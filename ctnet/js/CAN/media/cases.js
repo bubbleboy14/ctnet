@@ -2,6 +2,31 @@ CAN.media.cases = {
 	"inviteButton": null,
 	"current": null,
 	"evidenceCb": {},
+	"jump": function(key) {
+		if (location.pathname.startsWith("/cases.html"))
+			viewSingleCase(CT.data.get(key));
+		else
+			window.location = "/cases.html#!" + CAN.cookie.flipReverse(key);
+	},
+	"htmlSafe": function(key) {
+		var n = CT.dom.div(null, "bordered padded round",
+			"convocase" + key + CT.data.random(1000)),
+			cdata = CT.data.get(key);
+		if (cdata)
+			n.appendChild(CAN.media.cases.basic(cdata));
+		else {
+			CT.net.post("/get", {"gtype": "data", "key": key},
+				"error retrieving thought", function(result) {
+				CT.data.add(result);
+				setTimeout(function() {
+					CT.dom.doWhenNodeExists(n.id, function() {
+						CT.dom.id(n.id).appendChild(CAN.media.cases.basic(result));
+					});
+				}, 5000);
+			});
+		}
+		return n;
+	},
 	"basic": function(d) {
 	    var n = CT.dom.node();
 	    n.appendChild(CT.dom.node(d.title, "div", "big blue"));
