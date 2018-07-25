@@ -1,6 +1,7 @@
 CT.require("CT.all");
-CT.require("CT.map");
 CT.require("CAN.all");
+CT.setVal("mapkey", CT.data.choice(core.config.ctnet.geokeys));
+CT.require("CT.map", true);
 CT.map.util.setGeoKeys(core.config.ctnet.geokeys);
 
 onload = function() {

@@ -36,8 +36,12 @@ onload = function() {
         // o = old roles
         p = p || [];
         o = o || [];
-        if (p.indexOf("admin") != -1)
+        if (p.indexOf("admin") != -1) {
             roles = ggroles.concat(roles);
+            CT.setVal("mapkey", CT.data.choice(core.config.ctnet.geokeys));
+            CT.require("CT.map", true);
+            CT.map.util.setGeoKeys(core.config.ctnet.geokeys);
+        }
         var pstart = ["Introduction"];
         p = pstart.concat(p);
         if (uid) {
@@ -320,26 +324,91 @@ onload = function() {
     };
 
     var founderWelcome = function(n) {
-        n.appendChild(CT.dom.node("You're a founder. Congratulations! Now that you're here, try out Founder Chat on the Community page!",
-            "div", "bottompadded"));
+        if (CT.data.get(uid).role.indexOf("admin") != -1) {
+            n.appendChild(CT.dom.div("You're a founder. Congratulations! Now that you're here, try out Founder Chat on the Community page!",
+                "bottompadded"));
+        } else
+            n.appendChild(CT.dom.div("You're an admin. Congratulations!", "bottompadded"));
         var mhits = ["videos", "referenda", "news", "events"];
         var iporder = ["address", "users", "votes", "authentications"];
-        var statsnode = CT.dom.node("", "div", "bottompadded");
-        statsnode.appendChild(CT.dom.node("General Stats", "div",
+        var statsnode = CT.dom.div("", "bottompadded");
+        statsnode.appendChild(CT.dom.div("General Stats",
             "big gray bottommargined bottomline"));
-        var medianode = CT.dom.node("", "div", "bottompadded");
-        medianode.appendChild(CT.dom.node("Submissions", "div",
+        var medianode = CT.dom.div("", "bottompadded");
+        medianode.appendChild(CT.dom.div("Submissions",
             "big gray bottommargined bottomline"));
         var ipnode = CT.dom.node();
-        ipnode.appendChild(CT.dom.node("IP Addresses", "div",
+        ipnode.appendChild(CT.dom.div("IP Addresses",
             "big gray bottommargined bottomline"));
         CT.net.post("/get", {"gtype": "fstats", "uid": uid},
             "error retrieving stats", function(s) {
                 for (var k in s) {
                     if (k == "ips") {
-                        ipnode.appendChild(CT.dom.node("Count: " + s.ips.length,
-                            "div", "bold bottompadded"));
+                        ipnode.appendChild(CT.dom.div("<b>Count</b>: " + s.ips.length));
+                        var glcount = CT.dom.div();
+                        ipnode.appendChild(glcount);
+                        var mapnode = CT.dom.div(null, "h300p mv5");
+                        ipnode.appendChild(mapnode);
                         var votes = 0;
+
+                        var ipv4z = s.ips.filter(function(ipd) {
+                            return ipd.address != "none" && ipd.address.indexOf(":") == -1;
+                        });
+                        CT.map.util.ips2latlngs(ipv4z.map(function(ipd) {
+                            return ipd.address;
+                        }), function(locz) {
+                            CT.dom.setContent(glcount, "<b>Geolocated</b>: " + locz.length);
+                            var data = {};
+                            locz.forEach(function(loc, i) {
+                                if (loc.location == "unknown") return;
+                                var d = data[loc.location],
+                                    ipd = ipv4z[i];
+                                if (!d) {
+                                    d = data[loc.location] = {
+                                        location: loc.location,
+                                        lat: parseFloat(loc.latitude),
+                                        lng: parseFloat(loc.longitude),
+                                        ips: []
+                                    };
+                                    d.users = d.votes = d.authentications = 0;
+                                }
+                                d.ips.push(ipd.address);
+                                d.users += ipd.users;
+                                d.votes += ipd.votes;
+                                d.authentications += ipd.authentications;
+                            });
+                            var map = new CT.map.Map({
+                                node: mapnode,
+                                markers: Object.keys(data).map(function(loc) {
+                                    var d = data[loc];
+                                    return {
+                                        key: loc,
+                                        title: loc,
+                                        position: {
+                                            lat: d.lat,
+                                            lng: d.lng
+                                        },
+                                        info: CT.dom.div([loc, iporder.filter(function(key) {
+                                            return d[key];
+                                        }).map(function(key) {
+                                            return "<b>" + key + "</b>: " + d[key];
+                                        }), d.ips])
+                                    }
+                                })
+                            });
+                        });
+
+                        var ipdeetz = CT.dom.div();
+                        ipdeetz.style.maxHeight = "0px";
+                        ipdeetz.style.overflow = "hidden";
+                        ipdeetz.style.transition = "max-height 1s";
+                        var dlink = CT.dom.link("Show Deetz", function() {
+                            ipdeetz._open = !ipdeetz._open;
+                            dlink.innerHTML = (ipdeetz._open ? "Hide" : "Show") + " Deetz";
+                            ipdeetz.style.maxHeight = (ipdeetz._open ? ipdeetz.scrollHeight : 0) + "px";
+                        });
+                        ipnode.appendChild(CT.dom.div(dlink, "nicelinks big bold bottompadded"));
+                        ipnode.appendChild(ipdeetz);
                         for (var i = 0; i < s.ips.length; i++) {
                             var n = CT.dom.node("", "div", "bottompadded");
                             for (var k = 0; k < iporder.length; k++) {
@@ -349,7 +418,7 @@ onload = function() {
                                 if (io == "votes")
                                     votes += ioval;
                             }
-                            ipnode.appendChild(n);
+                            ipdeetz.appendChild(n);
                         }
                         statsnode.appendChild(CT.dom.node("<b>Total Votes</b>: " + votes));
                     }
