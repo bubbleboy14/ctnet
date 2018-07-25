@@ -38,6 +38,7 @@ onload = function() {
         o = o || [];
         if (p.indexOf("admin") != -1) {
             roles = ggroles.concat(roles);
+            CT.setVal("mapkey", CT.data.choice(core.config.ctnet.geokeys));
             CT.require("CT.map", true);
             CT.map.util.setGeoKeys(core.config.ctnet.geokeys);
         }
