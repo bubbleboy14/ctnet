@@ -382,12 +382,13 @@ onload = function() {
                                 markers: Object.keys(data).map(function(loc) {
                                     var d = data[loc];
                                     return {
+                                        key: loc,
                                         title: loc,
                                         position: {
                                             lat: d.lat,
                                             lng: d.lng
                                         },
-                                        info: CT.dom.div([iporder.filter(function(key) {
+                                        info: CT.dom.div([loc, iporder.filter(function(key) {
                                             return d[key];
                                         }).map(function(key) {
                                             return "<b>" + key + "</b>: " + d[key];
