@@ -12,14 +12,15 @@ def response():
     uids = cgi_get('uids', required=False)
 
     if gtype == "skinfo":
+        from model import Skin, ULog
         user = db.get(uid)
-        skin = db.Skin.query(db.Skin.user == uid).get()
+        skin = Skin.query(Skin.user == uid).get()
         succeed({
             "skin": skin and skin.data(),
-            "data": user.collection(db.ULog, "user", data=True,
+            "data": user.collection(ULog, "user", data=True,
                 limit=cgi_get("chunk", default=15),
                 offset=cgi_get("offset", default=0),
-                order=-db.ULog.date)
+                order=-ULog.date)
         })
 
     if gtype == "og":
