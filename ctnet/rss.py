@@ -110,7 +110,7 @@ def response():
                 badprops.add(p)
         used_props = set()
         media = []
-        for m in user.collection(ULog, "user", fetch=False).order(-ULog.date).fetch(15):
+        for m in user.collection(ULog, "user", limit=15, order=-ULog.date):
             pn = m.propname
             if m.newval and pn not in badprops and not (pn in prof_props and pn in used_props):
                 media.append(m)
