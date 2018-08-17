@@ -11,6 +11,17 @@ def response():
     uid = cgi_get('uid', required=False)
     uids = cgi_get('uids', required=False)
 
+    if gtype == "skinfo":
+        user = db.get(uid)
+        skin = db.Skin.query(db.Skin.user == uid).get()
+        succeed({
+            "skin": skin and skin.data(),
+            "data": user.collection(db.ULog, "user", data=True,
+                limit=cgi_get("chunk", default=15),
+                offset=cgi_get("offset", default=0),
+                order=-db.ULog.date)
+        })
+
     if gtype == "og":
         url = cgi_get("url")
         data = requests.get(url, headers={
