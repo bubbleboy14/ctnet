@@ -569,6 +569,11 @@ def getMost(mostWhat, mostClass, user, lastMost=None):
             result = [r for r in result if r.psum < lastMost.psum]
     return len(result) and result[0].data() or None
 
+class Skin(db.TimeStampedBase):
+    user = db.ForeignKey(kind=User)
+    title = db.String()
+    css = db.Text()
+
 class Invitation(CANModel):
     inviter = db.ForeignKey(kind=User)
     email = db.String()
