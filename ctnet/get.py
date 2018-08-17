@@ -15,12 +15,13 @@ def response():
         from model import Skin, ULog
         user = db.get(uid)
         skin = Skin.query(Skin.user == uid).get()
+        chunk = cgi_get("chunk", default=15)
+        offset = cgi_get("offset", default=0)
         succeed({
             "skin": skin and skin.data(),
-            "data": user.collection(ULog, "user", data=True,
-                limit=cgi_get("chunk", default=15),
-                offset=cgi_get("offset", default=0),
-                order=-ULog.date)
+            "data": [d.data() for d in user.collection(ULog,
+                "user", fetch=False).order(-ULog.date).fetch(chunk,
+                offset)]
         })
 
     if gtype == "og":
