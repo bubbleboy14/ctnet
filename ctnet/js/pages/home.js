@@ -138,47 +138,13 @@ onload = function() {
                 pruneCats();
 
                 // now show it in 4 columns...
-                var fnode = function(key) {
-                    var entity = CT.data.get(key),
-                        cnode = CT.dom.div(convos[entity.conversation].length, "smaller bold right"),
-                        n = CT.dom.div([
-                            CT.dom.div("(" + (entity.mtype || "thought") + ")", "smaller bold right"),
-                            entity.title || CT.parse.shortened(entity.thought, 50, 10, true),
-                            cnode
-                        ], null, null, {
-                            onclick: function() {
-                                CAN.widget.stream.jumpTo(entity.conversation);
-                            }
-                        });
-                    CT.db.get("comment", function(comcount) {
-                        cnode.innerHTML += " (" + comcount + ")";
-                    }, null, null, null, {
-                        conversation: entity.conversation
-                    }, null, true);
-                    setTimeout(function() {
-                        var img, blurb = entity.thought || entity.blurb || entity.body || entity.description;
-                        if (entity.thumbnail)
-                            img = entity.thumbnail;
-                        else if (entity.photo)
-                            img = "/get?gtype=graphic&key=" + entity.photo[0];
-                        else if (blurb)
-                            img = CT.parse.extractImage(blurb);
-                        if (img) {
-                            n.appendChild(CT.dom.panImg({
-                                img: img
-                            }));
-                        } else {
-                            CT.log("NEEDS IMAGE");
-                            CT.log(entity);
-                        }
-                    });
-                    return n;
-                };
                 var bgz = [];
                 CT.dom.setContent("forum", winners.map(function(ckey) {
                     var cat = CT.data.get(ckey), n = CT.dom.div([
                         CT.dom.div(cat.name, "biggest bold blue centered whitestroke"),
-                        fcats[ckey].map(fnode)
+                        fcats[ckey].map(function(key) {
+                            return CAN.media.loader.contentNode(key, convos);
+                        })
                     ]);
                     CT.db.get("photo", function(pz) {
                         var idata = CT.data.choice(pz.filter(function(p) {
