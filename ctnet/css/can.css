@@ -438,6 +438,7 @@ ins {
     text-align: right;
 }
 
+#feed, #feed > div, #feed > div > div,
 #forum, #forum > div, #forum > div > div {
     position: relative;
 }
@@ -450,17 +451,35 @@ ins {
     box-sizing: border-box;
 }
 
+#feed > div,
 #forum > div {
     height: 100%;
 }
 
+#feed > div > div,
 #forum > div > div {
     display: inline-block;
-    width: 25%;
     height: 100%;
     padding: 10px;
     vertical-align: top;
     box-sizing: border-box;
+}
+
+#forum > div > div {
+    width: 25%;
+}
+
+#feed > div > div {
+    width: 100%;
+    padding: 64px;
+    font-size: 240%;
+    cursor: pointer;
+    text-shadow: white 1px 1px 1px;
+}
+
+#feed > div > div:hover {
+    color: white;
+    text-shadow: black 1px 1px 1px;
 }
 
 #forum > div > div > div:nth-child(2) {
