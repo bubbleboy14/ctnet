@@ -173,23 +173,6 @@ class Avatar(CANModel):
         self.setSize(data, "chat", force=force)
         self.put()
 
-# most category stuff moved into ctmodel
-# Category collections: userscores, globalscores
-class CategoriedVotingModel(CategoriedModelBase):
-    # collections (checked): votes
-
-    def votes(self):
-        return self.collection(MediaVote, "media")
-
-    def vdata(self, vuser):
-        datadict = self.data()
-        if vuser:
-            v = MediaVote.query(MediaVote.user == vuser.key,
-                MediaVote.media == self.key).get()
-            if v:
-                datadict['vote'] = v.opinion
-        return datadict
-
 AUTH_ATTEMPT_LIMIT = 10
 AUTH_CODES = {
     "phone": 1,
@@ -676,9 +659,26 @@ class ULog(ModelBase):
             "description": self.logtext(),
             "pubDate": self.date}
 
+# most category stuff moved into ctmodel
+# Category collections: userscores, globalscores
+class CategoriedVotingModel(CategoriedModelBase):
+    user = db.ForeignKey(kind=User)
+    # collections (checked): votes
+
+    def votes(self):
+        return self.collection(MediaVote, "media")
+
+    def vdata(self, vuser):
+        datadict = self.data()
+        if vuser:
+            v = MediaVote.query(MediaVote.user == vuser.key,
+                MediaVote.media == self.key).get()
+            if v:
+                datadict['vote'] = v.opinion
+        return datadict
+
 class Thought(CategoriedVotingModel, Searchable):
     searchwords = db.String(repeated=True)
-    user = db.ForeignKey(kind=User)
     conversation = db.ForeignKey(kind=Conversation)
     thought = db.Text()
     reviewed_for_tweet = db.Boolean(default=False)
@@ -734,7 +734,6 @@ class Thought(CategoriedVotingModel, Searchable):
 
 class ChangeIdea(CategoriedVotingModel, Searchable):
     searchwords = db.String(repeated=True)
-    user = db.ForeignKey(kind=User)
     conversation = db.ForeignKey(kind=Conversation)
     idea = db.String()
 
@@ -789,7 +788,6 @@ class ChangeIdea(CategoriedVotingModel, Searchable):
 
 class Question(CategoriedVotingModel, Searchable):
     searchwords = db.String(repeated=True)
-    user = db.ForeignKey(kind=User)
     conversation = db.ForeignKey(kind=Conversation)
     question = db.String()
 
@@ -833,7 +831,6 @@ class Question(CategoriedVotingModel, Searchable):
 
 class Case(CategoriedVotingModel, Searchable):
     searchwords = db.String(repeated=True)
-    user = db.ForeignKey(kind=User)
     conversation = db.ForeignKey(kind=Conversation)
     title = db.String()
     blurb = db.Text()
@@ -1433,7 +1430,6 @@ class Critique(CANModel):
 
 class OpinionIdea(CategoriedVotingModel, Searchable):
     searchwords = db.String(repeated=True)
-    user = db.ForeignKey(kind=User)
     conversation = db.ForeignKey(kind=Conversation)
     title = db.String()
     body = db.Text()
@@ -1485,7 +1481,6 @@ class OpinionIdea(CategoriedVotingModel, Searchable):
 
 class PositionPaper(CategoriedVotingModel, Searchable):
     searchwords = db.String(repeated=True)
-    user = db.ForeignKey(kind=User)
     conversation = db.ForeignKey(kind=Conversation)
     title = db.String()
     body = db.Text()
@@ -1537,7 +1532,6 @@ class Video(CategoriedVotingModel, Searchable, Approvable):
     approved = db.Boolean(default=False)
     critiqued = db.Boolean(default=False)
     searchwords = db.String(repeated=True)
-    user = db.ForeignKey(kind=User)
     conversation = db.ForeignKey(kind=Conversation)
     title = db.String()
     description = db.Text()
@@ -1626,7 +1620,6 @@ def newVideo(**kwargs):
 class Text(CategoriedVotingModel, Approvable):
     approved = db.Boolean(default=False)
     critiqued = db.Boolean(default=False)
-    user = db.ForeignKey(kind=User)
     content = db.Text()
 
     def logstring(self):
@@ -1672,7 +1665,6 @@ class Photo(CategoriedVotingModel, Approvable):
     shared = db.Boolean(default=False)
     approved = db.Boolean(default=False)
     critiqued = db.Boolean(default=False)
-    user = db.ForeignKey(kind=User)
     # html OR ((photo OR graphic), title, artist, link)
     graphic = db.ForeignKey(kind=Graphic)
     html = db.String()
@@ -1867,7 +1859,6 @@ class Event(CategoriedVotingModel, Searchable, Approvable):
     approved = db.Boolean(default=False)
     critiqued = db.Boolean(default=False)
     searchwords = db.String(repeated=True)
-    user = db.ForeignKey(kind=User)
     where = db.ForeignKey(kind=Where)
     conversation = db.ForeignKey(kind=Conversation)
     title = db.String()
@@ -2124,7 +2115,6 @@ class News(CategoriedVotingModel, Searchable, Approvable):
     approved = db.Boolean(default=False)
     critiqued = db.Boolean(default=False)
     searchwords = db.String(repeated=True)
-    user = db.ForeignKey(kind=User)
     conversation = db.ForeignKey(kind=Conversation)
     title = db.String()
     body = db.Text()
