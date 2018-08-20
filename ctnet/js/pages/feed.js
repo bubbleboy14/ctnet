@@ -1,4 +1,9 @@
+CT.require("CT.data");
+CT.require("CT.db");
 CT.require("CT.dom");
+CT.require("CT.parse");
+CT.require("CT.trans");
+CT.require("CAN.media.loader");
 
 var empty, chunk = 15, offset = 0,
 	uid = location.hash.slice(2);
@@ -15,14 +20,15 @@ refill = function() {
 		cb: function(fulld) {
 			var skin = fulld.skin,
 				data = fulld.data;
+			CT.data.addSet(data);
 			if (skin && !offset) { // first request
 				CT.dom.addStyle(skin.css);
 				CT.dom.setContent("feed_title", skin.title);
 			}
-			CT.dom.addContent("feed", JSON.stringify(data));
+			CT.dom.addContent("feed", data.map(CAN.media.loader.contentNode));
 			offset += chunk;
 			empty = data.length != chunk;
 		}
 	});
 };
-refill();
+CT.onload(refill);
