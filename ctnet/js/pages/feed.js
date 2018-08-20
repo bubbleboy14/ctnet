@@ -15,7 +15,7 @@ refill = function() {
 		cb: function(fulld) {
 			var skin = fulld.skin,
 				data = fulld.data;
-			if (skin && offset == chunk) { // first request
+			if (skin && !offset) { // first request
 				CT.dom.addStyle(skin.css);
 				CT.dom.setContent("feed_title", skin.title);
 			}
