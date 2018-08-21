@@ -50,8 +50,6 @@ if qs:
                 content += "<div>%s</div>"%(t.thought,)
     elif title == "Recommendations" and qtype in ["PositionPapers", "OpinionsAndIdeas"] and qrest and len(qrest) > 20:
         m = db.get(flipRStripStroke(qrest))
-    elif title == "Feed":
-        m = db.get(qs)
     elif len(qs) > 20:
         m = db.get(flipRStripStroke(qs))
 

@@ -3,11 +3,13 @@ CT.require("CT.db");
 CT.require("CT.dom");
 CT.require("CT.parse");
 CT.require("CT.trans");
+CT.require("CAN.config");
+CT.require("CAN.cookie");
 CT.require("CAN.media.loader");
 CT.require("CAN.widget.stream");
 
 var empty, chunk = 15, offset = 0,
-	uid = location.hash.slice(2);
+	uid = CAN.cookie.flipReverse(location.hash.slice(2));
 var refill = function() {
 	!empty && CT.net.post({
 		path: "/get",
