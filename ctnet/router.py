@@ -5,7 +5,7 @@ def response():
     if "_escaped_fragment_" in os.environ.get("QUERY_STRING"):
         import gbot
 
-    allowed = set(["404", "about", "beta", "browsers",
+    allowed = set(["404", "about", "beta", "browsers", "feed",
         "community", "home", "login", "newaccount", "news", "participate",
         "profile", "recommendations", "referenda", "search", "security",
         "video", "slider", "cases", "talk", "chat", "wiki", "stream", "map"])

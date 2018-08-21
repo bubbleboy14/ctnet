@@ -11,6 +11,18 @@ def response():
     uid = cgi_get('uid', required=False)
     uids = cgi_get('uids', required=False)
 
+    if gtype == "skinfo":
+        from model import Skin, CategoriedVotingModel
+        user = db.get(uid)
+        skin = Skin.query(Skin.user == uid).get()
+        chunk = cgi_get("chunk", default=15)
+        offset = cgi_get("offset", default=0)
+        succeed({
+            "skin": skin and skin.data(),
+            "data": [d.data() for d in CategoriedVotingModel.query(CategoriedVotingModel.user == uid).order(-CategoriedVotingModel.date).fetch(chunk,
+                offset)]
+        })
+
     if gtype == "og":
         url = cgi_get("url")
         data = requests.get(url, headers={

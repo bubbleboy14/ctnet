@@ -41,6 +41,7 @@ syms = {
 		"browsers.html",
 		"cases.html",
 		"community.html",
+		"feed.html",
 		"home.html",
 		"login.html",
 		"map.html",

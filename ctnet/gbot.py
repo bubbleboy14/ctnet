@@ -1,6 +1,6 @@
 import os
 from util import send_text, readfile, flipRStripStroke, flipQ
-from model import db, getsettings, News, Video, Book, Case, Question, ChangeIdea, Thought, Event, OpinionIdea, PositionPaper, Quote
+from model import db, getsettings, News, Video, Book, Case, Question, ChangeIdea, Thought, Event, OpinionIdea, PositionPaper, Quote, Skin, CategoriedVotingModel
 from urllib import quote, unquote
 
 descriptions = {
@@ -10,22 +10,22 @@ descriptions = {
     "Video": "Civil Action Network's users submit important videos exposing the New World Order",
     "Referenda": "Submit your proposed law today through the Civil Action Network Referenda process, and allow others to vote on your proposal",
     "Community": "Connect with your community at Civil Action Network events. Chat live with other members in your area or field. Join the conversation in an Action Group.",
-    "Cases": "Build your case on Civil Action Network today, and crowd-source the evidence."
+    "Cases": "Build your case on Civil Action Network today, and crowd-source the evidence.",
+    "Feed": "Custom Feed"
 }
 
 pi = os.environ.get("PATH_INFO")
 # unquote twice for escaped %'s
-qs = unquote(unquote(os.environ.get("QUERY_STRING")[19:]))
-pfull = pi
+rawqs = os.environ.get("QUERY_STRING")[19:]
+qs = unquote(unquote(rawqs))
 m = None
 title = pi[1:].split(".")[0].title()
 description = descriptions[title]
 content = """<center>
 This page is not for humans.
-Unless you are a bot, please click <a href="%s">here</a>.
-</center>"""%(pfull,)
+Unless you are a bot, please click <a href="%s#!%s">here</a>.
+</center>"""%(pi, rawqs)
 if qs:
-    pfull += "#!%s"%(quote(qs),)
     qtype = qs
     qrest = None
     if "|" in qs:
@@ -84,7 +84,13 @@ elif title == "Recommendations" and not m:
     for q in Quote.query().order(-Quote.date).filter(Quote.approved == True).fetch(6):
         content += "<div>%s</div>"%(q.author,)
         content += "<div>%s</div>"%(q.content,)
-if m:
+
+if title == "Feed":
+    s = Skin.query(Skin.user == m.key).get()
+    title = s and s.title or "%s - %s"%(title, m.fullName())
+    for d in CategoriedVotingModel.query(CategoriedVotingModel.user == m.key).order(-CategoriedVotingModel.date).fetch(10):
+        content += "<div>%s</div>"%(d.title_analog(),)
+elif m:
     content += "<div class='big'>%s</div>"%(m.title,)
     if title == "Video":
         content += "<img src='%s'>"%(m.thumbnail,)
