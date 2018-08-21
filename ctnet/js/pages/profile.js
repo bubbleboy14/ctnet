@@ -32,18 +32,20 @@ var loadPage = function(uid, pid) {
         CT.data.add(u);
         var setContribution = function(pnode) {
             // temporary code while active/provisional system is inactive
+            var rd = CT.dom.div(null, "right big");
             if (u.is_active || u.contributions.length)
-                pnode.appendChild(CT.dom.node(CT.dom.node("CAN Contributor",
-                    "div", "gray big"), "div", "right"));
+                rd.appendChild(CT.dom.span("CAN Contributor", "gray"));
             else if (u.changes.length)
-                pnode.appendChild(CT.dom.node(CT.dom.node("CAN Changer",
-                    "div", "gray big"), "div", "right"));
+                rd.appendChild(CT.dom.span("CAN Changer", "gray"));
             else if (u.thoughts.length)
-                pnode.appendChild(CT.dom.node(CT.dom.node("CAN Thinker",
-                    "div", "gray big"), "div", "right"));
+                rd.appendChild(CT.dom.span("CAN Thinker", "gray"));
             else
-                pnode.appendChild(CT.dom.node(CT.dom.node("CAN User",
-                    "div", "gray big"), "div", "right"));
+                rd.appendChild(CT.dom.span("CAN User", "gray"));
+            rd.appendChild(CT.dom.pad());
+            rd.appendChild(CT.dom.link("feed", null,
+                "/feed.html#!" + CAN.cookie.flipReverse(u.key),
+                "bold nodecoration"));
+            pnode.appendChild(rd);
 
             // too exclusive
 /*            if (u.is_active || u.contributions.indexOf("articles") != -1 || u.contributions.indexOf("photographs") != -1 || u.contributions.indexOf("videos") != -1)
