@@ -557,6 +557,7 @@ class Skin(db.TimeStampedBase):
     title = db.String()
     css = db.Text()
     chat = db.Boolean(default=False)
+    chatter = db.Boolean(default=False)
 
     def isSearchable(self):
         return False
@@ -567,6 +568,7 @@ class Skin(db.TimeStampedBase):
             "key": self.id(),
             "chat": self.chat,
             "title": self.title,
+            "chatter": self.chatter,
             "user": self.user.urlsafe()
         }
 
