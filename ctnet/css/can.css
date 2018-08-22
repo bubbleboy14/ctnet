@@ -451,6 +451,12 @@ ins {
     box-sizing: border-box;
 }
 
+#feed_chatter {
+    width: 20%;
+    float: right;
+    display: none;
+}
+
 #feed > div,
 #forum > div {
     height: 100%;
