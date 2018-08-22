@@ -555,6 +555,8 @@ def getMost(mostWhat, mostClass, user, lastMost=None):
 class Skin(db.TimeStampedBase):
     user = db.ForeignKey(kind=User)
     title = db.String()
+    color = db.String()
+    background = db.String()
     css = db.Text()
     chat = db.Boolean(default=False)
     chatter = db.Boolean(default=False)
@@ -568,8 +570,10 @@ class Skin(db.TimeStampedBase):
             "key": self.id(),
             "chat": self.chat,
             "title": self.title,
+            "color": self.color,
             "chatter": self.chatter,
-            "user": self.user.urlsafe()
+            "user": self.user.urlsafe(),
+            "background": self.background
         }
 
 class Invitation(CANModel):
