@@ -1,4 +1,18 @@
 CAN.widget.skinner = {
+	color: function(key, val) {
+		var id = key.replace(/ /g, ""),
+			n = CT.dom.field(id, val, "block", null, null, {
+				color: "gray",
+				background: val
+			});
+		setTimeout(function() { // wait a tick
+			jsColorPicker("input#" + id, {
+				color: val,
+				readOnly: true
+			});
+		}, 500);
+		return n;
+	},
 	load: function(uid) {
 		if (CAN.widget.skinner._box)
 			return CAN.widget.skinner._box.show();
@@ -17,15 +31,21 @@ CAN.widget.skinner = {
 					title: "",
 					css: "",
 					chat: false,
-					chatter: false
+					chatter: false,
+					color: "#000000",
+					background: "#FFFFFF"
 				};
 				var title = CT.dom.field(null, skin.title, "w400p"),
 					css = CT.dom.textArea(null, skin.css, "w400p h200p"),
 					chat = CT.dom.checkboxAndLabel("Live Chat", skin.chat),
 					chatter = CT.dom.checkboxAndLabel("Chatter Feed", skin.chatter),
+					color = CAN.widget.skinner.color("Text Color", skin.color),
+					background = CAN.widget.skinner.color("Background Color", skin.background),
 					submitter = CT.dom.button("Update", function() {
 						skin.title = title.value;
 						skin.css = css.value;
+						skin.color = color.value;
+						skin.background = background.value;
 						skin.chat = chat.isChecked();
 						skin.chatter = chatter.isChecked();
 						CT.net.post("/edit", {
@@ -43,14 +63,21 @@ CAN.widget.skinner = {
 							"right bold nodecoration"),
 						CT.dom.div("Skin Your Feed!", "biggerest bold centered"),
 						CT.dom.div([
+							[
+								CT.dom.label("Text Color", "TextColor"),
+								color
+							], [
+								CT.dom.label("Background Color", "BackgroundColor"),
+								background
+							],
 							chat, chatter
 						], "right"),
-						CT.dom.div([
+						[
 							"Title", title
-						]),
-						CT.dom.div([
+						],
+						[
 							"CSS", css
-						]),
+						],
 						submitter
 					]
 				});
