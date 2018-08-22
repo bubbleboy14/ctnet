@@ -438,6 +438,10 @@ ins {
     text-align: right;
 }
 
+.cp-app {
+    z-index: 9999;
+}
+
 #feed, #feed > div, #feed > div > div,
 #forum, #forum > div, #forum > div > div {
     position: relative;
