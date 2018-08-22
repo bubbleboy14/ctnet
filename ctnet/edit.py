@@ -405,6 +405,7 @@ def response():
             s.css = data.pop('css')
             s.user = data.pop('user')
             s.chat = data.pop('chat')
+            s.chatter = data.pop('chatter')
             s.put()
             succeed(s.id())
         elif elkey == "place":
