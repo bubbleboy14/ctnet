@@ -16,15 +16,18 @@ CAN.widget.skinner = {
 					user: uid,
 					title: "",
 					css: "",
-					chat: false
+					chat: false,
+					chatter: false
 				};
 				var title = CT.dom.field(null, skin.title, "w400p"),
 					css = CT.dom.textArea(null, skin.css, "w400p h200p"),
 					chat = CT.dom.checkboxAndLabel("Live Chat", skin.chat),
+					chatter = CT.dom.checkboxAndLabel("Chatter Feed", skin.chatter),
 					submitter = CT.dom.button("Update", function() {
 						skin.title = title.value;
 						skin.css = css.value;
 						skin.chat = chat.isChecked();
+						skin.chatter = chatter.isChecked();
 						CT.net.post("/edit", {
 							eid: uid,
 							data: skin
@@ -40,7 +43,7 @@ CAN.widget.skinner = {
 							"right bold nodecoration"),
 						CT.dom.div("Skin Your Feed!", "biggerest bold centered"),
 						CT.dom.div([
-							chat
+							chat, chatter
 						], "right"),
 						CT.dom.div([
 							"Title", title
