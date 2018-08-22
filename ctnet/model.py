@@ -557,6 +557,17 @@ class Skin(db.TimeStampedBase):
     title = db.String()
     css = db.Text()
 
+    def isSearchable(self):
+        return False
+
+    def mindata(self, nothing=None):
+        return {
+            "css": self.css,
+            "key": self.id(),
+            "title": self.title,
+            "user": self.user.urlsafe()
+        }
+
 class Invitation(CANModel):
     inviter = db.ForeignKey(kind=User)
     email = db.String()
@@ -2503,7 +2514,7 @@ rolemap = { "quote": "writer", "book": "writer",
     "event": "coordinator", "referenda": "lawyer",
     "featured": "admin", "rules": "admin", "newsletter": "",
     "settings": "admin", "refnonlawyer": "", "paper": "",
-    "group": "", "opinion": "", "thought": "", "case": "",
+    "group": "", "opinion": "", "thought": "", "case": "", "skin": "",
     "changeidea": "", "page": "", "question": "", "branch": "", "place": ""}
 
 def acceptedRefKeys():
