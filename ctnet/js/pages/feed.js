@@ -25,8 +25,11 @@ var refill = function() {
 				data = fulld.data;
 			CT.data.addSet(data);
 			if (skin && !offset) { // first request
-				CT.dom.addStyle(skin.css);
-				CT.dom.setContent("feed_title", skin.title);
+				skin.css && CT.dom.addStyle(skin.css);
+				if (skin.title) {
+					CT.dom.setContent("feed_title", skin.title);
+					CT.dom.setContent(CT.dom.tag("title")[0], skin.title);
+				}
 			}
 			CT.dom.addContent("feed", data.map(CAN.media.loader.contentNode));
 			empty = data.length != chunk;
