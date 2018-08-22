@@ -42,8 +42,9 @@ var loadPage = function(uid, pid) {
             else
                 rd.appendChild(CT.dom.span("CAN User", "gray"));
             rd.appendChild(CT.dom.pad());
-            rd.appendChild(CT.dom.link("feed", null,
-                "/feed.html#!" + CAN.cookie.flipReverse(u.key),
+            rd.appendChild(CT.dom.link("feed", !pid && function() {
+                CAN.widget.skinner.load(u.key);
+            }, pid && ("/feed.html#!" + CAN.cookie.flipReverse(u.key)),
                 "bold nodecoration"));
             pnode.appendChild(rd);
 
