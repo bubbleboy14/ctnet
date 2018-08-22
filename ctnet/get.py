@@ -12,15 +12,16 @@ def response():
     uids = cgi_get('uids', required=False)
 
     if gtype == "skinfo":
-        from model import Skin, CategoriedVotingModel
+        from model import Skin, CategoriedVotingModel as CVM
         user = db.get(uid)
         skin = Skin.query(Skin.user == uid).get()
+        if cgi_get("nodata", required=False):
+            succeed(skin and skin.mindata())
         chunk = cgi_get("chunk", default=15)
         offset = cgi_get("offset", default=0)
         succeed({
-            "skin": skin and skin.data(),
-            "data": [d.data() for d in CategoriedVotingModel.query(CategoriedVotingModel.user == uid).order(-CategoriedVotingModel.date).fetch(chunk,
-                offset)]
+            "skin": skin and skin.mindata(),
+            "data": [d.data() for d in CVM.query(CVM.user == uid).order(-CVM.date).fetch(chunk, offset)]
         })
 
     if gtype == "og":
