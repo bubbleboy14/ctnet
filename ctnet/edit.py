@@ -1,5 +1,5 @@
 from util import respond, succeed, fail, cgi_get, send_mail, clearmem, DOMAIN, RAWDOMAIN
-from model import db, approvables, emailadmins, getsettings, dict2date, newcred, modcred, process_newsletter, getzip, hashpass, email_in_use, Conversation, Task, Moderation, Flag, Critique, newevent, newphoto, newnews, newref, newVideo, castvote, mediatypes, rolemap, SearchRule, Featured, Application, get_newsletter, Rideshare, OpinionIdea, PositionPaper, newGroup, Membership, emailuser, approve_message, ULog, Thought, Case, ChangeIdea, Page, Question, Branch, User, SustainableAction, Book, newPlace
+from model import db, approvables, emailadmins, getsettings, dict2date, newcred, modcred, process_newsletter, getzip, hashpass, email_in_use, Conversation, Task, Moderation, Flag, Critique, newevent, newphoto, newnews, newref, newVideo, castvote, mediatypes, rolemap, SearchRule, Featured, Application, get_newsletter, Rideshare, OpinionIdea, PositionPaper, newGroup, Membership, emailuser, approve_message, ULog, Thought, Case, ChangeIdea, Page, Question, Branch, User, SustainableAction, Book, newPlace, Skin
 from emailTemplates import email_changed, submission_approved, submission_critiqued, evidence_submitted, branch_submitted, tweet
 
 recruitergrants = ['reporter', 'writer', 'photographer', 'videographer']
@@ -399,7 +399,14 @@ def response():
                 tweet%(t.thought, tlz["yes"], tlz["no"]))
             succeed(t.data())
         editor = db.KeyWrapper(urlsafe=eid).get()
-        if elkey == "place":
+        if elkey == "skin":
+            s = Skin()
+            s.title = data.pop('title')
+            s.css = data.pop('css')
+            s.user = data.pop('user')
+            s.put()
+            succeed(s.id())
+        elif elkey == "place":
             p = newPlace(data)
             p.user = editor.key
             ul = ULog()
