@@ -1,3 +1,4 @@
+CT.require("CT.align");
 CT.require("CT.data");
 CT.require("CT.db");
 CT.require("CT.dom");
@@ -5,6 +6,7 @@ CT.require("CT.parse");
 CT.require("CT.trans");
 CT.require("CAN.config");
 CT.require("CAN.cookie");
+CT.require("CAN.frame");
 CT.require("CAN.media.loader");
 CT.require("CAN.widget.stream");
 
@@ -26,6 +28,10 @@ var refill = function() {
 			CT.data.addSet(data);
 			if (skin && !offset) { // first request
 				skin.css && CT.dom.addStyle(skin.css);
+				if (skin.chat) {
+					CT.dom.loadAllNode(true);
+					CAN.frame.loadSiteWideChat();
+				}
 				if (skin.title) {
 					CT.dom.setContent("feed_title", skin.title);
 					CT.dom.setContent(CT.dom.tag("title")[0], skin.title);
