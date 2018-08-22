@@ -28,13 +28,26 @@ var refill = function() {
 			CT.data.addSet(data);
 			if (skin && !offset) { // first request
 				skin.css && CT.dom.addStyle(skin.css);
-				if (skin.chat) {
-					CT.dom.loadAllNode(true);
-					CAN.frame.loadSiteWideChat();
-				}
 				if (skin.title) {
 					CT.dom.setContent("feed_title", skin.title);
 					CT.dom.setContent(CT.dom.tag("title")[0], skin.title);
+				}
+				if (skin.chatter) {
+					CT.dom.id("feed").classList.add("w4-5");
+					CT.dom.show("feed_chatter");
+				    CT.net.post("/get", {
+				    	uid: uid,
+				    	number: 6,
+				    	gtype: "media",
+				    	mtype: "comment"
+				    }, null, function(items) {
+				        CAN.widget.stream.comment(CT.dom.id("feed_chatter"),
+				        	null, items.reverse(), false, true, "full");
+				    });
+				}
+				if (skin.chat) {
+					CT.dom.loadAllNode(true);
+					CAN.frame.loadSiteWideChat();
 				}
 			}
 			CT.dom.addContent("feed", data.map(CAN.media.loader.contentNode));
