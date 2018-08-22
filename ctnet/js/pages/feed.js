@@ -28,6 +28,16 @@ var refill = function() {
 			CT.data.addSet(data);
 			if (skin && !offset) { // first request
 				skin.css && CT.dom.addStyle(skin.css);
+				skin.color && CT.dom.addStyle(null, null, {
+					body: {
+						color: skin.color
+					}
+				});
+				skin.background && CT.dom.addStyle(null, null, {
+					body: {
+						background: skin.background
+					}
+				});
 				if (skin.title) {
 					CT.dom.setContent("feed_title", skin.title);
 					CT.dom.setContent(CT.dom.tag("title")[0], skin.title);
