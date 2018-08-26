@@ -38,6 +38,7 @@ CAN.media.cases = {
 	    n.onclick = function() {
 	        document.location = "/cases.html#!" + CAN.cookie.flipReverse(d.key);
 	    };
+	    n.classList.add("pointer");
 	    return n;
 	},
 	"registerEvidence": function(mtype, cb) {
