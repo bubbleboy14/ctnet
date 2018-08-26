@@ -344,7 +344,7 @@ CAN.media.loader = {
 	},
 	"contentNode": function(key, recent_comments) {
 		var entity = typeof key == "string" && CT.data.get(key) || key,
-			cnode = CT.dom.div(typeof recent_comments == "object" ?
+			cnode = CT.dom.div((entity.conversation && typeof recent_comments == "object") ?
 				(recent_comments[entity.conversation].length + " ") : "",
 				"smaller bold right"),
 			n = CT.dom.div([
@@ -354,10 +354,10 @@ CAN.media.loader = {
 				cnode
 			], null, null, {
 				onclick: function() {
-					CAN.widget.stream.jumpTo(entity.conversation);
+					entity.conversation && CAN.widget.stream.jumpTo(entity.conversation);
 				}
 			});
-		CT.db.get("comment", function(comcount) {
+		entity.conversation && CT.db.get("comment", function(comcount) {
 			cnode.innerHTML += "(" + comcount + ")";
 		}, null, null, null, {
 			conversation: entity.conversation
