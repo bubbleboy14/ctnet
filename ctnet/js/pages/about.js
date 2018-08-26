@@ -21,7 +21,7 @@ CT.require("CAN.widget.stream");
 
 onload = function() {
     var uid = CAN.session.isLoggedIn();
-    CT.panel.load(["Mission", "Founders", "Contact", "Terms of Use"]);
+    CT.panel.load(["Mission", "Terms of Use"]);
 
     var _hash = document.location.hash.slice(1);
     if (_hash)
