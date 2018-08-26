@@ -121,7 +121,7 @@ CAN.media.video = {
 	},
 	"result": function(video, lastvideo) {
 	    var n = CT.dom.link("", null, "/video.html#!"
-	    	+ CAN.cookie.flipReverse(video.key));
+	    	+ CAN.cookie.flipReverse(video.key), "nodecoration");
 	    n.appendChild(CT.dom.div(CT.dom.img(
 	    	video.thumbnail.replace(/&amp;/g, "&")), "lfloat rpadded"));
 	    n.appendChild(CT.dom.div(video.title, "big"));
