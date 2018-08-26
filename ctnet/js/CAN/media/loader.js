@@ -348,8 +348,9 @@ CAN.media.loader = {
 				(recent_comments[entity.conversation].length + " ") : "",
 				"smaller bold right"),
 			n = CT.dom.div([
-				CT.dom.div("(" + (entity.mtype || "thought") + ")", "smaller bold right"),
-				entity.title || (entity.content ? (entity.content + " - <b>" + entity.author + "</b>")
+				CT.dom.div("(" + (entity.mtype || (entity.author ? "quote" : "thought")) + ")",
+					"smaller bold right"),
+				entity.title || (entity.content ? (entity.content + "<br>- <b>" + entity.author + "</b>")
 					: CT.parse.shortened(entity.thought, 50, 10, true)),
 				cnode
 			], null, null, {
