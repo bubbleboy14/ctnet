@@ -4,6 +4,7 @@ CT.require("CT.db");
 CT.require("CT.dom");
 CT.require("CT.parse");
 CT.require("CT.trans");
+CT.require("CT.video");
 CT.require("CAN.config");
 CT.require("CAN.cookie");
 CT.require("CAN.frame");
