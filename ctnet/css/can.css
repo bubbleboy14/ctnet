@@ -461,6 +461,10 @@ ins {
     display: none;
 }
 
+#feed_chatter img {
+    width: 100%;
+}
+
 #feed > div,
 #forum > div {
     height: 100%;
