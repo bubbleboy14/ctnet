@@ -349,7 +349,8 @@ CAN.media.loader = {
 				"smaller bold right"),
 			n = CT.dom.div([
 				CT.dom.div("(" + (entity.mtype || "thought") + ")", "smaller bold right"),
-				entity.title || CT.parse.shortened(entity.thought, 50, 10, true),
+				entity.title || (entity.content ? (entity.content + " - <b>" + entity.author + "</b>")
+					: CT.parse.shortened(entity.thought, 50, 10, true)),
 				cnode
 			], null, null, {
 				onclick: function() {
