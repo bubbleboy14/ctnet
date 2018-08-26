@@ -143,8 +143,8 @@ google.setOnLoadCallback(function() {
             "ed": CAN.cookie.checkEndDate()},
             "error finding " + stLower + "s", function(results) {
                 searchOuts[searchType] = false;
-                var container = CT.dom.node("", "div",
-                    "bordered padded small bottommargined thumb");
+                var container = CT.dom.div(null, "bordered padded small bottommargined "
+                    + ((stLower == "thought") && "fwimg" || "thumb"));
                 container.appendChild(CT.dom.node(
                     "CAN " + searchType + " Results",
                     "div", "right gray"));
