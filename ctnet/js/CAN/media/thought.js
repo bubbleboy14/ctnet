@@ -1,5 +1,5 @@
 CAN.media.thought = {
-	"build": function(d, vindex, v, htmlSafe) {
+	build: function(d, vindex, v, htmlSafe) {
 		var n = CT.dom.node();
 		var cclass = "bordered padded round bottommargined categoriedbox";
 		for (var i = 0; i < d.category.length; i++)
@@ -19,11 +19,18 @@ CAN.media.thought = {
 		n.appendChild(CT.dom.node(CT.parse.process(d.thought, false, true), "span"));
 		return n;
 	},
+	result: function(d) {
+		return CT.dom.link(CAN.media.thought.build(d), null,
+			CAN.media.thought.link(d.key), "nodecoration");
+	},
+	link: function(key) {
+		return "/community.html#!Stream|" + CAN.cookie.flipReverse(key);
+	},
 	jump: function(key) {
 		if (location.pathname.startsWith("/community.html"))
 			viewSingleItem(CT.data.get(key), "thought");
 		else
-			window.location = "/community.html#!Stream|" + CAN.cookie.flipReverse(key);
+			window.location = CAN.media.thought.link(key);
 	},
 	htmlSafe: function(key) {
 		var n = CT.dom.div(null, null, "convothought" + key + CT.data.random(1000)),
@@ -47,4 +54,4 @@ CAN.media.thought = {
 };
 
 CAN.media.loader.registerBuilder("thought", CAN.media.thought.build);
-CAN.media.loader.registerBuilder("thoughtresult", CAN.media.thought.build);
+CAN.media.loader.registerBuilder("thoughtresult", CAN.media.thought.result);
