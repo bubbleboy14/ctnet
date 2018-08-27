@@ -2611,6 +2611,8 @@ def nextmedia(mtype, category=None, uid=None, number=1000, offset=0, nodata=Fals
 #            results = q.fetch(number, offset)
 #    elif mtype == "referenda" and not allrefs and approved and not authid:
     if mtype == "comment":
+        if user:
+            q = q.filter(mt.user == user.key)
         results = q.filter(mt.private == False).fetch(number, offset=offset)
     elif mtype == "referenda" and not allrefs and approved and not authid:
         results = db.get_multi(getsettings().CAN_referenda[offset:offset+number])
