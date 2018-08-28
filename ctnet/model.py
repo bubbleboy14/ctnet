@@ -574,8 +574,8 @@ class Skin(db.TimeStampedBase):
             "font": self.font,
             "title": self.title,
             "color": self.color,
-            "img": self.img.path,
             "chatter": self.chatter,
+            "img": self.img.urlsafe(),
             "user": self.user.urlsafe(),
             "background": self.background
         }
