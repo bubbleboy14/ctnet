@@ -28,7 +28,6 @@ var refill = function() {
 				data = fulld.data;
 			CT.data.addSet(data);
 			if (skin && !offset) { // first request
-				skin.css && CT.dom.addStyle(skin.css);
 				skin.font && CT.dom.addStyle(null, null, {
 					body: {
 						"font-family": skin.font
@@ -50,6 +49,7 @@ var refill = function() {
 						background: "url(" + skin.img + ")"
 					}
 				});
+				skin.css && CT.dom.addStyle(skin.css);
 				if (skin.title) {
 					CT.dom.setContent("feed_title", skin.title);
 					CT.dom.setContent(CT.dom.tag("title")[0], skin.title);
