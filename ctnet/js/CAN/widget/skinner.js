@@ -46,12 +46,23 @@ CAN.widget.skinner = {
 					chatter = CT.dom.checkboxAndLabel("Chatter Feed", skin.chatter),
 					color = CAN.widget.skinner.color("Text Color", skin.color),
 					background = CAN.widget.skinner.color("Background Color", skin.background),
-					img = CT.db.edit.media({
-						data: skin,
-						delNode: true,
-						id: "BackgroundImage",
-						className: "hm200p wm200p"
-					}),
+					img = CT.dom.div(null, "hidden"),
+					loadImg = function() {
+						if (!img._loaded) {
+							CT.dom.setContent(img, [
+								CT.dom.label("Background Image", "BackgroundImage",
+									null, true),
+								CT.db.edit.media({
+									data: skin,
+									delNode: true,
+									id: "BackgroundImage",
+									className: "hm200p wm200p"
+								})
+							]);
+							CT.dom.show(img);
+							img._loaded = true;
+						}
+					},
 					submitter = CT.dom.button("Update", function() {
 						skin.title = title.value;
 						skin.css = css.value;
@@ -68,10 +79,11 @@ CAN.widget.skinner = {
 						}, null, function(skey) {
 							skin.img = simg;
 							skin.key = skey;
-							CT.dom.show("bgimgselector");
+							loadImg();
 							alert("great!");
 						});
 					});
+				(skin.key != "skin") && loadImg();
 				CAN.widget.skinner._box = new CT.modal.LightBox({
 					content: [
 						CT.dom.link("view feed", null,
@@ -85,11 +97,7 @@ CAN.widget.skinner = {
 							], [
 								CT.dom.label("Background Color", "BackgroundColor"),
 								background
-							], CT.dom.div([
-								CT.dom.label("Background Image", "BackgroundImage",
-									null, true),
-								img
-							], skin.key == "skin" && "hidden", "bgimgselector"), [
+							], img, [
 								"Font", font
 							],
 							chat, chatter
