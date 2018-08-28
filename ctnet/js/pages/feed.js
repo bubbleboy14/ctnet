@@ -39,6 +39,12 @@ var refill = function() {
 						background: skin.background
 					}
 				});
+				skin.img && CT.dom.addStyle(null, null, {
+					body: {
+						"background-size": "cover",
+						background: "url(" + skin.img + ")"
+					}
+				});
 				if (skin.title) {
 					CT.dom.setContent("feed_title", skin.title);
 					CT.dom.setContent(CT.dom.tag("title")[0], skin.title);
