@@ -557,6 +557,7 @@ class Skin(db.TimeStampedBase):
     title = db.String()
     color = db.String()
     background = db.String()
+    img = db.Binary()
     css = db.Text()
     chat = db.Boolean(default=False)
     chatter = db.Boolean(default=False)
@@ -571,6 +572,7 @@ class Skin(db.TimeStampedBase):
             "chat": self.chat,
             "title": self.title,
             "color": self.color,
+            "img": self.img.path,
             "chatter": self.chatter,
             "user": self.user.urlsafe(),
             "background": self.background
