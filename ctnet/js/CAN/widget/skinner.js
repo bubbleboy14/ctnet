@@ -48,6 +48,7 @@ CAN.widget.skinner = {
 					background = CAN.widget.skinner.color("Background Color", skin.background),
 					img = CT.db.edit.media({
 						data: skin,
+						delNode: true,
 						id: "BackgroundImage",
 						className: "hm200p wm200p"
 					}),
@@ -59,11 +60,15 @@ CAN.widget.skinner = {
 						skin.font = font.value;
 						skin.chat = chat.isChecked();
 						skin.chatter = chatter.isChecked();
+						var simg = skin.img;
+						delete skin.img; // to avoid overwriting
 						CT.net.post("/edit", {
 							eid: uid,
 							data: skin
 						}, null, function(skey) {
+							skin.img = simg;
 							skin.key = skey;
+							CT.dom.show("bgimgselector");
 							alert("great!");
 						});
 					});
@@ -80,11 +85,11 @@ CAN.widget.skinner = {
 							], [
 								CT.dom.label("Background Color", "BackgroundColor"),
 								background
-							], [
+							], CT.dom.div([
 								CT.dom.label("Background Image", "BackgroundImage",
 									null, true),
 								img
-							], [
+							], skin.key == "skin" && "hidden", "bgimgselector"), [
 								"Font", font
 							],
 							chat, chatter
