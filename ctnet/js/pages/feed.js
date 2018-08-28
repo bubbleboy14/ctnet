@@ -45,8 +45,8 @@ var refill = function() {
 				});
 				skin.img && CT.dom.addStyle(null, null, {
 					body: {
-						"background-size": "cover",
-						background: "url(" + skin.img + ")"
+						background: "url(" + skin.img + ")",
+						"background-size": "cover"
 					}
 				});
 				skin.css && CT.dom.addStyle(skin.css);
