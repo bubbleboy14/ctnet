@@ -38,6 +38,11 @@ CAN.widget.skinner = {
 				var title = CT.dom.field(null, skin.title, "w400p"),
 					css = CT.dom.textArea(null, skin.css, "w400p h200p"),
 					chat = CT.dom.checkboxAndLabel("Live Chat", skin.chat),
+					font = CT.dom.select([
+						"sans-serif, Arial, Helvetica",
+						"serif, Times New Roman, Times",
+						"monospace, Courier, Courier New"
+					]),
 					chatter = CT.dom.checkboxAndLabel("Chatter Feed", skin.chatter),
 					color = CAN.widget.skinner.color("Text Color", skin.color),
 					background = CAN.widget.skinner.color("Background Color", skin.background),
@@ -51,6 +56,7 @@ CAN.widget.skinner = {
 						skin.css = css.value;
 						skin.color = color.value;
 						skin.background = background.value;
+						skin.font = font.value;
 						skin.chat = chat.isChecked();
 						skin.chatter = chatter.isChecked();
 						CT.net.post("/edit", {
@@ -78,9 +84,11 @@ CAN.widget.skinner = {
 								CT.dom.label("Background Image", "BackgroundImage",
 									null, true),
 								img
+							], [
+								"Font", font
 							],
 							chat, chatter
-						], "right"),
+						], "right", "skinner_opts"),
 						[
 							"Title", title
 						],
