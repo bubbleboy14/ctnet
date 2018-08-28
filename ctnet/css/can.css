@@ -1360,6 +1360,10 @@ textarea.fullwidth {
     background: rgba(50, 50, 50, 0.4);
 }
 
+#canchatiframe, #canchatexpander {
+    z-index: 9999;
+}
+
 /* tinyMCE-related */
 .field-item > div {
     margin: 16px 0;
