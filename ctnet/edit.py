@@ -404,6 +404,7 @@ def response():
             s.title = data.pop('title')
             s.css = data.pop('css')
             s.user = data.pop('user')
+            s.font = data.pop('font')
             s.chat = data.pop('chat')
             s.chatter = data.pop('chatter')
             s.color = data.pop('color')
