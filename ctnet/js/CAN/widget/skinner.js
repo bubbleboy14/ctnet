@@ -41,6 +41,11 @@ CAN.widget.skinner = {
 					chatter = CT.dom.checkboxAndLabel("Chatter Feed", skin.chatter),
 					color = CAN.widget.skinner.color("Text Color", skin.color),
 					background = CAN.widget.skinner.color("Background Color", skin.background),
+					img = CT.db.edit.media({
+						data: skin,
+						id: "BackgroundImage",
+						className: "hm200p wm200p"
+					}),
 					submitter = CT.dom.button("Update", function() {
 						skin.title = title.value;
 						skin.css = css.value;
@@ -69,6 +74,10 @@ CAN.widget.skinner = {
 							], [
 								CT.dom.label("Background Color", "BackgroundColor"),
 								background
+							], [
+								CT.dom.label("Background Image", "BackgroundImage",
+									null, true),
+								img
 							],
 							chat, chatter
 						], "right"),
