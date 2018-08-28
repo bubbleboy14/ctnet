@@ -1,7 +1,10 @@
 CT.require("CT.data");
 CT.require("CT.dom");
+CT.require("CT.modal");
 CT.require("CT.parse");
 CT.require("CT.video");
+CT.require("core");
+CT.require("CAN.config");
 CT.require("CAN.cookie");
 CT.require("CAN.media.loader");
 CT.require("CAN.media.moderation");
