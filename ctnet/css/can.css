@@ -442,6 +442,13 @@ ins {
     z-index: 9999;
 }
 
+#skinner_opts > div {
+    padding: 5px;
+    margin: 5px;
+    border: 1px solid gray;
+    border-radius: 10px;
+}
+
 #feed, #feed > div, #feed > div > div,
 #forum, #forum > div, #forum > div > div {
     position: relative;
