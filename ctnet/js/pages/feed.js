@@ -29,6 +29,11 @@ var refill = function() {
 			CT.data.addSet(data);
 			if (skin && !offset) { // first request
 				skin.css && CT.dom.addStyle(skin.css);
+				skin.font && CT.dom.addStyle(null, null, {
+					body: {
+						"font-family": skin.font
+					}
+				});
 				skin.color && CT.dom.addStyle(null, null, {
 					body: {
 						color: skin.color
