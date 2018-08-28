@@ -7,7 +7,7 @@ setTimeout(function() {
 		agkey = "";
 
 	var blocker = document.createElement("div");
-	blocker._on = CT.align.width() < IFR_EXP_WIDTH;
+	blocker._on = window.innerWidth < IFR_EXP_WIDTH;
 	blocker.id = "chatblocker";
 	blocker.style.background = "white";
 	blocker.style.textAlign = "center";
@@ -41,9 +41,17 @@ setTimeout(function() {
 		? "" : "//www.civilactionnetwork.org")
 		+ "/talk.html" + (agkey ? ("#" + agkey) : "");
 
+	// iframe getters (from CT.dom)
+	var getDoc = function(iframe) {
+		return iframe.documentWindow || iframe.contentWindow || iframe.contentDocument;
+	};
+	var getLoc = function(iframe) {
+		return getDoc(iframe).location;
+	};
+
 	var msgDown = function(msg) {
 		if (!agkey) // only works same domain
-			CT.dom.getLoc(iframe).hash = "d" + msg;
+			getLoc(iframe).hash = "d" + msg;
 	};
 
 	var expander = document.createElement('div');
@@ -69,9 +77,9 @@ setTimeout(function() {
 		}
 	};
 
-	if (CT.dom.ALLNODE) {
+	if (CT && CT.dom && CT.dom.ALLNODE) {
 		CT.dom.ALLNODE.chatBlock = function() {
-			var w = CT.align.width();
+			var w = window.innerWidth;
 			if (!blocker._on && w < IFR_EXP_WIDTH) {
 				blocker._on = true;
 				blocker.style.display = "block";
@@ -93,7 +101,7 @@ setTimeout(function() {
 	if (!agkey) {
 		var _chatbridge = setInterval(function() {
 			try {
-				var loc = CT.dom.getLoc(iframe);
+				var loc = getLoc(iframe);
 				var hash = loc.hash.slice(2);
 				if (loc.hash.charAt(1) == 'u' && hash != lastHash) {
 					lastHash = hash; // defined in util
