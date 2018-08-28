@@ -351,7 +351,7 @@ CAN.media.loader = {
 				CT.dom.div("(" + (entity.mtype || (entity.author ? "quote" : "thought")) + ")",
 					"smaller bold right"),
 				entity.title || (entity.content ? (entity.content + "<br>- <b>" + entity.author + "</b>")
-					: CT.parse.shortened(entity.thought, 50, 10, true)),
+					: CT.parse.shortened(entity.thought || entity.idea, 50, 10, true)),
 				cnode
 			], null, null, {
 				onclick: function() {
@@ -364,7 +364,7 @@ CAN.media.loader = {
 			conversation: entity.conversation
 		}, null, true);
 		setTimeout(function() {
-			var img, blurb = entity.thought || entity.blurb || entity.body || entity.description;
+			var img, blurb = entity.thought || entity.blurb || entity.body || entity.description || entity.idea;
 			if (entity.thumbnail)
 				img = entity.thumbnail;
 			else if (entity.photo)
