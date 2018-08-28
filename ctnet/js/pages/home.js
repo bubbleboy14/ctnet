@@ -44,7 +44,7 @@ onload = function() {
         CT.data.checkAndDo(pkeyz, function() {
             unodez.forEach(function(n, i) {
                 n.appendChild(posterz[i] == "anon" ? CT.dom.div("(anon)") :
-                    CAN.session.firstLastLink(CT.data.get(posterz[i]), null, null, null, true));
+                    CAN.session.firstLastLink(CT.data.get(posterz[i]), null, null, null, true, true));
             });
         });
         CT.net.post({
