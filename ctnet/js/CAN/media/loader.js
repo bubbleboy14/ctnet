@@ -351,7 +351,8 @@ CAN.media.loader = {
 				(recent_comments[entity.conversation].length + " ") : "",
 				"smaller bold right"),
 			n = CT.dom.div([
-				CT.dom.div("(" + (entity.mtype || (entity.author ? "quote"
+				CT.dom.div("(" + (entity.mtype || (entity.author
+					? ((entity.buylink || entity.readlink) ? "book" : "quote")
 					: (entity.graphic ? "photo" : "thought"))) + ")",
 					"smaller bold right"),
 				title, cnode
@@ -369,7 +370,8 @@ CAN.media.loader = {
 			if (entity.thumbnail)
 				img = entity.thumbnail;
 			else if (entity.photo)
-				img = (typeof entity.photo == "string") ? entity.photo : "/get?gtype=graphic&key=" + entity.photo[0];
+				img = entity.photo.photo || ((typeof entity.photo == "string")
+					? entity.photo : "/get?gtype=graphic&key=" + entity.photo[0]);
 			else if (blurb)
 				img = CT.parse.extractImage(blurb);
 			if (img) {
