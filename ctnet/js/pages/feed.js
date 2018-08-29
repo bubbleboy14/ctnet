@@ -8,7 +8,9 @@ CT.require("CT.video");
 CT.require("CAN.config");
 CT.require("CAN.cookie");
 CT.require("CAN.frame");
+CT.require("CAN.session");
 CT.require("CAN.media.loader");
+CT.require("CAN.media.thought");
 CT.require("CAN.widget.stream");
 
 var empty, chunk = 15, offset = 0,
@@ -58,17 +60,32 @@ var refill = function() {
 					CT.dom.setContent(CT.dom.tag("title")[0], skin.title);
 				}
 				if (skin.chatter) {
+					var chchunk = 6, chparams = {
+						uid: uid,
+						offset: 0,
+						number: chchunk,
+						gtype: "media",
+						mtype: "comment"
+					};
 					CT.dom.id("feed").classList.add("w4-5");
 					CT.dom.show("feed_chatter");
-				    CT.net.post("/get", {
-				    	uid: uid,
-				    	number: 6,
-				    	gtype: "media",
-				    	mtype: "comment"
-				    }, null, function(items) {
-				        CAN.widget.stream.comment(CT.dom.id("feed_chatter"),
-				        	null, items.reverse(), false, true, "full");
-				    });
+					CT.net.post("/get", chparams, null, function(items) {
+						var fcnode = CT.dom.id("feed_chatter"),
+							fcrefiller = CT.dom.div();
+						fcrefiller.on("visible", function() {
+							chparams.offset += chchunk;
+							CT.dom.remove(fcrefiller);
+							CT.net.post("/get", chparams, null, function(cz) {
+								for (var i = 0; i < cz.length; i++)
+									fcnode.addNode(cz[i], true);
+								if (cz.length == chchunk)
+									CT.dom.addContent(fcnode, fcrefiller);
+							});
+						});
+						CAN.widget.stream.comment(fcnode, null,
+							items.reverse(), false, true, "full");
+						CT.dom.addContent(fcnode, fcrefiller);
+					});
 				}
 				if (skin.chat) {
 					CT.dom.loadAllNode(true);
@@ -80,12 +97,9 @@ var refill = function() {
 			if (empty)
 				CT.dom.remove("refiller");
 			else if (!offset) { // first request
-				var io = new IntersectionObserver(function(entz) {
-					if (entz[0].intersectionRatio)
-						refill();
-				}), refiller = CT.dom.div(null, null, "refiller");
-				io.observe(refiller);
-				CT.dom.addContent(document.body, refiller);
+				CT.dom.addContent(document.body, CT.dom.div(null, null, "refiller", {
+					onvisible: refill
+				}));
 			}
 			offset += chunk;
 		}
