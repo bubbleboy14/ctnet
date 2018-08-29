@@ -110,7 +110,7 @@ CAN.chat = {
 	        uspot.appendChild(CT.dom.node(u.fullName, "div", "bold"));
 	        uspot.appendChild(CT.dom.node("Hometown: " + u.zipcode.city));
 	        if (u.lastName != "(guest)")
-	            uspot.appendChild(CT.dom.link("View Profile", null, "/profile.html?u="
+	            uspot.appendChild(CT.dom.link("View Feed", null, "/feed.html#!"
 	                + CAN.cookie.flipReverse(u.key), null, null, null, true));
 	        !noFocus && CAN.chat.focusChatInput();
 	    }, ["zipcode"]);
