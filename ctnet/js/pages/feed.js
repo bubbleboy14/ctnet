@@ -12,7 +12,8 @@ CT.require("CAN.media.loader");
 CT.require("CAN.widget.stream");
 
 var empty, chunk = 15, offset = 0,
-	uid = CAN.cookie.flipReverse(location.hash.slice(2));
+	hash = location.hash.slice(2),
+	uid = CAN.cookie.flipReverse(hash);
 var refill = function() {
 	!empty && CT.net.post({
 		path: "/get",
@@ -26,6 +27,8 @@ var refill = function() {
 		cb: function(fulld) {
 			var skin = fulld.skin,
 				data = fulld.data;
+			if (!(offset || data.length))
+				window.location = "/profile.html?u=" + hash;
 			CT.data.addSet(data);
 			if (skin && !offset) { // first request
 				skin.font && CT.dom.addStyle(null, null, {
