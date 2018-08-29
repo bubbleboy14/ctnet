@@ -125,7 +125,7 @@ onload = function() {
             var u = ref.user;
             byline.appendChild(CT.dom.node("proposed by ", "span", "gray"));
             byline.appendChild(CT.dom.link(u.firstName + " " + u.lastName, null,
-                "/profile.html?u=" + CAN.cookie.flipReverse(u.key), "gray"));
+                "/feed.html#!" + CAN.cookie.flipReverse(u.key), "gray"));
             byline.appendChild(CT.dom.node(" for ", "span", "gray"));
         }
         else // glaser refs
