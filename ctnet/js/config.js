@@ -5,6 +5,7 @@
 	"okdomains": ["localhost"],
 	"feedback": "feedback@email.com",
 	"geokeys": [],
+	"feedlinks": true,
 	"pubsub": {
 		"host": null,
 		"port": null,
