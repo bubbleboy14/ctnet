@@ -829,7 +829,7 @@ class Question(CategoriedVotingModel, Searchable):
         ModelBase.rm(self)
 
     def storylink(self, aslist=False):
-        from util import DOMAIN
+        from util import DOMAIN, flipQ
         if aslist:
             return ["community"]
         return "%s/community.html#!Questions|%s"%(DOMAIN, flipQ(self.key.urlsafe()))
