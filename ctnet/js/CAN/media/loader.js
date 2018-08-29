@@ -343,16 +343,18 @@ CAN.media.loader = {
 			"div", d.unseencount && "bold" || "", "ll"+d.key);
 	},
 	"contentNode": function(key, recent_comments) {
-		var entity = typeof key == "string" && CT.data.get(key) || key,
+		var img, entity = typeof key == "string" && CT.data.get(key) || key,
+			blurb = entity.thought || entity.blurb || entity.body || entity.description || entity.idea,
+			title = entity.title || (entity.content ? (entity.content + "<br>- <b>" + entity.author + "</b>")
+					: (blurb && CT.parse.shortened(blurb, 50, 10, true) || "")),
 			cnode = CT.dom.div((entity.conversation && typeof recent_comments == "object") ?
 				(recent_comments[entity.conversation].length + " ") : "",
 				"smaller bold right"),
 			n = CT.dom.div([
-				CT.dom.div("(" + (entity.mtype || (entity.author ? "quote" : "thought")) + ")",
+				CT.dom.div("(" + (entity.mtype || (entity.author ? "quote"
+					: (entity.graphic ? "photo" : "thought"))) + ")",
 					"smaller bold right"),
-				entity.title || (entity.content ? (entity.content + "<br>- <b>" + entity.author + "</b>")
-					: CT.parse.shortened(entity.thought || entity.idea, 50, 10, true)),
-				cnode
+				title, cnode
 			], null, null, {
 				onclick: function() {
 					entity.conversation && CAN.widget.stream.jumpTo(entity.conversation);
@@ -364,11 +366,10 @@ CAN.media.loader = {
 			conversation: entity.conversation
 		}, null, true);
 		setTimeout(function() {
-			var img, blurb = entity.thought || entity.blurb || entity.body || entity.description || entity.idea;
 			if (entity.thumbnail)
 				img = entity.thumbnail;
 			else if (entity.photo)
-				img = "/get?gtype=graphic&key=" + entity.photo[0];
+				img = (typeof entity.photo == "string") ? entity.photo : "/get?gtype=graphic&key=" + entity.photo[0];
 			else if (blurb)
 				img = CT.parse.extractImage(blurb);
 			if (img) {
