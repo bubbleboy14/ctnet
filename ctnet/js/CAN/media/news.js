@@ -40,7 +40,7 @@ CAN.media.news = {
 			byline.appendChild(CT.dom.span("posted " + (d.date
 				|| "(now)") + ", by ", "gray"));
 			byline.appendChild(CT.dom.link(a.firstName + " " + a.lastName,
-				null, "/profile.html?u=" + CAN.cookie.flipReverse(a.key), "gray"));
+				null, "/feed.html#!" + CAN.cookie.flipReverse(a.key), "gray"));
 			n.appendChild(byline);
 		}
 
