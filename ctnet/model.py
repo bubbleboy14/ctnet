@@ -706,6 +706,9 @@ class Thought(CategoriedVotingModel, Searchable):
     thought = db.Text()
     reviewed_for_tweet = db.Boolean(default=False)
 
+    def verb(self):
+        return "consider"
+
     def convoTopic(self):
         return ("THOUGHT: %s"%(self.thought.replace('\n', ' '),))[:500]
 
@@ -759,6 +762,9 @@ class ChangeIdea(CategoriedVotingModel, Searchable):
     searchwords = db.String(repeated=True)
     conversation = db.ForeignKey(kind=Conversation)
     idea = db.String()
+
+    def verb(self):
+        return "consider"
 
     def convoTopic(self):
         return ("CHANGE: %s"%(self.idea.replace('\n', ' '),))[:500]
@@ -814,6 +820,9 @@ class Question(CategoriedVotingModel, Searchable):
     conversation = db.ForeignKey(kind=Conversation)
     question = db.String()
 
+    def verb(self):
+        return "ask yourself"
+
     def title_analog(self):
         return self.question
 
@@ -860,6 +869,9 @@ class Case(CategoriedVotingModel, Searchable):
     document = db.Binary()
     # DONE: STRING2KEY conversion!
     evidence = db.ForeignKey(repeated=True)
+
+    def verb(self):
+        return "review"
 
     def getBlob(self):
         return self.document and self.document.get()
@@ -2082,7 +2094,7 @@ def invitation_message(sender, recipient, media):
     m.recipient = recipient.key
     m.check_link = media.storylink(True)
     m.message = IMSG%(sender.fullName(),
-        prepend_article(media.modeltype_singular()), media.title)
+        prepend_article(media.modeltype_singular()), media.title_analog())
     m.put()
 
 CMSG = '%s has commented on your %s called "%s".'
