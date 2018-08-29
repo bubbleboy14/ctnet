@@ -26,6 +26,7 @@ onload = function() {
             CT.dom.hide(svnode);
             CT.dom.show(events);
             CAN.widget.share.updateShareItem("community", null, "Events");
+            CT.dom.hide("comminvite");
         }, function() {
             CAN.widget.share.updateShareItem("community",
                 CAN.chat.currentRoom, "People");
@@ -33,23 +34,29 @@ onload = function() {
                 CAN.chat.scrollOutie();
                 CAN.chat.focusChatInput();
             }
+            CT.dom.hide("comminvite");
         }, function() {
             CAN.widget.share.updateShareItem("community", null, "Questions");
             CT.dom.hide(streamnodes.question.snode);
             CT.dom.show(streamnodes.question.anode);
+            CT.dom.hide("comminvite");
         }, function() {
             CAN.widget.share.updateShareItem("community", null, "Ideas");
             CT.dom.hide(streamnodes.changeidea.snode);
             CT.dom.show(streamnodes.changeidea.anode);
+            CT.dom.hide("comminvite");
         }, function() {
             CAN.widget.share.updateShareItem("community", null, "Stream");
             CT.dom.hide(streamnodes.thought.snode);
             CT.dom.show(streamnodes.thought.anode);
+            CT.dom.hide("comminvite");
         }, function() {
             CAN.widget.share.updateShareItem("community", null, "Chatter");
+            CT.dom.hide("comminvite");
         }, function() {
             CAN.widget.share.updateShareItem("community", null, "Map");
             map.refresh();
+            CT.dom.hide("comminvite");
         }]);
 
     // video
@@ -110,6 +117,12 @@ onload = function() {
         CT.dom.hide(nodez.anode);
         CT.dom.show(nodez.snode);
         CAN.widget.share.updateShareItem("community", d.key, ntype);
+        if (mtype != "comment") {
+            CT.dom.setContent("comminvite", CAN.widget.invite.button(d,
+                (mtype == "changeidea") ? "idea" : mtype,
+                "consider", uid));
+            CT.dom.show("comminvite");
+        }
     };
     ['question', 'changeidea', 'thought', 'comment'].forEach(function (item) {
         var nodez = streamnodes[item] = {},
