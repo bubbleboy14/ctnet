@@ -60,14 +60,15 @@ CAN.widget.stream = {
 		var utinfo = CT.dom.node(opts.info);
 		var utinput = CT.dom.node();
 		var utlist = CT.dom.node("no " + opts.type + "s yet!");
-		var addNode = function(d) {
+		var addNode = opts.pnode.addNode = function(d, topdown) {
 			var n = CAN.widget.stream.getNode(d, opts);
 			if (!opts.taguser && !opts.listonly)
 				n.appendChild(CAN.media.moderation.remove(d, opts));
 			if (utlist.innerHTML == "no " + opts.type + "s yet!") {
 				utlist.innerHTML = "";
 				utlist.appendChild(n);
-			}
+			} else if (topdown)
+				utlist.appendChild(n);
 			else
 				utlist.insertBefore(n, utlist.firstChild);
 		};
