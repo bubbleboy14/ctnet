@@ -26,15 +26,16 @@ CAN.session = {
 	},
 
 	// user nodes. better place for this? maybe (small) CAN.util?
-	"firstLastLink": function(u, noname, rfloat, hash, firstonly, feedlink) {
+	"firstLastLink": function(u, noname, rfloat, hash, firstonly) {
 	    var nl = CT.dom.node(null, "b", "unamelink");
 	    nl.refresh = function(u) {
 	        nl.innerHTML = noname && "user" || (u.firstName +
 	            ((firstonly || !u.lastName) ? "" : (" " + u.lastName)));
 	    };
 	    u && nl.refresh(u);
-	    if (feedlink)
-	    	nl = CT.dom.link(nl, null, "/feed.html#!" + CAN.cookie.flipReverse(u.key));
+	    if (core.config.ctnet.feedlinks)
+	    	nl = CT.dom.link(nl, null,
+	    		"/feed.html#!" + CAN.cookie.flipReverse(u.key), "nodecoration");
 	    if (rfloat)
 	        return CT.dom.node(nl, "div", "small right lpadded");
 	    return nl;
@@ -42,7 +43,7 @@ CAN.session = {
 	"userLine": function(key, token, noline, n, wclass, wid, rfloat) {
 	    token = token || "";
 	    var u = CT.data.get(key);
-	    n = n || CT.dom.link("", null, "/profile.html?u=" + CAN.cookie.flipReverse(key));
+	    n = n || CT.dom.link("", null, "/feed.html#!" + CAN.cookie.flipReverse(key));
 	    if (rfloat)
 	        n.appendChild(CT.dom.node(rfloat, "div", "right"));
 	    n.appendChild(CT.dom.node(CT.dom.img("/get?gtype=avatar&size=chat&uid=" + CAN.cookie.flipReverse(key)), "div", "lfloat rpadded"));
