@@ -2,7 +2,7 @@ CAN.widget.invite = {
 	"button": function(d, itype, iverb, uid) {
 	    var ibutt = CT.dom.button("Invite a Friend to "
 	        + CT.parse.capitalize(iverb) + " this "
-	        + CT.parse.capitalize(itype));
+	        + CT.parse.capitalize(itype), null, "fullwidth");
 	    if (uid && uid !== "nouid")
 	        CAN.widget.invite.load(itype, uid, ibutt,
 	            null, function() { return d; }, iverb);
