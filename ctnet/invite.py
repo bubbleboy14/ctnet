@@ -4,7 +4,8 @@ from model import db, send_invitation, email_in_use, Invitation, invitation_mess
 def response():
     userkey = db.KeyWrapper(urlsafe=cgi_get('uid'))
     mtype = cgi_get('mtype', choices=["conversation", "group", "event",
-        "video", "article", "referendum", "case", "opinion", "paper"])
+        "video", "article", "referendum", "case", "opinion", "paper",
+        "question", "idea", "thought"])
     key = db.KeyWrapper(urlsafe=cgi_get('key'))
     invitee = cgi_get('invitee', required=False)
     email = cgi_get('email', required=False)
