@@ -344,17 +344,16 @@ CAN.media.loader = {
 	},
 	"contentNode": function(key, recent_comments) {
 		var img, entity = typeof key == "string" && CT.data.get(key) || key,
-			blurb = entity.thought || entity.blurb || entity.body || entity.description || entity.idea,
+			blurb = entity.thought || entity.blurb || entity.body || entity.description || entity.idea || entity.question,
 			title = entity.title || (entity.content ? (entity.content + "<br>- <b>" + entity.author + "</b>")
 					: (blurb && CT.parse.shortened(blurb, 50, 10, true) || "")),
 			cnode = CT.dom.div((entity.conversation && typeof recent_comments == "object") ?
 				(recent_comments[entity.conversation].length + " ") : "",
 				"smaller bold right"),
 			n = CT.dom.div([
-				CT.dom.div("(" + (entity.mtype || (entity.author
+				CT.dom.div("(" + (entity.mtype || (entity.question && "question") || (entity.author
 					? ((entity.buylink || entity.readlink) ? "book" : "quote")
-					: (entity.graphic ? "photo" : "thought"))) + ")",
-					"smaller bold right"),
+					: (entity.graphic ? "photo" : "thought"))) + ")", "smaller bold right"),
 				title, cnode
 			], null, null, {
 				onclick: function() {
