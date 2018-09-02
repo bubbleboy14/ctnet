@@ -147,7 +147,6 @@ CAN.widget.stream = {
 			type: 'idea',
 			key: 'changeidea',
 			bodyproperty: 'idea',
-			noConvo: true,
 			info: "How can we change the world?"
 		});
 	},
@@ -163,7 +162,6 @@ CAN.widget.stream = {
 			onclick: onclick,
 			type: 'question',
 			bodyproperty: 'question',
-			noConvo: true,
 			info: "Any questions?"
 		});
 	},
