@@ -115,11 +115,13 @@ CAN.media.cases = {
 	    CAN.media.cases.loadEvidence(d, evnode, uid);
 	    n.appendChild(evnode);
 
-	    var convonode = CT.dom.node("loading conversation...",
-	        "div", "red bordertop");
-	    n.appendChild(convonode);
-	    CAN.widget.conversation.load(uid || (v && v.uid) || null,
-	    	d.conversation, convonode, d.key);
+	    if (isSingle) {
+		    var convonode = CT.dom.node("loading conversation...",
+		        "div", "red bordertop");
+		    n.appendChild(convonode);
+		    CAN.widget.conversation.load(uid || (v && v.uid) || null,
+		    	d.conversation, convonode, d.key);
+	    }
 	    return n;
 	},
 	"profile": function(d, vindex, v) {

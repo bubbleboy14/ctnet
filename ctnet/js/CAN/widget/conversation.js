@@ -1,12 +1,6 @@
 CAN.widget.conversation = {
-	"checkFirstName": null,
-	"checkLastName": null,
-	"ALLOW_ANONYMOUS_COMMENTS": false, // move to config?
-	"ANON_UID": null,
-	"COMMENT_PREFIX": "",
-
 	"setCommentPrefix": function(cp) {
-	    CAN.widget.conversation.COMMENT_PREFIX = cp ? "<b>[" + cp + "]</b> " : "";
+	    core.config.ctnet.conversation.comment_prefix = cp ? "<b>[" + cp + "]</b> " : "";
 	},
 	"comment": function(c, commentsnode, uid, noflagging) {
 	    var u = CT.data.get(c.user);
@@ -56,7 +50,7 @@ CAN.widget.conversation = {
 		            var b = CT.parse.sanitize(cbody.value);
 		            if (b == "")
 		                return alert("say what?");
-		            b = CAN.widget.conversation.COMMENT_PREFIX + b;
+		            b = core.config.ctnet.conversation.comment_prefix + b;
 		            CT.net.post("/say", {"uid": uid, "conversation": ckey,
 		                "body": b, "contentkey": contentkey},
 		                "error posting comment", function() {
@@ -71,7 +65,7 @@ CAN.widget.conversation = {
 	},
 	"load": function(uid, ckey, convonode, contentkey, taid, noflagging, charlimit, blurs) {
 	    if (uid == "nouid") uid = null;
-	    uid = uid || CAN.widget.conversation.ANON_UID;
+	    uid = uid || core.config.ctnet.conversation.anon_uid;
 	    if (uid && !CT.data.get(uid)) {
 	        CT.data.add({
 	        	"key": uid,
@@ -96,7 +90,7 @@ CAN.widget.conversation = {
 	            if (uid)
 	                CAN.widget.conversation.input(uid, ckey, convonode, contentkey,
 	                    taid, noflagging, commentsnode, charlimit, blurs);
-	            else if (CAN.widget.conversation.ALLOW_ANONYMOUS_COMMENTS) {
+	            else if (core.config.ctnet.conversation.allow_anonymous_comments) {
 	                var rsubnode = CT.dom.node();
 	                var tryrecap = function() {
 	                    CT.recaptcha.submit(function() {

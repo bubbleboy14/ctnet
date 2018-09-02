@@ -14,6 +14,11 @@
 	"categories": {
 		"icons": {}
 	},
+	"conversation": {
+		"anon_uid": null,
+		"comment_prefix": "",
+		"allow_anonymous_comments": false
+	},
 	"mobile": {
 		"resize": {
 			"stretched": {

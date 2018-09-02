@@ -130,6 +130,7 @@ CAN.widget.stream = {
 			taguser: taguser,
 			onclick: onclick,
 			type: 'thought',
+			noConvo: true,
 			info: "Post a thought or idea here and it will appear on the CAN homepage in our 'Global Thought Stream'."
 		});
 	},
