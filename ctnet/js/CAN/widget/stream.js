@@ -130,6 +130,7 @@ CAN.widget.stream = {
 			taguser: taguser,
 			onclick: onclick,
 			type: 'thought',
+			noConvo: true,
 			info: "Post a thought or idea here and it will appear on the CAN homepage in our 'Global Thought Stream'."
 		});
 	},
@@ -146,6 +147,7 @@ CAN.widget.stream = {
 			type: 'idea',
 			key: 'changeidea',
 			bodyproperty: 'idea',
+			noConvo: true,
 			info: "How can we change the world?"
 		});
 	},
@@ -161,6 +163,7 @@ CAN.widget.stream = {
 			onclick: onclick,
 			type: 'question',
 			bodyproperty: 'question',
+			noConvo: true,
 			info: "Any questions?"
 		});
 	},
