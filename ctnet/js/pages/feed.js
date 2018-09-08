@@ -9,9 +9,8 @@ CT.require("CAN.config");
 CT.require("CAN.cookie");
 CT.require("CAN.frame");
 CT.require("CAN.session");
-CT.require("CAN.media.loader");
-CT.require("CAN.media.thought");
-CT.require("CAN.widget.stream");
+CT.require("CAN.widget.slider");
+CT.require("CAN.media.all");
 
 var empty, chunk = 15, offset = 0,
 	hash = location.hash.slice(2),
