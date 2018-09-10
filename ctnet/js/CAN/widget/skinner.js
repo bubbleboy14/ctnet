@@ -33,7 +33,8 @@ CAN.widget.skinner = {
 					chat: false,
 					chatter: false,
 					color: "#000000",
-					background: "#FFFFFF"
+					background: "#FFFFFF",
+					font: "sans-serif, Arial, Helvetica"
 				};
 				var title = CT.dom.field(null, skin.title, "w400p"),
 					css = CT.dom.textArea(null, skin.css, "w400p h200p"),
@@ -42,7 +43,7 @@ CAN.widget.skinner = {
 						"sans-serif, Arial, Helvetica",
 						"serif, Times New Roman, Times",
 						"monospace, Courier, Courier New"
-					]),
+					], null, null, skin.font),
 					chatter = CT.dom.checkboxAndLabel("Chatter Feed", skin.chatter),
 					color = CAN.widget.skinner.color("Text Color", skin.color),
 					background = CAN.widget.skinner.color("Background Color", skin.background),
