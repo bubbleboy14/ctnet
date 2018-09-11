@@ -110,6 +110,11 @@ onload = function() {
         "newMediaDefault": "videonocat", "rating": "0to10",
         "paging": "bidirectional", "recommendations": true});
 
+    // chatterbox
+    CT.net.post("/get", {"gtype": "media", "mtype": "comment", "number": 4}, null, function(items) {
+        CAN.widget.stream.comment(CT.dom.id("chatterbox"), uid, items.reverse(), false, true, "full");
+    });
+
     var singleLoaders = {
         OpinionsAndIdeas: CAN.media.opinion.viewSingle,
         PositionPapers: CAN.media.paper.viewSingle
