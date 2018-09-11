@@ -388,7 +388,7 @@ CAN.media.loader = {
 		var n = CT.dom.id(key);
 		n.style.height = n.firstChild.clientHeight + "px";
 		n.classList.remove("vidthumb");
-		n.innerHTML = CT.video.full(CT.video.videoData("https://youtube.com?v=" + key));
+		n.innerHTML = CT.video.full(CT.video.videoData("https://youtube.com?v=" + key.slice(0, -4)));
 	},
 	"_linkFlags": {
 		"thought": "community.html#!Stream|",
@@ -402,8 +402,9 @@ CAN.media.loader = {
 		if (photoSplit.length > 1)
 			return '<img src="' + url + '">';
 		if (url.indexOf("youtube.com") != -1) {
-			var key = url.split("v=")[1].split("&")[0];
-			return '<div class="vidthumb" id="' + key + '"><img class="pointer" src="http://img.youtube.com/vi/' + key + '/0.jpg" onclick="CAN.media.loader.ytUnthumb(\'' + key + '\')"></div>';
+			var key = url.split("v=")[1].split("&")[0],
+				keyran = key + Math.floor(1000 + Math.random() * 1000);
+			return '<div class="vidthumb" id="' + keyran + '"><img class="pointer" src="http://img.youtube.com/vi/' + key + '/0.jpg" onclick="CAN.media.loader.ytUnthumb(\'' + keyran + '\')"></div>';
 		}
 		// thoughts, events, cases
 		for (var i = 0; i < CAN.media.loader._linkTypes.length; i++) {
