@@ -1746,7 +1746,7 @@ def newphoto(**kwargs):
     s = getsettings()
     p = Photo(**kwargs)
     s.photo_count += 1
-    p.index = s.photo_count
+#    p.index = s.photo_count
     db.put_multi([s, p])
     return p
 
