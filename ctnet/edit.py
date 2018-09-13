@@ -333,7 +333,7 @@ def notpub(d):
 
 def notifyapprovers(isapproved):
     if not isapproved:
-        for approver in User.query(User.role == "approver",
+        for approver in User.query(User.role.contains("approver"),
             User.email_notifications == True).fetch(1000):
             emailuser(approver, "Content Submission", "Hey %s! Check out the participate page -- there's something new to approve! Thanks for everything you do, %s. Have a great day."%(approver.firstName, approver.firstName))
 
