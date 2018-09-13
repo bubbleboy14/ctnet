@@ -1,7 +1,9 @@
 CAN.media.thought = {
 	build: function(d, vindex, v, htmlSafe) {
 		var n = CT.dom.node();
-		var cclass = "bordered padded round bottommargined categoriedbox";
+		var cclass = "bordered padded round bottommargined";
+		if (!htmlSafe)
+			cclass += " categoriedbox";
 		for (var i = 0; i < d.category.length; i++)
 			cclass += " " + d.category[i];
 		if ((vindex || 0) < CAN.media.loader.newcount)
