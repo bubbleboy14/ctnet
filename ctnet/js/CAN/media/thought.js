@@ -41,12 +41,10 @@ CAN.media.thought = {
 			CT.net.post("/get", {"gtype": "data", "key": key},
 				"error retrieving thought", function(result) {
 				CT.data.add(result);
-				setTimeout(function() {
-					CT.dom.doWhenNodeExists(n.id, function() {
-						CT.dom.id(n.id).appendChild(CAN.media.thought.build(result,
-							null, null, true));
-					});
-				}, 5000);
+				CT.dom.doWhenNodeExists(n.id, function() {
+					CT.dom.id(n.id).appendChild(CAN.media.thought.build(result,
+						null, null, true));
+				});
 			});
 		}
 		return n;
