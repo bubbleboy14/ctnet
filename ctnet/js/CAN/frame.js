@@ -50,7 +50,7 @@ CAN.frame = {
 	"footer": function() {
 	    var footer = CT.dom.id("footer");
 	    footer.innerHTML = "";
-	    footer.appendChild(CT.dom.node(CT.dom.link("www.CivilActionNetwork.org", null, "http://www.CivilActionNetwork.org")));
+	    footer.appendChild(CT.dom.node(CT.dom.link("www.CivilActionNetwork.org", null, "https://www.civilactionnetwork.org")));
 	    var navfoot = CT.dom.node();
 	    for (var i = 0; i < CAN.frame.navitems.length; i++) {
 	        navfoot.appendChild(CT.dom.link(CAN.frame.navitems[i], null,

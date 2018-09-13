@@ -1,7 +1,7 @@
 var _RD = core.config.ctnet.domain;
 CAN.session = {
 	"RAWDOMAIN": _RD,
-	"DOMAIN": "http://" + _RD,
+	"DOMAIN": location.protocol + "//" + _RD,
 	"okdomains": core.config.ctnet.okdomains,
 	"settings": null,
 	"welcomeFirstName": CT.dom.span(),

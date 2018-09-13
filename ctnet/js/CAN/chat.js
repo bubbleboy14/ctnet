@@ -342,7 +342,7 @@ CAN.chat = {
 	        ], "div", "bold bottompadded"));
 	        namePrompt.appendChild(CT.dom.link("Or sign in to join this chat room :)",
 	            function() {
-	                window.open("http://" + core.config.ctnet.domain + "/login.html",
+	                window.open(location.protocol + core.config.ctnet.domain + "/login.html",
 	                    "_blank");
 	            }));
 	        chpanels.appendChild(namePrompt);

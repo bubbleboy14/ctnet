@@ -28,7 +28,7 @@ setTimeout(function() {
 		iframe.style.overflow = 'hidden';
 		iframe.style.border = '0px';
 		iframe.style.opacity = 0.0;
-		iframe.src = "http://www.civilactionnetwork.org/map.html#" + wkey;
+		iframe.src = "https://www.civilactionnetwork.org/map.html#" + wkey;
 		container.appendChild(iframe);
 		fillContainer();
 	} else
