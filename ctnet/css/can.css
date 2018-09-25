@@ -263,13 +263,14 @@ ins {
     height: 13px;
     border: 0px;
     outline: none;
-    border-top: 1.5px solid #c2c5cc;
-/*    border-bottom: 1.5px solid #8f9094;
+/*    border-top: 1.5px solid #c2c5cc;
+    border-bottom: 1.5px solid #8f9094;
     border-left: 1.5px solid #adadad;
-    border-right: 0px;*/
+    border-right: 0px;
     background-image: url('/img/header/search_gradient.gif');
     background-repeat: repeat-x;
-    background-position: bottom;
+    background-position: bottom;*/
+    background: transparent;
 }
 
 #searchcolumn ul {
