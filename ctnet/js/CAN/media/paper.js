@@ -41,7 +41,8 @@ CAN.media.paper = {
 	        cnode.parentNode.insertBefore(CT.dom.node(CAN.widget.invite.button(paper,
 	            "paper", "read", CAN.cookie.getUid()), "div", "right"),
 	            cnode.parentNode.firstChild);
-	        cnode.appendChild(CAN.media.paper.build(paper, null, true, true));
+	        cnode.appendChild(CAN.media.paper.build(paper,
+	        	null, { uid: CAN.cookie.getUid() }, true));
 	        CT.dom.id("spp").style.display = "block";
 	        paper.viewed = true;
 	    }
