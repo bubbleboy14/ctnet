@@ -9,7 +9,7 @@ Date.prototype.stdTimezoneOffset = function() {
 Date.prototype.dst = function() {
     return this.getTimezoneOffset() < this.stdTimezoneOffset();
 };
-CT.parse.set_ts_server_offset(((new Date()).dst() ? 0 : 1) + CAN.config.pubsub.timezone_offset);
+CT.parse.set_ts_server_offset(CAN.config.pubsub.timezone_offset);
 
 CAN.chat = {
 	//
