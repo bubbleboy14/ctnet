@@ -1,4 +1,7 @@
 import os
-from util import redirect
+from util import respond, redirect
 
-redirect(os.environ.get("PATH_INFO").replace("%23", "#", 1), exit=False)
+def response():
+	redirect(os.environ.get("PATH_INFO").replace("%23", "#", 1))
+
+respond(response)
