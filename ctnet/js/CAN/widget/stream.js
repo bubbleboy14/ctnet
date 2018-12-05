@@ -80,6 +80,7 @@ CAN.widget.stream = {
 				cb: function(url) {
 					CT.net.post({
 						path: "/get",
+						spinner: true,
 						params: {
 							gtype: "og",
 							url: url

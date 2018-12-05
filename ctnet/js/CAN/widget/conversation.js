@@ -31,6 +31,7 @@ CAN.widget.conversation = {
 			cb: function(url) {
 				CT.net.post({
 					path: "/get",
+					spinner: true,
 					params: {
 						gtype: "og",
 						url: url
