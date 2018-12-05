@@ -86,7 +86,7 @@ onload = function() {
             }
             if (pruned) {
                 winners.sort(function(a, b) {
-                    return fcats[a].length > fcats[b].length;
+                    return fcats[a].length - fcats[b].length;
                 });
                 pruneCats();
             }
