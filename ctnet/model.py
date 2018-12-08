@@ -720,7 +720,8 @@ class Meme(CategoriedVotingModel, Searchable):
         return {"uid": self.user and self.user.urlsafe() or None,
                 "user": self.user and self.user.get().firstName or "Anonymous",
                 "conversation": self.conversation and self.conversation.urlsafe() or None,
-                "title": self.title, "date": self.date.date().strftime("%a %b %d")}
+                "title": self.title, "image": self.image.urlsafe(),
+                "date": self.date.date().strftime("%a %b %d")}
 
 
 class Thought(CategoriedVotingModel, Searchable):
