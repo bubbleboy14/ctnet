@@ -700,6 +700,29 @@ class CategoriedVotingModel(CategoriedModelBase):
                 datadict['vote'] = v.opinion
         return datadict
 
+class Meme(CategoriedVotingModel, Searchable):
+    searchwords = db.String(repeated=True)
+    title = db.String()
+    image = db.Binary()
+
+    def verb(self):
+        return "review"
+
+    def convoTopic(self):
+        return "MEME: %s"%(self.title,)
+
+    def rm(self):
+        if self.conversation:
+            self.conversation.delete()
+        ModelBase.rm(self)
+
+    def mydata(self):
+        return {"uid": self.user and self.user.urlsafe() or None,
+                "user": self.user and self.user.get().firstName or "Anonymous",
+                "conversation": self.conversation and self.conversation.urlsafe() or None,
+                "title": self.title, "date": self.date.date().strftime("%a %b %d")}
+
+
 class Thought(CategoriedVotingModel, Searchable):
     searchwords = db.String(repeated=True)
     conversation = db.ForeignKey(kind=Conversation)
