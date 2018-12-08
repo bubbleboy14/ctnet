@@ -2561,7 +2561,7 @@ rolemap = { "quote": "writer", "book": "writer",
     "news": "reporter", "sustainableaction": "writer",
     "event": "coordinator", "referenda": "lawyer",
     "featured": "admin", "rules": "admin", "newsletter": "",
-    "settings": "admin", "refnonlawyer": "", "paper": "",
+    "settings": "admin", "refnonlawyer": "", "paper": "", "meme": "",
     "group": "", "opinion": "", "thought": "", "case": "", "skin": "",
     "changeidea": "", "page": "", "question": "", "branch": "", "place": ""}
 
