@@ -378,6 +378,23 @@ def response():
             ul.newval = c.idea
             db.put_multi([c, ul])
             succeed(c.data())
+        elif elkey == "meme":
+            m = Meme()
+            m.title = data.pop('title')
+            m.category = [db.KeyWrapper(urlsafe=k) for k in data.pop('category')]
+            ul = ULog()
+            if eid != "anonymous":
+                editor = db.KeyWrapper(urlsafe=eid)
+                t.user = editor
+                ul.user = editor
+            m.setSearchWords()
+            con = Conversation(topic=m.convoTopic())
+            con.put()
+            m.conversation = con.key
+            ul.propname = "meme"
+            ul.newval = m.title
+            db.put_multi([m, ul])
+            succeed(m.data())
         elif elkey == "thought":
             t = Thought()
             t.thought = data.pop('body')
