@@ -702,6 +702,7 @@ class CategoriedVotingModel(CategoriedModelBase):
 
 class Meme(CategoriedVotingModel, Searchable):
     searchwords = db.String(repeated=True)
+    conversation = db.ForeignKey(kind=Conversation)
     title = db.String()
     image = db.Binary()
 
@@ -2543,7 +2544,8 @@ mediatypes = {
     "question": Question,
     "branch": Branch,
     "place": Place,
-    "comment": Comment
+    "comment": Comment,
+    "meme": Meme
 }
 
 def recommendsomething(user, q, number=1):
@@ -2663,7 +2665,7 @@ def nextmedia(mtype, category=None, uid=None, number=1000, offset=0, nodata=Fals
 #            q.filter("user = ", user)
         if mtype == "newsletter":
             q = q.filter(mt.group == (nlgroup and db.KeyWrapper(urlsafe=nlgroup) or None))
-        if mtype not in  ["paper", "opinion", "thought", "case", "page", "changeidea", "question", "place", "comment"]:
+        if mtype not in  ["paper", "opinion", "thought", "case", "page", "changeidea", "question", "place", "comment", "meme"]:
             if approved != "both":
                 q = q.filter(mt.approved == approved)
             if approved == False and critiqued != "both":
