@@ -1,5 +1,5 @@
 from util import respond, succeed, fail, cgi_get, send_mail, clearmem, DOMAIN, RAWDOMAIN
-from model import db, approvables, emailadmins, getsettings, dict2date, newcred, modcred, process_newsletter, getzip, hashpass, email_in_use, Conversation, Task, Moderation, Flag, Critique, newevent, newphoto, newnews, newref, newVideo, castvote, mediatypes, rolemap, SearchRule, Featured, Application, get_newsletter, Rideshare, OpinionIdea, PositionPaper, newGroup, Membership, emailuser, approve_message, ULog, Thought, Case, ChangeIdea, Page, Question, Branch, User, SustainableAction, Book, newPlace, Skin
+from model import db, approvables, emailadmins, getsettings, dict2date, newcred, modcred, process_newsletter, getzip, hashpass, email_in_use, Conversation, Task, Moderation, Flag, Critique, newevent, newphoto, newnews, newref, newVideo, castvote, mediatypes, rolemap, SearchRule, Featured, Application, get_newsletter, Rideshare, OpinionIdea, PositionPaper, newGroup, Membership, emailuser, approve_message, ULog, Thought, Case, ChangeIdea, Page, Question, Branch, User, SustainableAction, Book, newPlace, Skin, Meme
 from emailTemplates import email_changed, submission_approved, submission_critiqued, evidence_submitted, branch_submitted, tweet
 
 recruitergrants = ['reporter', 'writer', 'photographer', 'videographer']
@@ -385,7 +385,7 @@ def response():
             ul = ULog()
             if eid != "anonymous":
                 editor = db.KeyWrapper(urlsafe=eid)
-                t.user = editor
+                m.user = editor
                 ul.user = editor
             m.setSearchWords()
             con = Conversation(topic=m.convoTopic())
