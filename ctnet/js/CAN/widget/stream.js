@@ -73,43 +73,55 @@ CAN.widget.stream = {
 				utlist.insertBefore(n, utlist.firstChild);
 		};
 		if (!opts.noInput) {
-			var linkMod = new CT.modal.Prompt({
-				clear: true,
-				transition: "slide",
-				prompt: "what's the link?",
-				cb: function(url) {
-					CT.net.post({
-						path: "/get",
-						spinner: true,
-						params: {
-							gtype: "og",
-							url: url
-						},
-						cb: function(data) {
-							rinput.value = data;
-							rinput.onkeyup();
+			if (opts.type == "meme") {
+				utinput.appendChild(CT.file.dragdrop(function(ctfile) {
+					(new CT.modal.Prompt({
+						transition: "slide",
+						prompt: "please title your meme",
+						cb: function(val) {
+							
 						}
-					});
-				}
-			});
-			var rinput = CT.dom.richInput(utinput, opts.type + "input", CT.dom.div([
-				CT.dom.button("Post " + CT.parse.capitalize(opts.type), function() {
-					var cbody = CT.dom.id(opts.type + "input");
-					var charcount = CT.dom.id(opts.type + "inputcc");
-					var b = CT.parse.sanitize(cbody.value);
-					if (b == "")
-						return alert("say what?");
-					var postOpts = {"key": opts.key || opts.type};
-					postOpts[opts.bodyproperty || 'body'] = b.replace(/%E2%80%99/g, "'");
-					CAN.categories.tagAndPost(postOpts, function(item) {
-						CT.data.add(item);
-						addNode(item);
-						cbody.value = "";
-						charcount.innerHTML = "(500 chars left)";
-					}, 'anonymous');
-				}),
-				CT.dom.button("Embed Link", linkMod.show)
-			]));
+					})).show();
+				}));
+			} else {
+				var linkMod = new CT.modal.Prompt({
+					clear: true,
+					transition: "slide",
+					prompt: "what's the link?",
+					cb: function(url) {
+						CT.net.post({
+							path: "/get",
+							spinner: true,
+							params: {
+								gtype: "og",
+								url: url
+							},
+							cb: function(data) {
+								rinput.value = data;
+								rinput.onkeyup();
+							}
+						});
+					}
+				});
+				var rinput = CT.dom.richInput(utinput, opts.type + "input", CT.dom.div([
+					CT.dom.button("Post " + CT.parse.capitalize(opts.type), function() {
+						var cbody = CT.dom.id(opts.type + "input");
+						var charcount = CT.dom.id(opts.type + "inputcc");
+						var b = CT.parse.sanitize(cbody.value);
+						if (b == "")
+							return alert("say what?");
+						var postOpts = {"key": opts.key || opts.type};
+						postOpts[opts.bodyproperty || 'body'] = b.replace(/%E2%80%99/g, "'");
+						CAN.categories.tagAndPost(postOpts, function(item) {
+							CT.data.add(item);
+							addNode(item);
+							cbody.value = "";
+							charcount.innerHTML = "(500 chars left)";
+						}, 'anonymous');
+					}),
+					CT.dom.button("Embed Link", linkMod.show)
+				]));
+			}
 		}
 		for (var i = 0; i < opts.items.length; i++)
 			addNode(opts.items[i]);
@@ -119,6 +131,21 @@ CAN.widget.stream = {
 			opts.pnode.appendChild(CT.dom.node("", "hr"));
 		}
 		opts.pnode.appendChild(utlist);
+	},
+
+	// memes
+	"meme": function(pnode, uid, memes, listonly, taguser, onclick) {
+		CAN.widget.stream.addNodes({
+			pnode: pnode,
+			uid: uid,
+			items: memes,
+			listonly: listonly,
+			taguser: taguser,
+			onclick: onclick,
+			type: 'meme',
+			noConvo: true,
+			info: "Share your memes!"
+		});
 	},
 
 	// thoughts
