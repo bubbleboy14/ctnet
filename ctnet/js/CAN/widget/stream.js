@@ -28,15 +28,15 @@ CAN.widget.stream = {
 	},
 
 	"getNode": function(d, opts) {
-		var n = CT.dom.div("", "padded bordered round bottommargined");
+		var n = CT.dom.div("", "padded bordered round bottommargined"), onclick = function() {
+			opts.onclick && opts.onclick(d);
+		};
 		if (opts.type == "meme")
-			n.appendChild(CT.dom.img(d.image));
+			n.appendChild(CT.dom.img(d.image, opts.onclick && "pointer", onclick));
 		var tnode = CT.dom.node(CT.parse.process(d[opts.type] || d.body || d.idea || d.title,
 			false, opts.processArg));
 		if (opts.onclick) {
-			tnode.onclick = function() {
-				opts.onclick(d);
-			};
+			tnode.onclick = onclick;
 			tnode.className = "pointer";
 		}
 		if (opts.taguser && d.uid)
