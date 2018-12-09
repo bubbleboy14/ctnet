@@ -700,6 +700,37 @@ class CategoriedVotingModel(CategoriedModelBase):
                 datadict['vote'] = v.opinion
         return datadict
 
+class Meme(CategoriedVotingModel, Searchable):
+    searchwords = db.String(repeated=True)
+    conversation = db.ForeignKey(kind=Conversation)
+    title = db.String()
+    image = db.Binary()
+
+    def verb(self):
+        return "review"
+
+    def convoTopic(self):
+        return "MEME: %s"%(self.title,)
+
+    def rm(self):
+        if self.conversation:
+            self.conversation.delete()
+        ModelBase.rm(self)
+
+    def storylink(self, aslist=False):
+        from util import DOMAIN, flipQ
+        if aslist:
+            return ["community"]
+        return "%s/community.html#!Memes|%s"%(DOMAIN, flipQ(self.key.urlsafe()))
+
+    def mydata(self):
+        return {"uid": self.user and self.user.urlsafe() or None,
+                "user": self.user and self.user.get().firstName or "Anonymous",
+                "conversation": self.conversation and self.conversation.urlsafe() or None,
+                "title": self.title, "image": self.image.urlsafe(),
+                "date": self.date.date().strftime("%a %b %d")}
+
+
 class Thought(CategoriedVotingModel, Searchable):
     searchwords = db.String(repeated=True)
     conversation = db.ForeignKey(kind=Conversation)
@@ -2519,7 +2550,8 @@ mediatypes = {
     "question": Question,
     "branch": Branch,
     "place": Place,
-    "comment": Comment
+    "comment": Comment,
+    "meme": Meme
 }
 
 def recommendsomething(user, q, number=1):
@@ -2537,7 +2569,7 @@ rolemap = { "quote": "writer", "book": "writer",
     "news": "reporter", "sustainableaction": "writer",
     "event": "coordinator", "referenda": "lawyer",
     "featured": "admin", "rules": "admin", "newsletter": "",
-    "settings": "admin", "refnonlawyer": "", "paper": "",
+    "settings": "admin", "refnonlawyer": "", "paper": "", "meme": "",
     "group": "", "opinion": "", "thought": "", "case": "", "skin": "",
     "changeidea": "", "page": "", "question": "", "branch": "", "place": ""}
 
@@ -2639,7 +2671,7 @@ def nextmedia(mtype, category=None, uid=None, number=1000, offset=0, nodata=Fals
 #            q.filter("user = ", user)
         if mtype == "newsletter":
             q = q.filter(mt.group == (nlgroup and db.KeyWrapper(urlsafe=nlgroup) or None))
-        if mtype not in  ["paper", "opinion", "thought", "case", "page", "changeidea", "question", "place", "comment"]:
+        if mtype not in  ["paper", "opinion", "thought", "case", "page", "changeidea", "question", "place", "comment", "meme"]:
             if approved != "both":
                 q = q.filter(mt.approved == approved)
             if approved == False and critiqued != "both":

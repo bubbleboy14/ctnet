@@ -141,7 +141,7 @@ def response():
     elif gtype == "media":
         from model import nextmedia, getcategory, randomindexed
         category = cgi_get('category', required=False)
-        mtype = cgi_get('mtype', choices=["text", "quote", "titled", "video", "photo", "book", "referenda", "sustainableaction", "news", "event", "newsletter", "paper", "opinion", "group", "conversation", "thought", "case", "page", "changeidea", "question", "branch", "place", "comment"])
+        mtype = cgi_get('mtype', choices=["text", "quote", "titled", "video", "photo", "book", "referenda", "sustainableaction", "news", "event", "newsletter", "paper", "opinion", "group", "conversation", "thought", "case", "page", "changeidea", "question", "branch", "place", "comment", "meme"])
         number = cgi_get('number', default="none")
         offset = cgi_get('offset', default=0)
         recommendations = cgi_get('recommendations', default=False)

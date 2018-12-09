@@ -1,5 +1,5 @@
 from util import respond, succeed, fail, cgi_get, send_mail, clearmem, DOMAIN, RAWDOMAIN
-from model import db, approvables, emailadmins, getsettings, dict2date, newcred, modcred, process_newsletter, getzip, hashpass, email_in_use, Conversation, Task, Moderation, Flag, Critique, newevent, newphoto, newnews, newref, newVideo, castvote, mediatypes, rolemap, SearchRule, Featured, Application, get_newsletter, Rideshare, OpinionIdea, PositionPaper, newGroup, Membership, emailuser, approve_message, ULog, Thought, Case, ChangeIdea, Page, Question, Branch, User, SustainableAction, Book, newPlace, Skin
+from model import db, approvables, emailadmins, getsettings, dict2date, newcred, modcred, process_newsletter, getzip, hashpass, email_in_use, Conversation, Task, Moderation, Flag, Critique, newevent, newphoto, newnews, newref, newVideo, castvote, mediatypes, rolemap, SearchRule, Featured, Application, get_newsletter, Rideshare, OpinionIdea, PositionPaper, newGroup, Membership, emailuser, approve_message, ULog, Thought, Case, ChangeIdea, Page, Question, Branch, User, SustainableAction, Book, newPlace, Skin, Meme
 from emailTemplates import email_changed, submission_approved, submission_critiqued, evidence_submitted, branch_submitted, tweet
 
 recruitergrants = ['reporter', 'writer', 'photographer', 'videographer']
@@ -378,6 +378,23 @@ def response():
             ul.newval = c.idea
             db.put_multi([c, ul])
             succeed(c.data())
+        elif elkey == "meme":
+            m = Meme()
+            m.title = data.pop('title')
+            m.category = [db.KeyWrapper(urlsafe=k) for k in data.pop('category')]
+            ul = ULog()
+            if eid != "anonymous":
+                editor = db.KeyWrapper(urlsafe=eid)
+                m.user = editor
+                ul.user = editor
+            m.setSearchWords()
+            con = Conversation(topic=m.convoTopic())
+            con.put()
+            m.conversation = con.key
+            ul.propname = "meme"
+            ul.newval = m.title
+            db.put_multi([m, ul])
+            succeed(m.data())
         elif elkey == "thought":
             t = Thought()
             t.thought = data.pop('body')

@@ -16,10 +16,11 @@ onload = function() {
     CAN.categories.load(uid);
     CAN.media.loader.load({"mtype": "referenda", "number": 3, "uid": uid,
         "node": CT.dom.id("reflist"), "paging": "bidirectional"});
-    CT.panel.load(["Events", "People", "Questions", "Ideas", "Stream", "Chatter", "Map"],
+    CT.panel.load(["Events", "People", "Questions", "Ideas", "Stream", "Memes", "Chatter", "Map"],
         true, null, null, null, null, ["/img/community/events.png",
         "/img/community/people.png", "/img/community/questions.png",
         "/img/community/ideas.png", "/img/community/stream.png",
+        "/img/community/memes.png",
         "/img/community/comments.png", "/img/community/map.png"],
         null, null, [function() {
             CT.dom.hide(viewmap.parentNode);
@@ -49,6 +50,11 @@ onload = function() {
             CAN.widget.share.updateShareItem("community", null, "Stream");
             CT.dom.hide(streamnodes.thought.snode);
             CT.dom.show(streamnodes.thought.anode);
+            CT.dom.hide("comminvite");
+        }, function() {
+            CAN.widget.share.updateShareItem("community", null, "Memes");
+            CT.dom.hide(streamnodes.meme.snode);
+            CT.dom.show(streamnodes.meme.anode);
             CT.dom.hide("comminvite");
         }, function() {
             CAN.widget.share.updateShareItem("community", null, "Chatter");
@@ -98,12 +104,13 @@ onload = function() {
     };
 
     // node streams
-    var nodetypes = { "question": "Questions", "changeidea": "Ideas", "thought": "Stream", "comment": "Chatter" },
-        ntrev = { "Questions": "question", "Ideas": "changeidea", "Stream": "thought" };
+    var nodetypes = { "question": "Questions", "changeidea": "Ideas",
+        "thought": "Stream", "comment": "Chatter", "meme": "Memes" },
+        ntrev = { "Questions": "question", "Ideas": "changeidea", "Stream": "thought", "Memes": "meme" };
     viewSingleItem = function(d, mtype) {
         if (!CT.dom.id("sbitem" + d.key)) {
             var pnode = CT.dom.id("sv_" + mtype),
-                lname = (d.body || d.idea || d[mtype]).split("http")[0].split(' ').slice(0, 2).join(' ') + " ...";
+                lname = (d.body || d.idea || d[mtype] || d.title).split("http")[0].split(' ').slice(0, 2).join(' ') + " ...";
             pnode.appendChild(CT.dom.div(CT.dom.link(lname,
                 function() { viewSingleItem(d, mtype); }),
                 "bottompadded sbitem", "sbitem"+d.key));
@@ -127,7 +134,7 @@ onload = function() {
             CT.dom.show("comminvite");
         }
     };
-    ['question', 'changeidea', 'thought', 'comment'].forEach(function (item) {
+    ['question', 'changeidea', 'thought', 'comment', 'meme'].forEach(function(item) {
         var nodez = streamnodes[item] = {},
             pnode = CT.dom.id("sbcontent" + nodetypes[item]),
             snode = nodez.snode = CT.dom.div(null, "hidden"),
@@ -191,7 +198,7 @@ onload = function() {
                     viewSingleEvent(CT.data.get(hkey));
                 });
             }
-            else if (["Questions", "Ideas", "Stream"].indexOf(section) != -1) {
+            else if (["Questions", "Ideas", "Stream", "Memes"].indexOf(section) != -1) {
                 if (hkey) {
                     CT.data.checkAndDo([hkey], function() {
                         viewSingleItem(CT.data.get(hkey), ntrev[section]);
