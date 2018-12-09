@@ -717,6 +717,12 @@ class Meme(CategoriedVotingModel, Searchable):
             self.conversation.delete()
         ModelBase.rm(self)
 
+    def storylink(self, aslist=False):
+        from util import DOMAIN, flipQ
+        if aslist:
+            return ["community"]
+        return "%s/community.html#!Memes|%s"%(DOMAIN, flipQ(self.key.urlsafe()))
+
     def mydata(self):
         return {"uid": self.user and self.user.urlsafe() or None,
                 "user": self.user and self.user.get().firstName or "Anonymous",
