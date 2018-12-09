@@ -29,7 +29,9 @@ CAN.widget.stream = {
 
 	"getNode": function(d, opts) {
 		var n = CT.dom.div("", "padded bordered round bottommargined");
-		var tnode = CT.dom.node(CT.parse.process(d[opts.type] || d.body || d.idea,
+		if (opts.type == "meme")
+			n.appendChild(CT.dom.img(d.image));
+		var tnode = CT.dom.node(CT.parse.process(d[opts.type] || d.body || d.idea || d.title,
 			false, opts.processArg));
 		if (opts.onclick) {
 			tnode.onclick = function() {
