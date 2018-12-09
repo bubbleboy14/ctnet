@@ -79,7 +79,20 @@ CAN.widget.stream = {
 						transition: "slide",
 						prompt: "please title your meme",
 						cb: function(val) {
-							
+							CAN.categories.tagAndPost({
+								key: opts.key || opts.type,
+								title: val
+							}, function(item) {
+								ctfile.upload("/_db", function(url) {
+									item.image = url;
+									CT.data.add(item);
+									addNode(item);
+								}, {
+									action: "blob",
+									key: item.key,
+									property: "image"
+								});
+							}, 'anonymous');
 						}
 					})).show();
 				}));
