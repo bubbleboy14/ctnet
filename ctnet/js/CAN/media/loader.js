@@ -366,13 +366,14 @@ CAN.media.loader = {
 			conversation: entity.conversation
 		}, null, true);
 		setTimeout(function() {
-			if (entity.thumbnail)
-				img = entity.thumbnail;
-			else if (entity.photo)
-				img = entity.photo.photo || ((typeof entity.photo == "string")
-					? entity.photo : "/get?gtype=graphic&key=" + entity.photo[0]);
-			else if (blurb)
-				img = CT.parse.extractImage(blurb);
+			img = entity.thumbnail || entity.image;
+			if (!img) {
+				if (entity.photo)
+					img = entity.photo.photo || ((typeof entity.photo == "string")
+						? entity.photo : "/get?gtype=graphic&key=" + entity.photo[0]);
+				else if (blurb)
+					img = CT.parse.extractImage(blurb);
+			}
 			if (img) {
 				n.appendChild(CT.dom.panImg({
 					img: img
