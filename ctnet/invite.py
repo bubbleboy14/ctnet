@@ -5,7 +5,7 @@ def response():
     userkey = db.KeyWrapper(urlsafe=cgi_get('uid'))
     mtype = cgi_get('mtype', choices=["conversation", "group", "event",
         "video", "article", "referendum", "case", "opinion", "paper",
-        "question", "idea", "thought"])
+        "question", "idea", "thought", "meme"])
     key = db.KeyWrapper(urlsafe=cgi_get('key'))
     invitee = cgi_get('invitee', required=False)
     email = cgi_get('email', required=False)
