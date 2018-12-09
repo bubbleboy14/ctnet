@@ -106,11 +106,11 @@ onload = function() {
     // node streams
     var nodetypes = { "question": "Questions", "changeidea": "Ideas",
         "thought": "Stream", "comment": "Chatter", "meme": "Memes" },
-        ntrev = { "Questions": "question", "Ideas": "changeidea", "Stream": "thought" };
+        ntrev = { "Questions": "question", "Ideas": "changeidea", "Stream": "thought", "Memes": "meme" };
     viewSingleItem = function(d, mtype) {
         if (!CT.dom.id("sbitem" + d.key)) {
             var pnode = CT.dom.id("sv_" + mtype),
-                lname = (d.body || d.idea || d[mtype]).split("http")[0].split(' ').slice(0, 2).join(' ') + " ...";
+                lname = (d.body || d.idea || d[mtype] || d.title).split("http")[0].split(' ').slice(0, 2).join(' ') + " ...";
             pnode.appendChild(CT.dom.div(CT.dom.link(lname,
                 function() { viewSingleItem(d, mtype); }),
                 "bottompadded sbitem", "sbitem"+d.key));
@@ -198,7 +198,7 @@ onload = function() {
                     viewSingleEvent(CT.data.get(hkey));
                 });
             }
-            else if (["Questions", "Ideas", "Stream"].indexOf(section) != -1) {
+            else if (["Questions", "Ideas", "Stream", "Memes"].indexOf(section) != -1) {
                 if (hkey) {
                     CT.data.checkAndDo([hkey], function() {
                         viewSingleItem(CT.data.get(hkey), ntrev[section]);
