@@ -393,9 +393,10 @@ CAN.media.loader = {
 	},
 	"_linkFlags": {
 		"thought": "community.html#!Stream|",
-		"event": "community.html#!Events|"
+		"event": "community.html#!Events|",
+		"meme": "community.html#!Memes|"
 	},
-	"_linkTypes": ["thought", "event", "cases"],
+	"_linkTypes": ["thought", "event", "cases", "meme"],
 	"linkProcessor": function (url, novid) {
 		// photos
 		url = url.replace("gtype=graphic&amp;key=", "gtype=graphic&key=");
