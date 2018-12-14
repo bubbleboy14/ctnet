@@ -3,6 +3,7 @@ CT.require("CAN.media.book");
 CT.require("CAN.media.cases");
 CT.require("CAN.media.event");
 CT.require("CAN.media.group");
+CT.require("CAN.media.meme");
 CT.require("CAN.media.moderation");
 CT.require("CAN.media.news");
 CT.require("CAN.media.opinion");
