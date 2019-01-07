@@ -425,7 +425,7 @@ ins {
 }
 
 #topz td {
-    min-width: 88px;
+    min-width: 85px;
 }
 
 #topz tr:not(:first-child) td:nth-child(3),
