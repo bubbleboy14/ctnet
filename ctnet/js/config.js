@@ -107,6 +107,11 @@
 						"icon": "founder"
 					},
 					{
+						"name": "thoughts",
+						"id": "latestThoughts",
+						"icon": "thought_stream"
+					},
+					{
 						"name": "change",
 						"id": "howChange",
 						"icon": "world"
@@ -130,11 +135,6 @@
 						"name": "books",
 						"id": "latestBooks",
 						"icon": "books"
-					},
-					{
-						"name": "thoughts",
-						"id": "latestThoughts",
-						"icon": "thought_stream"
 					},
 					{
 						"icon": "approver",
