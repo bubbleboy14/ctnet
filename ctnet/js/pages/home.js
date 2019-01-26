@@ -374,11 +374,11 @@ onload = function() {
     CAN.media.loader.load({"mtype": "photo", "random": true, "node": pn,
         "rating": "0to10", "uid": uid, "newMediaDefault": "photoscale"});
 
-    CAN.media.loader.load({"mtype": "referenda", "number": 10, "uid": uid,
+    CAN.media.loader.load({"mtype": "referenda", "number": 11, "uid": uid,
         "node": CT.dom.id("reflist"),
         "paging": "rotation", "cb": refreshSameHeights});
 
-    CAN.media.loader.load({"mtype": "book", "number": 10, "uid": uid,
+    CAN.media.loader.load({"mtype": "book", "number": 11, "uid": uid,
         "node": CT.dom.id("bookrecommendations"),
         "paging": "rotation", "cb": refreshSameHeights, "shared": 1});
 
