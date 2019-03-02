@@ -2,7 +2,7 @@ CT.require("CT.all");
 CT.require("CT.rte");
 CT.require("CAN.all");
 CT.require("CAN.widget.skinner");
-CT.scriptImport("lib.colorPicker");
+CT.scriptImport("CT.lib.colorPicker");
 
 var loadPage = function(uid, pid) {
     CT.dom.setContent("feedback", core.config.ctnet.feedback);
