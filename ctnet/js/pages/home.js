@@ -364,7 +364,7 @@ onload = function() {
 
     // global thought stream
     CAN.widget.stream.load(CT.dom.id("thoughtstream"),
-        CT.dom.id("thoughtfilter"), refreshSameHeights, 5);
+        CT.dom.id("thoughtfilter"), refreshSameHeights, 6);
 
     // random susact request automatically filters out non-shared
     CAN.media.loader.load({"mtype": "sustainableaction", "random": true,
