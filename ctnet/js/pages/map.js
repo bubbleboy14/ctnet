@@ -6,6 +6,7 @@ CT.require("CT.modal");
 CT.require("CT.storage");
 CT.require("CT.trans");
 CT.require("CT.map");
+CT.require("CAN.config");
 CT.require("CAN.cookie");
 CT.require("CAN.widget.action");
 CT.require("CAN.widget.map");
