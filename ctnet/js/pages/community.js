@@ -133,6 +133,10 @@ onload = function() {
                 "consider", uid));
             CT.dom.show("comminvite");
         }
+        CAN.cc.view(CT.merge(d, {
+            mtype: mtype,
+            name: d.thought || d.question || d.idea
+        }));
     };
     ['question', 'changeidea', 'thought', 'comment', 'meme'].forEach(function(item) {
         var nodez = streamnodes[item] = {},
@@ -183,6 +187,7 @@ onload = function() {
         CT.dom.hide(events);
         CT.dom.show(svnode);
         CAN.widget.share.updateShareItem("community", event.key, "Events");
+        CAN.cc.view(event);
     };
 
     var check_hash = function() {
