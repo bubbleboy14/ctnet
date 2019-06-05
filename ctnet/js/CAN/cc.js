@@ -62,7 +62,7 @@ CAN.cc = {
 					CT.dom.button("switch it up", function() {
 						_.setSwitcher(true);
 					})
-				], "biggerest bigpadded down30"));
+				], "biggerest bigpadded down20"));
 			}
 		}
 	},
