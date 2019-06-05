@@ -342,6 +342,7 @@ class User(UserBase, Searchable):
     impeach_date = db.DateTime(default=None)
     provisional_date = db.DateTime(default=None)
     deleted = db.Boolean(default=False)
+    cc = db.JSON()
     # collections (checked): comments, votes, catscores, mediavotes, applications, referenda (lawyers only), articles (reporters only), writing (writers only), photographs (photographer only), videos (videographer only), events (coordinator only), critiques (approver only), security_questions, judgments, rulings (both for moderation), flaggings, flags (both for flagging), rideshares, qualifications, jobs, education, volunteering, position_papers, opinions_and_ideas, ratings, logs, groups, newsletters (admins and leaders only), invitees, msgs_sent, msgs_received, thoughts, cases, changes, questions, branches
     label = "firstName"
 
@@ -405,7 +406,7 @@ class User(UserBase, Searchable):
         return len(self.role) and 1 or 0
 
     def data(self, comments=False, extended=False, role=False, judgments=False, contributions=False, credentials=False, authentication=False, messages=False, thoughts=False, changes=False, non_user_view=False, chat=False):
-        d = { "key": self.id(), "firstName": self.firstName, "lastName": self.lastName }
+        d = { "key": self.id(), "firstName": self.firstName, "lastName": self.lastName, "cc": self.cc }
         if chat:
             d['zipcode'] = self.zipcode and self.zipcode.get().data() or None
             d['blurb'] = self.blurb
