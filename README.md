@@ -27,7 +27,6 @@ This module contains the framework for a content-driven social network.
     		"login.py",
     		"newUser.py",
     		"phoneAuth.py",
-    		"refDoc.py",
     		"remind.py",
     		"router.py",
     		"rss.py",
@@ -48,6 +47,7 @@ This module contains the framework for a content-driven social network.
     		"browsers.html",
     		"cases.html",
     		"community.html",
+    		"feed.html",
     		"home.html",
     		"login.html",
     		"map.html",
@@ -88,6 +88,13 @@ This module contains the framework for a content-driven social network.
     	"okdomains": ["localhost"],
     	"feedback": "feedback@email.com",
     	"geokeys": [],
+    	"feedlinks": true,
+    	"CC": {
+    		"gateway": "https://cc.mkult.co/comp/api.js",
+    		"membership": null,
+    		"agent": null,
+    		"pod": null
+    	},
     	"pubsub": {
     		"host": null,
     		"port": null,
@@ -95,6 +102,11 @@ This module contains the framework for a content-driven social network.
     	},
     	"categories": {
     		"icons": {}
+    	},
+    	"conversation": {
+    		"anon_uid": null,
+    		"comment_prefix": "",
+    		"allow_anonymous_comments": false
     	},
     	"mobile": {
     		"resize": {
@@ -184,6 +196,11 @@ This module contains the framework for a content-driven social network.
     						"icon": "founder"
     					},
     					{
+    						"name": "thoughts",
+    						"id": "latestThoughts",
+    						"icon": "thought_stream"
+    					},
+    					{
     						"name": "change",
     						"id": "howChange",
     						"icon": "world"
@@ -207,11 +224,6 @@ This module contains the framework for a content-driven social network.
     						"name": "books",
     						"id": "latestBooks",
     						"icon": "books"
-    					},
-    					{
-    						"name": "thoughts",
-    						"id": "latestThoughts",
-    						"icon": "thought_stream"
     					},
     					{
     						"icon": "approver",
