@@ -12,6 +12,8 @@ onload = function() {
     // topz (more like a forum)
     CT.db.get("thought", function(thoughts) {
         var unodez = [], rnodez = [], posterz = [], pkeyz = [];
+        if (CT.info.isFirefox)
+            CT.dom.addStyle("#topz { font-size: 110% !important; }");
         CT.dom.setContent("topz", CT.dom.table([[
                 "<b>Tags</b>", "<b id='threadspot'>Thread</b>", "<b>Poster</b>",
                 "<b>Replies</b>", "<b>Posted</b>", "<b>Modified</b>"
