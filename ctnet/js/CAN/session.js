@@ -27,15 +27,18 @@ CAN.session = {
 
 	// user nodes. better place for this? maybe (small) CAN.util?
 	"firstLastLink": function(u, noname, rfloat, hash, firstonly) {
-	    var nl = CT.dom.node(null, "b", "unamelink");
-	    nl.refresh = function(u) {
-	        nl.innerHTML = noname && "user" || (u.firstName +
+	    var nl = namelink = CT.dom.node(null, "b", "unamelink"), ref = nl.refresh = function(u) {
+	        namelink.innerHTML = noname && "user" || (u.firstName +
 	            ((firstonly || !u.lastName) ? "" : (" " + u.lastName)));
 	    };
-	    u && nl.refresh(u);
-	    if (core.config.ctnet.feedlinks)
-	    	nl = CT.dom.link(nl, null,
-	    		"/feed.html#!" + CAN.cookie.flipReverse(u.key), "nodecoration");
+	    if (u) {
+		    nl.refresh(u);
+		    if (core.config.ctnet.feedlinks) {
+		    	nl = CT.dom.link(namelink, null,
+		    		"/feed.html#!" + CAN.cookie.flipReverse(u.key), "nodecoration");
+		    	nl.refresh = ref;
+		    }
+	    }
 	    if (rfloat)
 	        return CT.dom.node(nl, "div", "small right lpadded");
 	    return nl;
