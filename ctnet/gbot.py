@@ -1,6 +1,6 @@
 import os
 from util import send_text, readfile, flipRStripStroke, flipQ
-from model import db, getsettings, News, Video, Book, Case, Question, ChangeIdea, Thought, Event, OpinionIdea, PositionPaper, Quote, Skin, CategoriedVotingModel
+from model import db, getsettings, News, Video, Book, Case, Question, ChangeIdea, Thought, Meme, Event, OpinionIdea, PositionPaper, Quote, Skin, CategoriedVotingModel
 from urllib import quote, unquote
 
 descriptions = {
@@ -19,6 +19,8 @@ pi = os.environ.get("PATH_INFO")
 rawqs = os.environ.get("QUERY_STRING")[19:]
 qs = unquote(unquote(rawqs))
 m = None
+ta = None
+img = "/img/header/can-logo.jpg"
 title = pi[1:].split(".")[0].title()
 description = descriptions[title]
 content = """<center>
@@ -31,14 +33,13 @@ if qs:
     if "|" in qs:
         qtype, qrest = qs.split("|")
     if title == "Community":
-        if qtype == "Events":
-            if qrest and len(qrest) > 20:
-                m = db.get(flipRStripStroke(qrest))
-            else:
-                from datetime import datetime, timedelta
-                for e in Event.query().order(Event.when).filter(Event.when >= datetime.now() - timedelta(1)).fetch(1000):
-                    content += "<div>%s</div>"%(e.title,)
-                    content += "<div>%s</div>"%(e.blurb(),)
+        if qrest and len(qrest) > 20:
+            m = db.get(flipRStripStroke(qrest))
+        elif qtype == "Events":
+            from datetime import datetime, timedelta
+            for e in Event.query().order(Event.when).filter(Event.when >= datetime.now() - timedelta(1)).fetch(1000):
+                content += "<div>%s</div>"%(e.title,)
+                content += "<div>%s</div>"%(e.blurb(),)
         elif qtype == "Questions":
             for q in Question.query().order(-Question.date).fetch(40):
                 content += "<div>%s</div>"%(q.question,)
@@ -48,6 +49,9 @@ if qs:
         elif qtype == "Stream":
             for t in Thought.query().order(-Thought.date).fetch(40):
                 content += "<div>%s</div>"%(t.thought,)
+        elif qtype == "Memes":
+            for m in Meme.query().order(-Meme.date).fetch(40):
+                content += "<div>%s</div>"%(m.title,)
     elif title == "Recommendations" and qtype in ["PositionPapers", "OpinionsAndIdeas"] and qrest and len(qrest) > 20:
         m = db.get(flipRStripStroke(qrest))
     elif len(qs) > 20:
@@ -91,22 +95,32 @@ if title == "Feed":
     for d in CategoriedVotingModel.query(CategoriedVotingModel.user == m.key).order(-CategoriedVotingModel.date).fetch(10):
         content += "<div>%s</div>"%(d.title_analog(),)
 elif m:
-    content += "<div class='big'>%s</div>"%(m.title,)
+    ta = m.title_analog()
+    if "http" in ta:
+        ta, img = ta.split("http", 1)
+        img = "http%s"%(img.split(" ")[0],)
+    elif hasattr(m, "image"):
+        img = m.image.urlsafe()
+    elif hasattr(m, "description") and "http" in m.description:
+        img = "http%s"%(m.description.split("http")[1].split(" ")[0],)
+    content += "<div class='big'>%s</div>"%(ta,)
     if title == "Video":
+        img = m.thumbnail
         content += "<img src='%s'>"%(m.thumbnail,)
         content += "<div>%s</div>"%(m.description,)
     elif title == "News":
         toppic = m.photo[0].get()
+        img = toppic.pic_link()
         content += toppic.pic_html()
         content += "<div>%s</div>"%(m.body,)
     elif title == "Referenda":
         content += "<div>%s</div>"%(m.voteText(),)
-    elif title == "Community":
+    elif title == "Community" and hasattr(m, "blurb"):
         content += "<div>%s</div>"%(m.blurb(),)
     elif title == "Cases":
         content += "<div>%s</div>"%(m.blurb,)
     elif title == "Recommendations":
         content += "<div>%s</div>"%(m.body,)
-    title += " - %s"%(m.title,)
+    title += " - %s"%(ta,)
 
-send_text(readfile("/basic.html")%(description, title, content))
+send_text(readfile("/basic.html")%(ta or title, img, description, title, content))
