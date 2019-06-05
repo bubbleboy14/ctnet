@@ -81,9 +81,8 @@ CAN.cc = {
 			author = CT.data.get(content.user),
 			memship = author && author.cc.membership || cfg.membership;
 		CT.log("viewing: " + identifier);
-		return;
 		_.viewer = _.viewer || CC.viewer();
-		viewer.view({
+		_.viewer.view({
 			agent: cfg.agent,
 			content: {
 				membership: memship,
