@@ -78,7 +78,7 @@ CAN.cc = {
 		var _ = CAN.cc._, cfg = CAN.config.CC,
 			name = content.title || content.name,
 			identifier = content.mtype + ": " + name,
-			author = CT.data.get(content.user),
+			author = CT.data.get(content.uid || content.user),
 			memship = author && author.cc.membership || cfg.membership;
 		CT.log("viewing: " + identifier);
 		_.viewer = _.viewer || CC.viewer();
