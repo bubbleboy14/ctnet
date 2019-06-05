@@ -4,7 +4,7 @@ from cantools.web import *
 
 LOGALL = False
 RAWDOMAIN = config.web.domain
-DOMAIN = "http://%s"%(config.web.fulldomain or "www.%s"%(RAWDOMAIN,),)
+DOMAIN = "%s://%s"%(config.web.protocol, config.web.fulldomain or "www.%s"%(RAWDOMAIN,))
 RCK = config.recaptcha
 _c = config.scrambler
 _cl = len(_c)
