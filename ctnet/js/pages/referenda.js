@@ -501,6 +501,7 @@ onload = function() {
             branchlink.onclick();
             showBranch(branch);
         }
+        CAN.cc.view(ref);
     };
     var changeRef = function(ref, branch) {
         if (ref.summary)

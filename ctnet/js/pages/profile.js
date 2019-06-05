@@ -1095,6 +1095,11 @@ var loadPage = function(uid, pid) {
         bnode.appendChild(blurbta);
         CT.rte.wysiwygize("blurbta", true);
 
+        // cc
+        var ccnode = CT.dom.div(null, "bordered padded mv5 round");
+        userinfo.appendChild(ccnode);
+        CAN.cc.switcher(ccnode);
+
         var statusnode = CT.dom.node("", "div", "red");
         var setStatus = function(msg, timeout) {
             statusnode.innerHTML = msg || "";

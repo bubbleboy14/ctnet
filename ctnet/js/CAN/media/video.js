@@ -24,6 +24,7 @@ CAN.media.video = {
 	    CT.dom.id(video.docid+"conversation").style.display = "block";
 	    CT.panel.select(video.docid);
 	    CAN.widget.share.updateShareItem("video", video.key);
+	    CAN.cc.view(video);
 	},
 	// embedded video, as in list
 	"build": function(video, vindex, nocat, inconvo, htmlSafe) {

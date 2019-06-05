@@ -42,6 +42,7 @@ onload = function() {
         newslist.style.display = "none";
         svnode.style.display = "block";
         CAN.widget.share.updateShareItem("news", news.key);
+        CAN.cc.view(news);
     };
 
     // center: news

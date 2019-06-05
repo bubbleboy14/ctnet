@@ -35,6 +35,7 @@ onload = function() {
         caselist.style.display = "none";
         svnode.style.display = "block";
         CAN.widget.share.updateShareItem("case", cdata.key);
+        CAN.cc.view(cdata);
     };
 
     // center: case
