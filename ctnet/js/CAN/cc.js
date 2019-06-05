@@ -66,15 +66,29 @@ CAN.cc = {
 			}
 		}
 	},
-	switcher: function() {
+	switcher: function(node) {
 		var _ = CAN.cc._;
 		_.setSwitcher();
-		return _.switcheroo;
-	},
-	init: function(node) {
 		CT.dom.setContent(node || "ctmain", CT.dom.div([
 			CT.dom.div("Your <b>carecoin</b> Membership", "bigger centered"),
-			CT.dom.div(CAN.cc.switcher(), "h170p p0 noflow")
+			CT.dom.div(_.switcheroo, "h170p p0 noflow")
 		], "bordered padded margined round"));
+	},
+	view: function(content) {
+		var _ = CAN.cc._, cfg = CAN.config.CC,
+			name = content.title || content.name,
+			identifier = content.mtype + ": " + name,
+			author = CT.data.get(content.user),
+			memship = author && author.cc.membership || cfg.membership;
+		CT.log("viewing: " + identifier);
+		return;
+		_.viewer = _.viewer || CC.viewer();
+		viewer.view({
+			agent: cfg.agent,
+			content: {
+				membership: memship,
+				identifier: identifier
+			}
+		});
 	}
 };
