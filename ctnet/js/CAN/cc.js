@@ -79,8 +79,9 @@ CAN.cc = {
 			name = content.title || content.name,
 			identifier = content.mtype + ": " + name,
 			author = CT.data.get(content.uid || content.user),
-			memship = author && author.cc.membership || cfg.membership;
+			memship = author && author.cc.membership;
 		CT.log("viewing: " + identifier);
+		if (!memship) return CT.log("(no mem)");
 		_.viewer = _.viewer || CC.viewer();
 		_.viewer.view({
 			agent: cfg.agent,

@@ -8,7 +8,6 @@
 	"feedlinks": true,
 	"CC": {
 		"gateway": "https://cc.mkult.co/comp/api.js",
-		"membership": null,
 		"agent": null,
 		"pod": null
 	},
