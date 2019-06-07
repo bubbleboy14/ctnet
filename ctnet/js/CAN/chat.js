@@ -12,6 +12,7 @@ Object.assign(CAN.chat.settings, {
 		host: CAN.config.pubsub.host,
 		port: CAN.config.pubsub.port
 	},
+	data: {},
 	on: {
 		roomSelect: function(room) {
 			CAN.widget.share.updateShareItem("community", room, "People");
