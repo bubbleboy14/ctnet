@@ -12,6 +12,9 @@ Object.assign(CAN.chat.settings, {
 		host: CAN.config.pubsub.host,
 		port: CAN.config.pubsub.port
 	},
+	classes: {
+		presence: "bold blue bottompadded"
+	},
 	data: {},
 	on: {
 		roomSelect: function(room) {
@@ -37,6 +40,7 @@ Object.assign(CAN.chat, {
 	},
 	"loadAllChats": function(uid, chpanels, chsides, uspot, cb, mr, mrlink, mrcontainer) {
 		CAN.chat.init();
+		CT.chat.setNode(chpanels);
 		if (!uid) { // widget only
 			var namePrompt = CT.dom.node();
 			namePrompt.appendChild(CT.dom.node([
