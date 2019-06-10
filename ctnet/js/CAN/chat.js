@@ -1,4 +1,3 @@
-CT.parse.set_ts_server_offset(CAN.config.pubsub.timezone_offset);
 CAN.chat = CT.chat;
 Object.assign(CAN.chat.settings, {
 	NO_INFO_MSG: " hasn't filled out the 'Other Interests or Comments' section on the profile page. How mysterious!",
@@ -8,6 +7,7 @@ Object.assign(CAN.chat.settings, {
 		zipcode: { city: "unknown" }
 	},
 	require: ["zipcode"],
+	timezone_offset: CAN.config.pubsub.timezone_offset,
 	location: {
 		host: CAN.config.pubsub.host,
 		port: CAN.config.pubsub.port
