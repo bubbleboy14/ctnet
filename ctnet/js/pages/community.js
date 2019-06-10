@@ -66,28 +66,26 @@ onload = function() {
         }]);
 
     // video
-    if (CT.info.isChrome) {
-        var vsb = CT.dom.id("vstream");
-        CT.dom.show(vsb.parentNode);
-        vsb.onclick = function() {
-            vsb._modal = vsb._modal || new CT.modal.Modal({
-                center: false,
-                innerClass: "w1 h1 noflow",
-                className: "w1 bigger vslide mosthigh fixed whitelink noflow",
-                transition: "slide",
-                slide: {
-                    origin: "bottom"
-                },
-                content: [
-                    "Who else is lurking around CAN? Ask them yourself!",
-                    CT.dom.iframe("https://fzn.party/stream/widget.html#can", "w1", null, {
-                        allow: "microphone; camera"
-                    })
-                ]
-            });
-            vsb._modal.showHide();
-        };
-    }
+    var vsb = CT.dom.id("vstream");
+    CT.dom.show(vsb.parentNode);
+    vsb.onclick = function() {
+        vsb._modal = vsb._modal || new CT.modal.Modal({
+            center: false,
+            innerClass: "w1 h1 noflow",
+            className: "w1 bigger vslide mosthigh fixed whitelink noflow",
+            transition: "slide",
+            slide: {
+                origin: "bottom"
+            },
+            content: [
+                "Who else is lurking around CAN? Ask them yourself!",
+                CT.dom.iframe("https://fzn.party/stream/widget.html#can", "w1", null, {
+                    allow: "microphone; camera"
+                })
+            ]
+        });
+        vsb._modal.showHide();
+    };
 
     // map
     map = new CAN.widget.map.Map({
