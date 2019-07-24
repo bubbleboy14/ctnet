@@ -3,7 +3,7 @@ CAN.widget.chatterlightbox = {
 		if (CAN.widget.chatterlightbox._box)
 			return CAN.widget.chatterlightbox._box.show();
 	    CT.net.post("/get", {"gtype": "media", "mtype": "comment", "number": 3}, null, function(items) {
-	    	var cbox = CT.dom.div(null, "w1-3 mw150p wm400p m5 right"),
+	    	var cbox = CT.dom.div(null, "h1 w1-3 mw150p wm400p m5 scroller right"),
 	    		talkBack = CT.dom.div();
 	        CAN.widget.stream.comment(cbox, null, items.reverse(), false, true, "full");
 	        CT.dom.inputEnterCallback(CT.dom.richInput(talkBack, null, null, null, null,
@@ -14,7 +14,7 @@ CAN.widget.chatterlightbox = {
 		        });
 			CAN.widget.chatterlightbox._box = new CT.modal.LightBox({
 				innerClass: "scrolly lightbox hglite",
-				content: [
+				content: CT.dom.div([
 					cbox,
 					CT.dom.div([
 						CT.dom.div("What's This All About?", "biggerest bold centered"),
@@ -79,7 +79,7 @@ CAN.widget.chatterlightbox = {
 						CT.dom.div("Click the \"What's This?\" link at the top of any page (right by the \"Log In\" link) to return to this menu at any time. Click outside the box (or press the ESCAPE key) to make it go away. And in the meantime, tell us something we don't know.", "padded"),
 						talkBack
 					], "upscale nodecoration")
-				]
+				], "h1")
 			});
 			CT.storage.set("lb_viewed", true);
 			CT.key.on("ESCAPE", CAN.widget.chatterlightbox._box.hide);
