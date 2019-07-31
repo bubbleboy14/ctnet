@@ -536,7 +536,7 @@ def getadmins():
 def popularityContest(item):
     psum = sum([v.opinion for v in item.votes()])
     item.psum = psum
-    return sum
+    return psum
 
 def getMost(mostWhat, mostClass, user, lastMost=None):
     q = mostClass.query()
@@ -548,7 +548,7 @@ def getMost(mostWhat, mostClass, user, lastMost=None):
     if user and user != "anonymous":
         result = filterVoted(user, result)
     if mostWhat == "popular":
-        result = sorted(result, key=popularityContest, reverse=True)
+        result.sort(key=popularityContest, reverse=True)
         if lastMost:
             popularityContest(lastMost)
             result = [r for r in result if r.psum < lastMost.psum]
