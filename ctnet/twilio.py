@@ -25,7 +25,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 __VERSION__ = "2.0.0"
 
-import urllib, urllib2, base64, hmac
+import urllib.request, urllib.parse, urllib.error, urllib.request, urllib.error, urllib.parse, base64, hmac
 from hashlib import sha1
 from xml.sax.saxutils import escape, quoteattr
 
@@ -52,11 +52,11 @@ class HTTPErrorProcessor(urllib2.HTTPErrorProcessor):
 
 class HTTPErrorAppEngine(Exception): pass
 
-class TwilioUrlRequest(urllib2.Request):
+class TwilioUrlRequest(urllib.request.Request):
     def get_method(self):
         if getattr(self, 'http_method', None):
             return self.http_method
-        return urllib2.Request.get_method(self)
+        return urllib.request.Request.get_method(self)
 
 class Account:
     """Twilio account object that provides helper functions for making
@@ -81,22 +81,22 @@ class Account:
             if uri.find('?') > 0:
                 if uri[-1] != '&':
                     uri += '&'
-                uri = uri + urllib.urlencode(params)
+                uri = uri + urllib.parse.urlencode(params)
             else:
-                uri = uri + '?' + urllib.urlencode(params)
+                uri = uri + '?' + urllib.parse.urlencode(params)
         return uri
     
     def _urllib2_fetch(self, uri, params, method=None):
         # install error processor to handle HTTP 201 response correctly
         if self.opener == None:
-            self.opener = urllib2.build_opener(HTTPErrorProcessor)
-            urllib2.install_opener(self.opener)
+            self.opener = urllib.request.build_opener(HTTPErrorProcessor)
+            urllib.request.install_opener(self.opener)
         
         if method and method == 'GET':
             uri = self._build_get_uri(uri, params)
             req = TwilioUrlRequest(uri)
         else:
-            req = TwilioUrlRequest(uri, urllib.urlencode(params))
+            req = TwilioUrlRequest(uri, urllib.parse.urlencode(params))
             if method and (method == 'DELETE' or method == 'PUT'):
                 req.http_method = method
         
@@ -104,7 +104,7 @@ class Account:
         authstring = authstring.replace('\n', '')
         req.add_header("Authorization", "Basic %s" % authstring)
         
-        response = urllib2.urlopen(req)
+        response = urllib.request.urlopen(req)
         return response.read()
     
     def _appengine_fetch(self, uri, params, method):
@@ -119,7 +119,7 @@ class Account:
         
         authstring = base64.encodestring('%s:%s' % (self.id, self.token))
         authstring = authstring.replace('\n', '')
-        r = urlfetch.fetch(url=uri, payload=urllib.urlencode(params),
+        r = urlfetch.fetch(url=uri, payload=urllib.parse.urlencode(params),
             method=httpmethod,
             headers={'Content-Type': 'application/x-www-form-urlencoded',
                 'Authorization': 'Basic %s' % authstring})
@@ -165,7 +165,7 @@ class Verb:
         
         self.verbs = []
         self.attrs = {}
-        for k, v in kwargs.items():
+        for k, v in list(kwargs.items()):
             if v: self.attrs[k] = quoteattr(str(v))
     
     def __repr__(self):
@@ -196,7 +196,7 @@ class Verb:
         return verb
     
     def asUrl(self):
-        return urllib.quote(str(self))
+        return urllib.parse.quote(str(self))
     
     def addSay(self, text, **kwargs):
         return self.append(Say(text, **kwargs))

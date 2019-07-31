@@ -225,7 +225,7 @@ def getzip(code):
 
 def getzips(kwargs):
     zips = ZipCode.query()
-    for key, val in kwargs.items():
+    for key, val in list(kwargs.items()):
         zips = zips.filter(db.GenericProperty(key) == val)
     return zips.fetch(1000)
 

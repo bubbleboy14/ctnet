@@ -319,7 +319,7 @@ def edit(element, key, val, editor, emtype):
                 putthese.append(photo)
     try:
         setattr(element, key, val)
-    except Exception, e:
+    except Exception as e:
         fail("element: %s. key: %s. val: %s"%(element, key, val))
     return putthese
 
@@ -633,7 +633,7 @@ def response():
             fail("This wiki page has changed since your last refresh. Please save your work to a text editor, refresh the page, apply your changes, and resubmit. Thanks!")
         element.revision += 1
         element.user = editor.key
-    for key, val in data.items():
+    for key, val in list(data.items()):
         putthese += edit(element, key, val, editor, emtype)
     if emtype == "newsletter" and data.get("send"):
         element.send(data.get("test"))

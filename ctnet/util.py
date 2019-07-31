@@ -40,7 +40,7 @@ def flipRStripStroke(s):
     return "".join(flipR(s).split("\\"))
 
 def flipQ(s):
-    from urllib import quote
+    from urllib.parse import quote
     return quote(flipR(s))
 
 def readfile(pname):
@@ -75,7 +75,7 @@ def decode(d):
     d =  flipU(d)
     try: # will fail if someone has old version cached...
         d = b64decode(d)
-    except Exception, e:
+    except Exception as e:
         log("incorrect padding (probably): '%s'; '%s'"%(repr(e), d),
             "handled error")
     return d
