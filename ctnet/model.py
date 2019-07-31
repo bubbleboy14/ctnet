@@ -2580,8 +2580,8 @@ def acceptedRefKeys():
     return set(s.user_referenda + s.CAN_referenda)
 
 def filterVoted(user, results):
-    return [r for r in results if r.key not in
-        set([v.media for v in user.collection(MediaVote, "user")])]
+    votez = set([v.media.urlsafe() for v in user.collection(MediaVote, "user")])
+    return [r for r in results if r.key.urlsafe() not in votez]
 
 MINI_QUERY_SIZE = 20
 
