@@ -50,7 +50,7 @@ def readfile(pname):
         pname = pname[1:]
     else:
         pname = "%s%s"%(config.mode == "dynamic" and "html" or "html-%s"%(config.mode,), pname)
-    f = open(pname, "r")
+    f = open(pname, "rb")
     d = f.read()
     f.close()
     return d
