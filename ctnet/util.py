@@ -1,6 +1,10 @@
 from base64 import b64encode, b64decode
 from cantools import config
 from cantools.web import *
+try:
+    from urllib import quote       # py2
+except:
+    from urllib.parse import quote # py3
 
 LOGALL = False
 RAWDOMAIN = config.web.domain
@@ -28,7 +32,7 @@ def flipC(c):
     i = _c.find(c)
     if i == -1:
         return c
-    return _c[(i + _chl) % _cl]
+    return _c[int((i + _chl) % _cl)]
 
 def flipU(s):
     return "".join([flipC(c) for c in s])
@@ -40,7 +44,6 @@ def flipRStripStroke(s):
     return "".join(flipR(s).split("\\"))
 
 def flipQ(s):
-    from urllib import quote
     return quote(flipR(s))
 
 def readfile(pname):
@@ -50,7 +53,7 @@ def readfile(pname):
         pname = pname[1:]
     else:
         pname = "%s%s"%(config.mode == "dynamic" and "html" or "html-%s"%(config.mode,), pname)
-    f = open(pname, "r")
+    f = open(pname, "rb")
     d = f.read()
     f.close()
     return d
@@ -75,7 +78,7 @@ def decode(d):
     d =  flipU(d)
     try: # will fail if someone has old version cached...
         d = b64decode(d)
-    except Exception, e:
+    except Exception as e:
         log("incorrect padding (probably): '%s'; '%s'"%(repr(e), d),
             "handled error")
     return d

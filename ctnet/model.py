@@ -1,5 +1,6 @@
 from cantools import config
-from ctmodel import *
+from .ctmodel import *
+from functools import reduce
 
 setzipdomain(config.zipdomain)
 
@@ -8,7 +9,7 @@ def _lensort(a, b):
 
 class Searchable(object):
     def string2words(self, searchstring):
-        from util import strip_html, strip_punctuation
+        from .util import strip_html, strip_punctuation
         if hasattr(self, "conversation") and self.conversation:
             searchstring += " " + self.conversation.get().search_string()
         words = [w for w in set(strip_punctuation(strip_html(searchstring)).lower().split(" ")) if len(w) > 2 and len(w) < 20]
@@ -167,7 +168,7 @@ class Avatar(CANModel):
         if not data:
             data = (self.profile and self.profile.get().img) or (self.chat and self.chat.get().img) or None
         if not data:
-            from util import fail
+            from .util import fail
             fail("no image data existing or submitted")
         self.setSize(data, "profile", force=force)
         self.setSize(data, "chat", force=force)
@@ -189,14 +190,14 @@ class Authentication(ModelBase):
     # collections (checked): attempts
 
     def fail(self, msg):
-        from util import fail
+        from .util import fail
         fail(msg)
 
     def full_status(self, aslist=True):
         if hasattr(self, "myfullstatus"):
             return self.myfullstatus
         if aslist:
-            self.myfullstatus = [k for k, v in AUTH_CODES.items() if v & self.status]
+            self.myfullstatus = [k for k, v in list(AUTH_CODES.items()) if v & self.status]
             return self.myfullstatus
         d = {}
         for key, val in AUTH_CODES:
@@ -224,7 +225,7 @@ class Authentication(ModelBase):
             elif a.data.startswith("address"):
                 trythis("address", a)
             else:
-                from util import fail
+                from .util import fail
                 fail("unknown AuthAttempt. type: %s. data: %s"%(a.type, a.data))
         return r
 
@@ -293,7 +294,7 @@ class AuthAttempt(ModelBase):
 
     def datadict(self):
         if self.type != "graphic":
-            from util import fail
+            from .util import fail
             fail("AuthAttempt.datadict() failed. type: %s. data: %s."%(self.type, self.data))
         p, u, g = self.data.split(" ")
         return {"property": p, "user": u, "graphic": g}
@@ -350,7 +351,7 @@ class User(UserBase, Searchable):
         return True
 
     def mylink(self):
-        from util import flipQ, DOMAIN
+        from .util import flipQ, DOMAIN
         return "%s/profile.html?u=%s"%(DOMAIN, flipQ(self.id()))
 
     def mygroups(self):
@@ -522,7 +523,7 @@ class User(UserBase, Searchable):
 def getfounder(fname): # depped, leaving for posterity
     g = User.query(User.role.contains(fname)).fetch(2)
     if len(g) != 1:
-        from util import fail
+        from .util import fail
         fail("can't find unique %s!"%(fname,))
     return g[0]
 
@@ -535,7 +536,7 @@ def getadmins():
 def popularityContest(item):
     psum = sum([v.opinion for v in item.votes()])
     item.psum = psum
-    return sum
+    return psum
 
 def getMost(mostWhat, mostClass, user, lastMost=None):
     q = mostClass.query()
@@ -547,7 +548,7 @@ def getMost(mostWhat, mostClass, user, lastMost=None):
     if user and user != "anonymous":
         result = filterVoted(user, result)
     if mostWhat == "popular":
-        result = sorted(result, key=popularityContest, reverse=True)
+        result.sort(key=popularityContest, reverse=True)
         if lastMost:
             popularityContest(lastMost)
             result = [r for r in result if r.psum < lastMost.psum]
@@ -609,24 +610,24 @@ def send_invitation(media, user, invitee=None, email=None):
     mlink = media.storylink()
     if email:
         if mtype in ["conversation", "group"]:
-            from util import DOMAIN
-            from emailTemplates import invite_email
+            from .util import DOMAIN
+            from .emailTemplates import invite_email
             send_email(email, subject,
                 invite_email%(fn, asomething,
                     mtitle, DOMAIN, mtype, mlink))
         else: # event, video, news, referendum
-            from emailTemplates import invite_email_no_account
+            from .emailTemplates import invite_email_no_account
             send_email(email, subject,
                 invite_email_no_account%(fn,
                     verb, asomething, mtitle, mlink))
     elif invitee:
         if invitee.email_messages:
-            from emailTemplates import invitation
+            from .emailTemplates import invitation
             emailuser(invitee, subject,
                 invitation%(invitee.firstName,
                     fn, verb, asomething, mtitle, mlink))
     else:
-        from util import fail
+        from .util import fail
         fail("no invitee or email")
 
 def emailadmins(subject, body, html=None):
@@ -658,7 +659,7 @@ class ULog(ModelBase):
                     slist.append("<b>%s</b>: %s"%(sa[i], survey_questions[i]))
             return "<br>".join(slist)
         if self.propname == "avatar":
-            from util import flipQ
+            from .util import flipQ
             return '<img src="/get?gtype=avatar&size=profile&uid=%s">'%(flipQ(self.user.id()),)
         if self.propname == "dob":
             return self.newval.split(" ")[0]
@@ -719,7 +720,7 @@ class Meme(CategoriedVotingModel, Searchable):
         ModelBase.rm(self)
 
     def storylink(self, aslist=False):
-        from util import DOMAIN, flipQ
+        from .util import DOMAIN, flipQ
         if aslist:
             return ["community"]
         return "%s/community.html#!Memes|%s"%(DOMAIN, flipQ(self.key.urlsafe()))
@@ -753,7 +754,7 @@ class Thought(CategoriedVotingModel, Searchable):
         return self.thought
 
     def tweetlinks(self):
-        from util import DOMAIN
+        from .util import DOMAIN
         lnk = "%s/tweet?key=%s"%(DOMAIN, self.key.urlsafe())
         return {
             "yes": lnk + "?doit=1",
@@ -761,7 +762,7 @@ class Thought(CategoriedVotingModel, Searchable):
         }
 
     def storylink(self, aslist=False):
-        from util import DOMAIN, flipQ
+        from .util import DOMAIN, flipQ
         if aslist:
             return ["community"]
         return "%s/community.html#!Stream|%s"%(DOMAIN, flipQ(self.key.urlsafe()))
@@ -816,7 +817,7 @@ class ChangeIdea(CategoriedVotingModel, Searchable):
         return "change idea"
 
     def storylink(self, aslist=False):
-        from util import DOMAIN, flipQ
+        from .util import DOMAIN, flipQ
         if aslist:
             return ["community"]
         return "%s/community.html#!Ideas|%s"%(DOMAIN, flipQ(self.key.urlsafe()))
@@ -870,7 +871,7 @@ class Question(CategoriedVotingModel, Searchable):
         ModelBase.rm(self)
 
     def storylink(self, aslist=False):
-        from util import DOMAIN, flipQ
+        from .util import DOMAIN, flipQ
         if aslist:
             return ["community"]
         return "%s/community.html#!Questions|%s"%(DOMAIN, flipQ(self.key.urlsafe()))
@@ -923,7 +924,7 @@ class Case(CategoriedVotingModel, Searchable):
         return "<b>%s</b><br>%s"%(self.title, self.blurb)
 
     def storylink(self, aslist=False):
-        from util import DOMAIN, flipQ
+        from .util import DOMAIN, flipQ
         if aslist:
             return ["cases"]
         return "%s/cases.html#!%s"%(DOMAIN, flipQ(self.id()))
@@ -933,7 +934,7 @@ class Case(CategoriedVotingModel, Searchable):
 #        return "%s/profile.html?u=%s#Cases"%(DOMAIN, flipQ(self.user.id()))
 
     def rssitems(self):
-        from util import truncate
+        from .util import truncate
         return {"title": self.title, "link": self.storylink(),
             "description": truncate(self.blurb), "pubDate": self.date}
 
@@ -1078,7 +1079,7 @@ class Group(CANModel, Searchable):
         Membership(user=user.key, group=self.key).put()
 
     def storylink(self, aslist=False):
-        from util import flipQ, DOMAIN
+        from .util import flipQ, DOMAIN
         if aslist:
             return ["participate.html#ActionGroups|", self.id()]
 #            return "/participate.html#ActionGroups|%s"%(flipQ(self.id()),)
@@ -1155,7 +1156,7 @@ class Newsletter(CANModel):
     template = db.Boolean(default=False)
 
     def setBodyAndHtml(self, s):
-        from util import strip_html
+        from .util import strip_html
         self.html = s
         self.body = strip_html(s)
 
@@ -1206,7 +1207,7 @@ def get_newsletter(user, group, title, istemplate, failonfind=False):
     n = Newsletter.query().filter(Newsletter.title == title).filter(Newsletter.template == istemplate).filter(Newsletter.user == user.key).filter(Newsletter.group == group.key).get()
     if n:
         if failonfind:
-            from util import fail
+            from .util import fail
             fail("Sorry, you already have a %s called %s!"%(istemplate and "template" or "newsletter", title))
         return n
     return None
@@ -1389,7 +1390,7 @@ def modcred(cdata):
     c = db.get(cdata.pop("key"))
     puts = [c]
     if cname in keycreds:
-        for k, v in cdata.items():
+        for k, v in list(cdata.items()):
             setattr(c, k, v)
     else:
         subname = credsubs[cname]
@@ -1402,9 +1403,9 @@ def modcred(cdata):
             c.date_stopped = dstop
         elif hasattr(c, "date_stopped") and c.date_stopped:
             c.date_stopped = None
-        for k, v in cdata.items():
+        for k, v in list(cdata.items()):
             setattr(c, k, v)
-        for k, v in csubdata.items():
+        for k, v in list(csubdata.items()):
             setattr(csub, k, v)
         puts.append(csub)
     db.put_multi(puts)
@@ -1414,7 +1415,7 @@ def newcred(cdata, user):
     cname = cdata.pop("cname")
     if cname in keycreds:
         c = credmap[cname]()
-        for k, v in cdata.items():
+        for k, v in list(cdata.items()):
             setattr(c, k, v)
         c.put()
         curlist = getattr(user, cname)
@@ -1515,7 +1516,7 @@ class OpinionIdea(CategoriedVotingModel, Searchable):
             self.body))
 
     def storylink(self, aslist=False):
-        from util import DOMAIN, flipQ
+        from .util import DOMAIN, flipQ
         if aslist:
             return ["recommendations.html#!OpinionsAndIdeas", self.id()]
         return "%s/recommendations.html#!OpinionsAndIdeas|%s"%(DOMAIN, flipQ(self.id()))
@@ -1533,7 +1534,7 @@ class OpinionIdea(CategoriedVotingModel, Searchable):
         return "<b>%s</b><br>%s"%(self.title, sbody)
 
     def rssitems(self):
-        from util import truncate
+        from .util import truncate
         return {"title": self.title, "link": self.storylink(),
             "description": truncate(self.body), "pubDate": self.date}
 
@@ -1565,7 +1566,7 @@ class PositionPaper(CategoriedVotingModel, Searchable):
             self.body))
 
     def storylink(self, aslist=False):
-        from util import DOMAIN, flipQ
+        from .util import DOMAIN, flipQ
         if aslist:
             return ["recommendations#!PositionPapers", self.id()]
         return "%s/recommendations.html#!PositionPapers|%s"%(DOMAIN, flipQ(self.id()))
@@ -1583,7 +1584,7 @@ class PositionPaper(CategoriedVotingModel, Searchable):
         return "<b>%s</b><br>%s"%(self.title, sbody)
 
     def rssitems(self):
-        from util import truncate
+        from .util import truncate
         return {"title": self.title, "link": self.storylink(),
             "description": truncate(self.body), "pubDate": self.date}
 
@@ -1625,7 +1626,7 @@ class Video(CategoriedVotingModel, Searchable, Approvable):
         return "<b>%s</b>"%(self.title,)
 
     def storylink(self, aslist=False):
-        from util import flipQ, DOMAIN
+        from .util import flipQ, DOMAIN
         if aslist:
             return ["video.html#!", self.id()]
 #            return "/video.html#!%s"%(flipQ(self.id()),)
@@ -1672,7 +1673,7 @@ class Video(CategoriedVotingModel, Searchable, Approvable):
             from cantools.web import fetch
             self.thumbnail = fetch("vimeo.com", "/api/v2/video/%s.json"%(self.docid,), asjson=True)[0]['thumbnail_small']
         else:
-            from util import fail
+            from .util import fail
             fail("invalid video player: '%s'"%(self.player,))
 
 def newVideo(**kwargs):
@@ -1705,7 +1706,7 @@ class Quote(Text, Searchable):
             self.content))
 
     def rssitems(self):
-        from util import DOMAIN
+        from .util import DOMAIN
         return {"title": self.author, "description": self.content,
             "link": "%s/recommendations.html#!Quotes"%(DOMAIN,),
             "pubDate": self.date.strftime("%A %B %d, %Y at %I:%M%p")}
@@ -1756,7 +1757,7 @@ class Photo(CategoriedVotingModel, Approvable):
             return self.photo
         p = "/get?gtype=graphic&key=%s"%(self.graphic.urlsafe(),)
         if absolute:
-            from util import DOMAIN
+            from .util import DOMAIN
             return "%s%s"%(DOMAIN, p)
         return p
 
@@ -1820,7 +1821,7 @@ class Settings(CANModel):
 def getsettings():
     settingss = Settings.query().fetch(2)
     if len(settingss) != 1:
-        from util import fail
+        from .util import fail
         fail("inconsistent settings records!")
     return settingss[0]
 
@@ -1835,7 +1836,7 @@ class Book(Titled):
             self.author, self.content))
 
     def rssitems(self):
-        from util import DOMAIN
+        from .util import DOMAIN
         return {"title": "%s by %s"%(self.title, self.author),
             "description": self.content,
             "link": "%s/recommendations.html#!Books"%(DOMAIN,),
@@ -1864,7 +1865,7 @@ class SustainableAction(Titled):
             self.content))
 
     def rssitems(self):
-        from util import DOMAIN
+        from .util import DOMAIN
         return {"title": self.title, "description": self.content,
             "link": DOMAIN,
             "pubDate": self.date.strftime("%A %B %d, %Y at %I:%M%p")}
@@ -1887,14 +1888,14 @@ randomclasses = {"photo": Photo, "sustainableaction": SustainableAction}
 def randomindexed(modelname):
     modeltype = randomclasses[modelname]
     if not modeltype:
-        from util import fail
+        from .util import fail
         fail("%s is not indexed for randomization!"%(modelname,))
     q = modeltype.query(modeltype.shared == True, modeltype.approved == True)
     if modelname == "photo":
         q.filter(modeltype.is_book_cover == False)
     c = q.count()
     if c == 0:
-        from util import fail
+        from .util import fail
         fail("no %s randomization candidates!"%(modelname,))
     import random
     return q.fetch(1, offset=random.randint(0, c - 1))[0]
@@ -1964,7 +1965,7 @@ class Event(CategoriedVotingModel, Searchable, Approvable):
         return "%s<br><br>%s<br>%s"%(self.description, self.where.get().stringify(), self.whendata()['full'])
 
     def storylink(self, aslist=False):
-        from util import DOMAIN, flipQ
+        from .util import DOMAIN, flipQ
         if aslist:
             return ["community.html#!Events|", self.id()]
 #            return "/community.html#!Events|%s"%(flipQ(self.id()),)
@@ -2083,10 +2084,10 @@ def newPlace(data):
     return p
 
 def address2latlng(address):
-    import urllib
+    import urllib.request, urllib.parse, urllib.error
     from cantools.web import fetch
     results = fetch("maps.googleapis.com",
-        "/maps/api/geocode/json?sensor=false&address=%s"%(urllib.quote(address.replace(" ", "+")),),
+        "/maps/api/geocode/json?sensor=false&address=%s"%(urllib.parse.quote(address.replace(" ", "+")),),
         asjson=True)['results']
     loc = results[0]['geometry']['location']
     return [loc['lat'], loc['lng']]
@@ -2205,18 +2206,18 @@ class News(CategoriedVotingModel, Searchable, Approvable):
         return "article"
 
     def logstring(self):
-        from util import truncate
+        from .util import truncate
         return "<b>%s</b><br>%s"%(self.title, truncate(self.body))
 
     def storylink(self, aslist=False):
-        from util import flipQ, DOMAIN
+        from .util import flipQ, DOMAIN
         if aslist:
             return ["news.html#!", self.id()]
 #            return "/news.html#!%s"%(flipQ(self.id()),)
         return "%s/news.html#!%s"%(DOMAIN, flipQ(self.id()))
 
     def rssdesc(self):
-        from util import truncate
+        from .util import truncate
         tbod = truncate(self.body)
         if len(self.photo):
             return '%s %s'%(self.photo[0].get().pic_html(True), tbod)
@@ -2320,7 +2321,7 @@ class Votable(CANModel):
         return self.collection(Vote, "referendum")
 
     def storylink(self, aslist=False):
-        from util import flipQ, DOMAIN
+        from .util import flipQ, DOMAIN
         if aslist:
             return ["referenda.html#!", self.id()]
 #            return "/referenda.html#!%s"%(flipQ(self.id()),)
@@ -2405,7 +2406,7 @@ class Referendum(Votable, Approvable, Searchable):
         return d
 
 def makeblurb(summary):
-    from util import strip_html
+    from .util import strip_html
     blurb = ""
     summary = strip_html(summary, True)
     sentences = summary.split('.')
@@ -2492,7 +2493,7 @@ def cansearch(stype, string, startdate, enddate):
         if edyear and edmonth and edyear != "Year" and edmonth != "Month":
             dend = datetime(int(edyear), int(edmonth), 1)
         dprop = stype == "event" and "when" or "date"
-    from util import strip_punctuation
+    from .util import strip_punctuation
     searchwords = [w for w in strip_punctuation(string).lower().split(" ")]
     if dstart and dend: # filter and manually prune
         return [d.data() for d in list(set(reduce(list.__add__, [_filter(f.filter(db.GenericProperty(dprop) > dstart), qm, word).all() for word in searchwords]))) if d.dateProp() < dend]
@@ -2579,8 +2580,8 @@ def acceptedRefKeys():
     return set(s.user_referenda + s.CAN_referenda)
 
 def filterVoted(user, results):
-    return [r for r in results if r.key not in
-        set([v.media for v in user.collection(MediaVote, "user")])]
+    votez = set([v.media.urlsafe() for v in user.collection(MediaVote, "user")])
+    return [r for r in results if r.key.urlsafe() not in votez]
 
 MINI_QUERY_SIZE = 20
 
@@ -2650,7 +2651,7 @@ def nextmedia(mtype, category=None, uid=None, number=1000, offset=0, nodata=Fals
     if mtype == "conversation":
         r = q.filter(mt.privlist.contains(authid)).fetch(1000)
         if len(r) == 0:
-            from util import fail
+            from .util import fail
             fail("no convo results")
         return [c.data(unseencount=authid) for c in r]
 #    if mtype == "newsletter":
@@ -2679,7 +2680,7 @@ def nextmedia(mtype, category=None, uid=None, number=1000, offset=0, nodata=Fals
                 q = q.filter(mt.critiqued == critiqued)
             if critnoapp:
                 if rolemap[mtype] not in user.role:
-                    from util import fail
+                    from .util import fail
                     fail("You're not authorized!")
                 q = q.filter(mt.user == user.key)
         if category:
@@ -2691,7 +2692,7 @@ def nextmedia(mtype, category=None, uid=None, number=1000, offset=0, nodata=Fals
         else:
             results = q.fetch(number, offset=offset)
     if len(results) == 0:
-        from util import fail
+        from .util import fail
         fail("zero count: %s.%s. (you may have already voted on all matches. we need: tons of media to make sure this doesn't happen; reasonable fallback behavior when it does; and, whenever possible, code smart enough to avoid the request altogether.)"%(mtype, category or ""))
     if justone:
         import random
@@ -2713,8 +2714,8 @@ def nextmedia(mtype, category=None, uid=None, number=1000, offset=0, nodata=Fals
         for res in results:
             try:
                 res.data()
-            except Exception, e:
-                from util import fail
+            except Exception as e:
+                from .util import fail
                 fail("problem with: %s"%(res.signature(),), err=e)
 
 class Vote(CANModel):
@@ -2729,11 +2730,11 @@ def castvote(ref, user, opinion, cresponse=None, squestion=None, sanswer=None):
     elif opinion == False:
         ref.nay += 1
     else:
-        from util import fail
+        from .util import fail
         fail("invalid opinion!")
     ip = getip()
     if cresponse:
-        from util import fail, verify_recaptcha, RCK
+        from .util import fail, verify_recaptcha, RCK
         if ip.key not in user.ips:
             if squestion == None and sanswer == None:
                 import random

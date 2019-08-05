@@ -1,5 +1,5 @@
 import requests
-from HTMLParser import HTMLParser
+from html.parser import HTMLParser
 from util import respond, succeed, fail, cgi_get, trysavedresponse, setcachedefault
 from model import db
 

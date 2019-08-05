@@ -1,5 +1,7 @@
 """PyRSS2Gen - A Python library for generating RSS 2.0 feeds."""
 
+# modified for py3 support
+
 __name__ = "PyRSS2Gen"
 __version__ = (1, 0, 0)
 __author__ = "Andrew Dalke <dalke@dalkescientific.com>"
@@ -7,6 +9,7 @@ __author__ = "Andrew Dalke <dalke@dalkescientific.com>"
 _generator_name = __name__ + "-" + ".".join(map(str, __version__))
 
 import datetime
+from six import string_types
 
 # Could make this the base class; will need to add 'publish'
 class WriteXmlMixin:
@@ -21,14 +24,17 @@ class WriteXmlMixin:
         try:
             import cStringIO as StringIO
         except ImportError:
-            import StringIO
+            try:
+                import StringIO
+            except ImportError:
+                import io as StringIO
         f = StringIO.StringIO()
         self.write_xml(f, encoding)
         return f.getvalue()
 
 
 def _element(handler, name, obj, d = {}):
-    if isinstance(obj, basestring) or obj is None:
+    if isinstance(obj, string_types) or obj is None:
         # special-case handling to make the API easier
         # to use for the common case.
         handler.startElement(name, d)
@@ -337,7 +343,7 @@ class RSS2(WriteXmlMixin):
         _opt_element(handler, "lastBuildDate", lastBuildDate)
 
         for category in self.categories:
-            if isinstance(category, basestring):
+            if isinstance(category, string_types):
                 category = Category(category)
             category.publish(handler)
 
@@ -418,7 +424,7 @@ class RSSItem(WriteXmlMixin):
         _opt_element(handler, "author", self.author)
 
         for category in self.categories:
-            if isinstance(category, basestring):
+            if isinstance(category, string_types):
                 category = Category(category)
             category.publish(handler)
         

@@ -1,7 +1,10 @@
 import os
 from util import send_text, readfile, flipRStripStroke, flipQ
 from model import db, getsettings, News, Video, Book, Case, Question, ChangeIdea, Thought, Meme, Event, OpinionIdea, PositionPaper, Quote, Skin, CategoriedVotingModel
-from urllib import quote, unquote
+try:
+    from urllib.parse import quote, unquote # py3
+except:
+    from urllib import quote, unquote       # py2
 
 descriptions = {
     "Home": "Civil Action Network is your source for peaceful activism and the democratic exchange of ideas. Every perspective counts - make yourself heard!",
@@ -123,4 +126,4 @@ elif m:
         content += "<div>%s</div>"%(m.body,)
     title += " - %s"%(ta,)
 
-send_text(readfile("/basic.html")%(ta or title, img, description, title, content))
+send_text((readfile("/basic.html").decode())%(ta or title, img, description, title, content))

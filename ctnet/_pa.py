@@ -18,6 +18,6 @@ try:
 except Exception:
     r.addSay("Error. Goodbye.")
 
-print "Content-Type: text/xml"
-print ""
-print r
+print("Content-Type: text/xml")
+print("")
+print(r)
