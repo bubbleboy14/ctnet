@@ -32,7 +32,7 @@ def flipC(c):
     i = _c.find(c)
     if i == -1:
         return c
-    return _c[(i + _chl) % _cl]
+    return _c[int((i + _chl) % _cl)]
 
 def flipU(s):
     return "".join([flipC(c) for c in s])
