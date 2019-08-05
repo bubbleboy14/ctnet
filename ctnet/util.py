@@ -1,6 +1,10 @@
 from base64 import b64encode, b64decode
 from cantools import config
 from cantools.web import *
+try:
+    from urllib import quote       # py2
+except:
+    from urllib.parse import quote # py3
 
 LOGALL = False
 RAWDOMAIN = config.web.domain
@@ -40,7 +44,6 @@ def flipRStripStroke(s):
     return "".join(flipR(s).split("\\"))
 
 def flipQ(s):
-    from urllib.parse import quote
     return quote(flipR(s))
 
 def readfile(pname):
