@@ -7,7 +7,7 @@
 	"geokeys": [],
 	"feedlinks": true,
 	"CC": {
-		"gateway": "https://cc.mkult.co/comp/api.js",
+		"gateway": "https://care-coin.net/comp/api.js",
 		"agent": null,
 		"pod": null
 	},
