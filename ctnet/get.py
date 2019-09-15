@@ -1,5 +1,8 @@
 import requests
-from html.parser import HTMLParser
+try:
+    from html.parser import HTMLParser # py3
+except:
+    from HTMLParser import HTMLParser #py2
 from util import respond, succeed, fail, cgi_get, trysavedresponse, setcachedefault
 from model import db
 
