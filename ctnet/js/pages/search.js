@@ -222,7 +222,7 @@ google.setOnLoadCallback(function() {
         CT.dom.id("search"));
     searchform.setOnSubmitCallback(CAN.search.cansearch,
         CANSearch.prototype.search);
-    var _hash = document.location.hash.slice(1);
+    var _hash = decodeURIComponent(document.location.hash.slice(1));
     var checkHash = function() {
         if (! LOADED)
             return setTimeout(checkHash, 300);
