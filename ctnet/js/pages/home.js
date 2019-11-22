@@ -16,7 +16,7 @@ onload = function() {
             CT.dom.addStyle("#topz { font-size: 110% !important; }");
         CT.dom.setContent("topz", CT.dom.table([[
                 "<b>Tags</b>", "<b id='threadspot'>Thread</b>", "<b>Poster</b>",
-                "<b>Replies</b>", "<b>Posted</b>", "<b>Modified</b>"
+                "<b>Replies</b>", "<b>Posted</b>", "<b>Updated</b>"
             ]].concat(thoughts.map(function(t) {
                 var unode = CT.dom.div(), tnode = CT.dom.div(), rnode = CT.dom.div();
                 unodez.push(unode);
@@ -40,9 +40,14 @@ onload = function() {
                     CT.parse.timeStamp(t.modified)
                 ];
             }))));
-        CT.dom.id("threadspot").appendChild(CT.dom.button("new", function() {
-            window.location = "/community.html#!Stream";
-        }, "bold right"));
+        CT.dom.id("threadspot").appendChild(CT.dom.div([
+            CT.dom.button("global feed", function() {
+                window.location = "/feed.html";
+            }, "bold mh5"),
+            CT.dom.button("new", function() {
+                window.location = "/community.html#!Stream";
+            }, "bold")
+        ], "right"));
         CT.data.checkAndDo(pkeyz, function() {
             unodez.forEach(function(n, i) {
                 n.appendChild(posterz[i] == "anon" ? CT.dom.div("(anon)") :
