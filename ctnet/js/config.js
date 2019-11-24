@@ -6,11 +6,6 @@
 	"feedback": "feedback@email.com",
 	"geokeys": [],
 	"feedlinks": true,
-	"CC": {
-		"gateway": "https://care-coin.net/comp/api.js",
-		"agent": null,
-		"pod": null
-	},
 	"pubsub": {
 		"host": null,
 		"port": null,
