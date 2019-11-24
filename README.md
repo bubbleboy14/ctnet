@@ -89,12 +89,6 @@ This module contains the framework for a content-driven social network.
     	"feedback": "feedback@email.com",
     	"geokeys": [],
     	"feedlinks": true,
-    	"CC": {
-    		"gateway": "https://cc.mkult.co/comp/api.js",
-    		"membership": null,
-    		"agent": null,
-    		"pod": null
-    	},
     	"pubsub": {
     		"host": null,
     		"port": null,
