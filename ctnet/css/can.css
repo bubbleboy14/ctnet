@@ -1138,7 +1138,6 @@ ins {
 .maxwidthoverride img {
     max-width: 100%;
     height: auto;
-    width: 100%;
 }
 
 .maxwidthoverride table {
@@ -1152,6 +1151,10 @@ ins {
 .maxwidthoverridestream img {
     max-width: 400px !important;
     height: auto;
+}
+
+body:not(.profile_page):not(.recommendations_page) .maxwidthoverride img,
+body:not(.profile_page):not(.recommendations_page) .maxwidthoverridestream img {
     width: 100%;
 }
 
