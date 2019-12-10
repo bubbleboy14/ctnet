@@ -41,24 +41,10 @@ onload = function() {
         CAN.widget.stream.comment(CT.dom.id("chatterbox"), uid, items.reverse(), false, true, "full");
     });
 
-    var _hash = CAN.cookie.flipReverse(document.location.hash.slice(2));
     var checkHash = function() {
         if (!LOADED)
             return setTimeout(checkHash, 300);
-        CT.data.checkAndDo([_hash], function() {
-            var vid = CT.data.get(_hash);
-            if (vid && vid.mtype == "video") // else it's a comment
-                return CAN.media.video.viewSingle(vid);
-            CT.db.one(_hash, function(comm) {
-                CT.db.get("video", function(vz) {
-                    CAN.media.video.viewSingle(vz[0]);
-                    CAN.widget.conversation.select(_hash, 800);
-                }, null, null, null, {
-                    conversation: comm.conversation
-                });
-            });
-        });
-        document.location.hash = "";
+        CAN.widget.conversation.hash("video");
     };
-    if (_hash) checkHash();
+    if (document.location.hash) checkHash();
 };
