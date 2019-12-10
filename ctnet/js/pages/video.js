@@ -43,10 +43,20 @@ onload = function() {
 
     var _hash = CAN.cookie.flipReverse(document.location.hash.slice(2));
     var checkHash = function() {
-        if (! LOADED)
+        if (!LOADED)
             return setTimeout(checkHash, 300);
         CT.data.checkAndDo([_hash], function() {
-            CAN.media.video.viewSingle(CT.data.get(_hash));
+            var vid = CT.data.get(_hash);
+            if (vid && vid.mtype == "video") // else it's a comment
+                return CAN.media.video.viewSingle(vid);
+            CT.db.one(_hash, function(comm) {
+                CT.db.get("video", function(vz) {
+                    CAN.media.video.viewSingle(vz[0]);
+                    CAN.widget.conversation.select(_hash, 800);
+                }, null, null, null, {
+                    conversation: comm.conversation
+                });
+            });
         });
         document.location.hash = "";
     };
