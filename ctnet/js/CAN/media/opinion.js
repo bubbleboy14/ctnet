@@ -1,23 +1,30 @@
 CAN.media.opinion = {
-	"build": function(d, i, v, notit) {
+	"build": function(d, i, v, notit, single) {
 	    var n = CT.dom.node("", "div", "bordered padded round bottommargined");
+	    var viewIt = function() {
+            if (location.pathname.slice(1, -5) == "recommendations")
+                CAN.media.opinion.viewSingle(d);
+            else
+                location = "/recommendations.html#!OpinionsAndIdeas|"
+                    + CAN.cookie.flipReverse(d.key);
+        };
 	    if (v) {
 	        if (!notit) {
 	            n.appendChild(CT.dom.node(CAN.widget.invite.button(d,
 	            	"opinion", "consider", CAN.cookie.getUid()), "div", "right"));
-	            n.appendChild(CT.dom.node(CT.dom.link(d.title, function() {
-	                if (location.pathname.slice(1, -5) == "recommendations")
-	                    CAN.media.opinion.viewSingle(d);
-	                else
-	                    location = "/recommendations.html#!OpinionsAndIdeas|"
-	                        + CAN.cookie.flipReverse(d.key);
-	            }), "div", "big blue nodecoration"));
+	            n.appendChild(CT.dom.node(CT.dom.link(d.title,
+	            	viewIt), "div", "big blue nodecoration"));
 	        }
 	        n.appendChild(CT.dom.node(CT.parse.process(d.body)));
 	        if (d.conversation_active) {
-	            var convonode = CT.dom.node("loading conversation...", "div", "bordertop");
-	            n.appendChild(convonode);
-	            CAN.widget.conversation.load(v.uid, d.conversation, convonode, d.key);
+	            if (!single) {
+	            	n.appendChild(CT.dom.button("View Conversation",
+	            		viewIt, "w1"));
+	            } else {
+		            var convonode = CT.dom.node("loading conversation...", "div", "bordertop");
+		            n.appendChild(convonode);
+		            CAN.widget.conversation.load(v.uid, d.conversation, convonode, d.key);
+	            }
 	        }
 	    }
 	    else {
@@ -41,7 +48,7 @@ CAN.media.opinion = {
 	            "opinion", "consider", CAN.cookie.getUid()), "div", "right"),
 	            cnode.parentNode.firstChild);
 	        cnode.appendChild(CAN.media.opinion.build(opinion,
-	        	null, { uid: CAN.cookie.getUid() }, true));
+	        	null, { uid: CAN.cookie.getUid() }, true, true));
 	        CT.dom.id("soi").style.display = "block";
 	        opinion.viewed = true;
 	    }
