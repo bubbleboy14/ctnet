@@ -1115,6 +1115,7 @@ ins {
 .maxwidthoverride img {
     max-width: 100%;
     height: auto;
+    width: 100%;
 }
 
 .maxwidthoverride table {
@@ -1128,6 +1129,7 @@ ins {
 .maxwidthoverridestream img {
     max-width: 400px !important;
     height: auto;
+    width: 100%;
 }
 
 .maxwidthoverridestream table {
