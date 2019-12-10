@@ -203,8 +203,9 @@ onload = function() {
             }
             else if (["Questions", "Ideas", "Stream", "Memes"].indexOf(section) != -1) {
                 if (hkey) {
-                    CT.data.checkAndDo([hkey], function() {
-                        viewSingleItem(CT.data.get(hkey), ntrev[section]);
+                    var ntsec = ntrev[section];
+                    CAN.widget.conversation.jump(hkey, ntsec, function(item) {
+                        viewSingleItem(item, ntsec);
                     });
                 } else {
                     CT.panel.swap(section, true, "sb");
