@@ -1004,6 +1004,7 @@ ins {
 
 .comment.active {
     padding: 10px;
+    font-size: 120%;
     background: #e6eaed;
     border: 1px solid #d3d3d3;
 }
