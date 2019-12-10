@@ -50,6 +50,10 @@ onload = function() {
         photo: "Photographs",
         action: "SustainableActions"
     };
+    var backMap = {
+        OpinionsAndIdeas: "opinionidea",
+        PositionPapers: "positionpaper"
+    };
     var pr2hash = {
         Books: "Writer",
         Quotes: "Writer",
@@ -121,11 +125,9 @@ onload = function() {
     };
     var h = unescape(document.location.hash.slice(2));
     if (h.indexOf("|") != -1) {
-        var p = h.split("|");
-        var k = CAN.cookie.flipReverse(p[1]);
-        CT.data.checkAndDo([k], function() {
-            singleLoaders[p[0]](CT.data.get(k));
-        });
+        var p = h.split("|"), s = p[0],
+            k = CAN.cookie.flipReverse(p[1]);
+        CAN.widget.conversation.jump(k, backMap[s], singleLoaders[s]);
     }
     else if (panelKeys.indexOf(h) != -1) {
         CT.panel.swap(h);
