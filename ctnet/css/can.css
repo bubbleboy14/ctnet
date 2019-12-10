@@ -997,8 +997,15 @@ ins {
 }
 
 .comment {
+    cursor: pointer;
     padding-top: 5px;
     padding-bottom: 5px;
+}
+
+.comment.active {
+    padding: 10px;
+    background: #e6eaed;
+    border: 1px solid #d3d3d3;
 }
 
 .betterul {
