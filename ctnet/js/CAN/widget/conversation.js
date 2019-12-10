@@ -38,10 +38,12 @@ CAN.widget.conversation = {
 		});
 	},
 	"comment": function(c, commentsnode, uid, noflagging) {
-		var u = CT.data.get(c.user), _ = CAN.widget.conversation._;
-		var righty = CT.dom.div(CT.dom.img("/img/buttons/clipboard.png",
-			"clip"), "right clearnode");
-		var commentnode = CT.dom.div(righty, "comment", "com_" + c.key);
+		var u = CT.data.get(c.user), _ = CAN.widget.conversation._,
+			righty = CT.dom.div(CT.dom.img("/img/buttons/clipboard.png",
+			"clip", function() {
+				CT.data.copy(CAN.widget.share.pageAddr(location.pathname.slice(1, -5), CAN.cookie.flipReverse(c.key)));
+			}), "right clearnode"),
+			commentnode = CT.dom.div(righty, "comment", "com_" + c.key);
 		if (!noflagging) {
 			righty.appendChild(CT.dom.button("Flag", function() {
 				var prob = prompt("What's the problem?");
