@@ -3,15 +3,36 @@ CAN.widget.conversation = {
 	"setCommentPrefix": function(cp) {
 	    core.config.ctnet.conversation.comment_prefix = cp ? "<b>[" + cp + "]</b> " : "";
 	},
+	"hash": function(mtype, loader) {
+	    var _hash = CAN.cookie.flipReverse(document.location.hash.slice(2));
+	    if (_hash) {
+	        CT.data.checkAndDo([_hash], function() {
+	            var med = CT.data.get(_hash);
+	            loader = loader || CAN.media[mtype].viewSingle;
+	            if (med && med.mtype == mtype) // else it's a comment
+	                return loader(med);
+	            CT.db.one(_hash, function(comm) {
+	                CT.db.get(mtype, function(meds) {
+	                    loader(meds[0]);
+	                    CAN.widget.conversation.select(_hash, 800);
+	                }, null, null, null, {
+	                    conversation: comm.conversation
+	                });
+	            });
+	        });
+	        document.location.hash = "";
+	    };
+	},
 	"select": function(id, delay) {
-		var n = CT.dom.id("com_" + id);
-		n.onclick();
-		setTimeout(function() {
-			n.scrollIntoView({
-				behavior: "smooth",
-				block: "end"
-			});
-		}, delay);
+		CT.dom.doWhenNodeExists("com_" + id, function(n) {
+			n.onclick();
+			setTimeout(function() {
+				n.scrollIntoView({
+					behavior: "smooth",
+					block: "end"
+				});
+			}, delay);
+		});
 	},
 	"comment": function(c, commentsnode, uid, noflagging) {
 	    var u = CT.data.get(c.user), _ = CAN.widget.conversation._;
