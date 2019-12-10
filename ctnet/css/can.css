@@ -1020,6 +1020,10 @@ ins {
     display: inline;
 }
 
+#refarea img.clip {
+    display: none;
+}
+
 .betterul {
     padding: 0px 0px 0px 10px;
 }
