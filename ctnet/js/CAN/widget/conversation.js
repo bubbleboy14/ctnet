@@ -1,10 +1,19 @@
 CAN.widget.conversation = {
+	_: {},
 	"setCommentPrefix": function(cp) {
 	    core.config.ctnet.conversation.comment_prefix = cp ? "<b>[" + cp + "]</b> " : "";
 	},
+	"select": function(id) {
+		var n = CT.dom.id("com_" + id);
+		n.onclick();
+		n.scrollIntoView({
+			behavior: "smooth",
+			block: "end"
+		});
+	},
 	"comment": function(c, commentsnode, uid, noflagging) {
-	    var u = CT.data.get(c.user);
-	    var commentnode = CT.dom.node("", "div", "comment");
+	    var u = CT.data.get(c.user), _ = CAN.widget.conversation._;
+	    var commentnode = CT.dom.div("", "comment", "com_" + c.key);
 	    if (!noflagging) {
 	        commentnode.appendChild(CT.dom.node(CT.dom.button("Flag", function() {
 	            var prob = prompt("What's the problem?");
@@ -16,9 +25,22 @@ CAN.widget.conversation = {
 	    }
 	    commentnode.appendChild(CAN.session.firstLastLink(u, null, null, null, !uid));
 	    commentnode.appendChild(CT.dom.node(" says: ", "b"));
-	    commentnode.appendChild(CT.dom.node(CT.parse.process(c.body), "span"));
+	    commentnode.appendChild(CT.dom.span(CT.parse.process(c.body)));
 	    if (commentsnode.innerHTML == "no comments yet!")
 	        commentsnode.innerHTML = "";
+	    commentnode.onclick = function() {
+	    	if (_.selected) {
+	    		_.selected._selected = false;
+	    		_.selected.className = "comment";
+	    	}
+	    	if (_.selected == commentnode)
+	    		delete _.selected;
+	    	else {
+		    	_.selected = commentnode;
+		    	var sel = commentnode._selected = !commentnode._selected;
+		    	commentnode.classList[sel ? "add" : "remove"]("active");
+	    	}
+	    };
 	    commentsnode.appendChild(commentnode);
 	},
 	"input": function(uid, ckey, convonode, contentkey, taid, noflagging, commentsnode, charlimit, blurs) {
