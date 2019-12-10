@@ -3,14 +3,14 @@ CAN.widget.conversation = {
 	"setCommentPrefix": function(cp) {
 		core.config.ctnet.conversation.comment_prefix = cp ? "<b>[" + cp + "]</b> " : "";
 	},
-	"hash": function(mtype, loader) {
+	"hash": function(mtype, loader, exporter) {
 		var _hash = CAN.cookie.flipReverse(document.location.hash.slice(2));
 		if (_hash) {
-			CAN.widget.conversation.jump(_hash, mtype, loader);
+			CAN.widget.conversation.jump(_hash, mtype, loader, exporter);
 			document.location.hash = "";
 		};
 	},
-	"jump": function(key, mtype, loader) {
+	"jump": function(key, mtype, loader, exporter) {
 		CT.data.checkAndDo([key], function() {
 			var med = CT.data.get(key);
 			loader = loader || CAN.media[mtype].viewSingle;
@@ -22,7 +22,7 @@ CAN.widget.conversation = {
 					CAN.widget.conversation.select(key, 1200);
 				}, null, null, null, {
 					conversation: comm.conversation
-				});
+				}, null, null, exporter);
 			});
 		});
 	},
