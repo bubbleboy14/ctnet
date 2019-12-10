@@ -41,7 +41,9 @@ CAN.widget.conversation = {
 		var u = CT.data.get(c.user), _ = CAN.widget.conversation._,
 			righty = CT.dom.div(CT.dom.img("/img/buttons/clipboard.png",
 			"clip", function() {
-				CT.data.copy(CAN.widget.share.pageAddr(location.pathname.slice(1, -5), CAN.cookie.flipReverse(c.key)));
+				var shr = CAN.widget.share;
+				CT.data.copy(shr.pageAddr(location.pathname.slice(1,
+					-5), CAN.cookie.flipReverse(c.key), shr.currentSharePrefix));
 			}), "right clearnode"),
 			commentnode = CT.dom.div(righty, "comment", "com_" + c.key);
 		if (!noflagging) {
