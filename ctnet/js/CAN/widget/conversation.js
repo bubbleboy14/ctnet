@@ -36,15 +36,17 @@ CAN.widget.conversation = {
 	},
 	"comment": function(c, commentsnode, uid, noflagging) {
 	    var u = CT.data.get(c.user), _ = CAN.widget.conversation._;
-	    var commentnode = CT.dom.div("", "comment", "com_" + c.key);
+	    var righty = CT.dom.div(CT.dom.img("/img/buttons/clipboard.png",
+	    	"clip"), "right clearnode");
+	    var commentnode = CT.dom.div(righty, "comment", "com_" + c.key);
 	    if (!noflagging) {
-	        commentnode.appendChild(CT.dom.node(CT.dom.button("Flag", function() {
+	        righty.appendChild(CT.dom.button("Flag", function() {
 	            var prob = prompt("What's the problem?");
 	            if (!prob) return;
 	            CT.net.post("/edit", {"eid": uid, "data": {"key": c.key,
 	                "flag": prob}}, "error flagging comment",
 	                function() { alert("flagged!"); });
-	        }), "div", "right clearnode"));
+	        }));
 	    }
 	    commentnode.appendChild(CAN.session.firstLastLink(u, null, null, null, !uid));
 	    commentnode.appendChild(CT.dom.node(" says: ", "b"));
