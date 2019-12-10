@@ -3,13 +3,15 @@ CAN.widget.conversation = {
 	"setCommentPrefix": function(cp) {
 	    core.config.ctnet.conversation.comment_prefix = cp ? "<b>[" + cp + "]</b> " : "";
 	},
-	"select": function(id) {
+	"select": function(id, delay) {
 		var n = CT.dom.id("com_" + id);
 		n.onclick();
-		n.scrollIntoView({
-			behavior: "smooth",
-			block: "end"
-		});
+		setTimeout(function() {
+			n.scrollIntoView({
+				behavior: "smooth",
+				block: "end"
+			});
+		}, delay);
 	},
 	"comment": function(c, commentsnode, uid, noflagging) {
 	    var u = CT.data.get(c.user), _ = CAN.widget.conversation._;
