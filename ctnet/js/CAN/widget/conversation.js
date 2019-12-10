@@ -14,7 +14,7 @@ CAN.widget.conversation = {
 	            CT.db.one(_hash, function(comm) {
 	                CT.db.get(mtype, function(meds) {
 	                    loader(meds[0]);
-	                    CAN.widget.conversation.select(_hash, 800);
+	                    CAN.widget.conversation.select(_hash, 1200);
 	                }, null, null, null, {
 	                    conversation: comm.conversation
 	                });
