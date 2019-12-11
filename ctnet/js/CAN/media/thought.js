@@ -53,14 +53,6 @@ CAN.media.thought = {
 				eno.appendChild(CAN.media.thought.build(res, null, null, true));
 				eno.className = "bordered padded";
 			}, null, true);
-			false && CT.net.post("/get", {"gtype": "data", "key": key},
-				"error retrieving thought", function(result) {
-				CT.data.add(result);
-				CT.dom.doWhenNodeExists(n.id, function() {
-					CT.dom.id(n.id).appendChild(CAN.media.thought.build(result,
-						null, null, true));
-				});
-			});
 		}
 		return n;
 	}
