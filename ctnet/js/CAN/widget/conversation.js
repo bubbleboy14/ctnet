@@ -10,7 +10,7 @@ CAN.widget.conversation = {
 			document.location.hash = "";
 		};
 	},
-	"jump": function(key, mtype, loader, exporter) {
+	"jump": function(key, mtype, loader, exporter, noco) {
 		CT.data.checkAndDo([key], function() {
 			var med = CT.data.get(key);
 			loader = loader || CAN.media[mtype].viewSingle;
@@ -18,8 +18,8 @@ CAN.widget.conversation = {
 				return loader(med);
 			CT.db.one(key, function(comm) {
 				CT.db.get(mtype, function(meds) {
-					loader(meds[0]);
-					CAN.widget.conversation.select(key, 1200);
+					loader(meds[0], med);
+					noco || CAN.widget.conversation.select(key, 1200);
 				}, null, null, null, {
 					conversation: comm.conversation
 				}, null, null, exporter);
@@ -37,8 +37,16 @@ CAN.widget.conversation = {
 			}, delay);
 		});
 	},
+	"bare": function(c, n, uid) {
+		n = n || CT.dom.div();
+		n.appendChild(CAN.session.firstLastLink(CT.data.get(c.user),
+			null, null, null, !uid));
+		n.appendChild(CT.dom.node(" says: ", "b"));
+		n.appendChild(CT.dom.span(CT.parse.process(c.body)));
+		return n;
+	},
 	"comment": function(c, commentsnode, uid, noflagging) {
-		var u = CT.data.get(c.user), _ = CAN.widget.conversation._,
+		var _ = CAN.widget.conversation._,
 			righty = CT.dom.div(CT.dom.img("/img/buttons/clipboard.png",
 			"clip", function() {
 				var shr = CAN.widget.share;
@@ -55,9 +63,7 @@ CAN.widget.conversation = {
 					function() { alert("flagged!"); });
 			}));
 		}
-		commentnode.appendChild(CAN.session.firstLastLink(u, null, null, null, !uid));
-		commentnode.appendChild(CT.dom.node(" says: ", "b"));
-		commentnode.appendChild(CT.dom.span(CT.parse.process(c.body)));
+		CAN.widget.conversation.bare(c, commentnode, uid);
 		if (commentsnode.innerHTML == "no comments yet!")
 			commentsnode.innerHTML = "";
 		commentnode.onclick = function() {
