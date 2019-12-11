@@ -30,10 +30,10 @@ CAN.media.news = {
 			}
 			if ((vindex || 0) < CAN.media.loader.newcount)
 				cclass += " Latest";
-			if (howmuch == "full")
+/*			if (howmuch == "full")
 				cclass += " bigpic w420";
 			else if (howmuch == "intro")
-				cclass += " mediumgraphic lmargimg";
+				cclass += " mediumgraphic";*/
 			n.className += cclass;
 			var a = CT.data.get(d.user);
 			var byline = CT.dom.div("", "newstitle small italic");
