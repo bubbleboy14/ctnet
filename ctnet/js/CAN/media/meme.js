@@ -28,25 +28,31 @@ CAN.media.meme = {
 		return "/community.html#!Memes|" + CAN.cookie.flipReverse(key);
 	},
 	jump: function(key) {
-		if (location.pathname.startsWith("/community.html"))
-			viewSingleItem(CT.data.get(key), "meme");
-		else
+		if (location.pathname.startsWith("/community.html")) {
+			CAN.widget.conversation.jump(key, "meme", function(item) {
+				viewSingleItem(item, "meme");
+			});
+		} else
 			window.location = CAN.media.meme.link(key);
 	},
 	htmlSafe: function(key) {
 		var n = CT.dom.div(null, null, "convomeme" + key + CT.data.random(1000)),
 			tdata = CT.data.get(key);
-		if (tdata) {
+		if (tdata && tdata.image) {
 			n.appendChild(CAN.media.meme.build(tdata, null, null, true));
 		} else {
-			CT.net.post("/get", {"gtype": "data", "key": key},
-				"error retrieving meme", function(result) {
-				CT.data.add(result);
-				CT.dom.doWhenNodeExists(n.id, function() {
-					CT.dom.id(n.id).appendChild(CAN.media.meme.build(result,
-						null, null, true));
-				});
-			});
+			CAN.widget.conversation.jump(key, "meme", function(res, comm) {
+				var cno = CT.dom.id(n.id);
+				if (comm) {
+					cno.appendChild(CAN.widget.conversation.bare(comm));
+					cno.appendChild(CT.dom.link("from thread", null,
+						CAN.media.meme.link(comm.key),
+						"bigger block bold italic padded righted hoverglow nodecoration"));
+				}
+				cno.appendChild(CAN.media.meme.build(res,
+					null, null, true));
+				cno.className = "bordered padded";
+			}, "data", true);
 		}
 		return n;
 	}
