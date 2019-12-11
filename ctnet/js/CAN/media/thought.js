@@ -29,18 +29,31 @@ CAN.media.thought = {
 		return "/community.html#!Stream|" + CAN.cookie.flipReverse(key);
 	},
 	jump: function(key) {
-		if (location.pathname.startsWith("/community.html"))
-			viewSingleItem(CT.data.get(key), "thought");
-		else
+		if (location.pathname.startsWith("/community.html")) {
+			CAN.widget.conversation.jump(key, "thought", function(item) {
+				viewSingleItem(item, "thought");
+			});
+		} else
 			window.location = CAN.media.thought.link(key);
 	},
 	htmlSafe: function(key) {
 		var n = CT.dom.div(null, null, "convothought" + key + CT.data.random(1000)),
 			tdata = CT.data.get(key);
-		if (tdata) {
+		if (tdata && tdata.title) {
 			n.appendChild(CAN.media.thought.build(tdata, null, null, true));
 		} else {
-			CT.net.post("/get", {"gtype": "data", "key": key},
+			CAN.widget.conversation.jump(key, "thought", function(res, comm) {
+				var eno = CT.dom.id(n.id);
+				if (comm) {
+					eno.appendChild(CAN.widget.conversation.bare(comm));
+					eno.appendChild(CT.dom.link("from thread", null,
+						CAN.media.thought.link(comm.key),
+						"bigger block bold italic padded righted hoverglow nodecoration"));
+				}
+				eno.appendChild(CAN.media.thought.build(res, null, null, true));
+				eno.className = "bordered padded";
+			}, null, true);
+			false && CT.net.post("/get", {"gtype": "data", "key": key},
 				"error retrieving thought", function(result) {
 				CT.data.add(result);
 				CT.dom.doWhenNodeExists(n.id, function() {
