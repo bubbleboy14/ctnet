@@ -109,6 +109,10 @@ class Conversation(ModelBase):
     # collections (checked): comments
     label = "topic"
 
+    def media(self):
+        mod = db.get_model(self.topic.split(": ")[0].lower().replace(" ", "").replace("/", ""))
+        return mod.query(mod.conversation == self.key).get()
+
     def search_string(self):
         return " ".join([c.body for c in self.collection(Comment, "conversation")])
 

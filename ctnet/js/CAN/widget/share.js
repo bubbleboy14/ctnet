@@ -110,6 +110,7 @@ CAN.widget.share = {
 	"updateShareItem": function(lname, newkey, prefix) {
 	    CAN.widget.share.currentShareName = lname;
 	    CAN.widget.share.currentShareKey = newkey;
+	    CAN.widget.share.currentSharePrefix = prefix;
 	    var ntitle = newkey && CT.data.map[newkey] && CT.data.map[newkey].title || prefix || null;
 	    var frkey = newkey && CAN.cookie.flipReverse(newkey) || null;
 	    for (var k in CAN.widget.share.sharebuttons)

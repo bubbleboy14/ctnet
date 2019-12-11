@@ -98,6 +98,9 @@ if title == "Feed":
     for d in CategoriedVotingModel.query(CategoriedVotingModel.user == m.key).order(-CategoriedVotingModel.date).fetch(10):
         content += "<div>%s</div>"%(d.title_analog(),)
 elif m:
+    if m.polytype == "comment":
+        content += "<div class='big'><b>%s says:</b> %s</div><div>in thread:</div>"%(m.user.get().firstName, m.body)
+        m = m.conversation.get().media()
     ta = m.title_analog()
     if "http" in ta:
         ta, img = ta.split("http", 1)

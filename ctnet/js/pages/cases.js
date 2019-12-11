@@ -59,14 +59,10 @@ onload = function() {
     });
 
     // single case (hash linked or simply clicked)
-    var _hash = CAN.cookie.flipReverse(document.location.hash.slice(2));
     var checkHash = function() {
         if (! LOADED)
             return setTimeout(checkHash, 300);
-        CT.data.checkAndDo([_hash], function() { // basic callback
-            viewSingleCase(CT.data.get(_hash));
-        });
-        document.location.hash = "";
+        CAN.widget.conversation.hash("case", viewSingleCase);
     };
-    if (_hash) checkHash();
+    if (document.location.hash) checkHash();
 };

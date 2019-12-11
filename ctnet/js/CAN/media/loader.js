@@ -394,9 +394,11 @@ CAN.media.loader = {
 	"_linkFlags": {
 		"thought": "community.html#!Stream|",
 		"event": "community.html#!Events|",
-		"meme": "community.html#!Memes|"
+		"meme": "community.html#!Memes|",
+		"opinion": "recommendations.html#!OpinionsAndIdeas|",
+		"paper": "recommendations.html#!PositionPapers|"
 	},
-	"_linkTypes": ["thought", "event", "cases", "meme"],
+	"_linkTypes": ["thought", "event", "cases", "meme", "opinion", "paper"],
 	"linkProcessor": function (url, novid) {
 		// photos
 		url = url.replace("gtype=graphic&amp;key=", "gtype=graphic&key=");
@@ -408,7 +410,7 @@ CAN.media.loader = {
 				keyran = key + Math.floor(1000 + Math.random() * 1000);
 			return '<div class="vidthumb" id="' + keyran + '"><img class="pointer" src="http://img.youtube.com/vi/' + key + '/0.jpg" onclick="CAN.media.loader.ytUnthumb(\'' + keyran + '\')"></div>';
 		}
-		// thoughts, events, cases
+		// thoughts, events, cases, memes, opinions, papers
 		for (var i = 0; i < CAN.media.loader._linkTypes.length; i++) {
 			var ltype = CAN.media.loader._linkTypes[i],
 				split = url.split(CAN.media.loader._linkFlags[ltype] || (ltype + ".html#!"));

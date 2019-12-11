@@ -73,20 +73,17 @@ onload = function() {
     });
 
     // single news article (hash linked or simply clicked)
-    var _hash = CAN.cookie.flipReverse(document.location.hash.slice(2));
     var checkHash = function() {
         if (! LOADED)
             return setTimeout(checkHash, 300);
-        CT.data.checkAndDo([_hash], function() { // basic callback
-            var hashNews = CT.data.get(_hash);
-            CAN.media.loader.checkAndShow([hashNews], {
+        CAN.widget.conversation.hash("news", function(news) {
+            CAN.media.loader.checkAndShow([news], {
                 "newMediaChecks": {
                     "list": ["photo", "video"],
                     "single": ["user"]
                 }
-            }, function() { viewSingleNews(hashNews); });
+            }, function() { viewSingleNews(news); });
         });
-        document.location.hash = "";
     };
-    if (_hash) checkHash();
+    if (document.location.hash) checkHash();
 };

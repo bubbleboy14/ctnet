@@ -8,7 +8,7 @@ CAN.media.event = {
 
 	"jump": function(key) {
 		if (location.pathname.startsWith("/community.html"))
-			viewSingleEvent(CT.data.get(key));
+			CAN.widget.conversation.jump(key, "event", viewSingleEvent, "mydata");
 		else
 			window.location = "/community.html#!Events|" + CAN.cookie.flipReverse(key);
 	},
@@ -16,18 +16,19 @@ CAN.media.event = {
 		var n = CT.dom.div(null, "bordered padded round",
 			"convoevent" + key + CT.data.random(1000)),
 			edata = CT.data.get(key);
-		if (edata)
+		if (edata && edata.where)
 			n.appendChild(CAN.media.event.info(edata));
 		else {
-			CT.net.post("/get", {"gtype": "data", "key": key},
-				"error retrieving event", function(result) {
-				CT.data.add(result);
-				setTimeout(function() {
-					CT.dom.doWhenNodeExists(n.id, function() {
-						CT.dom.id(n.id).appendChild(CAN.media.event.info(result));
-					});
-				}, 5000);
-			});
+			CAN.widget.conversation.jump(key, "event", function(res, comm) {
+				var eno = CT.dom.id(n.id);
+				if (comm) {
+					eno.appendChild(CAN.widget.conversation.bare(comm));
+					eno.appendChild(CT.dom.link("from thread", null,
+						"/community.html#!Events|" + CAN.cookie.flipReverse(comm.key),
+						"bigger block bold italic padded righted hoverglow nodecoration"));
+				}
+				eno.appendChild(CT.dom.div(CAN.media.event.info(res), "bordered padded"));
+			}, "mydata", true);
 		}
 		return n;
 	},

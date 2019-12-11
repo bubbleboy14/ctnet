@@ -997,8 +997,31 @@ ins {
 }
 
 .comment {
+    cursor: pointer;
     padding-top: 5px;
     padding-bottom: 5px;
+}
+
+.comment .clip {
+    width: auto;
+    display: none;
+    margin-right: 2px;
+    vertical-align: middle;
+}
+
+.comment.active {
+    padding: 10px;
+    font-size: 120%;
+    background: #e6eaed;
+    border: 1px solid #d3d3d3;
+}
+
+.comment.active .clip {
+    display: inline;
+}
+
+#refarea img.clip {
+    display: none;
 }
 
 .betterul {
@@ -1126,8 +1149,13 @@ ins {
 }
 
 .maxwidthoverridestream img {
-    max-width: 400px !important;
+    max-width: 100%;
     height: auto;
+}
+
+body:not(.profile_page):not(.recommendations_page) .maxwidthoverride :not(.vidthumb) > img:not(.clip),
+body:not(.profile_page):not(.recommendations_page) .maxwidthoverridestream img:not(.clip) {
+    width: 100%;
 }
 
 .maxwidthoverridestream table {
