@@ -1,13 +1,7 @@
 CAN.media.paper = {
-	"build": function(d, i, v, notit, single) {
-		var n = CT.dom.node("", "div", "bordered padded round bottommargined");
-		var viewIt = function() {
-			if (location.pathname.slice(1, -5) == "recommendations")
-				CAN.media.paper.viewSingle(d);
-			else
-				location = "/recommendations.html#!PositionPapers|"
-					+ CAN.cookie.flipReverse(d.key);
-		};
+	build: function(d, i, v, notit, single) {
+		var n = CT.dom.node("", "div", "bordered padded round bottommargined"),
+			viewIt = function() { CAN.media.paper.jump(d.key); };
 		if (v) {
 			if (!notit) {
 				n.appendChild(CT.dom.node(CAN.widget.invite.button(d,
@@ -30,13 +24,44 @@ CAN.media.paper = {
 		}
 		else {
 			n.appendChild(CT.dom.node(CT.dom.link(d.title, null,
-				"/recommendations.html#!PositionPapers|" + CAN.cookie.flipReverse(d.key)),
-				"div", "big"));
+				CAN.media.paper.link(d.key)), "div", "big"));
 			n.appendChild(CT.dom.node(CT.parse.shortened(d.body)));
 		}
 		return n;
 	},
-	"viewSingle": function(paper) {
+	link: function(key) {
+		return "/recommendations.html#!PositionPapers|"
+			+ CAN.cookie.flipReverse(key);
+	},
+	jump: function(key) {
+		if (location.pathname.slice(1, -5) == "recommendations") {
+			CAN.widget.conversation.jump(key, "positionpaper", function(d) {
+				CAN.media.paper.viewSingle(d);
+			});
+		} else
+			location = CAN.media.paper.link(key);
+	},
+	htmlSafe: function(key) {
+		var n = CT.dom.div(null, null, "convopaper" + key + CT.data.random(1000)),
+			tdata = CT.data.get(key);
+		if (tdata && tdata.title)
+			n.appendChild(CAN.media.paper.result(tdata));
+		else {
+			CAN.widget.conversation.jump(key, "positionpaper", function(res, comm) {
+				var cno = CT.dom.id(n.id);
+				if (comm) {
+					cno.appendChild(CAN.widget.conversation.bare(comm));
+					cno.appendChild(CT.dom.link("from thread", null,
+						CAN.media.paper.link(comm.key),
+						"bigger block bold italic padded righted hoverglow nodecoration"));
+				}
+				cno.appendChild(CAN.media.paper.result(res));
+				cno.className = "bordered padded";
+			}, "data", true);
+		}
+		return n;
+	},
+	viewSingle: function(paper) {
 		if (!paper.viewed) {
 			CT.panel.add(paper.title, null, null,
 				CT.dom.id("sppl"),
@@ -57,7 +82,7 @@ CAN.media.paper = {
 		CAN.widget.share.updateShareItem("recommendations",
 			paper.key, "PositionPapers");
 	},
-	"result": function(d, lastPaper) {
+	result: function(d, lastPaper) {
 		return CT.dom.node(CAN.media.paper.build(d));
 	}
 };
