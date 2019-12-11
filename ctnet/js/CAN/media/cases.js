@@ -12,18 +12,19 @@ CAN.media.cases = {
 		var n = CT.dom.div(null, "bordered padded round",
 			"convocase" + key + CT.data.random(1000)),
 			cdata = CT.data.get(key);
-		if (cdata)
+		if (cdata && cdata.blurb)
 			n.appendChild(CAN.media.cases.basic(cdata));
 		else {
-			CT.net.post("/get", {"gtype": "data", "key": key},
-				"error retrieving thought", function(result) {
-				CT.data.add(result);
-				setTimeout(function() {
-					CT.dom.doWhenNodeExists(n.id, function() {
-						CT.dom.id(n.id).appendChild(CAN.media.cases.basic(result));
-					});
-				}, 5000);
-			});
+			CAN.widget.conversation.jump(key, "case", function(res, comm) {
+				var cno = CT.dom.id(n.id);
+				if (comm) {
+					cno.appendChild(CAN.widget.conversation.bare(comm));
+					cno.appendChild(CT.dom.link("from thread", null,
+						"/cases.html#!" + CAN.cookie.flipReverse(comm.key),
+						"bigger block bold italic padded righted hoverglow nodecoration"));
+				}
+				cno.appendChild(CT.dom.div(CAN.media.cases.basic(res), "bordered padded"));
+			}, null, true);
 		}
 		return n;
 	},

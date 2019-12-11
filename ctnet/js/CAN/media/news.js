@@ -158,13 +158,13 @@ CAN.media.news = {
 			CAN.widget.conversation.jump(nkey, "news", function(result, comm) {
 				var newsnode = CAN.media.news.embedded(result);
 				(CT.dom.id(n.id) || n).innerHTML = (comm
-					? CT.dom.div(CT.dom.div([
+					? CT.dom.div([
 						CAN.widget.conversation.bare(comm),
 						CT.dom.link("from thread", null,
 							"/news.html#!" + CAN.cookie.flipReverse(comm.key),
 							"bigger block bold italic padded righted hoverglow nodecoration"),
-						newsnode
-					], "bordered padded")) : newsnode).innerHTML;
+						CT.dom.div(newsnode, "bordered padded")
+					]) : newsnode).innerHTML;
 			}, null, true);
 		}
 		if (!notNewsPage) {
