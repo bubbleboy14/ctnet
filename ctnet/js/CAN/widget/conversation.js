@@ -16,13 +16,15 @@ CAN.widget.conversation = {
 			loader = loader || CAN.media[mtype].viewSingle;
 			if (med && med.mtype == mtype) // else it's a comment
 				return loader(med);
-			CT.db.one(key, function(comm) {
-				CT.db.get(mtype, function(meds) {
-					loader(meds[0], med);
-					noco || CAN.widget.conversation.select(key, 1200);
-				}, null, null, null, {
-					conversation: comm.conversation
-				}, null, null, exporter);
+			CT.db.one(key, function(comm) { // probs improve
+				CT.db.one(comm.user, function() {
+					CT.db.get(mtype, function(meds) {
+						loader(meds[0], med);
+						noco || CAN.widget.conversation.select(key, 1200);
+					}, null, null, null, {
+						conversation: comm.conversation
+					}, null, null, exporter);
+				});
 			});
 		});
 	},
