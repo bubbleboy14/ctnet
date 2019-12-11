@@ -155,12 +155,17 @@ CAN.media.news = {
 		if (ndata && ndata.title)
 			n.innerHTML = CAN.media.news.embedded(ndata).innerHTML;
 		else {
-			CT.net.post("/get", {"gtype": "data", "key": nkey},
-				"error retrieving news item", function(result) {
-					ndata = result;
-					CT.data.add(result);
-					(CT.dom.id(n.id) || n).innerHTML = CAN.media.news.embedded(result).innerHTML;
-			});
+			CAN.widget.conversation.jump(nkey, "news", function(result, comm) {
+				var newsnode = CAN.media.news.embedded(result);
+				(CT.dom.id(n.id) || n).innerHTML = (comm
+					? CT.dom.div(CT.dom.div([
+						CAN.widget.conversation.bare(comm),
+						CT.dom.link("from thread", null,
+							"/news.html#!" + CAN.cookie.flipReverse(comm.key),
+							"bigger block bold italic padded righted hoverglow nodecoration"),
+						newsnode
+					], "bordered padded")) : newsnode).innerHTML;
+			}, null, true);
 		}
 		if (!notNewsPage) {
 			setTimeout(function() {
