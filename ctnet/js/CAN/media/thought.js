@@ -43,7 +43,7 @@ CAN.media.thought = {
 			n.appendChild(CAN.media.thought.build(tdata, null, null, true));
 		} else {
 			CAN.widget.conversation.jump(key, "thought", function(res, comm) {
-				var eno = CT.dom.id(n.id);
+				var eno = CT.dom.id(n.id) || n;
 				if (comm) {
 					eno.appendChild(CAN.widget.conversation.bare(comm));
 					eno.appendChild(CT.dom.link("from thread", null,
@@ -52,7 +52,7 @@ CAN.media.thought = {
 					eno.className = "bordered padded";
 				}
 				eno.appendChild(CAN.media.thought.build(res, null, null, true));
-			}, null, true);
+			}, "data", true);
 		}
 		return n;
 	}
