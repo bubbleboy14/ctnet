@@ -34,7 +34,7 @@ CAN.widget.conversation = {
 			setTimeout(function() {
 				n.scrollIntoView({
 					behavior: "smooth",
-					block: "end"
+					block: "center"
 				});
 			}, delay);
 		});
