@@ -9,6 +9,7 @@ CT.require("CAN.config");
 CT.require("CAN.cookie");
 CT.require("CAN.frame");
 CT.require("CAN.session");
+CT.require("CAN.widget.conversation");
 CT.require("CAN.widget.slider");
 CT.require("CAN.widget.stream");
 CT.require("CAN.media.all");
