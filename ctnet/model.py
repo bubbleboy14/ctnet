@@ -733,7 +733,6 @@ class Meme(CategoriedVotingModel, Searchable):
                 "title": self.title, "image": self.image.urlsafe(),
                 "date": self.date.date().strftime("%a %b %d")}
 
-
 class Thought(CategoriedVotingModel, Searchable):
     searchwords = db.String(repeated=True)
     conversation = db.ForeignKey(kind=Conversation)
@@ -789,6 +788,7 @@ class Thought(CategoriedVotingModel, Searchable):
         return {"uid": self.user and self.user.urlsafe() or None,
                 "user": self.user and self.user.get().firstName or "Anonymous",
                 "conversation": self.conversation and self.conversation.urlsafe() or None,
+                "mtype": "thought",
                 "thought": self.thought, "reviewed_for_tweet": self.reviewed_for_tweet,
                 "date": self.date.date().strftime("%a %b %d")}
 
