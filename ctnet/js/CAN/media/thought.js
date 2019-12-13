@@ -49,9 +49,9 @@ CAN.media.thought = {
 					eno.appendChild(CT.dom.link("from thread", null,
 						CAN.media.thought.link(comm.key),
 						"bigger block bold italic padded righted hoverglow nodecoration"));
+					eno.className = "bordered padded";
 				}
 				eno.appendChild(CAN.media.thought.build(res, null, null, true));
-				eno.className = "bordered padded";
 			}, null, true);
 		}
 		return n;
