@@ -140,7 +140,6 @@ onload = function() {
             CT.dom.setContent("comminvite", CAN.widget.invite.button(d,
                 (mtype == "changeidea") ? "idea" : mtype,
                 "consider", uid));
-            if (mtype )
             CT.dom.show("comminvite");
             if (mtype == "meme" || mtype == "thought") {
                 cur.item = d;
