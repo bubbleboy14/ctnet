@@ -443,3 +443,10 @@ CAN.media.loader = {
 
 CT.parse.setLinkProcessor(CAN.media.loader.linkProcessor);
 CAN.media.loader.registerBuilder("lister", CAN.media.loader.listOne);
+var w = CAN.widget;
+if (w && w.slider) {
+	var rb = w.slider.registerBuilder,
+		cn = CAN.media.loader.contentNode;
+	rb("thought", cn);
+	rb("meme", cn);
+}
