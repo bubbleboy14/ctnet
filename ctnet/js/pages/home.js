@@ -269,7 +269,6 @@ onload = function() {
                 parent: "slider-container",
                 frames: ['start'].concat(d.rotation),
                 arrowPosition: "bottomer",
-                autoSlideInterval: 30000,
                 frameCb: function(item) {
                     if (item.img == 'start')
                         return CT.dom.img("/img/home/banner.png",
