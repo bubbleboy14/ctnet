@@ -342,7 +342,7 @@ CAN.media.loader = {
 			CAN.media.loader.change(d, v.mtype, v.showMedia, v.hasChanged, null, v.authid); }),
 			"div", d.unseencount && "bold" || "", "ll"+d.key);
 	},
-	"contentNode": function(key, recent_comments) {
+	"contentNode": function(key, recent_comments, titleclass) {
 		var img, entity = typeof key == "string" && CT.data.get(key) || key,
 			blurb = entity.thought || entity.blurb || entity.body || entity.description || entity.idea || entity.question,
 			title = entity.title || (entity.content ? (entity.content + "<br>- <b>" + entity.author + "</b>")
@@ -354,7 +354,7 @@ CAN.media.loader = {
 				CT.dom.div("(" + (entity.mtype || (entity.question && "question") || (entity.author
 					? ((entity.buylink || entity.readlink) ? "book" : "quote")
 					: (entity.graphic ? "photo" : "thought"))) + ")", "smaller bold right"),
-				title, cnode
+				CT.dom.div(title, titleclass), cnode
 			], null, null, {
 				onclick: function() {
 					entity.conversation && CAN.widget.stream.jumpTo(entity.conversation);
@@ -445,8 +445,11 @@ CT.parse.setLinkProcessor(CAN.media.loader.linkProcessor);
 CAN.media.loader.registerBuilder("lister", CAN.media.loader.listOne);
 var w = CAN.widget;
 if (w && w.slider) {
-	var rb = w.slider.registerBuilder,
-		cn = CAN.media.loader.contentNode;
-	rb("thought", cn);
-	rb("meme", cn);
+	var genericBuilder = function(item) {
+		return CAN.media.loader.contentNode(item,
+			undefined, "bigslide hoverglow");
+	};
+	["thought", "meme"].forEach(function(variety) {
+		w.slider.registerBuilder(variety, genericBuilder);
+	});
 }
