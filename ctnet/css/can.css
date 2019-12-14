@@ -491,6 +491,22 @@ ins {
     font-size: 300%;
 }
 
+#slider-container {
+    position: relative;
+    width: 890px;
+    height: 345px;
+}
+
+.slider-btn {
+    font-size: 500%;
+}
+
+.indicator-circle {
+    min-width: 20px;
+    min-height: 20px;
+}
+
+.bigslide,
 #feed > div > div {
     width: 100%;
     height: 100%;
@@ -499,6 +515,10 @@ ins {
     cursor: pointer;
     box-sizing: border-box;
     text-shadow: white 1px 1px 1px;
+}
+
+.bigslide.hoverglow {
+    box-shadow: none;
 }
 
 #feed > div > div:hover {
@@ -798,10 +818,17 @@ ins {
     overflow-y: scroll;
 }
 
-.fullheight {
+.fullheight:not(.carousel):not(.carousel-container):not(.carousel-content-container) {
     top: 10px;
     bottom: 10px;
     height: initial; /* overrides ct version */
+}
+
+.carousel {
+    background: initial;
+}
+.carousel-content-container {
+    color: initial;
 }
 
 #sharesubnode img {

@@ -21,8 +21,7 @@ def response():
         if key == "slider_rotation":
             if val in settings.slider_rotation:
                 settings.slider_rotation.remove(val)
-            settings.slider_rotation.insert(0, val)
-            settings.slider_rotation = settings.slider_rotation[:5]
+            settings.slider_rotation = ([val] + settings.slider_rotation)[:9]
         else:
             setattr(settings, key, val)
         settings.put()

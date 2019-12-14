@@ -262,14 +262,21 @@ onload = function() {
         = genVoteClicker(mostPopular, -1);
 
     // slider
-    initSlider();
     CT.net.post("/get", { "gtype": "slider" },
         "error retrieving slider content", function(d) {
             CT.data.addSet(d.extra);
-            for (var i = 0; i < d.rotation.length; i++) {
-                CT.dom.id('gcontent'+i)
-                    .appendChild(CAN.widget.slider.builders[d.rotation[i].mtype](d.rotation[i]));
-            }
+            new CT.slider.Slider({
+                parent: "slider-container",
+                frames: ['start'].concat(d.rotation),
+                arrowPosition: "bottomer",
+                autoSlideInterval: 45000,
+                frameCb: function(item) {
+                    if (item.img == 'start')
+                        return CT.dom.img("/img/home/banner.png",
+                            "block automarg");
+                    return CAN.widget.slider.builders[item.mtype](item);
+                }
+            });
         });
 
     // everyday currency search
