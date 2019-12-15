@@ -323,7 +323,7 @@ ins {
     width: 612px;
 }
 
-.red {
+a:hover, .red {
     color: #670002;
 }
 
@@ -441,6 +441,10 @@ ins {
 
 .cp-app {
     z-index: 9999;
+}
+
+#latestVideos a {
+    text-decoration: none;
 }
 
 #skinner_opts > div {
