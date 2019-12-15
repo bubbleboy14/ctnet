@@ -1181,7 +1181,7 @@ ins {
 }
 
 body:not(.profile_page):not(.recommendations_page) .maxwidthoverride :not(.vidthumb) > img:not(.clip),
-body:not(.profile_page):not(.recommendations_page) .maxwidthoverridestream img:not(.clip) {
+body:not(.profile_page):not(.recommendations_page) .maxwidthoverridestream :not(.vidthumb) > img:not(.clip) {
     width: 100%;
 }
 
