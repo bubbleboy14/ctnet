@@ -193,8 +193,12 @@ def setzipdomain(zipdomain):
     ZIPDOMAIN = zipdomain
 
 def getip():
-    import os
-    addr = os.environ.get('REMOTE_ADDR', 'none')
+    from cantools.web import local
+    res = local('response')
+    addr = res and res.ip
+    if not addr: # this really shouldn't happen...
+        import os
+        addr = os.environ.get('REMOTE_ADDR', 'none')
     ip = IP.query(
         IP.address == addr
     ).get()
