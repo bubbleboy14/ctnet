@@ -92,7 +92,7 @@ CAN.media.video = {
 						"bigger block bold italic padded righted hoverglow nodecoration"),
 					vnode
 				], "bordered padded")) : vnode).innerHTML;
-			}, null, true);
+			}, "mydata", true);
 		}
 		return n;
 	},
