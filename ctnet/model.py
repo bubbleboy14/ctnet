@@ -2085,10 +2085,13 @@ def newPlace(data):
     return p
 
 def address2latlng(address):
-    import urllib.request, urllib.parse, urllib.error
+    try:
+        from urllib.parse import quote # py3
+    except:
+        from urllib import quote       # py2
     from cantools.web import fetch
     results = fetch("maps.googleapis.com",
-        "/maps/api/geocode/json?sensor=false&address=%s"%(urllib.parse.quote(address.replace(" ", "+")),),
+        "/maps/api/geocode/json?sensor=false&address=%s"%(quote(address.replace(" ", "+")),),
         asjson=True)['results']
     loc = results[0]['geometry']['location']
     return [loc['lat'], loc['lng']]

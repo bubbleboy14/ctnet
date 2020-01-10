@@ -21,11 +21,20 @@ HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
+
+(py2/3 compatibility added later)
 """
 
-__VERSION__ = "2.0.0"
+__VERSION__ = "2.0.1" # py2/3 compatibility
 
-import urllib.request, urllib.parse, urllib.error, urllib.request, urllib.error, urllib.parse, base64, hmac
+try: # py2
+    from urllib import urlencode, quote
+    from urllib2 import Request, build_opener, install_opener, urlopen
+except: # py3
+    from urllib.parse import urlencode, quote
+    from urllib.request import Request, build_opener, install_opener, urlopen
+
+import base64, hmac
 from hashlib import sha1
 from xml.sax.saxutils import escape, quoteattr
 
@@ -52,11 +61,11 @@ class HTTPErrorProcessor(urllib2.HTTPErrorProcessor):
 
 class HTTPErrorAppEngine(Exception): pass
 
-class TwilioUrlRequest(urllib.request.Request):
+class TwilioUrlRequest(Request):
     def get_method(self):
         if getattr(self, 'http_method', None):
             return self.http_method
-        return urllib.request.Request.get_method(self)
+        return Request.get_method(self)
 
 class Account:
     """Twilio account object that provides helper functions for making
@@ -81,22 +90,22 @@ class Account:
             if uri.find('?') > 0:
                 if uri[-1] != '&':
                     uri += '&'
-                uri = uri + urllib.parse.urlencode(params)
+                uri = uri + urlencode(params)
             else:
-                uri = uri + '?' + urllib.parse.urlencode(params)
+                uri = uri + '?' + urlencode(params)
         return uri
     
     def _urllib2_fetch(self, uri, params, method=None):
         # install error processor to handle HTTP 201 response correctly
         if self.opener == None:
-            self.opener = urllib.request.build_opener(HTTPErrorProcessor)
-            urllib.request.install_opener(self.opener)
+            self.opener = build_opener(HTTPErrorProcessor)
+            install_opener(self.opener)
         
         if method and method == 'GET':
             uri = self._build_get_uri(uri, params)
             req = TwilioUrlRequest(uri)
         else:
-            req = TwilioUrlRequest(uri, urllib.parse.urlencode(params))
+            req = TwilioUrlRequest(uri, urlencode(params))
             if method and (method == 'DELETE' or method == 'PUT'):
                 req.http_method = method
         
@@ -104,7 +113,7 @@ class Account:
         authstring = authstring.replace('\n', '')
         req.add_header("Authorization", "Basic %s" % authstring)
         
-        response = urllib.request.urlopen(req)
+        response = urlopen(req)
         return response.read()
     
     def _appengine_fetch(self, uri, params, method):
@@ -119,7 +128,7 @@ class Account:
         
         authstring = base64.encodestring('%s:%s' % (self.id, self.token))
         authstring = authstring.replace('\n', '')
-        r = urlfetch.fetch(url=uri, payload=urllib.parse.urlencode(params),
+        r = urlfetch.fetch(url=uri, payload=urlencode(params),
             method=httpmethod,
             headers={'Content-Type': 'application/x-www-form-urlencoded',
                 'Authorization': 'Basic %s' % authstring})
@@ -196,7 +205,7 @@ class Verb:
         return verb
     
     def asUrl(self):
-        return urllib.parse.quote(str(self))
+        return quote(str(self))
     
     def addSay(self, text, **kwargs):
         return self.append(Say(text, **kwargs))
