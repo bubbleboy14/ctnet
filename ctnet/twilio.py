@@ -29,10 +29,10 @@ __VERSION__ = "2.0.1" # py2/3 compatibility
 
 try: # py2
     from urllib import urlencode, quote
-    from urllib2 import Request, build_opener, install_opener, urlopen
+    from urllib2 import Request, build_opener, install_opener, urlopen, HTTPErrorProcessor as urlHEP
 except: # py3
     from urllib.parse import urlencode, quote
-    from urllib.request import Request, build_opener, install_opener, urlopen
+    from urllib.request import Request, build_opener, install_opener, urlopen, HTTPErrorProcessor as urlHEP
 
 import base64, hmac
 from hashlib import sha1
@@ -51,7 +51,7 @@ class TwilioException(Exception): pass
 # Twilio REST Helpers
 # ===========================================================================
 
-class HTTPErrorProcessor(urllib2.HTTPErrorProcessor):
+class HTTPErrorProcessor(urlHEP):
     def https_response(self, request, response):
         code, msg, hdrs = response.code, response.msg, response.info()
         if code >= 300:
