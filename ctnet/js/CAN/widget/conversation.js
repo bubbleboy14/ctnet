@@ -119,9 +119,10 @@ CAN.widget.conversation = {
 					b = core.config.ctnet.conversation.comment_prefix + b;
 					CT.net.post("/say", {"uid": uid, "conversation": ckey,
 						"body": b, "contentkey": contentkey},
-						"error posting comment", function() {
-							CAN.widget.conversation.comment({"user": uid, "body": b},
-								commentsnode, uid, noflagging);
+						"error posting comment", function(ckey) {
+							CAN.widget.conversation.comment({
+								user: uid, body: b, key: ckey
+							}, commentsnode, uid, noflagging);
 							cbody.value = "";
 							cbody.focus();
 							charcount.innerHTML = "(" + charlimit + " chars left)"; });
