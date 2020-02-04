@@ -97,6 +97,7 @@ class UserBase(ModelBase):
             comment.private = True
         # we put conversation to update the date
         db.put_multi([comment, conversation])
+        return comment.key.urlsafe()
 
 class AnonymousUser(UserBase):
     pass # only has firstName
