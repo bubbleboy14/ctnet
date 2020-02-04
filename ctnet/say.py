@@ -37,7 +37,7 @@ def response():
                 send_invitation(conversation, user, invitee)
         succeed(conversation.id())
     user, conversation = db.get_multi([uid, db.KeyWrapper(urlsafe=cid)])
-    user.comment(body, conversation)
+    commkey = user.comment(body, conversation)
     if contentkey:
         content = db.KeyWrapper(urlsafe=contentkey).get()
         if content:
@@ -70,5 +70,6 @@ def response():
             if u != user and u.email_messages:
                 emailuser(u, "Message from %s"%(user.firstName,),
                     message_received%(u.firstName, fn, body, DOMAIN, cid))
+    succeed(commkey)
 
 respond(response)
