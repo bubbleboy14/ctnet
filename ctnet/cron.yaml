@@ -1,4 +1,3 @@
-cron:
 - description: basic scan
   url: /cronscan
   schedule: every 24 hours

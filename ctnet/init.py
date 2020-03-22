@@ -1,7 +1,6 @@
 copies = {
 	".": [
 		"emailTemplates.py",
-		"cron.yaml",
 		"app.yaml"
 	],
 	"img": "*"
