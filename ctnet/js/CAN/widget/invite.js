@@ -69,6 +69,8 @@ CAN.widget.invite = {
 		            "error inviting user", function() {
 		                invitenonmember.value = "";
 		                alert("Invitation sent!");
+		            }, function(err) {
+		            	alert(err);
 		            });
 		    };
 		    CT.dom.inputEnterCallback(invitenonmember, invitenonmembercb);
