@@ -3,9 +3,9 @@ CAN.search = {
 	"ADVANCEDSEARCHHELPTEXT": "CAN Smart Web Search returns results in the categories selected under <b>Search Types</b>. The standard CAN search scans the CAN media archive for hits, filtering by the dates indicated under <b>Filter CAN Results by Date</b> (if any). Google-enabled searches (disabled by default, indicated by <i>italics</i> in the <b>Search Types</b> list) are restricted to the domain specified under <b>Restrict Google Results to Site</b> (if any).",
 	"GOOGLE_DISCLAIMER": "If you wish, you can expand your search beyond Civil Action Network by checking the 'Search Google' checkbox below.",
 	"info": {
-	    'Video': { 'google': true, 'can': true },
-	    'News': { 'google': true, 'can': true },
-	    'Book': { 'google': true, 'can': true },
+	    'Video': { 'google': false, 'can': true },
+	    'News': { 'google': false, 'can': true },
+	    'Book': { 'google': false, 'can': true },
 	    'Law': { 'can': true },
 	    'Event': { 'can': true },
 	    'Group': { 'can': true },
@@ -42,7 +42,8 @@ CAN.search = {
 	        CAN.cookie.set(CAN.cookie.getUid(), CAN.cookie.checkFirstName(),
 	        	CAN.cookie.checkLastName(), CAN.cookie.checkSiteWideChat());
 	        if (CT.info.page == "search") {
-	            CT.dom.setFieldValue(val, "search", ["childNodes", 0, "search"]);
+//	            CT.dom.setFieldValue(val, "search", ["childNodes", 0, "search"]);
+	            CT.dom.id("basicsearch").value = val;
 	            CAN.search.cansearch.search();
 	            if (CT.mobile.isMobile())
 		            CT.dom.ALLNODE.toggleMobileMenu();

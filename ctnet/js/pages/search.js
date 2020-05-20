@@ -1,7 +1,8 @@
 CT.require("CT.all");
 CT.require("CAN.all");
 
-google.setOnLoadCallback(function() {
+//google.setOnLoadCallback(function() {
+CT.onload(function() {
     var LOADED = false;
     var uid = CAN.session.isLoggedIn();
     CAN.widget.challenge.load(uid);
@@ -177,7 +178,8 @@ google.setOnLoadCallback(function() {
         }
     };
     CANSearch.prototype.search = function(form) {
-        var q = currentQuery = CT.dom.getFieldValue("search", ["childNodes", 0, "search"]);
+//        var q = currentQuery = CT.dom.getFieldValue("search", ["childNodes", 0, "search"]);
+        var q = currentQuery = CT.dom.id("basicsearch").value;
         if (q) {
             results.innerHTML = "";
             searchcolumn.innerHTML = "";
@@ -212,21 +214,25 @@ google.setOnLoadCallback(function() {
             else  // Google's button was clicked
                 searchcolumn.parentNode.style.display = "none";
             querystring.innerHTML = '&quot;' + q + '&quot;';
-            searchGoog();
-            CT.dom.setFieldValue(q.replace(/  /g, " "), "search", ["childNodes", 0, "search"]);
+//            searchGoog();
+  //          CT.dom.setFieldValue(q.replace(/  /g, " "), "search", ["childNodes", 0, "search"]);
+//            CT.dom.setContent("basicsearch", q.replace(/  /g, " "));
+            CT.dom.id("basicsearch").value = q.replace(/  /g, " ");
         }
         return false;
     };
     CAN.search.setCANsearch(new CANSearch());
-    var searchform = new google.search.SearchForm(false,
-        CT.dom.id("search"));
-    searchform.setOnSubmitCallback(CAN.search.cansearch,
-        CANSearch.prototype.search);
+    //var searchform = new google.search.SearchForm(false,
+//        CT.dom.id("search"));
+    //searchform.setOnSubmitCallback(CAN.search.cansearch,
+//        CANSearch.prototype.search);
     var _hash = decodeURIComponent(document.location.hash.slice(1));
     var checkHash = function() {
         if (! LOADED)
             return setTimeout(checkHash, 300);
-        CT.dom.setFieldValue(_hash, "search", ["childNodes", 0, "search"]);
+        //CT.dom.setFieldValue(_hash, "search", ["childNodes", 0, "search"]);
+//        CT.dom.setContent("basicsearch", _hash);
+        CT.dom.id("basicsearch").value = _hash;
         CAN.search.cansearch.search();
         document.location.hash = "";
     }
@@ -238,16 +244,21 @@ google.setOnLoadCallback(function() {
         c.type = "checkbox";
         c.checked = true;
         c.onclick = function() {
-            var q = CT.dom.getFieldValue("search", ["childNodes", 0, "search"]);
+//            var q = CT.dom.getFieldValue("search", ["childNodes", 0, "search"]);
+            var q = CT.dom.id("basicsearch").value;
             if (c.checked) {
                 if (q.indexOf(showword) == -1) {
                     if (q.charAt(q.length-1) != " ")
                         q += " ";
-                    CT.dom.setFieldValue(q + showword, "search", ["childNodes", 0, "search"]);
+//                    CT.dom.setFieldValue(q + showword, "search", ["childNodes", 0, "search"]);
+//                    CT.dom.setContent("basicsearch", q + showword);
+                    CT.dom.id("basicsearch").value = q + showword;
                 }
             }
             else
-                setFieldValue(q.split(showword).join("").replace(/  /g, " "), "search", ["childNodes", 0, "search"]);
+                CT.dom.id("basicsearch").value = q.split(showword).join("").replace(/  /g, " ");
+//                CT.dom.setContent("basicsearch", q.split(showword).join("").replace(/  /g, " "));
+                //setFieldValue(q.split(showword).join("").replace(/  /g, " "), "search", ["childNodes", 0, "search"]);
         };
         n.appendChild(c);
         n.appendChild(CT.dom.node(showword, "span"));
