@@ -6,7 +6,7 @@ CAN.media.sustainableaction = {
 	    sa.appendChild(CT.dom.node(d.title, "div", "bold"));
 	    sa.appendChild(CT.dom.node(d.content));
 	    sa.appendChild(CT.dom.link("Take Action", null,
-	    	"http://" + d.link, null, null, {"target": "_blank"}));
+	    	"https://" + d.link, null, null, {"target": "_blank"}));
 	    sa.appendChild(CT.dom.node("", "div", "clearnode"));
 	    return sa;
 	},
