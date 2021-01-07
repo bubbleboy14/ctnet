@@ -408,7 +408,7 @@ CAN.media.loader = {
 		if (url.indexOf("youtube.com") != -1) {
 			var key = url.split("v=")[1].split("&")[0],
 				keyran = key + Math.floor(1000 + Math.random() * 1000);
-			return '<div class="vidthumb" id="' + keyran + '"><img class="pointer" src="http://img.youtube.com/vi/' + key + '/0.jpg" onclick="CAN.media.loader.ytUnthumb(\'' + keyran + '\')"></div>';
+			return '<div class="vidthumb" id="' + keyran + '"><img class="pointer" src="https://img.youtube.com/vi/' + key + '/0.jpg" onclick="CAN.media.loader.ytUnthumb(\'' + keyran + '\')"></div>';
 		}
 		// thoughts, events, cases, memes, opinions, papers
 		for (var i = 0; i < CAN.media.loader._linkTypes.length; i++) {
