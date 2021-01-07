@@ -1662,7 +1662,7 @@ class Video(CategoriedVotingModel, Searchable, Approvable):
                 "url": "https://d.tube/v/%s"%(self.docid,)
             })["thumbnail_url"]
         elif self.player == "youtube":
-            self.thumbnail = "http://img.youtube.com/vi/%s/0.jpg"%(self.docid,)
+            self.thumbnail = "https://img.youtube.com/vi/%s/0.jpg"%(self.docid,)
         elif self.player == "google":
             from cantools.web import fetch
             data = fetch("video.google.com", "/videofeed?docid=%s"%(self.docid,))
