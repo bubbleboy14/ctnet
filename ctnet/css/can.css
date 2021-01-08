@@ -835,6 +835,10 @@ a:hover, .red {
     color: initial;
 }
 
+.carousel iframe {
+    height: 345px;
+}
+
 #sharesubnode img {
     display: inline;
 }
