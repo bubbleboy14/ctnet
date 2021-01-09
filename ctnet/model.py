@@ -326,6 +326,7 @@ class User(UserBase, Searchable):
     searchable_profile = db.Boolean(default=False)
     non_user_view = db.Boolean(default=False)
     site_wide_chat = db.Boolean(default=True)
+    basic_only = db.Boolean(default=False)
     gender = db.String(default="decline")
     blurb = db.Text()
     # DONE: STRING2KEY conversion!
@@ -429,6 +430,7 @@ class User(UserBase, Searchable):
             d['searchable_profile'] = self.searchable_profile
             d['non_user_view'] = self.non_user_view
             d['site_wide_chat'] = self.site_wide_chat
+            d['basic_only'] = self.basic_only
             d['gender'] = self.gender
             d['blurb'] = self.blurb
             d['survey'] = self.survey or ["none", "none", "none", "none"]
