@@ -563,7 +563,7 @@ var loadPage = function(uid, pid) {
                 "div", "sbitem", "sbitembasicprofile"));
             sbitems.appendChild(CT.dom.node(CT.dom.img("/img/icons/briefcase.png",
                 null, epf), "div", "lfloat shiftleft"));
-            sbitems.appendChild(CT.dom.node(CT.dom.link("Expanded Profile", epf),
+            u.basic_only || sbitems.appendChild(CT.dom.node(CT.dom.link("Expanded Profile", epf),
                 "div", "sbitem", "sbitemexpandedprofile"));
             sbitems.appendChild(CT.dom.node(CT.dom.img("/img/icons/conversations.png",
                 null, null, "/profile.html#" + CAN.cookie.flipReverse(pid)),
@@ -1050,6 +1050,11 @@ var loadPage = function(uid, pid) {
             u.non_user_view, "Check this box if you don't mind non-members viewing your profile"));
         var nucb = CT.dom.id("nonuserviewcheckbox");
 
+        // checkbox for basic-only profile
+        CT.dom.id("basiconlyoption").appendChild(CT.dom.checkboxAndLabel("basiconly",
+            u.basic_only, "Check this box for a basic (non-extended) profile"));
+        var bocb = CT.dom.id("basiconlycheckbox");
+
         // checkbox for site-wide chat
         CT.dom.id("sitewidechatoption").appendChild(CT.dom.checkboxAndLabel("sitewidechat",
             u.site_wide_chat, "Check this box to chat with other CAN users"));
@@ -1149,7 +1154,7 @@ var loadPage = function(uid, pid) {
         userinfo.appendChild(submitButton);
         submitButton.onclick = function() {
             var gender = genderval();
-            if (sameDob() && email.value == u.email && zip.value == u.zipcode.code && newpass.value == "" && !docForm.data.value && mcb.checked == u.email_messages && ncb.checked == u.email_notifications && nlcb.checked == u.email_newsletters && cicb.checked == u.show_contact_info && spcb.checked == u.searchable_profile && nucb.checked == u.non_user_view && swcb.checked == u.site_wide_chat && gender == u.gender && blurbta.get() == u.blurb && address.value == u.address && phone.value == u.phone && fullname.value == u.fullName && surveycontext.get() == u.survey_context && CT.data.sameList(newSurveyAnswers, u.survey) && ! u.deleted)
+            if (sameDob() && email.value == u.email && zip.value == u.zipcode.code && newpass.value == "" && !docForm.data.value && mcb.checked == u.email_messages && ncb.checked == u.email_notifications && nlcb.checked == u.email_newsletters && cicb.checked == u.show_contact_info && spcb.checked == u.searchable_profile && nucb.checked == u.non_user_view && bocb.checked == u.basic_only && swcb.checked == u.site_wide_chat && gender == u.gender && blurbta.get() == u.blurb && address.value == u.address && phone.value == u.phone && fullname.value == u.fullName && surveycontext.get() == u.survey_context && CT.data.sameList(newSurveyAnswers, u.survey) && ! u.deleted)
                 return alert("no changes to commit!");
             if (gender == "")
                 return alert("you have selected 'other' for gender. please fill in the input field or select 'decline to state'");
@@ -1189,7 +1194,7 @@ var loadPage = function(uid, pid) {
                 "firstName": firstname, "lastName": lastname,
                 "deleted": false, "show_contact_info": cicb.checked,
                 "searchable_profile": spcb.checked, "non_user_view": nucb.checked,
-                "site_wide_chat": swcb.checked
+                "basic_only": bocb.checked, "site_wide_chat": swcb.checked
             };
             if (newpass.value)
                 newdata.newpass = newpass.value;
@@ -1224,6 +1229,7 @@ var loadPage = function(uid, pid) {
                         u.show_contact_info = cicb.checked;
                         u.searchable_profile = spcb.checked;
                         u.non_user_view = nucb.checked;
+                        u.basic_only = bocb.checked;
                         u.site_wide_chat = swcb.checked;
                         u.firstName = firstname;
                         u.lastName = lastname;
