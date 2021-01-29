@@ -2470,7 +2470,8 @@ CANSEARCHES = {
     "question": Question,
     "change": ChangeIdea,
     "case": Case,
-    "place": Place
+    "place": Place,
+    "meme": Meme
 }
 
 def _filter(q, qm, word):
