@@ -91,7 +91,7 @@ CT.onload(function() {
     // Old: User, Event, News, Video, Book
     // New: Group, Idea, Paper, Quote, Action, Thought
     // Newer: Case
-    // Newest: Question, Change
+    // Newest: Question, Change, Meme
     var searchers = {
         "Event": function(events, container) {
             CAN.media.loader.checkAndShow(events, {},
@@ -116,7 +116,7 @@ CT.onload(function() {
         }, "User": false, "Video": false, "Book": false,
         "Group": false, "Idea": false, "Paper": false, "Law": false,
         "Quote": false, "Action": false, "Thought": false,
-        "Question": false, "Change": false, "Case": false
+        "Question": false, "Change": false, "Case": false, "Meme": false
     };
     var searchOuts = {};
     var checkResults = function() {
@@ -145,7 +145,7 @@ CT.onload(function() {
             "error finding " + stLower + "s", function(results) {
                 searchOuts[searchType] = false;
                 var container = CT.dom.div(null, "bordered padded small bottommargined "
-                    + ((stLower == "thought") && "fwimg" || "thumb"));
+                    + ((stLower == "thought" || stLower == "meme") && "fwimg" || "thumb"));
                 container.appendChild(CT.dom.node(
                     "CAN " + searchType + " Results",
                     "div", "right gray"));
