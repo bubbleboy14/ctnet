@@ -16,12 +16,13 @@ CAN.search = {
 	    'Thought': { 'can': true },
 	    'Question': { 'can': true },
 	    'Change': { 'can': true },
+	    'Meme': { 'can': true },
 	    'Case': { 'can': true },
 	    'User': { 'can': true }
 	},
 	"types": ['Video', 'News', 'Book', 'Law',
 	    'Event', 'Group', 'Idea', 'Paper', 'Quote', 'Action',
-	    'Thought', 'Question', 'Change', 'Case', 'User'],
+	    'Thought', 'Question', 'Change', 'Case', 'User', 'Meme'],
 	"cansearch": null,
 	"_google_logo": null,
 	"setCANsearch": function(cs) {
