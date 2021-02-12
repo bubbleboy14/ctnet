@@ -10,44 +10,58 @@ onload = function() {
     CAN.categories.load(uid || "anonymous");
 
     // topz (more like a forum)
-    CT.db.get("thought", function(thoughts) {
+    var topIndex = 0, topChunk = 7, topRefilling;
+    var topTable = CT.dom.table([[
+        "<b>Tags</b>", "<b id='threadspot'>Thread</b>", "<b>Poster</b>",
+        "<b>Replies</b>", "<b>Posted</b>", "<b>Updated</b>"
+    ]]), topNode = CT.dom.id("topz");
+    var topRefill = function(cb) {
+        if (topRefilling) return;
+        topRefilling = true;
+        CT.db.get("thought", function(thoughts) {
+            cb(thoughts);
+            topRefilling = false;
+            topIndex += topChunk;
+        }, topChunk, topIndex, "-created");
+    };
+
+    CT.dom.setContent(topNode, topTable);
+    if (CT.info.isFirefox)
+        CT.dom.addStyle("#topz { font-size: 110% !important; }");
+    CT.dom.id("threadspot").appendChild(CT.dom.div([
+        CT.dom.button("global feed", function() {
+            window.location = "/feed.html";
+        }, "bold mh5"),
+        CT.dom.button("new", function() {
+            window.location = "/community.html#!Stream";
+        }, "bold")
+    ], "right"));
+
+    var topRefiller = function(thoughts) {
         var unodez = [], rnodez = [], posterz = [], pkeyz = [];
-        if (CT.info.isFirefox)
-            CT.dom.addStyle("#topz { font-size: 110% !important; }");
-        CT.dom.setContent("topz", CT.dom.table([[
-                "<b>Tags</b>", "<b id='threadspot'>Thread</b>", "<b>Poster</b>",
-                "<b>Replies</b>", "<b>Posted</b>", "<b>Updated</b>"
-            ]].concat(thoughts.map(function(t) {
-                var unode = CT.dom.div(), tnode = CT.dom.div(), rnode = CT.dom.div();
-                unodez.push(unode);
-                rnodez.push(rnode);
-                posterz.push(t.user || "anon");
-                t.user && pkeyz.push(t.user);
-                CAN.categories.get(function() {
-                    CT.dom.setContent(tnode, t.category.filter(function(c) {
-                        return CAN.categories.byKey(c).name in core.config.ctnet.categories.icons;
-                    }).map(function(c) {
-                        return CT.dom.img(core.config.ctnet.categories.icons[CAN.categories.byKey(c).name]);
-                    }));
-                });
-                return [
-                    tnode,
-                    CT.dom.link(CT.parse.shortened(t.thought, 100, 15, true), null,
-                        "/community.html#!Stream|" + CAN.cookie.flipReverse(t.key)),
-                    unode,
-                    rnode,
-                    CT.parse.timeStamp(t.created),
-                    CT.parse.timeStamp(t.modified)
-                ];
-            }))));
-        CT.dom.id("threadspot").appendChild(CT.dom.div([
-            CT.dom.button("global feed", function() {
-                window.location = "/feed.html";
-            }, "bold mh5"),
-            CT.dom.button("new", function() {
-                window.location = "/community.html#!Stream";
-            }, "bold")
-        ], "right"));
+        CT.dom.addRows(topTable, thoughts.map(function(t) {
+            var unode = CT.dom.div(), tnode = CT.dom.div(), rnode = CT.dom.div();
+            unodez.push(unode);
+            rnodez.push(rnode);
+            posterz.push(t.user || "anon");
+            t.user && pkeyz.push(t.user);
+            CAN.categories.get(function() {
+                CT.dom.setContent(tnode, t.category.filter(function(c) {
+                    return CAN.categories.byKey(c).name in core.config.ctnet.categories.icons;
+                }).map(function(c) {
+                    return CT.dom.img(core.config.ctnet.categories.icons[CAN.categories.byKey(c).name]);
+                }));
+            });
+            return [
+                tnode,
+                CT.dom.link(CT.parse.shortened(t.thought, 100, 15, true), null,
+                    "/community.html#!Stream|" + CAN.cookie.flipReverse(t.key)),
+                unode,
+                rnode,
+                CT.parse.timeStamp(t.created),
+                CT.parse.timeStamp(t.modified)
+            ];
+        }));
         CT.data.checkAndDo(pkeyz, function() {
             unodez.forEach(function(n, i) {
                 n.appendChild(posterz[i] == "anon" ? CT.dom.div("(anon)") :
@@ -68,7 +82,21 @@ onload = function() {
                 });
             }
         });
-    }, 7, 0, "-created");
+    };
+    topRefill(topRefiller);
+    topNode.onwheel = function(wevent) {
+        if (wevent.deltaY > 0) {
+            if (!topNode._scrolled) {
+                topNode._scrolled = true;
+                topNode.style.overflow = "auto";
+            }
+            if (topNode.scrollTop == topNode.scrollHeight - topNode.clientHeight)
+                topRefill(topRefiller);
+        }
+    };
+    CT.dom.ALLNODE.onwheel = function(wevent) {
+        topRefilling && wevent.preventDefault();
+    };
 
     // forum (more like hot topics)
     CT.net.post("/get", {
