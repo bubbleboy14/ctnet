@@ -83,10 +83,12 @@ onload = function() {
             }
         });
     };
+    CT.hover.set(topNode, CT.dom.marquee("scroll for more!", null, null, true));
     topRefill(topRefiller);
     topNode.onwheel = function(wevent) {
         if (wevent.deltaY > 0) {
             if (!topNode._scrolled) {
+                CT.hover.unset(topNode);
                 topNode._scrolled = true;
                 topNode.style.overflow = "auto";
             }
