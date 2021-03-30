@@ -22,7 +22,7 @@ CAN.widget.stream = {
 				key: conversation
 			},
 			cb: function(clink) {
-				window.location = clink;
+				window.open(clink, "_self");
 			}
 		});
 	},
@@ -45,7 +45,7 @@ CAN.widget.stream = {
 		n.appendChild(tnode);
 		if (opts.noConvo) {
 			n.appendChild(CT.dom.button("Check out the conversation", function() {
-				CAN.widget.stream.jumpTo(d.conversation);
+				opts.onclick ? opts.onclick(d) : CAN.widget.stream.jumpTo(d.conversation);
 			}, "w1"));
 		} else {
 			n.appendChild(CT.dom.node("", "hr"));
