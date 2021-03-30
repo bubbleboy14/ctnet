@@ -22,7 +22,10 @@ CAN.widget.stream = {
 				key: conversation
 			},
 			cb: function(clink) {
-				window.open(clink, "_self");
+				window.location = clink;
+				setTimeout(function() {
+					window.reload();
+				}, 200); // if page hasn't changed (same pathname)
 			}
 		});
 	},
