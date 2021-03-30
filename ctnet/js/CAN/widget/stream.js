@@ -24,7 +24,7 @@ CAN.widget.stream = {
 			cb: function(clink) {
 				window.location = clink;
 				setTimeout(function() {
-					window.reload();
+					window.location.reload();
 				}, 200); // if page hasn't changed (same pathname)
 			}
 		});
