@@ -22,7 +22,7 @@ CAN.widget.stream = {
 				key: conversation
 			},
 			cb: function(clink) {
-				window.location = clink;
+				window.open(clink, "_self");
 			}
 		});
 	},
@@ -45,7 +45,7 @@ CAN.widget.stream = {
 		n.appendChild(tnode);
 		if (opts.noConvo) {
 			n.appendChild(CT.dom.button("Check out the conversation", function() {
-				CAN.widget.stream.jumpTo(d.conversation);
+				opts.onclick ? opts.onclick(d) : CAN.widget.stream.jumpTo(d.conversation);
 			}, "w1"));
 		} else {
 			n.appendChild(CT.dom.node("", "hr"));
@@ -223,5 +223,28 @@ CAN.widget.stream = {
 			noConvo: true,
 			processArg: typeof processArg != "function" && processArg // no onclick
 		});
+	},
+
+	// infi
+	"infi": function(pnode, variety, uid, viewSingle) {
+		var offset = 0, chunk = 10, refill = function() {
+			CT.net.post("/get", {
+				gtype: "media",
+				mtype: variety,
+				number: chunk,
+				offset: offset
+			}, null, function(items) {
+				CAN.widget.stream[variety](pnode, uid,
+					items.reverse(), !!offset, true, viewSingle);
+				if (items.length == chunk)
+					pnode.appendChild(refiller);
+				else
+					CT.dom.remove(refiller);
+				offset += items.length;
+			}, function() {
+				CAN.widget.stream[variety](pnode, uid, [], false, true);
+			});
+		}, refiller = CT.dom.div(null, null, null, { onvisible: refill });
+		refill();
 	}
 };
