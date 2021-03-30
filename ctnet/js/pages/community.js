@@ -159,13 +159,8 @@ onload = function() {
             anode = nodez.anode = CT.dom.div();
         pnode.appendChild(snode);
         pnode.appendChild(anode);
-        CT.net.post("/get", {"gtype": "media", "mtype": item, "number": 100}, null, function(items) {
-            CAN.widget.stream[item](anode, uid, items.reverse(), false, true, function(d) {
-                viewSingleItem(d, item);
-            });
-        }, function() {
-            CAN.widget.stream[item](anode, uid, [], false, true);
-        });
+        CAN.widget.stream.infi(anode, item, uid,
+            d => viewSingleItem(d, item));
     });
 
     var eventStuff = CT.dom.id("sbcontentEvents");

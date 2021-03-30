@@ -223,5 +223,28 @@ CAN.widget.stream = {
 			noConvo: true,
 			processArg: typeof processArg != "function" && processArg // no onclick
 		});
+	},
+
+	// infi
+	"infi": function(pnode, variety, uid, viewSingle) {
+		var offset = 0, chunk = 10, refill = function() {
+	        CT.net.post("/get", {
+	        	gtype: "media",
+	        	mtype: variety,
+	        	number: chunk,
+	        	offset: offset
+	        }, null, function(items) {
+	            CAN.widget.stream[variety](pnode, uid,
+	            	items.reverse(), !!offset, true, viewSingle);
+	        	if (items.length == chunk)
+	        		pnode.appendChild(refiller);
+	        	else
+	        		CT.dom.remove(refiller);
+	        	offset += items.length;
+	        }, function() {
+	            CAN.widget.stream[variety](pnode, uid, [], false, true);
+	        });
+		}, refiller = CT.dom.div(null, null, null, { onvisible: refill });
+		refill();
 	}
 };
