@@ -725,7 +725,7 @@ class Meme(CategoriedVotingModel, Searchable):
         from .util import DOMAIN, flipQ
         if aslist:
             return ["community"]
-        return "%s/community.html#!Memes|%s"%(DOMAIN, flipQ(self.key.urlsafe()))
+        return "%s/community.html#!Memes%%7C%s"%(DOMAIN, flipQ(self.key.urlsafe()))
 
     def mydata(self):
         return {"uid": self.user and self.user.urlsafe() or None,
@@ -767,7 +767,7 @@ class Thought(CategoriedVotingModel, Searchable):
         from .util import DOMAIN, flipQ
         if aslist:
             return ["community"]
-        return "%s/community.html#!Stream|%s"%(DOMAIN, flipQ(self.key.urlsafe()))
+        return "%s/community.html#!Stream%%7C%s"%(DOMAIN, flipQ(self.key.urlsafe()))
         # forget profile
 #        if self.user:
 #            if aslist:
@@ -823,7 +823,7 @@ class ChangeIdea(CategoriedVotingModel, Searchable):
         from .util import DOMAIN, flipQ
         if aslist:
             return ["community"]
-        return "%s/community.html#!Ideas|%s"%(DOMAIN, flipQ(self.key.urlsafe()))
+        return "%s/community.html#!Ideas%%7C%s"%(DOMAIN, flipQ(self.key.urlsafe()))
         # don't mess around with profile
 #        if self.user:
 #            if aslist:
@@ -877,7 +877,7 @@ class Question(CategoriedVotingModel, Searchable):
         from .util import DOMAIN, flipQ
         if aslist:
             return ["community"]
-        return "%s/community.html#!Questions|%s"%(DOMAIN, flipQ(self.key.urlsafe()))
+        return "%s/community.html#!Questions%%7C%s"%(DOMAIN, flipQ(self.key.urlsafe()))
 
     def rssitems(self):
         return {"title": self.question, "link": self.storylink(),
@@ -1084,9 +1084,9 @@ class Group(CANModel, Searchable):
     def storylink(self, aslist=False):
         from .util import flipQ, DOMAIN
         if aslist:
-            return ["participate.html#ActionGroups|", self.id()]
-#            return "/participate.html#ActionGroups|%s"%(flipQ(self.id()),)
-        return "%s/participate.html#ActionGroups|%s"%(DOMAIN, flipQ(self.id()))
+            return ["participate.html#ActionGroups%%7C", self.id()]
+#            return "/participate.html#ActionGroups%%7C%s"%(flipQ(self.id()),)
+        return "%s/participate.html#ActionGroups%%7C%s"%(DOMAIN, flipQ(self.id()))
 
     def view_page(self):
         return "participate"
@@ -1522,7 +1522,7 @@ class OpinionIdea(CategoriedVotingModel, Searchable):
         from .util import DOMAIN, flipQ
         if aslist:
             return ["recommendations.html#!OpinionsAndIdeas", self.id()]
-        return "%s/recommendations.html#!OpinionsAndIdeas|%s"%(DOMAIN, flipQ(self.id()))
+        return "%s/recommendations.html#!OpinionsAndIdeas%%7C%s"%(DOMAIN, flipQ(self.id()))
 
     def modeltype_multiword(self):
         return "opinions and ideas"
@@ -1572,7 +1572,7 @@ class PositionPaper(CategoriedVotingModel, Searchable):
         from .util import DOMAIN, flipQ
         if aslist:
             return ["recommendations#!PositionPapers", self.id()]
-        return "%s/recommendations.html#!PositionPapers|%s"%(DOMAIN, flipQ(self.id()))
+        return "%s/recommendations.html#!PositionPapers%%7C%s"%(DOMAIN, flipQ(self.id()))
 
     def modeltype_multiword(self):
         return "position papers"
@@ -1970,9 +1970,9 @@ class Event(CategoriedVotingModel, Searchable, Approvable):
     def storylink(self, aslist=False):
         from .util import DOMAIN, flipQ
         if aslist:
-            return ["community.html#!Events|", self.id()]
-#            return "/community.html#!Events|%s"%(flipQ(self.id()),)
-        return "%s/community.html#!Events|%s"%(DOMAIN, flipQ(self.id()))
+            return ["community.html#!Events%%7C", self.id()]
+#            return "/community.html#!Events%%7C%s"%(flipQ(self.id()),)
+        return "%s/community.html#!Events%%7C%s"%(DOMAIN, flipQ(self.id()))
 
     def rssitems(self):
         return {"title": self.title, "description": self.blurb(),
