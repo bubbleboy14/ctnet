@@ -392,11 +392,11 @@ CAN.media.loader = {
 		n.innerHTML = CT.video.full(CT.video.videoData("https://youtube.com?v=" + key.slice(0, -4)));
 	},
 	"_linkFlags": {
-		"thought": "community.html#!Stream|",
-		"event": "community.html#!Events|",
-		"meme": "community.html#!Memes|",
-		"opinion": "recommendations.html#!OpinionsAndIdeas|",
-		"paper": "recommendations.html#!PositionPapers|"
+		"thought": "community.html#!Stream",
+		"event": "community.html#!Events",
+		"meme": "community.html#!Memes",
+		"opinion": "recommendations.html#!OpinionsAndIdeas",
+		"paper": "recommendations.html#!PositionPapers"
 	},
 	"_linkTypes": ["thought", "event", "cases", "meme", "opinion", "paper"],
 	"linkProcessor": function (url, novid) {
@@ -413,9 +413,13 @@ CAN.media.loader = {
 		// thoughts, events, cases, memes, opinions, papers
 		for (var i = 0; i < CAN.media.loader._linkTypes.length; i++) {
 			var ltype = CAN.media.loader._linkTypes[i],
-				split = url.split(CAN.media.loader._linkFlags[ltype] || (ltype + ".html#!"));
-			if (split.length > 1) {
-				var key = CAN.cookie.flipReverse(split[1]);
+				lflag = CAN.media.loader._linkFlags[ltype], skey;
+			if (lflag)
+				skey = url.split(lflag + "|")[1] || url.split(lflag + "%7C")[1];
+			else
+				skey = url.split(ltype + ".html#!")[1];
+			if (skey) {
+				var key = CAN.cookie.flipReverse(skey);
 				return '<div class="pointer" onclick="CAN.media.' + ltype + '.jump(\'' + key + '\')">'
 					+ CT.dom.node(CAN.media[ltype].htmlSafe(key)).innerHTML + "</div>";
 			}
