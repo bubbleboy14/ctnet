@@ -7,7 +7,6 @@ This module contains the framework for a content-driven social network.
     copies = {
     	".": [
     		"emailTemplates.py",
-    		"cron.yaml",
     		"app.yaml"
     	],
     	"img": "*"
@@ -182,6 +181,24 @@ This module contains the framework for a content-driven social network.
     					"icon": "Introduction"
     				}
     			],
+    			"left": [
+    				{
+    					"icon": "stream",
+    					"page": "community",
+    					"section": "Stream"
+    				},
+    				{
+    					"icon": "memes",
+    					"page": "community",
+    					"section": "Memes"
+    				},
+    				{
+    					"name": "chatter",
+    					"icon": "comments",
+    					"page": "community",
+    					"section": "Chatter"
+    				}
+    			],
     			"home": {
     				"top": [
     					{
@@ -262,7 +279,28 @@ This module contains the framework for a content-driven social network.
     			},
     			"community": {
     				"menu": "bigtabbed",
-    				"content": "maxwidthoverridestream"
+    				"content": "maxwidthoverridestream",
+    				"left": [
+    					{
+    						"icon": "stream",
+    						"page": "community",
+    						"section": "Stream",
+    						"clickChild": "sbitemStream"
+    					},
+    					{
+    						"icon": "memes",
+    						"page": "community",
+    						"section": "Memes",
+    						"clickChild": "sbitemMemes"
+    					},
+    					{
+    						"name": "chatter",
+    						"icon": "comments",
+    						"page": "community",
+    						"section": "Chatter",
+    						"clickChild": "sbitemChatter"
+    					}
+    				]
     			},
     			"recommendations": {
     				"menu": "bigtabbed",
