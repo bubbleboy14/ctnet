@@ -98,7 +98,7 @@ CAN.widget.share = {
 	"pageAddr": function(lname, hash, prefix) {
 	    return CAN.session.DOMAIN + "/" + (CAN.widget.share.pageAddrPages[lname] || lname)
 	    	+ ".html" + ((hash || prefix) && ("#!" + ((hash && prefix) ? prefix
-	    		+ "|" + escape(hash) : (prefix || escape(hash)))) || "");
+	    		+ "%7C" + escape(hash) : (prefix || escape(hash)))) || "");
 	},
 	"replaceLinkTokens": function(lname, txt, token, hash, title, prefix) {
 	    if (token && !CAN.widget.share.sharebuttons[token])
