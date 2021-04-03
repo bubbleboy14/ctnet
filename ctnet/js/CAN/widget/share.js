@@ -125,13 +125,11 @@ CAN.widget.share = {
 		if (newkey == null && prefix == null) {
 			cboard.style.display = casenode.style.display = "none";
 			cboardbox.style.opacity = "0";
-			if (mmcb)
-				mmcb.style.display = "none";
+			mmcb.style.display = "none";
 		} else {
 			casenode.style.display = "block";
 			cboard.style.display = "inline";
-			if (mmcb)
-				mmcb.style.display = "block";
+			mmcb.style.display = "block";
 			cboardnode.value = CAN.widget.share.pageAddr(lname, frkey, prefix);
 			cboardnode.select();
 		}
