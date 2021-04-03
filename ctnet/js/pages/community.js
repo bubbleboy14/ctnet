@@ -16,6 +16,15 @@ onload = function() {
     var streamnodes = {};
     var cur = {};
 
+    var showInvite = function() {
+        CT.dom.show("comminvite");
+        CT.dom.show("mminvite");
+    };
+    var hideInvite = function() {
+        CT.dom.hide("comminvite");
+        CT.dom.hide("mminvite");
+    };
+
     CAN.categories.load(uid);
     CAN.media.loader.load({"mtype": "referenda", "number": 3, "uid": uid,
         "node": CT.dom.id("reflist"), "paging": "bidirectional"});
@@ -31,7 +40,7 @@ onload = function() {
             CT.dom.hide(svnode);
             CT.dom.show(events);
             CAN.widget.share.updateShareItem("community", null, "Events");
-            CT.dom.hide("comminvite");
+            hideInvite();
         }, function() {
             delete cur.item;
             CAN.widget.share.updateShareItem("community",
@@ -40,40 +49,40 @@ onload = function() {
                 CAN.chat.scrollOutie();
                 CAN.chat.focusChatInput();
             }
-            CT.dom.hide("comminvite");
+            hideInvite();
         }, function() {
             delete cur.item;
             CAN.widget.share.updateShareItem("community", null, "Questions");
             CT.dom.hide(streamnodes.question.snode);
             CT.dom.show(streamnodes.question.anode);
-            CT.dom.hide("comminvite");
+            hideInvite();
         }, function() {
             delete cur.item;
             CAN.widget.share.updateShareItem("community", null, "Ideas");
             CT.dom.hide(streamnodes.changeidea.snode);
             CT.dom.show(streamnodes.changeidea.anode);
-            CT.dom.hide("comminvite");
+            hideInvite();
         }, function() {
             delete cur.item;
             CAN.widget.share.updateShareItem("community", null, "Stream");
             CT.dom.hide(streamnodes.thought.snode);
             CT.dom.show(streamnodes.thought.anode);
-            CT.dom.hide("comminvite");
+            hideInvite();
         }, function() {
             delete cur.item;
             CAN.widget.share.updateShareItem("community", null, "Memes");
             CT.dom.hide(streamnodes.meme.snode);
             CT.dom.show(streamnodes.meme.anode);
-            CT.dom.hide("comminvite");
+            hideInvite();
         }, function() {
             delete cur.item;
             CAN.widget.share.updateShareItem("community", null, "Chatter");
-            CT.dom.hide("comminvite");
+            hideInvite();
         }, function() {
             delete cur.item;
             CAN.widget.share.updateShareItem("community", null, "Map");
             map.refresh();
-            CT.dom.hide("comminvite");
+            hideInvite();
         }]);
 
     // video
@@ -140,7 +149,7 @@ onload = function() {
             CT.dom.setContent("comminvite", CAN.widget.invite.button(d,
                 (mtype == "changeidea") ? "idea" : mtype,
                 "consider", uid));
-            CT.dom.show("comminvite");
+            showInvite();
             if (mtype == "meme" || mtype == "thought") {
                 cur.item = d;
                 CT.dom.addContent("comminvite", grotadd);
