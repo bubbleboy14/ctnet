@@ -416,7 +416,7 @@ a:hover, .red {
     font-size: 120%;
 }
 
-#topz a {
+#topz a, .button_row_side a {
      text-decoration: none;
 }
 
