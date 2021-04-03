@@ -9,12 +9,18 @@ CAN.widget.stream = {
 				usecats = usecats.concat(mdata[i].category);
 			CAN.categories.loadSelector(CT.data.uniquify(usecats),
 				filternode, cb);
+			CT.dom.each(tsvars.node, function(n, i) {
+				n.style.cursor = "pointer";
+				n.onclick = function() {
+					CAN.widget.stream.jumpTo(mdata[i].conversation, true);
+				};
+			});
 			cb();
 		};
 		CAN.media.loader.load(tsvars);
 	},
 
-	"jumpTo": function(conversation) {
+	"jumpTo": function(conversation, noreload) {
 		CT.net.post({
 			path: "/get",
 			params: {
@@ -23,7 +29,7 @@ CAN.widget.stream = {
 			},
 			cb: function(clink) {
 				window.location = clink;
-				setTimeout(function() {
+				noreload || setTimeout(function() {
 					window.location.reload();
 				}, 200); // if page hasn't changed (same pathname)
 			}
