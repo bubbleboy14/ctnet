@@ -183,8 +183,63 @@
 			"about": {
 				"menu": "bigtabbed"
 			},
+			"news": {
+				"right": [
+					{
+						"icon": "clipboard",
+						"section": "buttons",
+						"className": "hidden",
+						"click": "newsclipboard"
+					},
+					{
+						"icon": "invite",
+						"className": "hidden",
+						"click": "newsinvite"
+					}
+				]
+			},
+			"video": {
+				"right": [
+					{
+						"icon": "clipboard",
+						"section": "buttons",
+						"className": "hidden",
+						"click": "videoclipboard"
+					},
+					{
+						"icon": "invite",
+						"className": "hidden",
+						"click": "vidinvite"
+					}
+				]
+			},
+			"referenda": {
+				"right": [
+					{
+						"icon": "clipboard",
+						"section": "buttons",
+						"click": "referendaclipboard"
+					},
+					{
+						"icon": "invite",
+						"click": "refinvite"
+					}
+				]
+			},
 			"cases": {
-				"menu": "bigtabbed"
+				"menu": "bigtabbed",
+				"right": [
+					{
+						"icon": "clipboard",
+						"section": "buttons",
+						"className": "hidden",
+						"click": "caseclipboard"
+					},
+					{
+						"icon": "invite",
+						"click": "caseinvite"
+					}
+				]
 			},
 			"login": {
 				"menu": "bigtabbed"
@@ -218,11 +273,30 @@
 						"section": "Chatter",
 						"clickChild": "sbitemChatter"
 					}
+				],
+				"right": [
+					{
+						"icon": "clipboard",
+						"section": "buttons",
+						"click": "communityclipboard"
+					},
+					{
+						"icon": "invite",
+						"className": "hidden",
+						"clickChild": "comminvite"
+					}
 				]
 			},
 			"recommendations": {
 				"menu": "bigtabbed",
-				"content": "maxwidthoverridestream"
+				"content": "maxwidthoverridestream",
+				"right": [
+					{
+						"icon": "clipboard",
+						"section": "buttons",
+						"click": "recommendationsclipboard"
+					}
+				]
 			}
 		}
 	}
