@@ -55,7 +55,8 @@ onload = function() {
         CAN.categories.heading.style.display = "block";
         caselist.style.display = "block";
         CAN.widget.share.updateShareItem("case");
-        CT.dom.showHide(CAN.media.cases.inviteButton.parentNode, null, true);
+        CT.dom.hide(CAN.media.cases.inviteButton.parentNode);
+        CT.dom.hide("mminvite");
     });
 
     // single case (hash linked or simply clicked)

@@ -4,7 +4,8 @@ CAN.media.video = {
 	"current": null,
 	"viewSingle": function(video) {
 		CAN.media.video.current = video;
-		CT.dom.showHide(CAN.media.video.inviteButton.parentNode, true);
+		CT.dom.show(CAN.media.video.inviteButton.parentNode);
+		CT.dom.show("mminvite");
 		var vnode = CT.dom.id(video.docid);
 		if (!vnode) {
 			vnode = CAN.media.video.build(video, null, true);

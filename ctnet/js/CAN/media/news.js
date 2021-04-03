@@ -81,7 +81,10 @@ CAN.media.news = {
 
 		if (howmuch == "full") {
 			CAN.media.news.current = d;
-			!nocat && CT.dom.showHide(CAN.media.news.inviteButton.parentNode, true);
+			if (!nocat) {
+				CT.dom.show(CAN.media.news.inviteButton.parentNode);
+				CT.dom.show("mminvite");
+			}
 			// body
 			n.appendChild(CT.dom.div(b, "newsbodytext"));
 			//categories

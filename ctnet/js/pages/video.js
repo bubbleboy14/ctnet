@@ -26,7 +26,8 @@ onload = function() {
 
     CAN.categories.loadSorter(function() {
         CAN.widget.share.updateShareItem("video");
-        CT.dom.showHide(CAN.media.video.inviteButton.parentNode, null, true);
+        CT.dom.hide(CAN.media.video.inviteButton.parentNode);
+        CT.dom.hide("mminvite");
     });
 
     CAN.media.loader.load({"mtype": "video", "number": 20, "uid": uid,

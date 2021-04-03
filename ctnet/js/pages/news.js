@@ -64,7 +64,8 @@ onload = function() {
         catheading.style.display = "block";
         newslist.style.display = "block";
         CAN.widget.share.updateShareItem("news");
-        CT.dom.showHide(CAN.media.news.inviteButton.parentNode, null, true);
+        CT.dom.hide(CAN.media.news.inviteButton.parentNode);
+        CT.dom.hide("mminvite");
     });
 
     // chatterbox
