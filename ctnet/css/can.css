@@ -65,24 +65,8 @@ ins {
     color: green;
 }
 
-.button_row {
-    position: fixed;
-    text-align: center;
-    pointer-events: none;
-    -webkit-transition: top 1s, bottom 1s;
-    -moz-transition: top 1s, bottom 1s;
-    -o-transition: top 1s, bottom 1s;
-    transition: top 1s, bottom 1s;
-    right: 0px;
-    left: 0px;
-}
-
-.button_row div {
-    margin: 2px;
-    display: inline-block;
-    background: rgba(255, 255, 255, 0.75);
-    pointer-events: auto;
-    cursor: pointer;
+.button_row_side img {
+    max-width: 20px;
 }
 
 .top_out {
