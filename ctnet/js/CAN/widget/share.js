@@ -131,7 +131,7 @@ CAN.widget.share = {
 			cboard.style.display = "inline";
 			mmcb.style.display = "block";
 			cboardnode.value = CAN.widget.share.pageAddr(lname, frkey, prefix);
-			cboardnode.select();
+//			cboardnode.select();
 		}
 		var cbs = document.getElementsByClassName("casebutton");
 		for (var i = 0; i < cbs.length; i++)
@@ -204,12 +204,13 @@ CAN.widget.share = {
 					cbnode._on = false;
 				} else {
 					cbnode.firstChild.nextSibling.select();
-					if (document.execCommand('copy'))
+					if (document.execCommand('copy')) {
+						cbnode.firstChild.nextSibling.blur();
 						alert("Link saved to clipboard. Great!");
-					else {
+					} else {
 						CT.dom.showHideT(cbnode);
 						cbnode._on = true;
-						cbnode.firstChild.nextSibling.select();
+//						cbnode.firstChild.nextSibling.select();
 					}
 				}
 			}, null, null, "Link To " + CAN.widget.share.type2item[lname], lname + "clipboard"));
