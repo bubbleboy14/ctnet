@@ -12,7 +12,7 @@ CAN.widget.stream = {
 			CT.dom.each(tsvars.node, function(n, i) {
 				n.style.cursor = "pointer";
 				n.onclick = function() {
-					CAN.widget.stream.jumpTo(mdata[i].conversation, true);
+					CAN.widget.stream.jumpTo(mdata[i].conversation);
 				};
 			});
 			cb();
@@ -20,7 +20,7 @@ CAN.widget.stream = {
 		CAN.media.loader.load(tsvars);
 	},
 
-	"jumpTo": function(conversation, noreload) {
+	"jumpTo": function(conversation) {
 		CT.net.post({
 			path: "/get",
 			params: {
@@ -29,9 +29,11 @@ CAN.widget.stream = {
 			},
 			cb: function(clink) {
 				window.location = clink;
-				noreload || setTimeout(function() {
-					window.location.reload();
-				}, 200); // if page hasn't changed (same pathname)
+				location.pathname == "/community.html" &&
+					clink.includes("community.html") &&
+					setTimeout(function() {
+						window.location.reload();
+					}, 200); // if page hasn't changed (same pathname)
 			}
 		});
 	},
