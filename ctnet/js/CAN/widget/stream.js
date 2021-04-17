@@ -91,6 +91,7 @@ CAN.widget.stream = {
 					(new CT.modal.Prompt({
 						transition: "slide",
 						prompt: "please title your meme",
+						resizeRecenter: true,
 						cb: function(val) {
 							CAN.categories.tagAndPost({
 								key: opts.key || opts.type,
@@ -114,6 +115,7 @@ CAN.widget.stream = {
 					clear: true,
 					transition: "slide",
 					prompt: "what's the link?",
+					resizeRecenter: true,
 					cb: function(url) {
 						CT.net.post({
 							path: "/get",
