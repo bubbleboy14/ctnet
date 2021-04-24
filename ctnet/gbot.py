@@ -129,4 +129,8 @@ elif m:
         content += "<div>%s</div>"%(m.body,)
     title += " - %s"%(ta,)
 
+if not img.startswith("http"):
+    from cantools import config
+    img = "https://%s%s"%(config.web.domain, img)
+
 send_text((readfile("/basic.html").decode())%(ta or title, img, description, title, content))
