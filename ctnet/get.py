@@ -35,15 +35,19 @@ def response():
             'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0'
         }).content.decode("utf-8")
         resp = []
+        qchar = '"'
         for flag in ["title", "image", "url"]:
-            fullflag = '"og:%s"'%(flag,)
+            fullflag = '%sog:%s%s'%(qchar, flag, qchar)
+            if fullflag not in data:
+                qchar = "'"
+                fullflag = '%sog:%s%s'%(qchar, flag, qchar)
             if fullflag in data:
                 before, after = data.split(fullflag, 1)
                 if after.startswith(">") or after.startswith(" />"):
-                    sub = before.rsplit('content="', 1)
+                    sub = before.rsplit('content=%s'%(qchar,), 1)
                 else:
-                    sub = after.split('content="')
-                metad = sub[1].split('"')[0]
+                    sub = after.split('content=%s'%(qchar,))
+                metad = sub[1].split(qchar)[0]
                 if flag == "image":
                     metad = metad.replace(" ", "%20")
                 resp.append(metad)
