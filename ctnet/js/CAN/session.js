@@ -136,7 +136,7 @@ CAN.session = {
 	    welbar.appendChild(rd);
 
 	    var greeting = CT.dom.node("", "span", "italic");
-	    greeting.appendChild(CT.dom.node((new Date()).toDateString() + " ... Welcome ", "span"));
+	    greeting.appendChild(CT.dom.span((new Date()).toDateString().slice(0, -5) + " ... Welcome "));
 	    CAN.session.welcomeFirstName.innerHTML = fn;
 	    greeting.appendChild(CAN.session.welcomeFirstName);
 	    greeting.appendChild(CT.dom.node(" to CAN, a wiki-style forum for peaceful activism.", "span"));
