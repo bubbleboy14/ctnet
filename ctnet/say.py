@@ -11,11 +11,17 @@ def emailCommentReceived(user, u, ctitle, storylink, content, body):
 def response():
     uid = db.KeyWrapper(urlsafe=cgi_get('uid'))
     cid = cgi_get('conversation')
+    key = cgi_get("key", required=False)
     body = cgi_get('body', required=False)
     topic = cgi_get('topic', required=False)
     privlist = cgi_get('privlist', required=False)
     contentkey = cgi_get('contentkey', required=False)
 
+    if key:
+        comm = db.get(key)
+        comm.body = body
+        comm.put()
+        succeed()
     if cid == "conversation":
         user = uid.get()
         privlist = [db.KeyWrapper(urlsafe=k) for k in privlist]
