@@ -47,10 +47,11 @@ CAN.widget.conversation = {
 		n.appendChild(CAN.session.firstLastLink(CT.data.get(c.user),
 			null, null, null, !uid));
 		n.appendChild(CT.dom.node(" says: ", "b"));
-		n.appendChild(CT.dom.span(CT.parse.process(c.body)));
+		n._commonly = CT.dom.span(CT.parse.process(c.body));
+		n.appendChild(n._commonly);
 		return n;
 	},
-	"comment": function(c, commentsnode, uid, noflagging) {
+	"comment": function(c, commentsnode, uid, noflagging, allowedit) {
 		var _ = CAN.widget.conversation._,
 			righty = CT.dom.div(CT.dom.img("/img/buttons/clipboard.png",
 			"clip", function() {
@@ -59,7 +60,29 @@ CAN.widget.conversation = {
 					-5), CAN.cookie.flipReverse(c.key), shr.currentSharePrefix));
 			}), "right clearnode"),
 			commentnode = CT.dom.div(righty, "comment", "com_" + c.key);
-		if (!noflagging) {
+		if (allowedit) {
+			righty.appendChild(CT.dom.button("Edit", function() {
+				CT.modal.prompt({
+					isTA: true,
+					value: c.body,
+					cb: function(val) {
+						CT.net.post({
+							path: "/say",
+							params: {
+								uid: uid,
+								body: val,
+								key: c.key,
+								conversation: c.conversation
+							},
+							cb: function() {
+								c.body = val;
+								CT.dom.setContent(commentnode._commonly, CT.parse.process(val));
+							}
+						});
+					}
+				});
+			}));
+		} else if (!noflagging) {
 			righty.appendChild(CT.dom.button("Flag", function() {
 				var prob = prompt("What's the problem?");
 				if (!prob) return;
@@ -119,10 +142,10 @@ CAN.widget.conversation = {
 					b = core.config.ctnet.conversation.comment_prefix + b;
 					CT.net.post("/say", {"uid": uid, "conversation": ckey,
 						"body": b, "contentkey": contentkey},
-						"error posting comment", function(ckey) {
+						"error posting comment", function(commkey) {
 							CAN.widget.conversation.comment({
-								user: uid, body: b, key: ckey
-							}, commentsnode, uid, noflagging);
+								user: uid, body: b, key: commkey, conversation: ckey
+							}, commentsnode, uid, noflagging, true);
 							cbody.value = "";
 							cbody.focus();
 							charcount.innerHTML = "(" + charlimit + " chars left)"; });
