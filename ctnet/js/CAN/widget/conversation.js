@@ -13,7 +13,13 @@ CAN.widget.conversation = {
 			"Click 'Share', then '<>' ('Embed this content'), then copy the link (after 'src=', without the quotes) in the 'Embedded' section.",
 			CT.dom.div("otherwise", "big bold"),
 			"In all other cases, you should be able to just drop in a regular link.",
-			"Give it a shot! If it doesn't work, you can always edit your comment ;)"
+			CT.dom.div("CAN content:", "bigger bold inline-block"),
+			CT.dom.img("/img/buttons/clipboard.png", "vsub"),
+			"Look for a little picture of a clipboard. You'll generally see it to the right of whatever you're looking at (a video, article, referendum, case, etc), near the top of the page.",
+			"Additionally, if you select (click on) a comment, a little clipboard will appear next to it.",
+			"Clicking on a clipboard copies a link to _your_ clipboard!",
+			CT.dom.div("anyway", "bigger bold"),
+			"Give it a shot! Try embedding various types of content -- including other comments -- into your comments! What have you got to lose? If it doesn't look right, you can always edit! ;)",
 		], "kidvp")
 	},
 	"setCommentPrefix": function(cp) {
@@ -82,6 +88,8 @@ CAN.widget.conversation = {
 					isTA: true,
 					value: c.body,
 					cb: function(val) {
+						if (val.length > 500)
+							return alert("please keep it under 500 characters!!");
 						CT.net.post({
 							path: "/say",
 							params: {
@@ -91,8 +99,6 @@ CAN.widget.conversation = {
 								conversation: c.conversation
 							},
 							cb: function() {
-								if (val.length > 500)
-									return alert("please keep it under 500 characters!!");
 								c.body = val;
 								CT.dom.setContent(commentnode._commonly, CT.parse.process(val));
 							}
