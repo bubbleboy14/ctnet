@@ -793,6 +793,12 @@ a:hover, .red {
     height: 200px;
 }
 
+.basicpopup textarea {
+    width: 400px;
+    height: 200px;
+    display: block;
+}
+
 .adminpopup {
     z-index: 5;
     position: fixed;
