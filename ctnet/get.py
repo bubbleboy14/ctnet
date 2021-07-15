@@ -9,6 +9,23 @@ from model import db
 def isRandom():
     return cgi_get('random', default=False) or not cgi_get('number', default=False)
 
+def og(data, flag, pref="og"):
+    qchar = '"'
+    fullflag = '%s%s:%s%s'%(qchar, pref, flag, qchar)
+    if fullflag not in data:
+        qchar = "'"
+        fullflag = '%s%s:%s%s'%(qchar, pref, flag, qchar)
+    if fullflag in data:
+        before, after = data.split(fullflag, 1)
+        if after.startswith(">") or after.startswith(" />"):
+            sub = before.rsplit('content=%s'%(qchar,), 1)
+        else:
+            sub = after.split('content=%s'%(qchar,))
+        metad = sub[1].split(qchar)[0]
+        if flag == "image":
+            metad = metad.replace(" ", "%20")
+        return metad
+
 def response():
     gtype = cgi_get('gtype')
     uid = cgi_get('uid', required=False)
@@ -35,24 +52,16 @@ def response():
             'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0'
         }).content.decode("utf-8")
         resp = []
-        qchar = '"'
-        for flag in ["title", "image", "url"]:
-            fullflag = '%sog:%s%s'%(qchar, flag, qchar)
-            if fullflag not in data:
-                qchar = "'"
-                fullflag = '%sog:%s%s'%(qchar, flag, qchar)
-            if fullflag in data:
-                before, after = data.split(fullflag, 1)
-                if after.startswith(">") or after.startswith(" />"):
-                    sub = before.rsplit('content=%s'%(qchar,), 1)
-                else:
-                    sub = after.split('content=%s'%(qchar,))
-                metad = sub[1].split(qchar)[0]
-                if flag == "image":
-                    metad = metad.replace(" ", "%20")
-                resp.append(metad)
-            elif flag == "url":
-                resp.append(url)
+        titog = og(data, "title")
+        if titog:
+            resp.append(titog)
+        imgog = og(data, "image")
+        imgtw = og(data, "image", "twitter")
+        if imgog and imgtw:
+            resp.append(len(imgog) < len(imgtw) and imgog or imgtw)
+        elif imgog or imgtw:
+            resp.append(imgog or imgtw)
+        resp.append(og(data, "url") or url)
         resp = " ".join(resp)
         if len(resp) > 500:
             succeed(url)
