@@ -1,5 +1,21 @@
 CAN.widget.conversation = {
-	_: {},
+	_: {
+		tips: CT.dom.div([
+			CT.dom.div("How to embed stuff", "biggest bold centered"),
+			"For articles, web pages, and the like, just use the 'Embed Link' button to assemble the corresponding title, image and link.",
+			"For videos, images, and audio files, just try dropping in the link - most should embed automatically.",
+			CT.dom.div("video players", "bigger bold"),
+			"We support DTube, BitChute, Rumble, Odysee, lbryplayer, UGETube, GabTV, Vimeo, YouTube, Google Video, Facebook, and uStream.",
+			"We also support raw video files - mp4, ogg, webm, and mov.",
+			CT.dom.div("rumble", "big bold"),
+			"Use the 'Embed IFRAME URL' link you get when you click 'EMBED' on a Rumble video.",
+			CT.dom.div("odysee", "big bold"),
+			"Click 'Share', then '<>' ('Embed this content'), then copy the link (after 'src=', without the quotes) in the 'Embedded' section.",
+			CT.dom.div("otherwise", "big bold"),
+			"In all other cases, you should be able to just drop in a regular link.",
+			"Give it a shot! If it doesn't work, you can always edit your comment ;)"
+		], "kidvp")
+	},
 	"setCommentPrefix": function(cp) {
 		core.config.ctnet.conversation.comment_prefix = cp ? "<b>[" + cp + "]</b> " : "";
 	},
@@ -75,6 +91,8 @@ CAN.widget.conversation = {
 								conversation: c.conversation
 							},
 							cb: function() {
+								if (val.length > 500)
+									return alert("please keep it under 500 characters!!");
 								c.body = val;
 								CT.dom.setContent(commentnode._commonly, CT.parse.process(val));
 							}
@@ -130,7 +148,7 @@ CAN.widget.conversation = {
 					}
 				});
 			}
-		});
+		}), cwidg = CAN.widget.conversation;
 		var rinput = CT.dom.richInput(convonode, taid,
 			ckey != "conversation" && CT.dom.div([
 				CT.dom.button("Add Comment", function() {
@@ -143,14 +161,15 @@ CAN.widget.conversation = {
 					CT.net.post("/say", {"uid": uid, "conversation": ckey,
 						"body": b, "contentkey": contentkey},
 						"error posting comment", function(commkey) {
-							CAN.widget.conversation.comment({
+							cwidg.comment({
 								user: uid, body: b, key: commkey, conversation: ckey
 							}, commentsnode, uid, noflagging, true);
 							cbody.value = "";
 							cbody.focus();
 							charcount.innerHTML = "(" + charlimit + " chars left)"; });
 				}),
-				CT.dom.button("Embed Link", linkMod.show)
+				CT.dom.button("Embed Link", linkMod.show),
+				CT.dom.button("Tips & Tricks", () => CT.modal.modal(cwidg._.tips))
 			]) || null, null, charlimit, blurs, ckey == "conversation");
 	},
 	"load": function(uid, ckey, convonode, contentkey, taid, noflagging, charlimit, blurs) {
