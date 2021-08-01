@@ -198,6 +198,12 @@ CAN.media.event = {
 	        n.appendChild(CT.dom.node(d.rideshares.length + " rideshares",
 	            "div", "bottompadded", d.key+"ridesharelink"));
 	    if (d.tasks.length > 0) {
+	    	var newtask = function(task, uid, canvolunteer) {
+	    		return CT.dom.div([ // TODO: also add volunteer stuff.....
+	    			CT.dom.div(task.title, "big bold"),
+	    			task.description
+	    		]);
+	    	};
 	        n.appendChild(CT.dom.node("Tasks", "div", "blue bold"));
 	        var tbox = CT.dom.node();
 	        var canvolunteer = v.uid != "nouid";
