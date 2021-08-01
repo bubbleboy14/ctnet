@@ -96,7 +96,7 @@ onload = function() {
         CT.net.post("/login", {"email": EUemail.value, "password": password.value}, "login error", function(udata) {
             CAN.cookie.set(udata.key, udata.firstName, udata.lastName, udata.site_wide_chat);
             if (udata.issecure)
-                document.location = "/profile.html";
+                document.location = "/community.html#!Stream";
             else
                 document.location = "/security.html";
         }, function() { alert("login failed! are you sure that's your password?"); });
