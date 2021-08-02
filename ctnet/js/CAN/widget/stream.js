@@ -140,12 +140,23 @@ CAN.widget.stream = {
 							return alert("say what?");
 						var postOpts = {"key": opts.key || opts.type};
 						postOpts[opts.bodyproperty || 'body'] = b.replace(/%E2%80%99/g, "'");
-						CAN.categories.tagAndPost(postOpts, function(item) {
-							CT.data.add(item);
-							addNode(item);
-							cbody.value = "";
-							charcount.innerHTML = "(500 chars left)";
-						}, 'anonymous');
+						CT.modal.prompt({
+							style: "confirm",
+							prompt: [
+								CT.dom.div("you're about to post:", "centered bold"),
+								CT.dom.div(CT.parse.process(b),
+									"padded bordered round maxwidthoverride")
+							],
+							noClose: true,
+							cb: function() {
+								CAN.categories.tagAndPost(postOpts, function(item) {
+									CT.data.add(item);
+									addNode(item);
+									cbody.value = "";
+									charcount.innerHTML = "(500 chars left)";
+								}, 'anonymous');
+							}
+						});
 					}),
 					CT.dom.button("Embed Link", linkMod.show)
 				]));
