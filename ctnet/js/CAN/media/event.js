@@ -199,7 +199,7 @@ CAN.media.event = {
 	            "div", "bottompadded", d.key+"ridesharelink"));
 	    if (d.tasks.length > 0) {
 	    	var newtask = function(task, uid, canvolunteer) {
-	    		return CT.dom.div([ // TODO: also add volunteer stuff.....
+	    		return CT.dom.div([ // TODO: also add volunteer/rideshare stuff.....
 	    			CT.dom.div(task.title, "big bold"),
 	    			task.description
 	    		]);
