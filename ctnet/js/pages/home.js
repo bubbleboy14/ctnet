@@ -100,6 +100,38 @@ onload = function() {
         topRefilling && wevent.preventDefault();
     };
 
+    // memez [scrolly]
+    var memez = CT.dom.id("memez"), mindex = 0, mchunk = 7, memeRefilling;
+    CT.hover.set(memez, CT.dom.marquee("scroll for more!", null, null, true));
+    var memeRefill = function() {
+        if (memeRefilling) return;
+        memeRefilling = true;
+        CT.db.get("meme", function(memes) {
+            CT.dom.addContent(memez, memes.map(function(m) {
+                return CT.dom.link([
+                    CT.dom.img(m.image),
+                    CT.dom.div(m.title, "abs all0 h100 pt100 white centered overlay nonowrap")
+                ], null, "/community.html#!Memes|" + CAN.cookie.flipReverse(m.key),
+                    "pointer relative inline-block");
+            }));
+            memeRefilling = false;
+            mindex += mchunk;
+        }, mchunk, mindex, "-created");
+    };
+    memeRefill();
+    memez.onwheel = function(wevent) {
+        if (!memez._scrolled) {
+            CT.hover.unset(memez);
+            memez._scrolled = true;
+            memez.style.overflowX = "scroll";
+        }
+        memez.scrollLeft += wevent.deltaY;
+        if (memez.scrollLeft + memez.clientWidth == memez.scrollWidth)
+            memeRefill();
+        wevent.preventDefault();
+        wevent.stopPropagation();
+    };
+
     // forum (more like hot topics)
     CT.net.post("/get", {
         "gtype": "media", "mtype": "comment", "number": 60
