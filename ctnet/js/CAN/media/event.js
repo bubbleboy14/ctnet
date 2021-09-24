@@ -127,7 +127,7 @@ CAN.media.event = {
 	    n.appendChild(CT.dom.node(CAN.media.event._zip(d.where.zipcode), "div", "bottompadded"));
 	    n.appendChild(CT.dom.node("When", "div", "blue bold"));
 	    n.appendChild(CT.dom.node(d.when.full, "div", "bottompadded"));
-	    n.appendChild(CT.dom.node("Transportation", "div", "blue bold"));
+/*	    n.appendChild(CT.dom.node("Transportation", "div", "blue bold"));
 	    n.appendChild(CT.dom.node("More cars, bigger event."));
 	    if (v.uid && v.uid != "nouid") {
 	        var rsbox = CT.align.centered(CT.dom.node("", "div", "hidden adminpopup"));
@@ -196,7 +196,7 @@ CAN.media.event = {
 	    }
 	    else
 	        n.appendChild(CT.dom.node(d.rideshares.length + " rideshares",
-	            "div", "bottompadded", d.key+"ridesharelink"));
+	            "div", "bottompadded", d.key+"ridesharelink"));*/
 	    if (d.tasks.length > 0) {
 	    	var newtask = function(task, uid, canvolunteer) {
 	    		return CT.dom.div([ // TODO: also add volunteer/rideshare stuff.....
