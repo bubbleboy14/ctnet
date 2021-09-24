@@ -82,7 +82,7 @@ CAN.media.event = {
 	    n.appendChild(topnode);
 	    n.appendChild(CT.dom.node(CAN.media.event._desc(d.description),
 	        "div", "bottompadded"));
-	    n.appendChild(CT.dom.node("Who", "div", "blue bold"));
+/*	    n.appendChild(CT.dom.node("Who", "div", "blue bold"));
 	    if (v.uid && v.uid != "nouid") {
 	        var abox = CT.align.centered(CT.dom.node("", "div", "hidden adminpopup"));
 	        n.appendChild(abox);
@@ -118,7 +118,7 @@ CAN.media.event = {
 	    }
 	    else
 	        n.appendChild(CT.dom.node(d.attendees.length + " attendees",
-	            "div", "bottompadded", d.key+"attendeelink"));
+	            "div", "bottompadded", d.key+"attendeelink"));*/
 	    n.appendChild(CT.dom.node("Where", "div", "blue bold"));
 	    n.appendChild(CT.dom.node(CT.dom.link(d.where.name, function() {
 	    	v.showMarker(d.key);
