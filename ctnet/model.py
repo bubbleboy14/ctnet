@@ -1,3 +1,5 @@
+import magic
+from cantools.util import read, cmd, rm
 from cantools import config
 from .ctmodel import *
 from functools import reduce
@@ -709,6 +711,7 @@ class Meme(CategoriedVotingModel, Searchable):
     conversation = db.ForeignKey(kind=Conversation)
     title = db.String()
     image = db.Binary()
+    video = db.Binary()
 
     def verb(self):
         return "review"
@@ -727,12 +730,27 @@ class Meme(CategoriedVotingModel, Searchable):
             return ["community"]
         return "%s/community.html#!Memes%%7C%s"%(DOMAIN, flipQ(self.key.urlsafe()))
 
+    def blobify(self, data):
+        ft = magic.from_buffer(data, True)
+        if ft.startswith("video"):
+            self.video = data
+            self.put()
+            ti = "_v2itmp.jpg"
+            cmd("ffmpeg -i %s %s"%(self.video.path, ti))
+            self.image = read(ti)
+            rm(ti)
+        else:
+            self.image = data
+        self.put()
+
     def mydata(self):
         return {"uid": self.user and self.user.urlsafe() or None,
                 "user": self.user and self.user.get().firstName or "Anonymous",
                 "conversation": self.conversation and self.conversation.urlsafe() or None,
                 "mtype": "meme",
-                "title": self.title, "image": self.image.urlsafe(),
+                "title": self.title,
+                "image": self.image.urlsafe(),
+                "video": self.video and self.video.urlsafe() or None,
                 "date": self.date.date().strftime("%a %b %d")}
 
 class Thought(CategoriedVotingModel, Searchable):
