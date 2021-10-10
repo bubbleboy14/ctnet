@@ -42,8 +42,18 @@ CAN.widget.stream = {
 		var n = CT.dom.div("", "padded bordered round bottommargined"), onclick = function() {
 			opts.onclick && opts.onclick(d);
 		};
-		if (opts.type == "meme")
-			n.appendChild(CT.dom.img(d.image, opts.onclick && "pointer", onclick));
+		if (opts.type == "meme") {
+			var inode = CT.dom.img(d.image, d.video || opts.onclick && "pointer", function() {
+				d.video ? CT.dom.replace(inode, CT.dom.video({
+					src: d.video,
+					controls: true,
+					className: "w1"
+				})) : onclick();
+			});
+			if (d.video)
+				inode = CT.dom.div(inode, "vidthumb");
+			n.appendChild(inode);
+		}
 		var tnode = CT.dom.node(CT.parse.process(d[opts.type] || d.body || d.idea || d.title,
 			false, opts.processArg));
 		if (opts.onclick) {
@@ -97,14 +107,17 @@ CAN.widget.stream = {
 								key: opts.key || opts.type,
 								title: val
 							}, function(item) {
-								ctfile.upload("/_db", function(url) {
-									item.image = url;
+								ctfile.upload("/_db", function(idata) {
+									item.image = idata.image;
+									if (idata.video)
+										item.video = idata.video;
 									CT.data.add(item);
 									addNode(item);
 								}, {
 									action: "blob",
 									key: item.key,
-									property: "image"
+									setter: "blobify"
+									//property: "image"
 								});
 							}, 'anonymous');
 						}
