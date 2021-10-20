@@ -77,8 +77,9 @@ setTimeout(function() {
 		}
 	};
 
-	if (CT && CT.dom && CT.dom.ALLNODE) {
-		CT.dom.ALLNODE.chatBlock = function() {
+//	if (CT && CT.dom && CT.dom.ALLNODE) {
+	if (typeof ALLNODE != "undefined") {
+		ALLNODE.chatBlock = function() {
 			var w = window.innerWidth;
 			if (!blocker._on && w < IFR_EXP_WIDTH) {
 				blocker._on = true;
