@@ -134,9 +134,12 @@ CAN.frame = {
 	"CHATINFO": "Chat live with other CAN users! Not your thing? If you don't feel like talking, you can disable the Site Wide Chat Widget on the profile page.",
 	"loadSiteWideChat": function() {
 	    document.body.appendChild(CT.dom.script(CT.net._encode &&
-	        "/lib/chat.js" || "/js/lib/chat.js"));
-	    document.body.appendChild(CT.dom.script(null,
-	        'CT.dom.doWhenNodeExists("canchatiframe", function() { CAN.frame.setInfoBubble(CT.dom.id("canchatiframe"), CAN.frame.CHATINFO, true); });', true));
+	        "/lib/chat.js" || "/js/lib/chat.js", null, null, () => {
+	        	CT.dom.doWhenNodeExists("canchatiframe", function() {
+	        		CAN.frame.setInfoBubble(CT.dom.id("canchatiframe"),
+	        			CAN.frame.CHATINFO, true);
+	        	});
+	        }));
 	},
 
 	// login buttonization
