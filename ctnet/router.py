@@ -1,5 +1,5 @@
 import os
-from util import respond, redirect, send_text, send_file, readfile
+from util import respond, redirect, send_text, send_file, readfile, getcached
 
 def response():
     if "_escaped_fragment_" in os.environ.get("QUERY_STRING"):
@@ -23,7 +23,8 @@ def response():
         send_file(readfile("favicon.ico"), "ico")
 
     if pname in allowed or "tiny_mce" in pname:
-        send_text(readfile(pi), ptype)
+        data, headers = getcached(pi)
+        send_text(data, ptype, headers=headers)
 
     redirect("/404.html")
 
