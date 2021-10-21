@@ -1,4 +1,5 @@
 from base64 import b64encode, b64decode
+from dez.http.static import StaticStore
 from cantools import config
 from cantools.web import *
 try:
@@ -14,6 +15,8 @@ RCK = config.recaptcha
 _c = config.scrambler
 _cl = len(_c)
 _chl = _cl / 2
+
+filestore = StaticStore()
 
 def truncate(s):
     cutoff = s.find("<br><br>", 100)
@@ -46,14 +49,20 @@ def flipRStripStroke(s):
 def flipQ(s):
     return quote(flipR(s))
 
-def readfile(pname):
+def mapfile(pname):
     if pname == "favicon.ico":
-        pname = os.path.join("img", pname)
+        return os.path.join("img", pname)
     elif "tiny_mce" in pname and config.mode != "production":
-        pname = pname[1:]
+        return pname[1:]
     else:
-        pname = "%s%s"%(config.mode == "dynamic" and "html" or "html-%s"%(config.mode,), pname)
-    f = open(pname, "rb")
+        return "%s%s"%(config.mode == "dynamic" and "html" or "html-%s"%(config.mode,), pname)
+
+def getcached(pname, req=None):
+    return filestore.read(mapfile(pname),
+        req or local("response").request)
+
+def readfile(pname):
+    f = open(mapfile(pname), "rb")
     d = f.read()
     f.close()
     return d
