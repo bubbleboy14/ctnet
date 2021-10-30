@@ -406,7 +406,7 @@ CAN.media.loader = {
 		var photoSplit = url.split("gtype=graphic&key=");
 		if (photoSplit.length > 1)
 			return '<img src="' + url + '">';
-		if (url.indexOf("youtube.com") != -1) {
+		if (url.indexOf("youtube.com/watch") != -1) {
 			var key = url.split("v=")[1].split("&")[0],
 				keyran = key + Math.floor(1000 + Math.random() * 1000);
 			return '<div class="vidthumb" id="' + keyran + '"><img class="pointer" src="https://img.youtube.com/vi/' + key + '/0.jpg" onclick="__me.loader.ytUnthumb(\'' + keyran + '\', arguments[0])"></div>';
