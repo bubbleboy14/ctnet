@@ -409,7 +409,7 @@ CAN.media.loader = {
 		if (url.indexOf("youtube.com") != -1) {
 			var key = url.split("v=")[1].split("&")[0],
 				keyran = key + Math.floor(1000 + Math.random() * 1000);
-			return '<div class="vidthumb" id="' + keyran + '"><img class="pointer" src="https://img.youtube.com/vi/' + key + '/0.jpg" onclick="CAN.media.loader.ytUnthumb(\'' + keyran + '\', arguments[0])"></div>';
+			return '<div class="vidthumb" id="' + keyran + '"><img class="pointer" src="https://img.youtube.com/vi/' + key + '/0.jpg" onclick="__me.loader.ytUnthumb(\'' + keyran + '\', arguments[0])"></div>';
 		}
 		// thoughts, events, cases, memes, opinions, papers
 		for (var i = 0; i < CAN.media.loader._linkTypes.length; i++) {
@@ -421,7 +421,7 @@ CAN.media.loader = {
 				skey = url.split(ltype + ".html#!")[1];
 			if (skey) {
 				var key = CAN.cookie.flipReverse(skey);
-				return '<div class="pointer" onclick="CAN.media.' + ltype + '.jump(\'' + key + '\')">'
+				return '<div class="pointer" onclick="__me.' + ltype + '.jump(\'' + key + '\')">'
 					+ CT.dom.node(CAN.media[ltype].htmlSafe(key)).innerHTML + "</div>";
 			}
 		}
@@ -445,6 +445,7 @@ CAN.media.loader = {
 		}
 	}
 };
+window.__me = CAN.media;
 
 CT.parse.setLinkProcessor(CAN.media.loader.linkProcessor);
 CAN.media.loader.registerBuilder("lister", CAN.media.loader.listOne);
