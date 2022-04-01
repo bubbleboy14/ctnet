@@ -2,12 +2,14 @@ import magic
 from cantools.util import read, cmd, rm
 from cantools import config
 from .ctmodel import *
-from functools import reduce
+from functools import reduce, cmp_to_key
 
 setzipdomain(config.zipdomain)
 
 def _lensort(a, b):
     return len(b) - len(a)
+
+lskey = cmp_to_key(_lensort)
 
 class Searchable(object):
     def string2words(self, searchstring):
@@ -15,7 +17,7 @@ class Searchable(object):
         if hasattr(self, "conversation") and self.conversation:
             searchstring += " " + self.conversation.get().search_string()
         words = [w for w in set(strip_punctuation(strip_html(searchstring)).lower().split(" ")) if len(w) > 2 and len(w) < 20]
-        words.sort(cmp=_lensort)
+        words.sort(key=lskey)
         return words[:500]
 
     def setSearchWords(self):

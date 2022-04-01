@@ -211,7 +211,7 @@ def getip():
 
 def hashpass(password, date):
     import hashlib
-    return hashlib.md5(password + str(date.date()).replace('-','')).hexdigest()
+    return hashlib.md5((password + str(date.date()).replace('-','')).encode()).hexdigest()
 
 def getzip(code):
     if len(code) < 5:
