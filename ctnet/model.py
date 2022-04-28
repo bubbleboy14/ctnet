@@ -1677,23 +1677,23 @@ class Video(CategoriedVotingModel, Searchable, Approvable):
                  "date": self.date.date().strftime("%A %B %d, %Y") }
 
     def makethumb(self):
+        from cantools.web import fetch
         self.docid = self.docid.strip()
-        if self.player == "dtube":
-            from cantools.web import fetch
+        if self.player == "rumble":
+            self.thumbnail = fetch("https://rumble.com/embed/%s"%(self.docid,)).split('"i":"')[1].split('"')[0].replace("\\", "")
+        elif self.player == "dtube":
             self.thumbnail = fetch("api.d.tube", path="/oembed", asjson=True, protocol="https", qsp={
                 "url": "https://d.tube/v/%s"%(self.docid,)
             })["thumbnail_url"]
         elif self.player == "youtube":
             self.thumbnail = "https://img.youtube.com/vi/%s/0.jpg"%(self.docid,)
         elif self.player == "google":
-            from cantools.web import fetch
             data = fetch("video.google.com", "/videofeed?docid=%s"%(self.docid,))
             s1 = '<media:thumbnail url="'
             i = data.index(s1) + len(s1)
             j = data.index('"', i)
             self.thumbnail = data[i:j]
         elif self.player == "vimeo":
-            from cantools.web import fetch
             self.thumbnail = fetch("vimeo.com", "/api/v2/video/%s.json"%(self.docid,), asjson=True)[0]['thumbnail_small']
         else:
             from .util import fail
