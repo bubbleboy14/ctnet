@@ -387,7 +387,7 @@ onload = function() {
 
     // latest videos
     var latestvideos = CT.dom.node("", "div",
-        "thumb awhite blackimg dashedgrayleft", "latestVideos");
+        "vthumb awhite blackimg dashedgrayleft", "latestVideos");
     feat.appendChild(CT.align.absed(latestvideos, 612, 293 + vOffset));
     CAN.media.loader.load({"mtype": "video", "layout": "tiled", "node": latestvideos,
         "number": 4, "width": 2, "nextimg": "MORE_VIDEO_BUTTON_BLUE_TRANS.png",
