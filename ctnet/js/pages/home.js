@@ -358,7 +358,7 @@ onload = function() {
         null, "/news.html"), "div", "bold whitelink"), 300, 273 + vOffset));
     feat.appendChild(CT.align.absed(CT.dom.button("new", function() {
         location = "/participate.html#Videographer";
-    }, "bold"), 803, 268 + vOffset));
+    }, "bold"), 843, 268 + vOffset));
     feat.appendChild(CT.align.absed(CT.dom.button("new", function() {
         location = "/participate.html#Reporter";
     }, "bold"), 560, 268 + vOffset));
