@@ -967,8 +967,9 @@ a:hover, .red {
     max-height: 100px;
 }
 
-.vthumb img {
-    width: 125px;
+.vthumb img:not(:last-child) {
+    width: 120px;
+    height: 90px;
 }
 
 .whiteimg img {
