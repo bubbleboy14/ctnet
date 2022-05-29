@@ -395,7 +395,7 @@ onload = function() {
 
     // latest news
     var latestnews = CT.dom.node("", "div",
-        "smallthumb awhite whiteimg w300", "latestNews");
+        "newsthumb awhite whiteimg w300", "latestNews");
     feat.appendChild(CT.align.absed(latestnews, 300, 298 + vOffset));
     CAN.media.loader.load({"mtype": "news", "node": latestnews,
         "nextimg": "MORE_NEWS_BUTTON_BLUE_TRANS.png",
