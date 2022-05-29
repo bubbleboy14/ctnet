@@ -986,6 +986,11 @@ a:hover, .red {
     border: 1px solid white;
 }
 
+.newsthumb img {
+    max-height: 67px;
+    border: 1px solid white;
+}
+
 #toppic {
     width: 420px !important;
     max-width: 420px !important;
