@@ -1,8 +1,9 @@
 import requests
 try:
-    from html.parser import HTMLParser # py3
+    import html # py3
 except:
-    from HTMLParser import HTMLParser #py2
+    from HTMLParser import HTMLParser # py2
+    html = HTMLParser()
 from util import respond, succeed, fail, cgi_get, trysavedresponse, setcachedefault
 from model import db
 
@@ -65,7 +66,7 @@ def response():
         resp = " ".join(resp)
         if len(resp) > 500:
             succeed(url)
-        succeed(HTMLParser.unescape.__func__(HTMLParser, resp))
+        succeed(html.unescape(resp))
 
     if gtype == "fstats":
         user = db.get(uid)
