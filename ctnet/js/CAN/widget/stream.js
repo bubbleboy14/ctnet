@@ -161,6 +161,8 @@ CAN.widget.stream = {
 									"padded bordered round maxwidthoverride")
 							],
 							noClose: true,
+							recenter: true,
+							resizeRecenter: true,
 							cb: function() {
 								CAN.categories.tagAndPost(postOpts, function(item) {
 									CT.data.add(item);
