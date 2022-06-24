@@ -1,10 +1,5 @@
 import requests
-try:
-    import html # py3
-except:
-    from HTMLParser import HTMLParser # py2
-    html = HTMLParser()
-from util import respond, succeed, fail, cgi_get, trysavedresponse, setcachedefault
+from util import respond, succeed, fail, cgi_get, trysavedresponse, setcachedefault, fetch, strip_html
 from model import db
 
 def isRandom():
@@ -26,6 +21,14 @@ def og(data, flag, pref="og"):
         if flag == "image":
             metad = metad.replace(" ", "%20")
         return metad
+
+def ts(url):
+    resp = fetch("https://truthsocial.com/api/v1/statuses/%s"%(url.split("/").pop(),), asjson=True)
+    card = resp["card"]
+    if card["type"] == "video":
+        return [resp["content"], card["html"].split('"')[1], url]
+    else:
+        return [card["title"], card["image"], card["url"]]
 
 def response():
     gtype = cgi_get('gtype')
@@ -49,24 +52,27 @@ def response():
 
     if gtype == "og":
         url = cgi_get("url")
-        data = requests.get(url, headers={
-            'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0'
-        }).content.decode("utf-8")
-        resp = []
-        titog = og(data, "title")
-        if titog:
-            resp.append(titog)
-        imgog = og(data, "image")
-        imgtw = og(data, "image", "twitter")
-        if imgog and imgtw:
-            resp.append(len(imgog) < len(imgtw) and imgog or imgtw)
-        elif imgog or imgtw:
-            resp.append(imgog or imgtw)
-        resp.append(og(data, "url") or url)
-        resp = " ".join(resp)
+        if "truthsocial" in url:
+            resp = ts(url)
+        else:
+            data = requests.get(url, headers={
+                'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0'
+            }).content.decode("utf-8")
+            resp = []
+            titog = og(data, "title")
+            if titog:
+                resp.append(titog)
+            imgog = og(data, "image")
+            imgtw = og(data, "image", "twitter")
+            if imgog and imgtw:
+                resp.append(len(imgog) < len(imgtw) and imgog or imgtw)
+            elif imgog or imgtw:
+                resp.append(imgog or imgtw)
+            resp.append(og(data, "url") or url)
+        resp = strip_html(" ".join(resp))
         if len(resp) > 500:
             succeed(url)
-        succeed(html.unescape(resp))
+        succeed(resp)
 
     if gtype == "fstats":
         user = db.get(uid)
