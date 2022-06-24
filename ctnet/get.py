@@ -1,3 +1,8 @@
+try:
+    import html # py3
+except:
+    from HTMLParser import HTMLParser # py2
+    html = HTMLParser()
 import requests
 from util import respond, succeed, fail, cgi_get, trysavedresponse, setcachedefault, fetch, strip_html
 from model import db
@@ -69,7 +74,7 @@ def response():
             elif imgog or imgtw:
                 resp.append(imgog or imgtw)
             resp.append(og(data, "url") or url)
-        resp = strip_html(" ".join(resp))
+        resp = html.unescape(strip_html(" ".join(resp)))
         if len(resp) > 500:
             succeed(url)
         succeed(resp)
