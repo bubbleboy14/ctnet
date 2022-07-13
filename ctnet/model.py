@@ -1,5 +1,5 @@
 import magic
-from cantools.util import read, cmd, rm
+from cantools.util import read, cmd, rm, shouldMoveMoov, transcode
 from cantools import config
 from .ctmodel import *
 from functools import reduce, cmp_to_key
@@ -741,6 +741,7 @@ class Meme(CategoriedVotingModel, Searchable):
             cmd("ffmpeg -i %s %s"%(self.video.path, ti))
             self.image = read(ti)
             rm(ti)
+            shouldMoveMoov(self.video.path) and transcode(self.video.path)
         else:
             self.image = data
         self.put()
