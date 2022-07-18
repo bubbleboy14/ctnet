@@ -4,36 +4,12 @@ except:
     from HTMLParser import HTMLParser # py2
     html = HTMLParser()
 import requests
-from util import respond, succeed, fail, cgi_get, trysavedresponse, setcachedefault, fetch, strip_html
+from ctnet.meta import og, ts
+from util import respond, succeed, fail, cgi_get, trysavedresponse, setcachedefault, strip_html
 from model import db
 
 def isRandom():
     return cgi_get('random', default=False) or not cgi_get('number', default=False)
-
-def og(data, flag, pref="og"):
-    qchar = '"'
-    fullflag = '%s%s:%s%s'%(qchar, pref, flag, qchar)
-    if fullflag not in data:
-        qchar = "'"
-        fullflag = '%s%s:%s%s'%(qchar, pref, flag, qchar)
-    if fullflag in data:
-        before, after = data.split(fullflag, 1)
-        if after.startswith(">") or after.startswith(" />"):
-            sub = before.rsplit('content=%s'%(qchar,), 1)
-        else:
-            sub = after.split('content=%s'%(qchar,))
-        metad = sub[1].split(qchar)[0]
-        if flag == "image":
-            metad = metad.replace(" ", "%20")
-        return metad
-
-def ts(url):
-    resp = fetch("https://truthsocial.com/api/v1/statuses/%s"%(url.split("/").pop(),), asjson=True)
-    card = resp["card"]
-    if card["type"] == "video":
-        return [resp["content"], card["html"].split('"')[1], url]
-    else:
-        return [card["title"], card["image"], card["url"]]
 
 def response():
     gtype = cgi_get('gtype')
