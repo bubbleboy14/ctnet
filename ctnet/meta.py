@@ -1,6 +1,6 @@
 from util import fetch
 
-def og(data, flag, pref="og"):
+def ogpart(data, flag, pref="og"):
     qchar = '"'
     fullflag = '%s%s:%s%s'%(qchar, pref, flag, qchar)
     if fullflag not in data:
@@ -16,6 +16,21 @@ def og(data, flag, pref="og"):
         if flag == "image":
             metad = metad.replace(" ", "%20")
         return metad
+
+def og(url):
+    data = fetch(url, fakeua=True).decode()
+    resp = []
+    titog = ogpart(data, "title")
+    if titog:
+        resp.append(titog)
+    imgog = ogpart(data, "image")
+    imgtw = ogpart(data, "image", "twitter")
+    if imgog and imgtw:
+        resp.append(len(imgog) < len(imgtw) and imgog or imgtw)
+    elif imgog or imgtw:
+        resp.append(imgog or imgtw)
+    resp.append(ogpart(data, "url") or url)
+    return resp
 
 def ts(url):
     resp = fetch("https://truthsocial.com/api/v1/statuses/%s"%(url.split("/").pop(),), asjson=True)

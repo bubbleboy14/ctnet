@@ -3,7 +3,6 @@ try:
 except:
     from HTMLParser import HTMLParser # py2
     html = HTMLParser()
-import requests
 from ctnet.meta import og, ts
 from util import respond, succeed, fail, cgi_get, trysavedresponse, setcachedefault, strip_html
 from model import db
@@ -36,20 +35,7 @@ def response():
         if "truthsocial" in url:
             resp = ts(url)
         else:
-            data = requests.get(url, headers={
-                'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0'
-            }).content.decode("utf-8")
-            resp = []
-            titog = og(data, "title")
-            if titog:
-                resp.append(titog)
-            imgog = og(data, "image")
-            imgtw = og(data, "image", "twitter")
-            if imgog and imgtw:
-                resp.append(len(imgog) < len(imgtw) and imgog or imgtw)
-            elif imgog or imgtw:
-                resp.append(imgog or imgtw)
-            resp.append(og(data, "url") or url)
+            resp = og(url)
         resp = html.unescape(strip_html(" ".join(resp)))
         if len(resp) > 500:
             succeed(url)
