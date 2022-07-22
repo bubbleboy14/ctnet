@@ -1681,7 +1681,7 @@ class Video(CategoriedVotingModel, Searchable, Approvable):
         from cantools.web import fetch
         self.docid = self.docid.strip()
         if self.player == "rumble":
-            self.thumbnail = fetch("https://rumble.com/embed/%s"%(self.docid,)).split('"i":"')[1].split('"')[0].replace("\\", "")
+            self.thumbnail = fetch("https://rumble.com/embed/%s"%(self.docid,)).decode().split('"i":"')[1].split('"')[0].replace("\\", "")
         elif self.player == "dtube":
             self.thumbnail = fetch("api.d.tube", path="/oembed", asjson=True, protocol="https", qsp={
                 "url": "https://d.tube/v/%s"%(self.docid,)
