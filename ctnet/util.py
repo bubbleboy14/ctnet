@@ -49,13 +49,15 @@ def flipRStripStroke(s):
 def flipQ(s):
     return quote(flipR(s))
 
+htmlDir = config.mode == "dynamic" and "html" or "html-%s"%(config.mode,)
+
 def mapfile(pname):
     if pname == "favicon.ico":
         return os.path.join("img", pname)
     elif "tiny_mce" in pname and config.mode != "production":
         return pname[1:]
     else:
-        return "%s%s"%(config.mode == "dynamic" and "html" or "html-%s"%(config.mode,), pname)
+        return "%s%s"%(htmlDir, pname)
 
 def getcached(pname, req=None):
     return filestore.read(mapfile(pname),
