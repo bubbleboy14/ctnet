@@ -37,7 +37,7 @@ def ship(d, vid=False):
     return o
 
 def og(url):
-    data = fetch(url, fakeua=True).decode()
+    data = fetch(url, timeout=5, fakeua=True).decode()
     resp = {}
     titog = ogpart(data, "title")
     if titog:
