@@ -1,4 +1,10 @@
-from util import fetch
+try:
+    import html # py3
+except:
+    from HTMLParser import HTMLParser # py2
+    html = HTMLParser()
+from cantools.util.admin import ushort
+from util import fetch, strip_html
 
 def ogpart(data, flag, pref="og"):
     qchar = '"'
@@ -17,34 +23,47 @@ def ogpart(data, flag, pref="og"):
             metad = metad.replace(" ", "%20")
         return metad
 
+def clean(parts):
+    return html.unescape(strip_html(" ".join(parts)))
+
+def ship(d, vid=False):
+    o = clean([d["title"], d["img"], d["url"]])
+    if not vid:
+        if len(o) > 500:
+            d["img"] = "%s.jpg"%(ushort(d["img"]),)
+        o = clean([d["title"], d["img"], d["url"]])
+    if len(o) > 500:
+        o = clean([d["img"], d["url"]])
+    return o
+
 def og(url):
     data = fetch(url, fakeua=True).decode()
-    resp = []
+    resp = {}
     titog = ogpart(data, "title")
     if titog:
-        resp.append(titog)
+        resp["title"] = titog
     imgog = ogpart(data, "image")
     imgtw = ogpart(data, "image", "twitter")
     if imgog and imgtw:
-        resp.append(len(imgog) < len(imgtw) and imgog or imgtw)
+        resp["img"] = len(imgog) < len(imgtw) and imgog or imgtw
     elif imgog or imgtw:
-        resp.append(imgog or imgtw)
-    resp.append(ogpart(data, "url") or url)
-    return resp
+        resp["img"] = imgog or imgtw
+    resp["url"] = ogpart(data, "url") or url
+    return ship(resp)
 
 def ts(url):
     resp = fetch("https://truthsocial.com/api/v1/statuses/%s"%(url.split("/").pop(),), asjson=True)
     card = resp["card"] or resp
     if "type" in card and card["type"] == "video":
-        return [resp["content"], card["html"].split('"')[1], url]
+        return ship({ "title": resp["content"], "img": card["html"].split('"')[1], "url": url }, True)
     else:
-        title = card.get("title", resp["content"])
+        d = { "title": card.get("title", resp["content"]), "url": card["url"] }
         if "image" not in card:
             mats = card.get("media_attachments", [])
             for mat in mats:
                 if mat["type"] == "image":
                     card["image"] = mat["url"]
                     break
-        if "image" not in card:
-            return [title, card["url"]]
-        return [title, card["image"], card["url"]]
+        if "image" in card:
+            d["img"] = card["image"]
+        return ship(d)
