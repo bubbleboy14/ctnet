@@ -1,10 +1,5 @@
-try:
-    import html # py3
-except:
-    from HTMLParser import HTMLParser # py2
-    html = HTMLParser()
 from ctnet.meta import og, ts
-from util import respond, succeed, fail, cgi_get, trysavedresponse, setcachedefault, strip_html
+from util import respond, succeed, fail, cgi_get, trysavedresponse, setcachedefault
 from model import db
 
 def isRandom():
@@ -36,9 +31,6 @@ def response():
             resp = ts(url)
         else:
             resp = og(url)
-        resp = html.unescape(strip_html(" ".join(resp)))
-        if len(resp) > 500:
-            succeed(url)
         succeed(resp)
 
     if gtype == "fstats":
