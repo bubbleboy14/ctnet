@@ -71,7 +71,7 @@ CAN.widget.map.Map = CT.Class({
 			places: CT.dom.id("mapplaces")
 		});
 		this.node = CT.dom.node(null, null, "fill");
-		this.map = new CT.map.Map({ node: this.node });
+		this.map = new CT.map.Map({ node: this.node, deferBuild: true });
 		this.refresh = this.map.refresh;
 		this.addTriggers = this.map.addTriggers;
 		opts.node.appendChild(this.node);
