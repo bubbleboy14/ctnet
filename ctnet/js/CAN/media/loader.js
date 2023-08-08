@@ -385,12 +385,22 @@ CAN.media.loader = {
 		});
 		return n;
 	},
-	"ytUnthumb": function(key, e) {
+	"_unthumb": function(key, e, u) {
 		var n = CT.dom.id(key);
 		n.style.height = n.firstChild.clientHeight + "px";
 		n.classList.remove("vidthumb");
-		n.innerHTML = CT.video.full(CT.video.videoData("https://youtube.com?v=" + key.slice(0, -4)));
+		n.innerHTML = CT.video.full(CT.video.videoData(u));
 		e && e.stopPropagation();
+	},
+	"ytUnthumb": function(key, e) {
+		CAN.media.loader._unthumb(key, e,
+			"https://youtube.com?v=" + key.slice(0, -4));
+	},
+	"tlUnthumb": function(key, e) {
+		var name, token;
+		[name, token] = key.split("_");
+		CAN.media.loader._unthumb(token, e,
+			"https://tl.fzn.party/v/" + name + ".mp4");
 	},
 	"_linkFlags": {
 		"thought": "community.html#!Stream",
@@ -406,11 +416,14 @@ CAN.media.loader = {
 		var photoSplit = url.split("gtype=graphic&key=");
 		if (photoSplit.length > 1)
 			return '<img src="' + url + '">';
-		if (url.indexOf("youtube.com") != -1) {
+		if (url.includes("youtube.com")) {
 			url = url.replace("/shorts/", "/watch?v=");
 			var key = url.split("v=")[1].split("&")[0],
 				keyran = key + Math.floor(1000 + Math.random() * 1000);
 			return '<div class="vidthumb" id="' + keyran + '"><img class="pointer" src="https://img.youtube.com/vi/' + key + '/0.jpg" onclick="__me.loader.ytUnthumb(\'' + keyran + '\', arguments[0])"></div>';
+		} else if (url.includes("tl.fzn.party/v/")) {
+			var token = CT.data.token(), name = url.split("/v/").pop().split(".").shift();
+			return '<div class="vidthumb" id="' + token + '"><img class="pointer" src="https://tl.fzn.party/img/v/' + name + '.jpg" onclick="__me.loader.tlUnthumb(\'' + name + "_" + token + '\', arguments[0])"></div>';
 		}
 		// thoughts, events, cases, memes, opinions, papers
 		for (var i = 0; i < CAN.media.loader._linkTypes.length; i++) {
