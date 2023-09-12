@@ -42,7 +42,7 @@ CAN.media.meme = {
 			n.appendChild(CAN.media.meme.build(tdata, null, null, true));
 		} else {
 			CAN.widget.conversation.jump(key, "meme", function(res, comm) {
-				var cno = CT.dom.id(n.id);
+				var cno = CT.dom.id(n.id, true);
 				if (comm) {
 					cno.appendChild(CAN.widget.conversation.bare(comm));
 					cno.appendChild(CT.dom.link("from thread", null,
