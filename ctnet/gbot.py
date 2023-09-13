@@ -144,5 +144,5 @@ if not img.startswith("http"):
     img = "https://%s%s"%(config.web.domain, img)
 
 tati = ta or title
-send_text((readfile("/basic.html").decode())%(tati, tati,
-    img, img, desc, desc, title, content))
+send_text((readfile("/basic.html").decode())%(tati,
+    tati, img, img, desc, desc, desc, title, content))
