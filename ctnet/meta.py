@@ -50,6 +50,8 @@ def og(url):
         resp["img"] = len(imgog) < len(imgtw) and imgog or imgtw
     elif imgog or imgtw:
         resp["img"] = imgog or imgtw
+    elif '<img src="' in data:
+        resp["img"] = data.split('<img src="')[1].split('"')[0]
     resp["url"] = ogpart(data, "url") or url
     return ship(resp)
 
