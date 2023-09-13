@@ -25,7 +25,7 @@ m = None
 ta = None
 img = "/img/header/can-logo.jpg"
 title = pi[1:].split(".")[0].title()
-description = descriptions[title]
+desc = pdescription = descriptions[title]
 content = """<center>
 This page is not for humans.
 Unless you are a bot, please click <a href="%s#!%s">here</a>.
@@ -99,7 +99,8 @@ if title == "Feed":
         content += "<div>%s</div>"%(d.title_analog(),)
 elif m:
     if m.polytype == "comment":
-        content += "<div class='big'><b>%s says:</b> %s</div><div>in thread:</div>"%(m.user.get().firstName, m.body)
+        desc = m.body
+        content += "<div class='big'><b>%s says:</b> %s</div><div>in thread:</div>"%(m.user.get().firstName, desc)
         m = m.conversation.get().media()
     ta = m.title_analog()
     if "http" in ta:
@@ -113,21 +114,30 @@ elif m:
     if title == "Video":
         img = m.thumbnail
         content += "<img src='%s'>"%(m.thumbnail,)
-        content += "<div>%s</div>"%(m.description,)
+        desc = m.description
+#        content += "<div>%s</div>"%(m.description,)
     elif title == "News":
         toppic = m.photo[0].get()
         img = toppic.pic_link()
         content += toppic.pic_html()
-        content += "<div>%s</div>"%(m.body,)
+        desc = m.body
+#        content += "<div>%s</div>"%(m.body,)
     elif title == "Referenda":
-        content += "<div>%s</div>"%(m.voteText(),)
+        desc = m.voteText()
+#        content += "<div>%s</div>"%(m.voteText(),)
     elif title == "Community" and hasattr(m, "blurb"):
-        content += "<div>%s</div>"%(m.blurb(),)
+        desc = m.blurb()
+#        content += "<div>%s</div>"%(m.blurb(),)
     elif title == "Cases":
-        content += "<div>%s</div>"%(m.blurb,)
+        desc = m.blurb
+#        content += "<div>%s</div>"%(m.blurb,)
     elif title == "Recommendations":
-        content += "<div>%s</div>"%(m.body,)
-    title += " - %s"%(ta,)
+        desc = m.body
+#        content += "<div>%s</div>"%(m.body,)
+    content += "<div>%s</div>"%(desc,)
+    title = "%s - %s"%(ta, title)
+
+content += "<div>%s</div>"%(pdescription,)
 
 if not img.startswith("http"):
     from cantools import config
@@ -135,4 +145,4 @@ if not img.startswith("http"):
 
 tati = ta or title
 send_text((readfile("/basic.html").decode())%(tati, tati,
-    img, img, description, description, title, content))
+    img, img, desc, desc, title, content))
