@@ -133,4 +133,6 @@ if not img.startswith("http"):
     from cantools import config
     img = "https://%s%s"%(config.web.domain, img)
 
-send_text((readfile("/basic.html").decode())%(ta or title, img, description, title, content))
+tati = ta or title
+send_text((readfile("/basic.html").decode())%(tati, tati,
+    img, img, description, description, title, content))
