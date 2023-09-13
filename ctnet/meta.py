@@ -39,9 +39,11 @@ def ship(d, vid=False):
 def og(url):
     data = fetch(url, timeout=5, fakeua=True).decode()
     resp = {}
-    titog = ogpart(data, "title")
+    titog = ogpart(data, "title") or ogpart(data, "title", "twitter")
     if titog:
         resp["title"] = titog
+    elif "<title>" in data:
+        resp["title"] = data.split("<title>")[1].split("</title>")[0]
     imgog = ogpart(data, "image")
     imgtw = ogpart(data, "image", "twitter")
     if imgog and imgtw:
