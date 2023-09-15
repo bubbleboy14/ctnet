@@ -43,6 +43,7 @@ onload = function() {
         svnode.style.display = "block";
         CAN.widget.share.updateShareItem("news", news.key);
         CAN.cc.view(news);
+        CAN.config.setPage("Article", news.title, news.photo[0]);
     };
 
     // center: news

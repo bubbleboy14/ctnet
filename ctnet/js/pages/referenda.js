@@ -502,6 +502,7 @@ onload = function() {
             showBranch(branch);
         }
         CAN.cc.view(ref);
+        CAN.config.setPage("Article", ref.title);
     };
     var changeRef = function(ref, branch) {
         if (ref.summary)

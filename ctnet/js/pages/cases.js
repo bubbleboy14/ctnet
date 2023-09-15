@@ -36,6 +36,7 @@ onload = function() {
         svnode.style.display = "block";
         CAN.widget.share.updateShareItem("case", cdata.key);
         CAN.cc.view(cdata);
+        CAN.config.setPage("Article", cdata.title);
     };
 
     // center: case

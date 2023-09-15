@@ -156,10 +156,12 @@ onload = function() {
             } else
                 delete cur.item;
         }
+        var dname = d.thought || d.question || d.idea;
         CAN.cc.view(CT.merge(d, {
             mtype: mtype,
-            name: d.thought || d.question || d.idea
+            name: dname
         }));
+        CAN.config.setPage("Article", dname);
     };
     ['question', 'changeidea', 'thought', 'comment', 'meme'].forEach(function(item) {
         var nodez = streamnodes[item] = {},
@@ -207,6 +209,7 @@ onload = function() {
         CT.dom.show(svnode);
         CAN.widget.share.updateShareItem("community", event.key, "Events");
         CAN.cc.view(event);
+        CAN.config.setPage("Event", event.title);
     };
 
     var check_hash = function() {
