@@ -156,12 +156,17 @@ onload = function() {
             } else
                 delete cur.item;
         }
-        var dname = d.thought || d.question || d.idea;
+        var dname = d.title || d.thought || d.question || d.idea,
+            dimg = d.image;
+        if (!dimg && dname.includes("http")) {
+            [dname, dimg] = dname.split("http");
+            dimg = "http" + dimg.split(" ")[0];
+        }
         CAN.cc.view(CT.merge(d, {
             mtype: mtype,
             name: dname
         }));
-        CAN.config.setPage("Article", dname);
+        CAN.config.setPage("Article", dname, dimg);
     };
     ['question', 'changeidea', 'thought', 'comment', 'meme'].forEach(function(item) {
         var nodez = streamnodes[item] = {},
