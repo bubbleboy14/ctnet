@@ -158,7 +158,9 @@ onload = function() {
         }
         var dname = d.title || d.thought || d.question || d.idea,
             dimg = d.image;
-        if (!dimg && dname.includes("http")) {
+        if (dimg)
+            dimg = location.protocol + "//" + location.hostname + dimg;
+        else if (dname.includes("http")) {
             [dname, dimg] = dname.split("http");
             dimg = "http" + dimg.split(" ")[0];
         }
