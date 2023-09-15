@@ -26,6 +26,7 @@ CAN.media.video = {
 		CT.panel.select(video.docid);
 		CAN.widget.share.updateShareItem("video", video.key);
 		CAN.cc.view(video);
+		CAN.config.setJLD("Video", video.title, video.thumbnail);
 	},
 	// embedded video, as in list
 	"build": function(video, vindex, nocat, inconvo, htmlSafe) {
