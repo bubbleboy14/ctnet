@@ -7,7 +7,8 @@ c.scramlen = c.scrambler.length;
 c.scramlenh = c.scramlen / 2;
 
 c.setJLD = function(type, name, image, data) {
-	document.head.appendChild(CT.dom.node(JSON.stringify(CT.merge(data, {
+	var h = document.head;
+	h.appendChild(CT.dom.node(JSON.stringify(CT.merge(data, {
 			"@context": "http://schema.org",
 			"@type": type,
 			"name": name,
@@ -15,4 +16,5 @@ c.setJLD = function(type, name, image, data) {
 	})), "script", null, null, {
 		type: 'application/ld+json'
 	}));
+	CT.dom.setContent(h.getElementsByTagName("title")[0], name + " - CAN " type)
 };
