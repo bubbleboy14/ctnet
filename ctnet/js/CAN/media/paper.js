@@ -81,6 +81,7 @@ CAN.media.paper = {
 		CT.panel.swap(paper.key);
 		CAN.widget.share.updateShareItem("recommendations",
 			paper.key, "PositionPapers");
+		CAN.config.setPage("Article", paper.title);
 	},
 	result: function(d, lastPaper) {
 		return CT.dom.node(CAN.media.paper.build(d));

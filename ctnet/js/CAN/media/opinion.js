@@ -80,6 +80,7 @@ CAN.media.opinion = {
 		CT.panel.swap(opinion.key);
 		CAN.widget.share.updateShareItem("recommendations",
 			opinion.key, "OpinionsAndIdeas");
+		CAN.config.setPage("Article", opinion.title);
 	},
 	result: function(d, lastIdea) {
 		return CT.dom.node(CAN.media.opinion.build(d));
