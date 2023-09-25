@@ -56,12 +56,15 @@ CAN.widget.conversation = {
 	"select": function(id, delay) {
 		CT.dom.doWhenNodeExists("com_" + id, function(n) {
 			n.onclick();
-			setTimeout(function() {
+			n._scroll2me = function() {
 				n.scrollIntoView({
 					behavior: "smooth",
 					block: "center"
 				});
-			}, delay);
+			};
+			setTimeout(n._scroll2me, delay);
+			setTimeout(n._scroll2me, delay * 2);
+			setTimeout(n._scroll2me, delay * 3);
 		});
 	},
 	"bare": function(c, n, uid) {
