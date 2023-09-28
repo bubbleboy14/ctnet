@@ -420,10 +420,10 @@ CAN.media.loader = {
 			url = url.replace("/shorts/", "/watch?v=");
 			var key = url.split("v=")[1].split("&")[0],
 				keyran = key + Math.floor(1000 + Math.random() * 1000);
-			return '<div class="vidthumb" id="' + keyran + '"><img class="pointer" src="https://img.youtube.com/vi/' + key + '/0.jpg" onclick="__me.loader.ytUnthumb(\'' + keyran + '\', arguments[0])"></div>';
+			return '<div class="vidthumb" id="' + keyran + '"><img class="w1 pointer" src="https://img.youtube.com/vi/' + key + '/0.jpg" onclick="__me.loader.ytUnthumb(\'' + keyran + '\', arguments[0])"></div>';
 		} else if (url.includes("tl.fzn.party/v/")) {
 			var token = CT.data.token(), name = url.split("/v/").pop().split(".").shift();
-			return '<div class="vidthumb" id="' + token + '"><img class="pointer" src="https://tl.fzn.party/img/v/' + name + '.jpg" onclick="__me.loader.tlUnthumb(\'' + name + "_" + token + '\', arguments[0])"></div>';
+			return '<div class="vidthumb" id="' + token + '"><img class="w1 pointer" src="https://tl.fzn.party/img/v/' + name + '.jpg" onclick="__me.loader.tlUnthumb(\'' + name + "_" + token + '\', arguments[0])"></div>';
 		}
 		// thoughts, events, cases, memes, opinions, papers
 		for (var i = 0; i < CAN.media.loader._linkTypes.length; i++) {
