@@ -3,6 +3,7 @@ from cantools.util import read, cmd, rm, shouldMoveMoov, transcode
 from cantools import config
 from .ctmodel import *
 from functools import reduce, cmp_to_key
+from util import flipRStripStroke
 
 setzipdomain(config.zipdomain)
 
@@ -22,17 +23,36 @@ page_descriptions = {
     "Feed": "Custom Feed"
 }
 
+def p2i(path, key=None):
+    title = path[1:].split(".")[0].title()
+    description = page_descriptions[title]
+    item = None
+    section = None
+    if key:
+        if "|" in key:
+            section, key = key.split("|")
+        if len(key) > 20:
+            key = flipRStripStroke(key)
+            item = db.get(key)
+    return {
+        "key": key
+        "item": item,
+        "title": title,
+        "section": section,
+        "description": description
+    }
+
 class Dlink(db.TimeStampedBase):
-    item = db.ForeignKey()
     path = db.String()
     token = db.String()
 
-    def metas(self): # returns {name,image,blurb}
+    def metas(self):
         from .util import truncate
-        item = self.item.get()
-        name = item.title_analog()
+        info = p2i(self.path)
+        item = info["item"]
+        name = item.title_analog() or info["title"]
+        blurb = info["description"]
         image = None
-        blurb = None
         if "http" in name:
             name, rest = name.split("http", 1)
             image, blurb = "http%s"%(rest,).split(" ", 1)
@@ -48,7 +68,7 @@ class Dlink(db.TimeStampedBase):
         return {
             "name": name,
             "image": image,
-            "blurb": blurb or page_descriptions[self.path[1:].split(".")[0].title()]
+            "blurb": blurb
         }
 
 class Searchable(object):

@@ -6,7 +6,7 @@ def response():
 	p = cgi_get("p", required=False)
 	if p:
 		dlink = Dlink.query(Dlink.path == p).get()
-		if not dlink: # TODO: set item!
+		if not dlink:
 			dlink = Dlink()
 			dlink.path = p
 			dlink.token = token()

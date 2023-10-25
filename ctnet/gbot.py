@@ -1,6 +1,6 @@
 import os
-from util import send_text, readfile, flipRStripStroke, flipQ
-from model import db, getsettings, page_descriptions, News, Video, Book, Case, Question, ChangeIdea, Thought, Meme, Event, OpinionIdea, PositionPaper, Quote, Skin, CategoriedVotingModel
+from util import send_text, readfile, flipQ
+from model import db, getsettings, p2i, News, Video, Book, Case, Question, ChangeIdea, Thought, Meme, Event, OpinionIdea, PositionPaper, Quote, Skin, CategoriedVotingModel
 try:
     from urllib.parse import quote, unquote # py3
 except:
@@ -10,44 +10,37 @@ pi = os.environ.get("PATH_INFO")
 # unquote twice for escaped %'s
 rawqs = os.environ.get("QUERY_STRING")[19:]
 qs = unquote(unquote(rawqs))
-m = None
+
+info = p2i(pi, qs)
+m = info["item"]
+title = info["title"]
+qtype = info["section"]
+desc = pdescription = p2i["description"]
+
 ta = None
 img = "/img/header/can-logo.jpg"
-title = pi[1:].split(".")[0].title()
-desc = pdescription = page_descriptions[title]
 content = """<center>
 This page is not for humans.
 Unless you are a bot, please click <a href="%s#!%s">here</a>.
 </center>"""%(pi, rawqs)
-if qs:
-    qtype = qs
-    qrest = None
-    if "|" in qs:
-        qtype, qrest = qs.split("|")
-    if title == "Community":
-        if qrest and len(qrest) > 20:
-            m = db.get(flipRStripStroke(qrest))
-        elif qtype == "Events":
-            from datetime import datetime, timedelta
-            for e in Event.query().order(Event.when).filter(Event.when >= datetime.now() - timedelta(1)).fetch(1000):
-                content += "<div>%s</div>"%(e.title,)
-                content += "<div>%s</div>"%(e.blurb(),)
-        elif qtype == "Questions":
-            for q in Question.query().order(-Question.date).fetch(40):
-                content += "<div>%s</div>"%(q.question,)
-        elif qtype == "Ideas":
-            for i in ChangeIdea.query().order(-ChangeIdea.date).fetch(40):
-                content += "<div>%s</div>"%(i.idea,)
-        elif qtype == "Stream":
-            for t in Thought.query().order(-Thought.date).fetch(40):
-                content += "<div>%s</div>"%(t.thought,)
-        elif qtype == "Memes":
-            for m in Meme.query().order(-Meme.date).fetch(40):
-                content += "<div>%s</div>"%(m.title,)
-    elif title == "Recommendations" and qtype in ["PositionPapers", "OpinionsAndIdeas"] and qrest and len(qrest) > 20:
-        m = db.get(flipRStripStroke(qrest))
-    elif len(qs) > 20:
-        m = db.get(flipRStripStroke(qs))
+if qtype and not m and title == "Community":
+    if qtype == "Events":
+        from datetime import datetime, timedelta
+        for e in Event.query().order(Event.when).filter(Event.when >= datetime.now() - timedelta(1)).fetch(1000):
+            content += "<div>%s</div>"%(e.title,)
+            content += "<div>%s</div>"%(e.blurb(),)
+    elif qtype == "Questions":
+        for q in Question.query().order(-Question.date).fetch(40):
+            content += "<div>%s</div>"%(q.question,)
+    elif qtype == "Ideas":
+        for i in ChangeIdea.query().order(-ChangeIdea.date).fetch(40):
+            content += "<div>%s</div>"%(i.idea,)
+    elif qtype == "Stream":
+        for t in Thought.query().order(-Thought.date).fetch(40):
+            content += "<div>%s</div>"%(t.thought,)
+    elif qtype == "Memes":
+        for m in Meme.query().order(-Meme.date).fetch(40):
+            content += "<div>%s</div>"%(m.title,)
 
 if title == "Home":
     for n in News.query().order(-News.date).filter(News.approved == True).fetch(4):
