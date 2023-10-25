@@ -15,7 +15,7 @@ info = p2i(pi, qs)
 m = info["item"]
 title = info["title"]
 qtype = info["section"]
-desc = pdescription = p2i["description"]
+desc = pdescription = info["description"]
 
 ta = None
 img = "/img/header/can-logo.jpg"
