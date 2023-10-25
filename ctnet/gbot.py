@@ -1,21 +1,10 @@
 import os
 from util import send_text, readfile, flipRStripStroke, flipQ
-from model import db, getsettings, News, Video, Book, Case, Question, ChangeIdea, Thought, Meme, Event, OpinionIdea, PositionPaper, Quote, Skin, CategoriedVotingModel
+from model import db, getsettings, page_descriptions, News, Video, Book, Case, Question, ChangeIdea, Thought, Meme, Event, OpinionIdea, PositionPaper, Quote, Skin, CategoriedVotingModel
 try:
     from urllib.parse import quote, unquote # py3
 except:
     from urllib import quote, unquote       # py2
-
-descriptions = {
-    "Home": "Civil Action Network is your source for peaceful activism and the democratic exchange of ideas. Every perspective counts - make yourself heard!",
-    "Recommendations": "Civil Action Network delivers customized content feeds to individual users based on their own preferences, as expressed in the form of ratings",
-    "News": "Civil Action Network publishes user-submitted news and research articles that are expose-driven and solution oriented",
-    "Video": "Civil Action Network's users submit important videos exposing the New World Order",
-    "Referenda": "Submit your proposed law today through the Civil Action Network Referenda process, and allow others to vote on your proposal",
-    "Community": "Connect with your community at Civil Action Network events. Chat live with other members in your area or field. Join the conversation in an Action Group.",
-    "Cases": "Build your case on Civil Action Network today, and crowd-source the evidence.",
-    "Feed": "Custom Feed"
-}
 
 pi = os.environ.get("PATH_INFO")
 # unquote twice for escaped %'s
@@ -25,7 +14,7 @@ m = None
 ta = None
 img = "/img/header/can-logo.jpg"
 title = pi[1:].split(".")[0].title()
-desc = pdescription = descriptions[title]
+desc = pdescription = page_descriptions[title]
 content = """<center>
 This page is not for humans.
 Unless you are a bot, please click <a href="%s#!%s">here</a>.

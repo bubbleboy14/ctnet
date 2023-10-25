@@ -11,6 +11,46 @@ def _lensort(a, b):
 
 lskey = cmp_to_key(_lensort)
 
+page_descriptions = {
+    "Home": "Civil Action Network is your source for peaceful activism and the democratic exchange of ideas. Every perspective counts - make yourself heard!",
+    "Recommendations": "Civil Action Network delivers customized content feeds to individual users based on their own preferences, as expressed in the form of ratings",
+    "News": "Civil Action Network publishes user-submitted news and research articles that are expose-driven and solution oriented",
+    "Video": "Civil Action Network's users submit important videos exposing the New World Order",
+    "Referenda": "Submit your proposed law today through the Civil Action Network Referenda process, and allow others to vote on your proposal",
+    "Community": "Connect with your community at Civil Action Network events. Chat live with other members in your area or field. Join the conversation in an Action Group.",
+    "Cases": "Build your case on Civil Action Network today, and crowd-source the evidence.",
+    "Feed": "Custom Feed"
+}
+
+class Dlink(db.TimeStampedBase):
+    item = db.ForeignKey()
+    path = db.String()
+    token = db.String()
+
+    def metas(self): # returns {name,image,blurb}
+        from .util import truncate
+        item = self.item.get()
+        name = item.title_analog()
+        image = None
+        blurb = None
+        if "http" in name:
+            name, rest = name.split("http", 1)
+            image, blurb = "http%s"%(rest,).split(" ", 1)
+        else:
+            for prop in ["thumbnail", "image", "img"]:
+                if hasattr(item, prop):
+                    image = getattr(item, prop)
+                    if hasattr(image, "urlsafe"):
+                        image = image.urlsafe()
+            for prop in ["blurb", "body", "content", "description"]:
+                if hasattr(item, prop):
+                    blurb = truncate(getattr(item, prop))
+        return {
+            "name": name,
+            "image": image,
+            "blurb": blurb or page_descriptions[self.path[1:].split(".")[0].title()]
+        }
+
 class Searchable(object):
     def string2words(self, searchstring):
         from .util import strip_html, strip_punctuation
