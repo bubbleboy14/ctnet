@@ -48,7 +48,7 @@ class Dlink(db.TimeStampedBase):
 
     def metas(self):
         from .util import truncate
-        info = p2i(self.path)
+        info = p2i(*self.path.split("!#"))
         item = info["item"]
         name = item.title_analog() or info["title"]
         blurb = info["description"]
