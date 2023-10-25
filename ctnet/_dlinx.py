@@ -12,6 +12,8 @@ def response():
 			dlink.token = token()
 		succeed(dlink.data())
 	dlink = Dlink.query(Dlink.token == cgi_get("t")).get()
+	if cgi_get("noredirect", required=False):
+		succeed(dlink.path)
 	redirect(dlink.path, metas=metized(dlink.metas()))
 
 respond(response)
