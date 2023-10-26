@@ -425,10 +425,10 @@ CAN.media.loader = {
 			var token = CT.data.token(), name = url.split("/v/").pop().split(".").shift();
 			return '<div class="vidthumb" id="' + token + '"><img class="w1 pointer" src="https://tl.fzn.party/img/v/' + name + '.jpg" onclick="__me.loader.tlUnthumb(\'' + name + "_" + token + '\', arguments[0])"></div>';
 		}
-		if (url.includes("/?t=")) { // TODO : async ; domain check
+		if (url.includes("/?t=")) { // TODO: domain check?
 			var domain, token;
 			[domain, token] = url.split("/?t=");
-			url = domain + CT.net.get("/_dlinx?noredirect=1&t=" + token);
+			url = domain + CAN.widget.share.token2path(token);
 		}
 		return CAN.media.loader.hashBang(url, novid);
 	},
