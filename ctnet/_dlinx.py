@@ -3,7 +3,7 @@ from cantools.util import token
 from model import Dlink
 
 def response():
-	p = cgi_get("p", required=False, decode=True)
+	p = cgi_get("p", required=False, decode=True, base64=True)
 	if p:
 		dlink = Dlink.query(Dlink.path == p).get()
 		if not dlink:
