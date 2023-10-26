@@ -35,7 +35,7 @@ def p2i(path, key=None):
             key = flipRStripStroke(key)
             item = db.get(key)
     return {
-        "key": key
+        "key": key,
         "item": item,
         "title": title,
         "section": section,
