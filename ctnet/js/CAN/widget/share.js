@@ -115,7 +115,7 @@ CAN.widget.share = {
 	"pageAddr": function(lname, hash, prefix) {
 		var cws = CAN.widget.share, path = "/" + (cws.pageAddrPages[lname] || lname)
 			+ ".html" + ((hash || prefix) && ("#!" + ((hash && prefix) ? prefix
-			+ "%7C" + escape(hash) : (prefix || escape(hash)))) || "");
+			+ "|" + escape(hash) : (prefix || escape(hash)))) || "");
 		return CAN.session.DOMAIN + "/?t=" + cws.path2token(path);
 	},
 	"replaceLinkTokens": function(lname, txt, token, hash, title, prefix) {
