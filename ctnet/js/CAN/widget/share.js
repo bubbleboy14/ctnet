@@ -72,6 +72,7 @@ CAN.widget.share = {
 	},
 	"pageAddrPages": { "case": "cases" },
 	"sharebuttons": {},
+	"tokenMap": {},
 	"currentShareName": null,
 	"currentShareKey": null,
 
@@ -96,9 +97,12 @@ CAN.widget.share = {
 		return n;
 	},
 	"pageAddr": function(lname, hash, prefix) {
-		return CAN.session.DOMAIN + "/" + (CAN.widget.share.pageAddrPages[lname] || lname)
+		var cws = CAN.widget.share, path = "/" + (cws.pageAddrPages[lname] || lname)
 			+ ".html" + ((hash || prefix) && ("#!" + ((hash && prefix) ? prefix
-				+ "%7C" + escape(hash) : (prefix || escape(hash)))) || "");
+			+ "%7C" + escape(hash) : (prefix || escape(hash)))) || "");
+		if (!(path in cws.tokenMap)) // TODO: async?
+			cws.tokenMap[path] = CT.net.get("/_dlinx?p=" + encodeURIComponent(path));
+		return CAN.session.DOMAIN + "/?t=" + cws.tokenMap[path];
 	},
 	"replaceLinkTokens": function(lname, txt, token, hash, title, prefix) {
 		if (token && !CAN.widget.share.sharebuttons[token])
