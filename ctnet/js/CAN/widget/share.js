@@ -99,7 +99,8 @@ CAN.widget.share = {
 	"path2token": function(path) {
 		var cws = CAN.widget.share, tz = cws.tokens, token;
 		if (!(path in tz.p2t)) { // TODO: async?
-			token = tz.p2t[path] = CT.net.get("/_dlinx?p=" + encodeURIComponent(path));
+			token = tz.p2t[path] = CT.net.get("/_dlinx?p=" + encodeURIComponent(btoa(path)),
+				null, false, true);
 			tz.t2p[token] = path;
 		}
 		return tz.p2t[path];
@@ -107,7 +108,8 @@ CAN.widget.share = {
 	"token2path": function(token) {
 		var cws = CAN.widget.share, tz = cws.tokens, path;
 		if (!(token in tz.t2p)) { // TODO: async?
-			path = tz.t2p[token] = CT.net.get("/_dlinx?noredirect=1&t=" + token);
+			path = tz.t2p[token] = CT.net.get("/_dlinx?noredirect=1&t=" + token,
+				null, false, true);
 			tz.p2t[path] = token;
 		}
 		return tz.t2p[token];
@@ -116,7 +118,7 @@ CAN.widget.share = {
 		var cws = CAN.widget.share, path = "/" + (cws.pageAddrPages[lname] || lname)
 			+ ".html" + ((hash || prefix) && ("#!" + ((hash && prefix) ? prefix
 			+ "|" + escape(hash) : (prefix || escape(hash)))) || "");
-		return CAN.session.DOMAIN + "/?t=" + cws.path2token(path);
+		return CAN.session.DOMAIN + (hash ? "/?t=" + cws.path2token(path) : path);
 	},
 	"replaceLinkTokens": function(lname, txt, token, hash, title, prefix) {
 		if (token && !CAN.widget.share.sharebuttons[token])
