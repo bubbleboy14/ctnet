@@ -3,14 +3,14 @@ from cantools.util import token
 from model import Dlink
 
 def response():
-	p = cgi_get("p", required=False)
+	p = cgi_get("p", required=False, decode=True)
 	if p:
 		dlink = Dlink.query(Dlink.path == p).get()
 		if not dlink:
 			dlink = Dlink()
 			dlink.path = p
 			dlink.token = token()
-		succeed(dlink.data())
+		succeed(dlink.token)
 	dlink = Dlink.query(Dlink.token == cgi_get("t")).get()
 	if cgi_get("noredirect", required=False):
 		succeed(dlink.path)
