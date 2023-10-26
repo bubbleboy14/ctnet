@@ -9,6 +9,7 @@ syms = {
 	".": [
 		"PyRSS2Gen.py",
 		"_pa.py",
+		"_dlinx.py",
 		"activate.py",
 		"cronscan.py",
 		"edit.py",
