@@ -10,6 +10,7 @@ def response():
 			dlink = Dlink()
 			dlink.path = p
 			dlink.token = token()
+			dlink.put()
 		succeed(dlink.token)
 	dlink = Dlink.query(Dlink.token == cgi_get("t")).get()
 	if cgi_get("noredirect", required=False):
