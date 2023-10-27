@@ -47,7 +47,7 @@ class Dlink(db.TimeStampedBase):
     token = db.String()
 
     def metas(self):
-        from .util import truncate
+        from .util import truncate, DOMAIN
         info = p2i(*self.path.split("#!"))
         item = info["item"]
         name = item.title_analog() or info["title"]
@@ -57,18 +57,20 @@ class Dlink(db.TimeStampedBase):
             name, rest = name.split("http", 1)
             image, blurb = ("http%s"%(rest,)).split(" ", 1)
         else:
-            for prop in ["thumbnail", "image", "img"]:
+            for prop in ["thumbnail", "image", "img", "photo"]:
                 if hasattr(item, prop):
                     image = getattr(item, prop)
-                    if hasattr(image, "urlsafe"):
-                        image = image.urlsafe()
+                    if prop == "photo": # news
+                        image = image[0].get().pic_link(True)
+                    elif hasattr(image, "urlsafe"):
+                        image = "%s%s"%(DOMAIN, image.urlsafe())
             for prop in ["blurb", "body", "content", "description"]:
                 if hasattr(item, prop):
                     blurb = truncate(getattr(item, prop))
         return {
             "name": name,
             "image": image,
-            "blurb": blurb
+            "blurb": blurb.replace('"', "'").replace("\n", " ")
         }
 
 class Searchable(object):
