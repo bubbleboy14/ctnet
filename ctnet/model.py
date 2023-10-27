@@ -42,11 +42,13 @@ def p2i(path, key=None):
         "description": description
     }
 
-def item2blurb(item):
+def item2blurb(item, checkTitle=False):
     from .util import truncate
     for prop in ["blurb", "summary", "body", "content", "description"]:
         if hasattr(item, prop):
             return truncate(getattr(item, prop))
+    if checkTitle:
+        return item.title_analog()
 
 def item2image(item, checkTitle=False):
     from .util import text2image, DOMAIN
@@ -86,7 +88,7 @@ class Dlink(db.TimeStampedBase):
                 image = image or item2image(topic, True)
                 name = name or topic.title_analog()
                 if not blurb or name == blurb:
-                    blurb = item2blurb(topic)
+                    blurb = item2blurb(topic, True)
             name = name or info["title"]
             blurb = blurb or info["description"]
         blurb = blurb.replace('"', "'").replace("\n", " ")
