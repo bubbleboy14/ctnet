@@ -72,8 +72,8 @@ class Dlink(db.TimeStampedBase):
         from .util import text2image, text2parts
         info = self.info()
         item = info["item"]
-        name = item.title_analog() or info["title"]
-        blurb = info["description"]
+        name = item.title_analog()
+        blurb = None
         image = None
         if "http" in name:
             name, image, blurb = text2parts(name)
