@@ -48,7 +48,7 @@ def item2blurb(item):
         if hasattr(item, prop):
             return truncate(getattr(item, prop))
 
-def item2image(item):
+def item2image(item, checkTitle=False):
     from .util import DOMAIN
     for prop in ["thumbnail", "image", "img", "photo"]:
         if hasattr(item, prop):
@@ -58,6 +58,8 @@ def item2image(item):
             elif hasattr(image, "urlsafe"):
                 image = "%s%s"%(DOMAIN, image.urlsafe())
             return image
+    if checkTitle:
+        return text2image(item.title_analog().split(" "))
 
 class Dlink(db.TimeStampedBase):
     path = db.String()
@@ -83,7 +85,7 @@ class Dlink(db.TimeStampedBase):
                 topic = item.conversation.get().media()
                 name = name or topic.title_analog()
                 blurb = blurb or item2blurb(topic)
-                image = image or item2image(topic)
+                image = image or item2image(topic, True)
             name = name or info["title"]
             blurb = blurb or info["description"]
         blurb = blurb.replace('"', "'").replace("\n", " ")
