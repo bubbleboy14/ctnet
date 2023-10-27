@@ -71,6 +71,7 @@ CAN.widget.share = {
 		"TWITTER": "http://twitthis.com/twit?url=LINK_URL&title=LINK_TITLE"
 	},
 	"pageAddrPages": { "case": "cases" },
+	"tokens": { "t2p": {}, "p2t": {} },
 	"sharebuttons": {},
 	"currentShareName": null,
 	"currentShareKey": null,
@@ -95,10 +96,29 @@ CAN.widget.share = {
 		}
 		return n;
 	},
+	"path2token": function(path) {
+		var cws = CAN.widget.share, tz = cws.tokens, token;
+		if (!(path in tz.p2t)) { // TODO: async?
+			token = tz.p2t[path] = CT.net.get("/_dlinx?p=" + encodeURIComponent(btoa(path)),
+				null, false, true);
+			tz.t2p[token] = path;
+		}
+		return tz.p2t[path];
+	},
+	"token2path": function(token) {
+		var cws = CAN.widget.share, tz = cws.tokens, path;
+		if (!(token in tz.t2p)) { // TODO: async?
+			path = tz.t2p[token] = CT.net.get("/_dlinx?noredirect=1&t=" + token,
+				null, false, true);
+			tz.p2t[path] = token;
+		}
+		return tz.t2p[token];
+	},
 	"pageAddr": function(lname, hash, prefix) {
-		return CAN.session.DOMAIN + "/" + (CAN.widget.share.pageAddrPages[lname] || lname)
+		var cws = CAN.widget.share, path = "/" + (cws.pageAddrPages[lname] || lname)
 			+ ".html" + ((hash || prefix) && ("#!" + ((hash && prefix) ? prefix
-				+ "%7C" + escape(hash) : (prefix || escape(hash)))) || "");
+			+ "|" + escape(hash) : (prefix || escape(hash)))) || "");
+		return CAN.session.DOMAIN + (hash ? "/?t=" + cws.path2token(path) : path);
 	},
 	"replaceLinkTokens": function(lname, txt, token, hash, title, prefix) {
 		if (token && !CAN.widget.share.sharebuttons[token])

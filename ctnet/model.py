@@ -3,6 +3,7 @@ from cantools.util import read, cmd, rm, shouldMoveMoov, transcode
 from cantools import config
 from .ctmodel import *
 from functools import reduce, cmp_to_key
+from util import flipRStripStroke
 
 setzipdomain(config.zipdomain)
 
@@ -10,6 +11,67 @@ def _lensort(a, b):
     return len(b) - len(a)
 
 lskey = cmp_to_key(_lensort)
+
+page_descriptions = {
+    "Home": "Civil Action Network is your source for peaceful activism and the democratic exchange of ideas. Every perspective counts - make yourself heard!",
+    "Recommendations": "Civil Action Network delivers customized content feeds to individual users based on their own preferences, as expressed in the form of ratings",
+    "News": "Civil Action Network publishes user-submitted news and research articles that are expose-driven and solution oriented",
+    "Video": "Civil Action Network's users submit important videos exposing the New World Order",
+    "Referenda": "Submit your proposed law today through the Civil Action Network Referenda process, and allow others to vote on your proposal",
+    "Community": "Connect with your community at Civil Action Network events. Chat live with other members in your area or field. Join the conversation in an Action Group.",
+    "Cases": "Build your case on Civil Action Network today, and crowd-source the evidence.",
+    "Feed": "Custom Feed"
+}
+
+def p2i(path, key=None):
+    title = path[1:].split(".")[0].title()
+    description = page_descriptions[title]
+    item = None
+    section = None
+    if key:
+        if "|" in key:
+            section, key = key.split("|")
+        if len(key) > 20:
+            key = flipRStripStroke(key)
+            item = db.get(key)
+    return {
+        "key": key,
+        "item": item,
+        "title": title,
+        "section": section,
+        "description": description
+    }
+
+class Dlink(db.TimeStampedBase):
+    path = db.String()
+    token = db.String()
+
+    def metas(self):
+        from .util import truncate, DOMAIN
+        info = p2i(*self.path.split("#!"))
+        item = info["item"]
+        name = item.title_analog() or info["title"]
+        blurb = info["description"]
+        image = None
+        if "http" in name:
+            name, rest = name.split("http", 1)
+            image, blurb = ("http%s"%(rest,)).split(" ", 1)
+        else:
+            for prop in ["thumbnail", "image", "img", "photo"]:
+                if hasattr(item, prop):
+                    image = getattr(item, prop)
+                    if prop == "photo": # news
+                        image = image[0].get().pic_link(True)
+                    elif hasattr(image, "urlsafe"):
+                        image = "%s%s"%(DOMAIN, image.urlsafe())
+            for prop in ["blurb", "body", "content", "description"]:
+                if hasattr(item, prop):
+                    blurb = truncate(getattr(item, prop))
+        return {
+            "name": name,
+            "image": image,
+            "blurb": blurb.replace('"', "'").replace("\n", " ")
+        }
 
 class Searchable(object):
     def string2words(self, searchstring):

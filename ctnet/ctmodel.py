@@ -176,7 +176,8 @@ class Comment(ModelBase):
         return False
 
     def title_analog(self):
-        return "%s's comment"%(self.user.get().firstName,)
+        return self.body
+#        return "%s's comment"%(self.user.get().firstName,)
 
     def data(self, withseenlist=False):
         d = { "key": self.id(),
