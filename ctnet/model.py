@@ -55,7 +55,7 @@ class Dlink(db.TimeStampedBase):
         image = None
         if "http" in name:
             name, rest = name.split("http", 1)
-            image, blurb = "http%s"%(rest,).split(" ", 1)
+            image, blurb = ("http%s"%(rest,)).split(" ", 1)
         else:
             for prop in ["thumbnail", "image", "img"]:
                 if hasattr(item, prop):
