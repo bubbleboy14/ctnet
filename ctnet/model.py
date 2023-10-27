@@ -50,7 +50,7 @@ class Dlink(db.TimeStampedBase):
         return p2i(*self.path.split("#!"))
 
     def metas(self):
-        from .util import text2parts, truncate, DOMAIN
+        from .util import text2image, text2parts, truncate, DOMAIN
         info = self.info()
         item = info["item"]
         name = item.title_analog() or info["title"]
@@ -66,13 +66,20 @@ class Dlink(db.TimeStampedBase):
                         image = image[0].get().pic_link(True)
                     elif hasattr(image, "urlsafe"):
                         image = "%s%s"%(DOMAIN, image.urlsafe())
-            for prop in ["blurb", "body", "content", "description"]:
+                    break
+            for prop in ["blurb", "summary", "body", "content", "description"]:
                 if hasattr(item, prop):
                     blurb = truncate(getattr(item, prop))
+                    break
+        if blurb:
+            blurb = blurb.replace('"', "'").replace("\n", " ")
+            if not image and "http" in blurb:
+                before, image, after = text2image(blurb.split(" "), True)
+                blurb = before or after
         return {
             "name": name,
             "image": image,
-            "blurb": blurb.replace('"', "'").replace("\n", " ")
+            "blurb": blurb
         }
 
 class Searchable(object):
