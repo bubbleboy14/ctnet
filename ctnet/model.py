@@ -46,17 +46,18 @@ class Dlink(db.TimeStampedBase):
     path = db.String()
     token = db.String()
 
+    def info(self):
+        return p2i(*self.path.split("#!"))
+
     def metas(self):
-        from .util import vid2thumb, truncate, DOMAIN
-        info = p2i(*self.path.split("#!"))
+        from .util import text2parts, truncate, DOMAIN
+        info = self.info()
         item = info["item"]
         name = item.title_analog() or info["title"]
         blurb = info["description"]
         image = None
         if "http" in name:
-            name, rest = name.split("http", 1)
-            image, blurb = rest.split(" ", 1)
-            image = vid2thumb("http%s"%(image,))
+            name, image, blurb = text2parts(name)
         else:
             for prop in ["thumbnail", "image", "img", "photo"]:
                 if hasattr(item, prop):
