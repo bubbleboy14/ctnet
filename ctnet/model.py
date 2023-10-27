@@ -47,7 +47,7 @@ class Dlink(db.TimeStampedBase):
     token = db.String()
 
     def metas(self):
-        from .util import truncate, DOMAIN
+        from .util import vid2thumb, truncate, DOMAIN
         info = p2i(*self.path.split("#!"))
         item = info["item"]
         name = item.title_analog() or info["title"]
@@ -55,7 +55,8 @@ class Dlink(db.TimeStampedBase):
         image = None
         if "http" in name:
             name, rest = name.split("http", 1)
-            image, blurb = ("http%s"%(rest,)).split(" ", 1)
+            image, blurb = rest.split(" ", 1)
+            image = vid2thumb("http%s"%(image,))
         else:
             for prop in ["thumbnail", "image", "img", "photo"]:
                 if hasattr(item, prop):
