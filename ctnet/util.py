@@ -19,12 +19,17 @@ _chl = _cl / 2
 filestore = StaticStore()
 
 def truncate(s):
+    slen = len(s)
     cutoff = s.find("<br><br>", 100)
     if cutoff == -1:
         cutoff = s.find("<br>", 100)
-    if cutoff == -1 or cutoff > 400:
-        return strip_html(s)[:400] + " ..."
-    return s[:cutoff]
+    if cutoff == -1 or cutoff > 400: # meh...
+        cutoff = 400
+        s = strip_html(s)
+    s = s[:cutoff]
+    if slen > cutoff:
+        s += " ..."
+    return s
 
 def randomString(slength):
     import random
