@@ -49,7 +49,7 @@ def item2blurb(item):
             return truncate(getattr(item, prop))
 
 def item2image(item, checkTitle=False):
-    from .util import DOMAIN
+    from .util import text2image, DOMAIN
     for prop in ["thumbnail", "image", "img", "photo"]:
         if hasattr(item, prop):
             image = getattr(item, prop)
