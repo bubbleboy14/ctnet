@@ -78,11 +78,12 @@ class Dlink(db.TimeStampedBase):
         else:
             image = item2image(item)
             blurb = item2blurb(item)
-        if not name or not blurb:
+        if not name or not blurb or not image:
             if item.polytype == "comment":
                 topic = item.conversation.get().media()
                 name = name or topic.title_analog()
                 blurb = blurb or item2blurb(topic)
+                image = image or item2image(topic)
             name = name or info["title"]
             blurb = blurb or info["description"]
         blurb = blurb.replace('"', "'").replace("\n", " ")
