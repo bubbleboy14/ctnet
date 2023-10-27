@@ -75,7 +75,7 @@ class Dlink(db.TimeStampedBase):
             blurb = blurb.replace('"', "'").replace("\n", " ")
             if not image and "http" in blurb:
                 before, image, after = text2image(blurb.split(" "), True)
-                blurb = before or after
+                blurb = before or after or blurb
         return {
             "name": name,
             "image": image,
