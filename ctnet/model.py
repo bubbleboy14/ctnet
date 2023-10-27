@@ -42,6 +42,23 @@ def p2i(path, key=None):
         "description": description
     }
 
+def item2blurb(item):
+    from .util import truncate
+    for prop in ["blurb", "summary", "body", "content", "description"]:
+        if hasattr(item, prop):
+            return truncate(getattr(item, prop))
+
+def item2image(item):
+    from .util import DOMAIN
+    for prop in ["thumbnail", "image", "img", "photo"]:
+        if hasattr(item, prop):
+            image = getattr(item, prop)
+            if prop == "photo": # news
+                image = image[0].get().pic_link(True)
+            elif hasattr(image, "urlsafe"):
+                image = "%s%s"%(DOMAIN, image.urlsafe())
+            return image
+
 class Dlink(db.TimeStampedBase):
     path = db.String()
     token = db.String()
@@ -50,33 +67,28 @@ class Dlink(db.TimeStampedBase):
         return p2i(*self.path.split("#!"))
 
     def metas(self):
-        from .util import text2image, text2parts, truncate, DOMAIN
+        from .util import text2image, text2parts
         info = self.info()
         item = info["item"]
         name = item.title_analog() or info["title"]
         blurb = info["description"]
         image = None
         if "http" in name:
-            name, image, remainder = text2parts(name)
-            blurb = remainder or blurb
+            name, image, blurb = text2parts(name)
         else:
-            for prop in ["thumbnail", "image", "img", "photo"]:
-                if hasattr(item, prop):
-                    image = getattr(item, prop)
-                    if prop == "photo": # news
-                        image = image[0].get().pic_link(True)
-                    elif hasattr(image, "urlsafe"):
-                        image = "%s%s"%(DOMAIN, image.urlsafe())
-                    break
-            for prop in ["blurb", "summary", "body", "content", "description"]:
-                if hasattr(item, prop):
-                    blurb = truncate(getattr(item, prop))
-                    break
-        if blurb:
-            blurb = blurb.replace('"', "'").replace("\n", " ")
-            if not image and "http" in blurb:
-                before, image, after = text2image(blurb.split(" "), True)
-                blurb = before or after or blurb
+            image = item2image(item)
+            blurb = item2blurb(item)
+        if not name or not blurb:
+            if item.polytype == "comment":
+                topic = item.conversation.get().media()
+                name = name or topic.title_analog()
+                blurb = blurb or item2blurb(topic)
+            name = name or info["title"]
+            blurb = blurb or info["description"]
+        blurb = blurb.replace('"', "'").replace("\n", " ")
+        if not image and "http" in blurb:
+            before, image, after = text2image(blurb.split(" "), True)
+            blurb = before or after or blurb
         return {
             "name": name,
             "image": image,
