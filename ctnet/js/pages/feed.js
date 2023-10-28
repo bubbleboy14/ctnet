@@ -12,6 +12,7 @@ CT.require("CAN.session");
 CT.require("CAN.widget.conversation");
 CT.require("CAN.widget.slider");
 CT.require("CAN.widget.stream");
+CT.require("CAN.widget.share");
 CT.require("CAN.media.all");
 
 var empty, chunk = 15, offset = 0,
