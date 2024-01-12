@@ -126,7 +126,11 @@ def response():
         media = [m for m in media if m.id() in s.CAN_referenda or m.id() in s.user_referenda][:3]
     else:
         mt = mediatypes[rtype]
-        media = mt.query().order(rtype == "event" and -mt.when or -mt.date)
+        if rtype == "event":
+            qord = -mt.when
+        else:
+            qord = -mt.date
+        media = mt.query().order(qord)
         if rtype not in ['thought', 'case', 'changeidea', 'paper', 'opinion']:
             media = media.filter(mt.approved == True)
         media = media.fetch(3)
