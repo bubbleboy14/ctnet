@@ -1747,9 +1747,9 @@ class Video(CategoriedVotingModel, Searchable, Approvable):
         return "%s/video.html#!%s"%(DOMAIN, flipQ(self.id()))
 
     def rssdesc(self):
-        import unicodedata
-        d = unicodedata.normalize("NFKD", self.description).encode("ascii", "ignore")
-        return '<img src="' + self.thumbnail + '"> ' + d
+#        import unicodedata
+#        d = unicodedata.normalize("NFKD", self.description).encode("ascii", "ignore")
+        return '<img src="' + self.thumbnail + '"> ' + self.description
 
     def rssitems(self):
         return {"title": self.title, "link": self.storylink(),
