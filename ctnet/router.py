@@ -1,6 +1,7 @@
 import os
 from util import respond, redirect, send_text, send_file, readfile, getcached
 from model import getsettings, getip
+from cantools import config
 
 allowed = set(["404", "about", "beta", "browsers", "feed",
     "community", "home", "login", "newaccount", "news", "participate",
@@ -14,10 +15,11 @@ def response():
     pi = os.environ.get("PATH_INFO")
     pname, ptype = pi[1:].split(".", 1) # shouldn't be necessary :-\
 
-    s = getsettings()
-    s.hit_count += 1
-    s.put()
-    getip()
+    if not config.nocount:
+        s = getsettings()
+        s.hit_count += 1
+        s.put()
+        getip()
 
     if pname == "favicon":
         send_file(readfile("favicon.ico"), "ico")
