@@ -6,6 +6,7 @@
 	"feedback": "feedback@email.com",
 	"geokeys": [],
 	"feedlinks": true,
+	"lightbox": false,
 	"pubsub": {
 		"host": null,
 		"port": null,

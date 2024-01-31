@@ -87,5 +87,5 @@ CAN.widget.chatterlightbox = {
 	    });
 	}
 };
-if (!CT.storage.get("lb_viewed"))
+if (core.config.ctnet.lightbox && !CT.storage.get("lb_viewed"))
 	setTimeout(CAN.widget.chatterlightbox.load, 5000);
