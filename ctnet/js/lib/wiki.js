@@ -28,7 +28,7 @@ setTimeout(function() {
 		iframe.style.overflow = 'hidden';
 		iframe.style.border = '0px';
 		iframe.style.opacity = 0.0;
-		iframe.src = "https://www.civilactionnetwork.org/wiki.html#" + wkey;
+		iframe.src = "https://civac.net/wiki.html#" + wkey;
 		container.appendChild(iframe);
 		fillContainer();
 	} else

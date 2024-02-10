@@ -48,9 +48,10 @@ CAN.frame = {
 	    CT.dom.blurField(CT.dom.id("restriction"));
 	},
 	"footer": function() {
-	    var footer = CT.dom.id("footer");
+	    var footer = CT.dom.id("footer"),
+	    	dname = core.config.ctnet.domain;
 	    footer.innerHTML = "";
-	    footer.appendChild(CT.dom.node(CT.dom.link("www.CivilActionNetwork.org", null, "https://www.civilactionnetwork.org")));
+	    footer.appendChild(CT.dom.node(CT.dom.link(dname, null, "https://" + dname)));
 	    var navfoot = CT.dom.node();
 	    for (var i = 0; i < CAN.frame.navitems.length; i++) {
 	        navfoot.appendChild(CT.dom.link(CAN.frame.navitems[i], null,
