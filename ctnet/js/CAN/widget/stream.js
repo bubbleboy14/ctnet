@@ -28,12 +28,12 @@ CAN.widget.stream = {
 				key: conversation
 			},
 			cb: function(clink) {
-				window.location = clink;
 				location.pathname == "/community.html" &&
 					clink.includes("community.html") &&
 					setTimeout(function() {
 						window.location.reload();
 					}, 200); // if page hasn't changed (same pathname)
+				window.location = clink;
 			}
 		});
 	},
