@@ -24,7 +24,7 @@ page_descriptions = {
 }
 
 def p2i(path, key=None):
-    title = path[1:].split(".")[0].title()
+    title = path[1:].split(".")[0].title().replace('"', "'")
     description = page_descriptions[title].replace('"', "'")
     item = None
     section = None
