@@ -24,8 +24,8 @@ page_descriptions = {
 }
 
 def p2i(path, key=None):
-    title = path[1:].split(".")[0].title().replace('"', "'")
-    description = page_descriptions[title].replace('"', "'")
+    title = path[1:].split(".")[0].title()
+    description = page_descriptions[title]
     item = None
     section = None
     if key:
@@ -91,6 +91,7 @@ class Dlink(db.TimeStampedBase):
                     blurb = item2blurb(topic, True)
             name = name or info["title"]
             blurb = blurb or info["description"]
+        name = name.replace('"', "'")
         blurb = blurb.replace('"', "'").replace("\n", " ")
         if not image and "http" in blurb:
             before, image, after = text2image(blurb.split(" "), True)
