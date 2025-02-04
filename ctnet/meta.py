@@ -36,6 +36,9 @@ def ship(d, vid=False):
         o = clean([d["img"], d["url"]])
     return o
 
+def img1(s):
+    return s.split("<img ")[1].split(' src="')[1].split('"')[0]
+
 def og(url):
     data = fetch(url, timeout=5, fakeua=True).decode()
     resp = {}
@@ -46,12 +49,15 @@ def og(url):
         resp["title"] = data.split("<title>")[1].split("</title>")[0]
     imgog = ogpart(data, "image")
     imgtw = ogpart(data, "image", "twitter")
+    adata = data.split("<article")[-1]
     if imgog and imgtw:
         resp["img"] = len(imgog) < len(imgtw) and imgog or imgtw
     elif imgog or imgtw:
         resp["img"] = imgog or imgtw
-    elif '<img src="' in data:
-        resp["img"] = data.split('<img src="')[1].split('"')[0]
+    elif "<img " in adata:
+        resp["img"] = img1(adata)
+    elif "<img " in data:
+        resp["img"] = img1(data)
     resp["url"] = ogpart(data, "url") or url
     return ship(resp)
 
