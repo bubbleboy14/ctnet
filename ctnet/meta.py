@@ -6,12 +6,15 @@ except:
 from cantools.util.admin import ushort
 from util import fetch, strip_html
 
+FAKEUA = False # TODO: conditionalize? or try both?
+
 def ogpart(data, flag, pref="og"):
     qchar = '"'
     fullflag = '%s%s:%s%s'%(qchar, pref, flag, qchar)
     if fullflag not in data:
         qchar = "'"
         fullflag = '%s%s:%s%s'%(qchar, pref, flag, qchar)
+    print("ogpart()", fullflag)
     if fullflag in data:
         before, after = data.split(fullflag, 1)
         if after.startswith(">") or after.startswith(" />"):
@@ -19,6 +22,7 @@ def ogpart(data, flag, pref="og"):
         else:
             sub = after.split('content=%s'%(qchar,))
         metad = sub[1].split(qchar)[0]
+        print("found:", metad)
         if flag == "image":
             metad = metad.replace(" ", "%20")
         return metad
@@ -40,7 +44,7 @@ def img1(s):
     return s.split("<img ")[1].split(' src="')[1].split('"')[0]
 
 def og(url):
-    data = fetch(url, timeout=5, fakeua=True).decode()
+    data = fetch(url, timeout=5, fakeua=FAKEUA).decode()
     resp = {}
     titog = ogpart(data, "title") or ogpart(data, "title", "twitter")
     if titog:
