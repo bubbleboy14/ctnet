@@ -6,7 +6,12 @@ except:
 from cantools.util.admin import ushort
 from util import fetch, strip_html
 
-FAKEUA = False # TODO: conditionalize? or try both?
+fakers = ["thegatewaypundit.com"]
+
+def isfake(url):
+    for faker in fakers:
+        if faker in url:
+            return True
 
 def ogpart(data, flag, pref="og"):
     qchar = '"'
@@ -44,7 +49,7 @@ def img1(s):
     return s.split("<img ")[1].split(' src="')[1].split('"')[0]
 
 def og(url):
-    data = fetch(url, timeout=5, fakeua=FAKEUA).decode()
+    data = fetch(url, timeout=5, fakeua=isfake(url)).decode()
     resp = {}
     titog = ogpart(data, "title") or ogpart(data, "title", "twitter")
     if titog:
