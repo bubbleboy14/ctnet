@@ -6,7 +6,7 @@ except:
 from cantools.util.admin import ushort
 from util import fetch, strip_html
 
-fakers = ["thegatewaypundit.com"]
+fakers = ["thegatewaypundit.com", "thefederalist.com"]
 
 def isfake(url):
     for faker in fakers:
