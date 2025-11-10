@@ -1,7 +1,7 @@
 from urllib.parse import quote
 from base64 import b64encode, b64decode
 from dez.http.static import StaticStore
-from cantools.web.util import strip_html, strip_punctuation, setcachedefault
+from cantools.web.util import strip_html, strip_punctuation, setcachedefault, text2image, text2parts
 from cantools.web import *
 from cantools import config
 
