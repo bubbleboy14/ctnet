@@ -1,11 +1,9 @@
+from urllib.parse import quote
 from base64 import b64encode, b64decode
 from dez.http.static import StaticStore
-from cantools import config
+from cantools.web.util import strip_html, strip_punctuation, setcachedefault
 from cantools.web import *
-try:
-    from urllib import quote       # py2
-except:
-    from urllib.parse import quote # py3
+from cantools import config
 
 LOGALL = False
 RAWDOMAIN = config.web.domain
@@ -99,6 +97,6 @@ def decode(d):
             "handled error")
     return d
 
-setlog(log)
+#setlog(log)
 #setenc(lambda d : flipU(b64encode(d)))
 #setdec(decode)

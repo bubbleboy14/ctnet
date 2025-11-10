@@ -1,4 +1,5 @@
-from cantools.web import respond, cgi_get, succeed, redirect, metized
+from cantools.web import respond, cgi_get, succeed, redirect
+from cantools.web.util import metized
 from cantools.util import token
 from model import Dlink
 
