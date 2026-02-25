@@ -8,9 +8,9 @@ def response():
     user = User.query().filter(User.email == email).get()
     if not user or user.password != hashpass(password, user.date):
         if user:
-            log('login failure - wrong password. email: "%s". submitted password: "%s"'%(email, password), shouldEmail=False)
+            log('login failure - wrong password. email: "%s". submitted password: "%s"'%(email, password))
         else:
-            log('login failure - no such user. email: "%s". submitted password: "%s"'%(email, password), shouldEmail=False)
+            log('login failure - no such user. email: "%s". submitted password: "%s"'%(email, password))
         fail()
     succeed({"key": user.id(), "isadmin": user.isadmin(),
         "firstName": user.firstName, "lastName": user.lastName,
