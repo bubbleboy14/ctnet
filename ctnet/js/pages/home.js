@@ -92,7 +92,7 @@ onload = function() {
                 topNode._scrolled = true;
                 topNode.style.overflow = "auto";
             }
-            if (topNode.scrollTop == topNode.scrollHeight - topNode.clientHeight)
+            if (Math.ceil(topNode.scrollTop) == topNode.scrollHeight - topNode.clientHeight)
                 topRefill(topRefiller);
         }
     };
@@ -126,7 +126,7 @@ onload = function() {
             memez.style.overflowX = "scroll";
         }
         memez.scrollLeft += wevent.deltaY;
-        if (memez.scrollLeft + memez.clientWidth == memez.scrollWidth)
+        if (Math.ceil(memez.scrollLeft + memez.clientWidth) == memez.scrollWidth)
             memeRefill();
         wevent.preventDefault();
         wevent.stopPropagation();
